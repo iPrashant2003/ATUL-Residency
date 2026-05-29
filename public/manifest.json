@@ -136,5 +136,23 @@
       ],
       "launch_type": "single-client"
     }
-  ]
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+atul",
+      "url": "/?type=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/admin/payments",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

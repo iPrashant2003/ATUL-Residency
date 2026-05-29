@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "sonner";
@@ -65,6 +66,19 @@ export default function RootLayout({
             <Chatbot />
             <PWARegister />
             <PWAInstallPrompt />
+            <Script id="register-sw" strategy="afterInteractive">
+              {`
+                if ('serviceWorker' in navigator) {
+                  window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                      console.log('Service Worker registered with scope:', reg.scope);
+                    }).catch(function(err) {
+                      console.error('Service Worker registration failed:', err);
+                    });
+                  });
+                }
+              `}
+            </Script>
           </ThemeProvider>
         </SessionProvider>
       </body>
