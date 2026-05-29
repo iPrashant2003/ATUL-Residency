@@ -32,11 +32,26 @@ export async function POST(req: NextRequest) {
         OR: orConditions,
         code: otp,
         used: false,
-        expiresAt: { gt: new Date() },
       },
+      orderBy: { createdAt: "desc" },
     });
 
     if (!validOtp) {
+      return NextResponse.json({ error: "Invalid or expired OTP" }, { status: 400 });
+    }
+
+    // Get current DB time to avoid timezone mismatch on naive datetime columns
+    let dbNow = new Date();
+    try {
+      const dbTimeRes: any = await prisma.$queryRaw`SELECT NOW() as now`;
+      if (dbTimeRes && dbTimeRes[0] && dbTimeRes[0].now) {
+        dbNow = new Date(dbTimeRes[0].now);
+      }
+    } catch (err) {
+      console.error("[reset-password] Failed to get DB time, falling back to local time", err);
+    }
+
+    if (validOtp.expiresAt.getTime() <= dbNow.getTime()) {
       return NextResponse.json({ error: "Invalid or expired OTP" }, { status: 400 });
     }
 
