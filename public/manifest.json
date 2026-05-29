@@ -10,8 +10,10 @@
   "theme_color": "#14B8A6",
   "orientation": "any",
   "categories": ["productivity", "business"],
-  "lang": "en-IN",
-  "id": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "id": "atul-residency-pwa",
+  "iarc_rating_id": "",
   "icons": [
     {
       "src": "/icons/icon-192.png",

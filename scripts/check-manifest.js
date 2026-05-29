@@ -13,10 +13,10 @@ function getUrl(url) {
 async function run() {
   const assets = [
     'https://atul-residency.vercel.app/manifest.json',
-    'https://atul-residency.vercel.app/sw.js',
-    'https://atul-residency.vercel.app/offline',
-    'https://atul-residency.vercel.app/.well-known/assetlinks.json',
-    'https://atul-residency.vercel.app/.well-known/apple-app-site-association'
+    'https://atul-residency.vercel.app/screenshots/desktop-home.png',
+    'https://atul-residency.vercel.app/screenshots/mobile-home.png',
+    'https://atul-residency.vercel.app/screenshots/desktop-login.png',
+    'https://atul-residency.vercel.app/screenshots/mobile-login.png'
   ];
 
   for (const asset of assets) {
@@ -25,7 +25,6 @@ async function run() {
       console.log(`ASSET: ${asset}`);
       console.log(`STATUS: ${res.status}`);
       console.log(`CONTENT TYPE: ${res.headers['content-type']}`);
-      console.log(`LOCATION: ${res.headers['location'] || 'None'}`);
       console.log("-----------------------------------------");
     } catch (err) {
       console.error(`Error for ${asset}:`, err.message);
