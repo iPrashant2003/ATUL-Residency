@@ -36,7 +36,7 @@ export default function AppLayout({ children, role, title, subtitle, userName }:
           subtitle={subtitle}
           onMenuClick={() => setSidebarOpen(true)}
         />
-        <main style={{ padding: "24px" }}>
+        <main style={{ padding: "24px", flex: 1, overflow: "auto" }}>
           {children}
         </main>
       </div>
