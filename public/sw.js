@@ -12,18 +12,18 @@ if (workbox) {
   const { ExpirationPlugin } = workbox.expiration;
 
   // Pre-cache core shell resources on install
-  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v2';
+  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v3';
   const PRECACHE_ASSETS = [
     '/offline',
     '/manifest.json',
     '/favicon.ico',
-    '/favicon-32x32.png?v=2',
-    '/favicon-16x16.png?v=2',
-    '/apple-touch-icon.png?v=2',
-    '/icons/icon-192.png?v=2',
-    '/icons/icon-512.png?v=2',
-    '/icons/icon-maskable-192.png?v=2',
-    '/icons/icon-maskable-512.png?v=2'
+    '/favicon-32x32.png?v=3',
+    '/favicon-16x16.png?v=3',
+    '/apple-touch-icon.png?v=3',
+    '/icons/icon-192.png?v=3',
+    '/icons/icon-512.png?v=3',
+    '/icons/icon-maskable-192.png?v=3',
+    '/icons/icon-maskable-512.png?v=3'
   ];
 
   self.addEventListener('install', (event) => {

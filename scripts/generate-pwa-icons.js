@@ -36,9 +36,10 @@ const logoSvg = `
     </filter>
   </defs>
   
-  {/* Premium Squircle Container matching Login page logo frame */}
-  <rect x="2" y="2" width="96" height="96" rx="28" fill="url(#containerBg)" stroke="url(#containerBorder)" strokeWidth="2.5" />
-  <rect x="5" y="5" width="90" height="90" rx="24" stroke="url(#logoGold)" strokeWidth="0.5" opacity="0.15" />
+  {/* Solid Background filling the entire 100x100 canvas (prevents Windows transparency artifacts) */}
+  <rect x="0" y="0" width="100" height="100" fill="url(#containerBg)" />
+  <rect x="0.75" y="0.75" width="98.5" height="98.5" stroke="url(#containerBorder)" strokeWidth="1.5" />
+  <rect x="4" y="4" width="92" height="92" rx="16" stroke="url(#logoGold)" strokeWidth="0.5" opacity="0.1" />
   
   {/* Logo scaled down to 65% and centered inside the squircle container */}
   <g transform="translate(17.5, 17.5) scale(0.65)">
