@@ -137,8 +137,9 @@ Rules:
   );
 
   if (!geminiRes.ok) {
-    console.error("[Gemini API Error]", await geminiRes.json());
-    return "Sorry, I'm having trouble connecting. Please try again!";
+    const errData = await geminiRes.json().catch(() => ({}));
+    console.error("[Gemini API Error]", errData);
+    throw new Error(errData.error?.message || `HTTP ${geminiRes.status}`);
   }
 
   const geminiData = await geminiRes.json();
@@ -159,9 +160,14 @@ export async function POST(req: NextRequest) {
     let reply: string;
 
     if (apiKey) {
-      // Premium: use Gemini AI
-      const dbContext = `\n[Live System Data]\n- Active Renters: ${db.tenantCount}\n- Vacant Rooms: ${db.vacantRooms}\n- Pending Payment Approvals: ${db.pendingPayments}\n- Open Maintenance Requests: ${db.openMaintenance}\n- UPI ID for rent: atultiwari123321@oksbi\n- WhatsApp for support: +91 6392651108\n`;
-      reply = await getGeminiReply(message, history, apiKey, dbContext);
+      try {
+        // Premium: use Gemini AI
+        const dbContext = `\n[Live System Data]\n- Active Renters: ${db.tenantCount}\n- Vacant Rooms: ${db.vacantRooms}\n- Pending Payment Approvals: ${db.pendingPayments}\n- Open Maintenance Requests: ${db.openMaintenance}\n- UPI ID for rent: atultiwari123321@oksbi\n- WhatsApp for support: +91 6392651108\n`;
+        reply = await getGeminiReply(message, history, apiKey, dbContext);
+      } catch (geminiErr: any) {
+        console.warn("[Chatbot] Gemini API error, falling back to local rule-based chatbot:", geminiErr.message || geminiErr);
+        reply = getLocalReply(message, db);
+      }
     } else {
       // Free: smart local chatbot
       reply = getLocalReply(message, db);
