@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.atul_residency.twa",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:83:C5:EC:E2:E8:F0:8B:5C:F6:10:B9:81:3B:82:F6:E9:83:C5:EC:E2:E8:F0:8B:5C:F6:10:B9:81"
+      ]
+    }
+  }
+]

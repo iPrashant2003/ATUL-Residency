@@ -126,6 +126,54 @@ if (workbox) {
     })
   );
 
+  // 5. Handle Push Notifications
+  self.addEventListener('push', (event) => {
+    if (!event.data) return;
+
+    try {
+      const data = event.data.json();
+      const options = {
+        body: data.body || 'New notification from Atul Residency',
+        icon: data.icon || '/icons/icon-192.png',
+        badge: data.badge || '/icons/icon-192.png',
+        data: data.data || { url: '/' },
+        vibrate: [100, 50, 100],
+        actions: [
+          { action: 'open', title: 'Open Portal' }
+        ]
+      };
+
+      event.waitUntil(
+        self.registration.showNotification(data.title || 'ATUL Residency', options)
+      );
+    } catch (err) {
+      console.error('Failed to parse push event:', err);
+    }
+  });
+
+  // 6. Handle Notification Clicks
+  self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+
+    const targetUrl = event.notification.data?.url || '/';
+
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+        // If an app window is already open, focus it and redirect
+        for (let i = 0; i < windowClients.length; i++) {
+          const client = windowClients[i];
+          if (client.url.startsWith(self.location.origin) && 'focus' in client) {
+            return client.focus().then((focusedClient) => focusedClient.navigate(targetUrl));
+          }
+        }
+        // Otherwise, open a new window
+        if (clients.openWindow) {
+          return clients.openWindow(targetUrl);
+        }
+      })
+    );
+  });
+
 } else {
   console.log('⚠️ Workbox failed to load. Falling back to basic fetch passthrough.');
 

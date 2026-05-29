@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { addDays } from "date-fns";
+import { sendPushNotification } from "@/lib/push";
 
 export async function GET(req: NextRequest) {
   try {
@@ -93,6 +94,19 @@ export async function POST(req: NextRequest) {
         tenant: { include: { room: { include: { tower: true } } } },
       },
     });
+
+    // Trigger PWA Push Notification to the tenant
+    if (record.tenant && record.tenant.userId) {
+      const balance = record.totalAmount - record.amountPaid;
+      const monthName = new Date(record.year, record.month - 1).toLocaleString('default', { month: 'long' });
+      
+      await sendPushNotification(
+        record.tenant.userId,
+        "Rent Invoice Generated 🏢",
+        `Hi ${record.tenant.name}, your rent invoice for ${monthName} ${record.year} of ₹${balance.toLocaleString('en-IN')} has been generated. Tap to view and pay instantly.`,
+        `/tenant/payments`
+      ).catch(e => console.error("Push notify error:", e));
+    }
 
     return NextResponse.json(record, { status: 201 });
   } catch (error) {

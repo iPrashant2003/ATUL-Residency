@@ -68,6 +68,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   tenant        Tenant?
   notifications Notification[]
+  pushSubscriptions PushSubscription[]
 }
 
 model Tower {
@@ -238,4 +239,15 @@ model WhatsappQueue {
   error       String?  @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

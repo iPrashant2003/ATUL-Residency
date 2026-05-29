@@ -22,6 +22,9 @@ $envVars = @{
     "GEMINI_API_KEY" = "AIzaSyA7274CX76ayiW0GrePynaarGT8yxvDfow"
     "DATABASE_URL" = "postgresql://neondb_owner:npg_O8q1BsQLKfno@ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require"
     "DATABASE_URL_DIRECT" = "postgresql://neondb_owner:npg_O8q1BsQLKfno@ep-billowing-star-ajgbsm9e.c-3.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require"
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY" = "BJULim9UpjvBt_tZRC3yei7P-vK74DpAQBLp4IJBoS9gx7zTjjF6Z2y84KCCdUPLbKGXFKGqMfDRGYgt1jIC9ZQ"
+    "VAPID_PRIVATE_KEY" = "sE_2Nk-ojaRRRPZZo-_iMQn9b8f7P4S6UQwuXN9HB4I"
+    "VAPID_MAILTO" = "mailto:atultiwari123321@gmail.com"
 }
 
 foreach ($key in $envVars.Keys) {

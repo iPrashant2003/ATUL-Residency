@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { sendPushNotification } from "@/lib/push";
 
 // Approve or reject payment
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -45,6 +46,22 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           },
         });
       }
+    }
+
+    // Trigger PWA Push Notification to the tenant about payment status
+    if (payment.tenant && payment.tenant.userId) {
+      const isApproved = status === "APPROVED";
+      const messageTitle = isApproved ? "Payment Approved! 🎉" : "Payment Rejected ⚠️";
+      const messageBody = isApproved
+        ? `Hi ${payment.tenant.name}, your payment of ₹${payment.amount.toLocaleString('en-IN')} has been approved. Thank you!`
+        : `Hi ${payment.tenant.name}, your payment of ₹${payment.amount.toLocaleString('en-IN')} was not approved. Please verify details.`;
+
+      await sendPushNotification(
+        payment.tenant.userId,
+        messageTitle,
+        messageBody,
+        "/tenant/payments"
+      ).catch(e => console.error("Push notify error:", e));
     }
 
     return NextResponse.json(payment);
