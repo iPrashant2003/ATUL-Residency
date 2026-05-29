@@ -69,65 +69,154 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#050606] text-slate-200 overflow-x-hidden font-sans"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.04) 0%, #050606 100%), linear-gradient(to right, rgba(20, 184, 166, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 184, 166, 0.02) 1px, transparent 1px)",
-        backgroundSize: "100% 100%, 45px 45px, 45px 45px"
-      }}
-    >
+    <div style={{
+      minHeight: "100vh",
+      background: "radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.04) 0%, #050606 100%), linear-gradient(to right, rgba(20, 184, 166, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 184, 166, 0.02) 1px, transparent 1px)",
+      backgroundSize: "100% 100%, 45px 45px, 45px 45px",
+      position: "relative",
+      overflow: "hidden",
+      color: "#e2e8f0",
+      fontFamily: "'Inter', sans-serif"
+    }}>
       {/* Background ambient lights - Aurora style combining Sea Green and Yellow/Gold */}
-      <div className="absolute top-[-10%] left-[-10%] w-[65vw] h-[65vw] rounded-full bg-teal-500/10 blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[55vw] h-[55vw] rounded-full bg-amber-500/5 blur-[150px] pointer-events-none" />
-      <div className="absolute top-[40%] left-[30%] w-[40vw] h-[40vw] rounded-full bg-teal-600/5 blur-[120px] pointer-events-none" />
+      <div className="orb orb-1" style={{ position: "absolute", filter: "blur(150px)", opacity: 0.28, background: "radial-gradient(circle, #14B8A6, transparent)", top: "-10%", left: "-10%", width: "65vw", height: "65vw", pointerEvents: "none" }} />
+      <div className="orb orb-2" style={{ position: "absolute", filter: "blur(150px)", opacity: 0.14, background: "radial-gradient(circle, #FFE259, transparent)", bottom: "-10%", right: "-10%", width: "55vw", height: "55vw", pointerEvents: "none" }} />
+      <div className="orb orb-3" style={{ position: "absolute", filter: "blur(120px)", opacity: 0.12, background: "radial-gradient(circle, #0d9488, transparent)", top: "40%", left: "30%", width: "40vw", height: "40vw", pointerEvents: "none" }} />
 
       {/* ═══ NAVBAR ═══ */}
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[1100px] flex items-center justify-between p-3 md:py-3.5 md:px-7 z-50 rounded-2xl bg-[#0a0c0c]/85 backdrop-blur-xl border border-teal-500/15 shadow-2xl shadow-black/80">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 md:w-10 md:h-10 bg-slate-950/90 border border-amber-500/25 rounded-xl flex items-center justify-center shadow-lg shadow-black/50">
-            <Logo width={26} height={26} />
+      <nav
+        style={{
+          position: "fixed",
+          top: 20,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "calc(100% - 40px)",
+          maxWidth: "1100px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "14px 28px",
+          zIndex: 100,
+          borderRadius: "20px",
+          background: "rgba(10, 12, 12, 0.85)",
+          backdropFilter: "blur(24px)",
+          border: "1px solid rgba(20, 184, 166, 0.15)",
+          boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.6)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              background: "linear-gradient(135deg, rgba(15, 17, 17, 0.9), rgba(5, 6, 6, 0.95))",
+              borderRadius: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 12px rgba(245, 158, 11, 0.15)",
+              border: "1px solid rgba(245, 158, 11, 0.25)",
+            }}
+          >
+            <Logo width={28} height={28} />
           </div>
-          <span className="text-base md:text-xl font-black tracking-tight font-display flex items-center gap-1">
-            <span className="text-slate-50">ATUL</span>
-            <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent drop-shadow-md">Residency</span>
+          <span style={{ fontSize: "20px", fontWeight: 800, letterSpacing: "-0.5px", fontFamily: "'Poppins', sans-serif" }}>
+            <span style={{ color: "#f8fafc" }}>ATUL </span>
+            <span style={{ background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", textShadow: "0px 2px 10px rgba(255, 167, 81, 0.2)" }}>Residency</span>
           </span>
         </div>
 
-        <Link href="/login" className="py-2 px-4 md:py-2.5 md:px-6 text-xs md:text-sm font-extrabold bg-gradient-to-r from-amber-300 to-amber-500 text-slate-950 rounded-xl hover:from-amber-400 hover:to-amber-600 transition-all duration-300 shadow-md shadow-amber-500/10 active:scale-95 text-center decoration-transparent">
+        <Link href="/login" style={{ padding: "10px 24px", fontSize: "13px", background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", color: "#050606", borderRadius: "10px", textDecoration: "none", fontWeight: 800, boxShadow: "0 4px 15px rgba(255, 167, 81, 0.25)", transition: "transform 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-1px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
           Portal Login
         </Link>
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-6 pt-32 md:pt-44 pb-16 min-h-screen">
+      <section
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          padding: "140px 24px 80px",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-amber-500/5 border border-amber-500/20 rounded-full px-4 py-1.5 text-[10px] md:text-xs font-bold text-amber-500 tracking-wider mb-6 md:mb-8 shadow-md shadow-amber-500/5">
-          <Star size={10} fill="#FFA751" color="#FFA751" />
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            background: "rgba(245, 158, 11, 0.05)",
+            border: "1px solid rgba(245, 158, 11, 0.22)",
+            borderRadius: "999px",
+            padding: "6px 16px",
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "#FFA751",
+            letterSpacing: "0.5px",
+            marginBottom: "32px",
+            boxShadow: "0 4px 20px rgba(245, 158, 11, 0.05)"
+          }}
+        >
+          <Star size={12} fill="#FFA751" color="#FFA751" />
           PREMIUM MANAGEMENT SYSTEM
-          <Star size={10} fill="#FFA751" color="#FFA751" />
+          <Star size={12} fill="#FFA751" color="#FFA751" />
         </div>
 
         {/* Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tight text-white mb-6 leading-tight max-w-4xl font-display">
-          <span className="text-slate-50">Welcome to</span>
+        <h1
+          style={{
+            fontSize: "clamp(38px, 6.5vw, 76px)",
+            maxWidth: "900px",
+            marginBottom: "24px",
+            lineHeight: 1.1,
+            fontWeight: 900,
+            letterSpacing: "-1.5px",
+            fontFamily: "'Poppins', sans-serif"
+          }}
+        >
+          <span style={{ color: "#f8fafc" }}>Welcome to</span>
           <br />
-          <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent drop-shadow-lg shadow-amber-500/10">ATUL Residency</span>
+          <span style={{ background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", textShadow: "0px 3px 25px rgba(255,167,81,0.25)" }}>ATUL Residency</span>
         </h1>
 
-        <p className="text-sm sm:text-base md:text-lg text-slate-400 leading-relaxed max-w-2xl mb-10 px-2">
+        <p
+          style={{
+            fontSize: "clamp(15px, 2vw, 18px)",
+            color: "rgba(226, 232, 240, 0.6)",
+            maxWidth: "640px",
+            lineHeight: 1.7,
+            marginBottom: "40px",
+          }}
+        >
           Experience Premium Residency & Smart Automation.
           Managing rent collection, WhatsApp reminders, PDF invoices, and maintenance requests via a unified interface.
         </p>
 
         {/* Unified CTA */}
         <div>
-          <Link href="/login" className="py-3.5 px-8 md:py-4 md:px-10 text-sm md:text-base font-extrabold text-slate-950 bg-gradient-to-r from-teal-400 to-teal-600 rounded-xl hover:from-teal-300 hover:to-teal-500 transition-all duration-300 shadow-lg shadow-teal-500/20 inline-flex items-center gap-2 active:scale-95 decoration-transparent">
+          <Link href="/login" style={{ padding: "16px 40px", fontSize: "16px", background: "linear-gradient(135deg, #20B2AA 0%, #14B8A6 100%)", color: "#050606", borderRadius: "14px", textDecoration: "none", fontWeight: 800, boxShadow: "0 10px 30px rgba(20, 184, 166, 0.3)", display: "inline-flex", alignItems: "center", gap: "10px", transition: "transform 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
             Portal Login
-            <ArrowRight size={16} />
+            <ArrowRight size={18} />
           </Link>
         </div>
-
         {/* Real-time stats preview cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-16 md:mt-24 w-full max-w-5xl px-2">
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginTop: "80px",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            width: "100%",
+            maxWidth: "960px",
+          }}
+        >
           {(data?.towerStats || [
             { name: "Tower A", totalRooms: 19, occupiedRooms: 0 },
             { name: "Tower B", totalRooms: 15, occupiedRooms: 0 }
@@ -136,24 +225,53 @@ export default function LandingPage() {
             return (
               <div
                 key={t.name}
-                className="p-5 md:p-6 text-left bg-slate-950/60 border border-teal-500/10 rounded-2xl backdrop-blur-md shadow-xl transition-all duration-300 hover:border-amber-500/35 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/5 group"
+                style={{ 
+                  padding: "24px", 
+                  minWidth: "220px", 
+                  flex: "1 1 200px",
+                  textAlign: "left",
+                  background: "rgba(15, 17, 17, 0.7)",
+                  border: "1px solid rgba(20, 184, 166, 0.15)",
+                  borderRadius: "20px",
+                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 15px 35px -5px rgba(0,0,0,0.5)",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.borderColor = "rgba(255, 226, 89, 0.35)";
+                  e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.6), 0 0 15px rgba(255, 226, 89, 0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "rgba(20, 184, 166, 0.15)";
+                  e.currentTarget.style.boxShadow = "0 15px 35px -5px rgba(0,0,0,0.5)";
+                }}
               >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 bg-teal-500/5 border border-teal-500/20 rounded-xl flex items-center justify-center group-hover:border-amber-500/30 transition-colors">
-                    <Building size={16} className="text-amber-500" />
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+                  <div
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                      background: "rgba(20, 184, 166, 0.08)",
+                      border: "1px solid rgba(20, 184, 166, 0.25)",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Building size={18} color="#FFA751" />
                   </div>
-                  <span className="font-extrabold text-sm md:text-base text-slate-50">{t.name}</span>
+                  <span style={{ fontWeight: 700, fontSize: "15px", color: "#f8fafc" }}>{t.name}</span>
                 </div>
-                <div className="text-2xl md:text-3xl font-black text-slate-50 font-mono">
+                <div style={{ fontSize: "32px", fontWeight: 900, color: "#f8fafc", fontFamily: "monospace" }}>
                   {t.occupiedRooms}
-                  <span className="text-sm md:text-base text-slate-500 font-normal">/{t.totalRooms}</span>
+                  <span style={{ fontSize: "16px", color: "rgba(226,232,240,0.35)", fontWeight: 400 }}>/{t.totalRooms}</span>
                 </div>
-                <div className="text-xs text-slate-500 mt-1">Occupied Rooms</div>
-                <div className="mt-4 w-full h-1 bg-slate-900 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-amber-300 to-amber-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${pct}%` }}
-                  />
+                <div style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", marginTop: "4px" }}>Occupied Rooms</div>
+                <div style={{ marginTop: "16px", width: "100%", height: "5px", background: "rgba(255,255,255,0.06)", borderRadius: "3px", overflow: "hidden" }}>
+                  <div style={{ width: `${pct}%`, background: "linear-gradient(90deg, #FFE259, #FFA751)", height: "100%", borderRadius: "3px" }} />
                 </div>
               </div>
             );
@@ -162,20 +280,47 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ STATS COUNTERS ═══ */}
-      <section className="px-4 md:px-6 py-10 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 bg-slate-950/50 border border-teal-500/15 rounded-3xl backdrop-blur-xl overflow-hidden divide-y divide-x divide-teal-500/10 md:divide-y-0">
+      <section style={{ padding: "40px 24px", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "0",
+              background: "rgba(10, 12, 12, 0.6)",
+              border: "1px solid rgba(20, 184, 166, 0.15)",
+              borderRadius: "24px",
+              backdropFilter: "blur(20px)",
+              overflow: "hidden",
+            }}
+          >
             {[
               { label: "Rooms Managed", value: data?.totalRooms || 0, prefix: "", suffix: "" },
               { label: "Vacant Rooms", value: data?.vacantRooms || 0, prefix: "", suffix: "" },
               { label: "Occupied Rooms", value: data?.occupiedRooms || 0, prefix: "", suffix: "" },
               { label: "Towers Managed", value: data?.totalTowers || 0, prefix: "", suffix: "" },
-            ].map((stat) => (
-              <div key={stat.label} className="p-6 md:p-8 text-center flex flex-col justify-center items-center">
-                <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent font-mono">
+            ].map((stat, i, arr) => (
+              <div
+                key={stat.label}
+                style={{
+                  padding: "36px 24px",
+                  textAlign: "center",
+                  borderRight: i < arr.length - 1 ? "1px solid rgba(20, 184, 166, 0.1)" : "none",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "38px",
+                    fontWeight: 900,
+                    background: "linear-gradient(135deg, #FFE259, #FFA751)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontFamily: "monospace"
+                  }}
+                >
                   {mounted && <AnimatedNumber target={stat.value} prefix={stat.prefix} suffix={stat.suffix} />}
                 </div>
-                <div className="text-[10px] md:text-xs text-teal-400 font-bold tracking-wider uppercase mt-2">
+                <div style={{ fontSize: "13px", color: "rgba(20, 184, 166, 0.8)", marginTop: "8px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px" }}>
                   {stat.label}
                 </div>
               </div>
@@ -185,57 +330,123 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      <section className="py-20 px-4 md:px-6 relative z-10 max-w-5xl mx-auto">
-        <div className="text-center mb-14 md:mb-16">
-          <h2 className="text-2xl sm:text-4xl font-black mb-4 bg-gradient-to-r from-teal-400 to-teal-600 bg-clip-text text-transparent font-display">
-            Management Capabilities
-          </h2>
-          <p className="text-slate-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-            Automating your property administrative pipeline from renting contracts to bills collections.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="p-6 bg-slate-900/20 border border-teal-500/5 rounded-2xl hover:border-teal-500/25 hover:bg-slate-900/40 hover:-translate-y-1 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/5 flex flex-col text-left"
+      <section style={{ padding: "80px 24px", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "56px" }}>
+            <h2
+              style={{ fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 900, marginBottom: "16px", background: "linear-gradient(135deg, #20B2AA 0%, #14B8A6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontFamily: "'Poppins', sans-serif" }}
             >
-              <div className="w-10 h-10 bg-teal-500/5 border border-teal-500/15 rounded-xl flex items-center justify-center mb-4">
-                <f.icon size={18} className="text-teal-400" />
-              </div>
-              <h3 className="font-extrabold text-sm sm:text-base text-slate-50 mb-2">{f.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+              Management Capabilities
+            </h2>
+            <p style={{ color: "rgba(226,232,240,0.5)", fontSize: "16px", maxWidth: "520px", margin: "0 auto", lineHeight: "1.5" }}>
+              Automating your property administrative pipeline from renting contracts to bills collections
+            </p>
+          </div>
 
-      {/* ═══ CTA SECTION ═══ */}
-      <section className="py-16 px-4 md:px-6 relative z-10 max-w-4xl mx-auto text-center">
-        <div className="p-8 sm:p-14 bg-gradient-to-r from-teal-500/10 to-teal-700/5 border border-teal-500/20 rounded-3xl backdrop-blur-md shadow-2xl shadow-teal-500/5">
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4 font-display">
-            Property Portals Redefined
-          </h2>
-          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto mb-8">
-            Sign in to manage your rented property stats, inspect bills, or execute automation reminders instantly.
-          </p>
-          <div>
-            <Link href="/login" className="py-3.5 px-8 md:py-4 md:px-10 text-sm md:text-base font-extrabold text-slate-950 bg-gradient-to-r from-teal-400 to-teal-600 rounded-xl hover:from-teal-300 hover:to-teal-500 transition-all duration-300 shadow-md shadow-teal-500/10 active:scale-95 inline-flex items-center gap-2 decoration-transparent">
-              Enter Portal
-              <ArrowRight size={16} />
-            </Link>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            {features.map((f, i) => (
+              <div
+                key={f.title}
+                style={{
+                  padding: "28px",
+                  background: "rgba(15, 17, 17, 0.5)",
+                  border: "1px solid rgba(20, 184, 166, 0.08)",
+                  borderRadius: "20px",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.borderColor = "rgba(20, 184, 166, 0.35)";
+                  e.currentTarget.style.background = "rgba(15, 17, 17, 0.8)";
+                  e.currentTarget.style.boxShadow = "0 10px 25px rgba(20, 184, 166, 0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "rgba(20, 184, 166, 0.08)";
+                  e.currentTarget.style.background = "rgba(15, 17, 17, 0.5)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    background: "rgba(20, 184, 166, 0.08)",
+                    border: "1px solid rgba(20, 184, 166, 0.15)",
+                    borderRadius: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "16px",
+                  }}
+                >
+                  <f.icon size={22} color="#14B8A6" />
+                </div>
+                <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "8px", color: "#f8fafc" }}>
+                  {f.title}
+                </h3>
+                <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.5)", lineHeight: 1.6 }}>
+                  {f.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-teal-500/10 py-10 px-4 text-center text-slate-500 text-xs sm:text-sm leading-relaxed relative z-10">
+      {/* ═══ CTA SECTION ═══ */}
+      <section style={{ padding: "60px 24px 120px", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: "760px", margin: "0 auto", textAlign: "center" }}>
+          <div
+            style={{
+              padding: "56px 48px",
+              background: "linear-gradient(135deg, rgba(20, 184, 166, 0.16) 0%, rgba(13, 148, 136, 0.04) 100%)",
+              border: "1px solid rgba(20, 184, 166, 0.25)",
+              borderRadius: "28px",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.55), 0 0 30px rgba(20, 184, 166, 0.08)"
+            }}
+          >
+            <h2 style={{ fontSize: "32px", fontWeight: 800, marginBottom: "16px", color: "#f8fafc", fontFamily: "'Poppins', sans-serif" }}>
+              Property Portals Redefined
+            </h2>
+            <p style={{ color: "rgba(226,232,240,0.55)", marginBottom: "32px", fontSize: "15px", lineHeight: "1.5" }}>
+              Sign in to manage your rented property stats, inspect bills, or execute automation reminders instantly.
+            </p>
+            <div>
+              <Link href="/login" style={{ padding: "16px 40px", fontSize: "15px", background: "linear-gradient(135deg, #20B2AA 0%, #14B8A6 100%)", color: "#050606", borderRadius: "12px", textDecoration: "none", fontWeight: 800, display: "inline-flex", alignItems: "center", gap: "8px", boxShadow: "0 6px 20px rgba(20, 184, 166, 0.25)" }}>
+                Enter Portal
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer (including requested copyright details) */}
+      <footer
+        style={{
+          borderTop: "1px solid rgba(20, 184, 166, 0.1)",
+          padding: "36px 24px",
+          textAlign: "center",
+          color: "rgba(226,232,240,0.3)",
+          fontSize: "13px",
+          position: "relative",
+          zIndex: 1,
+          lineHeight: "1.8"
+        }}
+      >
         © 2026 ATUL Residency. All rights reserved.
         <br />
-        Built by <a href="mailto:prashantmnaitripathi2003@gmail.com" className="text-amber-400 hover:text-amber-300 transition-colors font-bold decoration-transparent">Prashant Mani Tripathi</a> for ATUL Residency.
+        Built by <a href="mailto:prashantmnaitripathi2003@gmail.com" style={{ color: "#FFE259", textDecoration: "none", fontWeight: 600 }}>Prashant Mani Tripathi</a> for ATUL Residency.
         <br />
-        <span className="text-[10px] sm:text-xs text-teal-600/60 mt-1 block">UPI: atultiwari123321@oksbi | Phone: +91 6392651108</span>
+        <span style={{ fontSize: "11px", color: "rgba(20, 184, 166, 0.4)" }}>UPI: atultiwari123321@oksbi | Phone: +91 6392651108</span>
       </footer>
     </div>
   );

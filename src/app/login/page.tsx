@@ -201,8 +201,8 @@ function LoginPageContent() {
 
         {/* glassmorphic card */}
         <div 
-          className="p-6 sm:p-9"
           style={{ 
+            padding: "36px",
             background: "rgba(10, 12, 12, 0.75)",
             border: "1px solid rgba(20, 184, 166, 0.2)",
             borderRadius: "24px",

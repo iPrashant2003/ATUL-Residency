@@ -14,52 +14,47 @@ const logoSvg = `
 <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#FFE259" />
-      <stop offset="60%" stopColor="#FFA751" />
-      <stop offset="100%" stopColor="#FF6B6B" />
+      <stop offset="0%" stop-color="#FFE259" />
+      <stop offset="60%" stop-color="#FFA751" />
+      <stop offset="100%" stop-color="#FF6B6B" />
     </linearGradient>
     <linearGradient id="logoTeal" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#00F2FE" />
-      <stop offset="100%" stopColor="#4FACFE" />
+      <stop offset="0%" stop-color="#00F2FE" />
+      <stop offset="100%" stop-color="#4FACFE" />
     </linearGradient>
     <linearGradient id="containerBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#1E1E28" />
-      <stop offset="100%" stopColor="#0F0F14" />
+      <stop offset="0%" stop-color="#1E1E28" />
+      <stop offset="100%" stop-color="#0F0F14" />
     </linearGradient>
     <linearGradient id="containerBorder" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#FFE259" stopOpacity="0.4" />
-      <stop offset="100%" stopColor="#FFA751" stopOpacity="0.15" />
+      <stop offset="0%" stop-color="#FFE259" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#FFA751" stop-opacity="0.15" />
     </linearGradient>
-    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
   </defs>
   
   <!-- Solid Background filling the entire 100x100 canvas (prevents Windows transparency artifacts) -->
   <rect x="0" y="0" width="100" height="100" fill="url(#containerBg)" />
-  <rect x="0.75" y="0.75" width="98.5" height="98.5" stroke="url(#containerBorder)" strokeWidth="1.5" />
-  <rect x="4" y="4" width="92" height="92" rx="16" stroke="url(#logoGold)" strokeWidth="0.5" opacity="0.1" />
+  <rect x="0.75" y="0.75" width="98.5" height="98.5" stroke="url(#containerBorder)" stroke-width="1.5" />
+  <rect x="4" y="4" width="92" height="92" rx="16" stroke="url(#logoGold)" stroke-width="0.5" opacity="0.1" />
   
   <!-- Logo scaled down to 65% and centered inside the squircle container -->
   <g transform="translate(17.5, 17.5) scale(0.65)">
     <circle cx="50" cy="50" r="42" fill="url(#logoGold)" opacity="0.05" />
-    <circle cx="50" cy="50" r="45" stroke="url(#logoGold)" strokeWidth="1" strokeDasharray="3 6" opacity="0.4" />
+    <circle cx="50" cy="50" r="45" stroke="url(#logoGold)" stroke-width="1" stroke-dasharray="3 6" opacity="0.4" />
     
-    <path d="M24 82 L47 18 C48 15, 52 15, 53 18 L76 82" stroke="url(#logoGold)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" filter="url(#logoGlow)" />
-    <path d="M33 58 L67 58" stroke="url(#logoGold)" strokeWidth="4" strokeLinecap="round" filter="url(#logoGlow)" />
-    <path d="M50 24 L50 82" stroke="url(#logoTeal)" strokeWidth="3.5" strokeLinecap="round" opacity="0.85" />
-    <path d="M38 42 L50 30 L62 42" stroke="url(#logoGold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-    <path d="M30 65 L50 50 L70 65" stroke="url(#logoGold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-    <path d="M18 82 L82 82" stroke="url(#logoGold)" strokeWidth="5" strokeLinecap="round" filter="url(#logoGlow)" />
-    <path d="M50 6 L52 11 L57 11 L53 14 L55 19 L50 16 L45 19 L47 14 L43 11 L48 11 Z" fill="url(#logoGold)" filter="url(#logoGlow)" />
+    <path d="M24 82 L47 18 C48 15, 52 15, 53 18 L76 82" stroke="url(#logoGold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M33 58 L67 58" stroke="url(#logoGold)" stroke-width="4" stroke-linecap="round" />
+    <path d="M50 24 L50 82" stroke="url(#logoTeal)" stroke-width="3.5" stroke-linecap="round" opacity="0.85" />
+    <path d="M38 42 L50 30 L62 42" stroke="url(#logoGold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+    <path d="M30 65 L50 50 L70 65" stroke="url(#logoGold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+    <path d="M18 82 L82 82" stroke="url(#logoGold)" stroke-width="5" stroke-linecap="round" />
+    <path d="M50 6 L52 11 L57 11 L53 14 L55 19 L50 16 L45 19 L47 14 L43 11 L48 11 Z" fill="url(#logoGold)" />
 
     <g>
       <circle cx="76" cy="72" r="14" fill="#050606" />
-      <circle cx="76" cy="72" r="12" fill="#050606" stroke="url(#logoGold)" strokeWidth="1.5" filter="url(#logoGlow)" />
-      <circle cx="76" cy="72" r="12" stroke="url(#logoTeal)" strokeWidth="0.75" opacity="0.8" />
+      <circle cx="76" cy="72" r="12" fill="#050606" stroke="url(#logoGold)" stroke-width="1.5" />
+      <circle cx="76" cy="72" r="12" stroke="url(#logoTeal)" stroke-width="0.75" opacity="0.8" />
       
-      <path d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z" fill="url(#logoGold)" filter="url(#logoGlow)" />
       <path d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z" fill="url(#logoGold)" />
       <rect x="71.5" y="78" width="9" height="1.2" rx="0.4" fill="url(#logoGold)" />
       <circle cx="69" cy="70" r="0.75" fill="url(#logoGold)" />
