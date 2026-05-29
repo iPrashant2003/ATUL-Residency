@@ -179,3 +179,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ reply: "An error occurred. Please try again!" }, { status: 200 });
   }
 }
+
+export async function GET() {
+  return NextResponse.json({ status: "ok", version: "fallback-v1" });
+}
