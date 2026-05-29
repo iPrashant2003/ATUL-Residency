@@ -49,3 +49,5 @@ prisma/dev.db
 # WhatsApp cache
 .wwebjs_cache
 .wwebjs_auth
+
+.vercel

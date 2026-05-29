@@ -44,26 +44,22 @@ export async function GET(req: NextRequest) {
       const message = `🔔 *Rent Reminder - Atul Residency*\n\nHi ${tenant.name},\nThis is an automated reminder that your rent of ₹${amountDue.toLocaleString('en-IN')} for ${new Date(record.year, record.month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })} was due 48 hours ago.\n\nPlease pay at your earliest convenience to avoid late fees. Let us know if you've already paid.`;
 
       try {
-        const botUrl = process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
-        const response = await fetch(`${botUrl}/send`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        await prisma.whatsappQueue.create({
+          data: {
             number: tenant.whatsapp,
-            message: message
-          })
+            message: message,
+            status: "PENDING"
+          }
         });
 
-        if (response.ok) {
-          // Mark as reminder sent
-          await prisma.rentRecord.update({
-            where: { id: record.id },
-            data: { reminderSent: true }
-          });
-          sentCount++;
-        }
+        // Mark as reminder sent
+        await prisma.rentRecord.update({
+          where: { id: record.id },
+          data: { reminderSent: true }
+        });
+        sentCount++;
       } catch (err) {
-        console.error(`Failed to send WhatsApp to ${tenant.name}:`, err);
+        console.error(`Failed to queue WhatsApp to ${tenant.name}:`, err);
       }
     }
 

@@ -241,7 +241,7 @@ function LoginPageContent() {
                     e.target.style.borderColor = "rgba(255,255,255,0.08)";
                     e.target.style.boxShadow = "none";
                   }}
-                  placeholder="e.g. atultiwari@gmail.com or 7388389944"
+                  placeholder="Enter Username"
                   value={loginData.identifier}
                   onChange={(e) => setLoginData({ ...loginData, identifier: e.target.value })}
                   required

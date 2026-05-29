@@ -228,3 +228,14 @@ model OtpCode {
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model WhatsappQueue {
+  id          String   @id @default(cuid())
+  number      String
+  message     String   @db.Text
+  mediaBase64 String?  @db.Text
+  status      String   @default("PENDING") // PENDING, SENT, FAILED
+  error       String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

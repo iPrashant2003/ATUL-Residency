@@ -72,7 +72,7 @@ export default function AdminSettingsPage() {
   const fetchWhatsappStatus = async () => {
     setFetchingWhatsapp(true);
     try {
-      const res = await fetch("/api/whatsapp/status");
+      const res = await fetch("http://localhost:3001/status");
       if (res.ok) {
         const data = await res.json();
         setWhatsappStatus({
@@ -93,7 +93,7 @@ export default function AdminSettingsPage() {
     }
     setResettingBot(bot);
     try {
-      const res = await fetch("/api/whatsapp/logout", {
+      const res = await fetch("http://localhost:3001/logout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bot }),
@@ -121,7 +121,7 @@ export default function AdminSettingsPage() {
     }
     setRequestingCode(bot);
     try {
-      const res = await fetch("/api/whatsapp/pair", {
+      const res = await fetch("http://localhost:3001/pair", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bot, phone }),

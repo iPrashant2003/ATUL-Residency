@@ -1,4 +1,7 @@
 // @ts-nocheck
+const { loadEnvConfig } = require('@next/env');
+loadEnvConfig(process.cwd());
+
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcodeTerminal = require('qrcode-terminal');
 const QRCode = require('qrcode');
@@ -323,10 +326,73 @@ function startAutomatedReminders() {
         checkFirstOfMonthInvoices();
         checkOverdue();
     };
-    
+
     // Check immediately, then every 1 hour
     runChecks();
     setInterval(runChecks, 60 * 60 * 1000);
+}
+
+let isPolling = false;
+async function pollWhatsappQueue() {
+    if (isPolling) return;
+    isPolling = true;
+
+    try {
+        const pendingMessages = await prisma.whatsappQueue.findMany({
+            where: { status: 'PENDING' },
+            orderBy: { createdAt: 'asc' }
+        });
+        
+        console.log(`[Queue] Polled DB. Found ${pendingMessages.length} pending messages. (isReady1: ${isReady1}, isReady2: ${isReady2})`);
+
+        if (pendingMessages.length === 0) {
+            isPolling = false;
+            return;
+        }
+
+        if (!isReady1 && !isReady2) {
+            isPolling = false;
+            return;
+        }
+
+        const activeClient = isReady1 ? client1 : client2;
+        const botName = isReady1 ? 'Bot 1' : 'Bot 2';
+
+        for (const msg of pendingMessages) {
+            console.log(`[Queue] Sending msg ${msg.id} to ${msg.number} via ${botName}...`);
+            const cleanNumber = msg.number.replace(/\D/g, '');
+            const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
+            const chatId = `${formattedNumber}@c.us`;
+
+            try {
+                let response;
+                if (msg.mediaBase64) {
+                    const base64Data = msg.mediaBase64.split(',')[1] || msg.mediaBase64;
+                    const media = new MessageMedia('image/png', base64Data, 'payment-qr.png');
+                    response = await activeClient.sendMessage(chatId, media, { caption: msg.message });
+                } else {
+                    response = await activeClient.sendMessage(chatId, msg.message);
+                }
+
+                await prisma.whatsappQueue.update({
+                    where: { id: msg.id },
+                    data: { status: 'SENT' }
+                });
+                console.log(`[Queue] ✅ Msg ${msg.id} sent successfully.`);
+            } catch (err) {
+                console.error(`[Queue] ❌ Failed to send ${msg.id}:`, err.message);
+                await prisma.whatsappQueue.update({
+                    where: { id: msg.id },
+                    data: { status: 'FAILED', error: err.message || 'Unknown error' }
+                });
+            }
+            await new Promise(r => setTimeout(r, 2000));
+        }
+    } catch (e) {
+        console.error('Error in pollWhatsappQueue:', e);
+    } finally {
+        isPolling = false;
+    }
 }
 
 // ==================== Express Server Routes ====================
@@ -503,6 +569,11 @@ app.listen(PORT, () => {
     console.log(`Starting WhatsApp clients initialization (Dual-Bot)...`);
     client1.initialize().catch(e => console.error('Failed to initialize client 1:', e.message));
     client2.initialize().catch(e => console.error('Failed to initialize client 2:', e.message));
+    
+    // Start database queue polling
+    console.log('🔄 Starting database queue polling for WhatsApp reminders (every 5s)...');
+    pollWhatsappQueue();
+    setInterval(pollWhatsappQueue, 5000);
 });
 
 process.on('unhandledRejection', (reason, promise) => {

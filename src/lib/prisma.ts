@@ -1,4 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { loadEnvConfig } from "@next/env";
+
+// Load environment variables (.env, .env.local, etc.)
+loadEnvConfig(process.cwd());
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

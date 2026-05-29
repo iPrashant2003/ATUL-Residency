@@ -1,10 +1,30 @@
 import { defineConfig } from "prisma/config";
 import path from "path";
+import fs from "fs";
 
-// In production (Vercel), DATABASE_URL is a PostgreSQL connection string (e.g., from Neon/Supabase).
-// In local development, if DATABASE_URL is not set, we fall back to local SQLite.
-const databaseUrl = process.env.DATABASE_URL;
+function getDatabaseUrl() {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+  // Try reading from .env or .env.local
+  for (const file of [".env.local", ".env"]) {
+    try {
+      const filePath = path.join(process.cwd(), file);
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, "utf8");
+        const match = content.match(/^DATABASE_URL=["']?([^"'\r\n]+)["']?/m);
+        if (match && match[1]) {
+          return match[1];
+        }
+      }
+    } catch (e) {
+      // Ignore
+    }
+  }
+  return undefined;
+}
 
+const databaseUrl = getDatabaseUrl();
 const isPostgres = databaseUrl && 
   (databaseUrl.startsWith("postgresql://") || databaseUrl.startsWith("postgres://"));
 

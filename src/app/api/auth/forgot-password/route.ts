@@ -86,32 +86,36 @@ export async function POST(req: NextRequest) {
       emailSent = await sendEmailOTP(targetEmail, code);
     }
 
-    // Send SMS if we have a phone and gateway is configured
+    // Send WhatsApp Message if we have a phone
     let smsSent = false;
-    const fast2smsKey = process.env.FAST2SMS_API_KEY;
-    if (fast2smsKey && cleanPhone) {
+    if (cleanPhone) {
       try {
-        const smsRes = await fetch("https://www.fast2sms.com/dev/bulkV2", {
-          method: "POST",
-          headers: { authorization: fast2smsKey, "Content-Type": "application/json" },
-          body: JSON.stringify({ route: "q", message: `Atul Residency Reset OTP: ${code}`, language: "english", flash: 0, numbers: cleanPhone }),
+        const formattedPhone = cleanPhone.length === 10 ? `91${cleanPhone}` : cleanPhone;
+        const msg = `🏢 *ATUL RESIDENCY*\n\nYour Password Reset OTP is: *${code}*\n\nThis code is valid for 10 minutes. Please do not share it with anyone.`;
+        
+        await prisma.whatsappQueue.create({
+            data: {
+                number: formattedPhone,
+                message: msg,
+                status: 'PENDING'
+            }
         });
-        const smsData = await smsRes.json();
-        if (smsData.return === true) smsSent = true;
+        console.log(`[Forgot Password] Queued WhatsApp OTP for ${formattedPhone}`);
+        smsSent = true;
       } catch (e) {
-        console.error("[Forgot Password SMS Error]", e);
+        console.error("[Forgot Password WhatsApp Queue Error]", e);
       }
     }
 
-    // Fallback: If neither email nor SMS could be sent, check if we are in development or simulated mode
+    // Fallback: If neither email nor WhatsApp could be queued, check if we are in development or simulated mode
     let simulated = false;
     if (!emailSent && !smsSent) {
-      if (process.env.NODE_ENV === "development" || (!process.env.SMTP_USER && !process.env.FAST2SMS_API_KEY)) {
+      if (process.env.NODE_ENV === "development" || !process.env.SMTP_USER) {
         simulated = true;
         console.log(`[Forgot Password] SIMULATION MODE ACTIVE. OTP is: ${code}`);
       } else {
         return NextResponse.json(
-          { error: "Failed to send reset code. Please check credentials or balance." },
+          { error: "Failed to send reset code. Please check credentials or system health." },
           { status: 500 }
         );
       }

@@ -153,7 +153,7 @@ export default function ForgotPasswordPage() {
                       e.target.style.borderColor = "rgba(255,255,255,0.08)";
                       e.target.style.boxShadow = "none";
                     }}
-                    placeholder="e.g. yourname@gmail.com or 7388389944"
+                    placeholder="Enter Username"
                     required
                   />
                 </div>

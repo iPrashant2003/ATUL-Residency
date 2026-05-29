@@ -62,24 +62,22 @@ export async function POST(req: NextRequest) {
       const qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
 
       try {
-        const botUrl = process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
-        const response = await fetch(`${botUrl}/send`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ number: record.tenant.whatsapp, message: msg, mediaBase64: qrDataUri }),
+        await prisma.whatsappQueue.create({
+          data: {
+            number: record.tenant.whatsapp,
+            message: msg,
+            mediaBase64: qrDataUri,
+            status: "PENDING",
+          }
         });
 
-        if (response.ok) {
-          await prisma.rentRecord.update({
-            where: { id: record.id },
-            data: { lastReminderSentAt: new Date() }
-          });
-          return NextResponse.json({ success: true });
-        } else {
-          throw new Error("WhatsApp API failed");
-        }
+        await prisma.rentRecord.update({
+          where: { id: record.id },
+          data: { lastReminderSentAt: new Date() }
+        });
+        return NextResponse.json({ success: true });
       } catch (err) {
-        return NextResponse.json({ error: "Failed to send WhatsApp message" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to queue WhatsApp message" }, { status: 500 });
       }
     } else if (type === "bulk") {
       // Find all overdue or pending records, optionally filtered by month/year
@@ -124,33 +122,23 @@ export async function POST(req: NextRequest) {
         const qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
 
         try {
-          const botUrl = process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
-          const response = await fetch(`${botUrl}/send`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ number: record.tenant.whatsapp, message: msg, mediaBase64: qrDataUri }),
+          await prisma.whatsappQueue.create({
+            data: {
+              number: record.tenant.whatsapp,
+              message: msg,
+              mediaBase64: qrDataUri,
+              status: "PENDING",
+            }
           });
 
-          if (response.ok) {
-            await prisma.rentRecord.update({
-              where: { id: record.id },
-              data: { lastReminderSentAt: new Date() }
-            });
-            count++;
-          } else {
-            throw new Error(`WhatsApp API returned ${response.status}`);
-          }
+          await prisma.rentRecord.update({
+            where: { id: record.id },
+            data: { lastReminderSentAt: new Date() }
+          });
+          count++;
         } catch (err: any) {
-          console.error("Bulk reminder failed for", record.tenant.name, err.message);
-          // If we failed to send the very first one, the bot is likely down. 
-          // Let's abort and throw an error to the user rather than returning 0 sent.
-          if (count === 0 && (err.message.includes("fetch failed") || err.message.includes("503") || err.message.includes("ECONNREFUSED"))) {
-             return NextResponse.json({ error: "WhatsApp Bot is offline or not ready. Please check terminal." }, { status: 500 });
-          }
+          console.error("Bulk reminder queue failed for", record.tenant.name, err.message);
         }
-        
-        // Sleep to avoid rate limiting
-        await new Promise(r => setTimeout(r, 1000));
       }
 
       return NextResponse.json({ success: true, count });
