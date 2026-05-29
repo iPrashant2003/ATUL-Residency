@@ -205,7 +205,6 @@ export default function LandingPage() {
             <ArrowRight size={18} />
           </Link>
         </div>
-
         {/* Real-time stats preview cards */}
         <div
           style={{

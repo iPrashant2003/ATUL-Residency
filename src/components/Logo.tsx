@@ -103,6 +103,53 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
         fill="url(#logoGold)"
         filter={glow ? "url(#logoGlow)" : undefined}
       />
+
+      {/* Creative Badge at Bottom-Right (cx=76, cy=72) */}
+      <g>
+        {/* Solid background mask circle to block out underlying lines cleanly */}
+        <circle cx="76" cy="72" r="14" fill="#050606" />
+
+        {/* Outer glowing border and glassmorphic base of the badge */}
+        <circle
+          cx="76"
+          cy="72"
+          r="12"
+          fill="#050606"
+          stroke="url(#logoGold)"
+          strokeWidth="1.5"
+          filter={glow ? "url(#logoGlow)" : undefined}
+        />
+        <circle
+          cx="76"
+          cy="72"
+          r="12"
+          stroke="url(#logoTeal)"
+          strokeWidth="0.75"
+          opacity="0.8"
+        />
+        
+        {/* Crown emblem inside the badge representing premium status */}
+        <path
+          d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z"
+          fill="url(#logoGold)"
+          filter={glow ? "url(#logoGlow)" : undefined}
+        />
+        <path
+          d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z"
+          fill="url(#logoGold)"
+        />
+        <rect
+          x="71.5"
+          y="78"
+          width="9"
+          height="1.2"
+          rx="0.4"
+          fill="url(#logoGold)"
+        />
+        <circle cx="69" cy="70" r="0.75" fill="url(#logoGold)" />
+        <circle cx="76" cy="67" r="0.9" fill="url(#logoGold)" />
+        <circle cx="83" cy="70" r="0.75" fill="url(#logoGold)" />
+      </g>
     </svg>
   );
 }
