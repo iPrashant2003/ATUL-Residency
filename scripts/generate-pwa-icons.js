@@ -36,12 +36,12 @@ const logoSvg = `
     </filter>
   </defs>
   
-  {/* Solid Background filling the entire 100x100 canvas (prevents Windows transparency artifacts) */}
+  <!-- Solid Background filling the entire 100x100 canvas (prevents Windows transparency artifacts) -->
   <rect x="0" y="0" width="100" height="100" fill="url(#containerBg)" />
   <rect x="0.75" y="0.75" width="98.5" height="98.5" stroke="url(#containerBorder)" strokeWidth="1.5" />
   <rect x="4" y="4" width="92" height="92" rx="16" stroke="url(#logoGold)" strokeWidth="0.5" opacity="0.1" />
   
-  {/* Logo scaled down to 65% and centered inside the squircle container */}
+  <!-- Logo scaled down to 65% and centered inside the squircle container -->
   <g transform="translate(17.5, 17.5) scale(0.65)">
     <circle cx="50" cy="50" r="42" fill="url(#logoGold)" opacity="0.05" />
     <circle cx="50" cy="50" r="45" stroke="url(#logoGold)" strokeWidth="1" strokeDasharray="3 6" opacity="0.4" />
