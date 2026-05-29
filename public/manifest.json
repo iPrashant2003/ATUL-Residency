@@ -11,7 +11,7 @@
   "orientation": "any",
   "categories": ["productivity", "business"],
   "lang": "en-IN",
-  "id": "atul-residency-pms-v2",
+  "id": "/",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -70,7 +70,36 @@
       "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ],
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ATUL Residency Portal - Home Screen"
+    },
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ATUL Residency Portal - Mobile Landing"
+    },
+    {
+      "src": "/screenshots/desktop-login.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ATUL Residency Portal - Unified Login Screen"
+    },
+    {
+      "src": "/screenshots/mobile-login.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ATUL Residency Portal - Mobile Login Screen"
+    }
+  ],
   "prefer_related_applications": false,
   "related_applications": []
 }
