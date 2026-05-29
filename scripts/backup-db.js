@@ -81,10 +81,52 @@ async function runBackup() {
         console.log('🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!');
         console.log(`📂 Saved to: ${filePath}`);
         console.log('==================================================\n');
+
+        // Email the backup file to admin for off-site cloud sync
+        await emailBackup(filePath, fileName);
     } catch (err) {
         console.error('❌ Backup failed:', err);
     } finally {
         await client.end();
+    }
+}
+
+async function emailBackup(filePath, fileName) {
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const adminEmail = process.env.ADMIN_EMAIL || 'atultiwari123321@gmail.com';
+
+    if (!smtpUser || !smtpPass) {
+        console.log('ℹ️ SMTP credentials not found in environment. Skipping email sync.');
+        return;
+    }
+
+    console.log(`✉️ Syncing backup file to cloud inbox: sending to ${adminEmail}...`);
+    try {
+        const nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: smtpUser,
+                pass: smtpPass
+            }
+        });
+
+        await transporter.sendMail({
+            from: `"Atul Residency Database Backups" <${smtpUser}>`,
+            to: adminEmail,
+            subject: `💾 Database Backup Sync - ${new Date().toLocaleDateString('en-IN')}`,
+            text: `Hello Admin,\n\nYour automated database backup for Atul Residency has successfully completed.\n\nDetails:\n- Date: ${new Date().toLocaleString('en-IN')}\n- Backup File: ${fileName}\n\nWe have attached the backup JSON file to this email for secure cloud archiving. Keep this email safe. In the event of a database crash, you can download the attached file and restore your entire system immediately using: \n"npm run db:restore"\n\nBest Regards,\nAtul Residency Automation`,
+            attachments: [
+                {
+                    filename: fileName,
+                    path: filePath
+                }
+            ]
+        });
+        console.log(`📧 Database backup successfully emailed to ${adminEmail}!`);
+    } catch (err) {
+        console.error('❌ Failed to email database backup:', err.message);
     }
 }
 
