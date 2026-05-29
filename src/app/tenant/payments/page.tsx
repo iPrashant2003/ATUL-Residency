@@ -6,6 +6,7 @@ import { CreditCard, Upload, Loader2, CheckCircle, QrCode, Copy, X, AlertTriangl
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import ImageUpload from "@/components/ui/ImageUpload";
+import { getMonthName, formatCurrency } from "@/lib/utils";
 
 export default function TenantPaymentsPage() {
   const { data: session } = useSession();
@@ -57,6 +58,31 @@ export default function TenantPaymentsPage() {
     upiId: "atultiwari123321@oksbi",
     upiName: "Atul Tiwari",
   });
+  const [pendingRecords, setPendingRecords] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!dbTenantId) return;
+    fetch(`/api/rent?tenantId=${dbTenantId}&status=PENDING`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          // Filter out fully paid ones just in case
+          const pending = data.filter(r => r.status !== "PAID");
+          setPendingRecords(pending);
+          // Auto-select and pre-fill the latest pending record if available
+          if (pending.length > 0) {
+            const latest = pending[0];
+            const outstanding = latest.totalAmount - (latest.amountPaid || 0);
+            setForm((prev) => ({
+              ...prev,
+              amount: outstanding.toString(),
+              rentRecordId: latest.id,
+            }));
+          }
+        }
+      })
+      .catch((err) => console.error("Error fetching pending rent records:", err));
+  }, [dbTenantId]);
 
   useEffect(() => {
     fetch("/api/upi")
@@ -85,13 +111,16 @@ export default function TenantPaymentsPage() {
 
   function getUpiUrl(appScheme: string) {
     const amount = form.amount ? parseFloat(form.amount) : 0;
-    const base = `pa=${upiDetails.upiId}&pn=${encodeURIComponent(upiDetails.upiName)}&cu=INR`;
+    const note = encodeURIComponent("Rent & Bill Payment - Atul Residency");
+    const base = `pa=${upiDetails.upiId}&pn=${encodeURIComponent(upiDetails.upiName)}&cu=INR&tn=${note}`;
     const amtParam = amount > 0 ? `&am=${amount}` : "";
 
     if (appScheme === "phonepe") {
       return `phonepe://pay?${base}${amtParam}`;
     } else if (appScheme === "paytm") {
       return `paytmmp://pay?${base}${amtParam}`;
+    } else if (appScheme === "gpay") {
+      return `gpay://upi/pay?${base}${amtParam}`;
     }
     // GPay and others can use the default upi:// protocol
     return `upi://pay?${base}${amtParam}`;
@@ -355,6 +384,42 @@ export default function TenantPaymentsPage() {
           </h3>
 
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {pendingRecords.length > 0 && (
+              <div style={{ marginBottom: "8px" }}>
+                <label className="form-label">Select Rent Invoice / Bill to Pay</label>
+                <select
+                  className="form-input"
+                  value={form.rentRecordId}
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    if (!selectedId) {
+                      setForm(prev => ({ ...prev, rentRecordId: "", amount: "" }));
+                      return;
+                    }
+                    const selected = pendingRecords.find(r => r.id === selectedId);
+                    if (selected) {
+                      const outstanding = selected.totalAmount - (selected.amountPaid || 0);
+                      setForm(prev => ({
+                        ...prev,
+                        rentRecordId: selectedId,
+                        amount: outstanding.toString()
+                      }));
+                    }
+                  }}
+                >
+                  {pendingRecords.map((record) => {
+                    const outstanding = record.totalAmount - (record.amountPaid || 0);
+                    return (
+                      <option key={record.id} value={record.id}>
+                        {getMonthName(record.month)} {record.year} — Outstanding: {formatCurrency(outstanding)}
+                      </option>
+                    );
+                  })}
+                  <option value="">Other / Custom Payment</option>
+                </select>
+              </div>
+            )}
+
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
               <div>
                 <label className="form-label">Amount Paid (₹) *</label>
