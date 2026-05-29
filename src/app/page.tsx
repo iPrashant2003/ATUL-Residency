@@ -85,48 +85,26 @@ export default function LandingPage() {
 
       {/* ═══ NAVBAR ═══ */}
       <nav
-        style={{
-          position: "fixed",
-          top: 20,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "calc(100% - 40px)",
-          maxWidth: "1100px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "14px 28px",
-          zIndex: 100,
-          borderRadius: "20px",
-          background: "rgba(10, 12, 12, 0.85)",
-          backdropFilter: "blur(24px)",
-          border: "1px solid rgba(20, 184, 166, 0.15)",
-          boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.6)",
-        }}
+        className="fixed top-4 md:top-5 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] md:w-[calc(100%-40px)] max-w-[1100px] flex items-center justify-between px-4 py-2.5 md:px-7 md:py-3.5 z-50 rounded-[16px] md:rounded-[20px] bg-[#0a0c0c]/85 backdrop-blur-[24px] border border-[#14B8A6]/15 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)]"
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+        <div className="flex items-center gap-2 md:gap-3.5">
           <div
-            style={{
-              width: "40px",
-              height: "40px",
-              background: "linear-gradient(135deg, rgba(15, 17, 17, 0.9), rgba(5, 6, 6, 0.95))",
-              borderRadius: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 12px rgba(245, 158, 11, 0.15)",
-              border: "1px solid rgba(245, 158, 11, 0.25)",
-            }}
+            className="w-8 h-8 md:w-10 md:h-10 rounded-[10px] md:rounded-[12px] flex items-center justify-center border border-[#f59e0b]/25 bg-gradient-to-br from-[#0f1111]/90 to-[#050606]/95 shadow-[0_4px_15px_rgba(0,0,0,0.5),_inset_0_1px_0_rgba(255,255,255,0.05),_0_0_12px_rgba(245,158,11,0.15)]"
           >
-            <Logo width={28} height={28} />
+            <div className="block md:hidden">
+              <Logo width={22} height={22} />
+            </div>
+            <div className="hidden md:block">
+              <Logo width={28} height={28} />
+            </div>
           </div>
-          <span style={{ fontSize: "20px", fontWeight: 800, letterSpacing: "-0.5px", fontFamily: "'Poppins', sans-serif" }}>
+          <span className="text-sm sm:text-base md:text-xl font-extrabold tracking-[-0.5px] font-['Poppins',sans-serif]">
             <span style={{ color: "#f8fafc" }}>ATUL </span>
             <span style={{ background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", textShadow: "0px 2px 10px rgba(255, 167, 81, 0.2)" }}>Residency</span>
           </span>
         </div>
 
-        <Link href="/login" style={{ padding: "10px 24px", fontSize: "13px", background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", color: "#050606", borderRadius: "10px", textDecoration: "none", fontWeight: 800, boxShadow: "0 4px 15px rgba(255, 167, 81, 0.25)", transition: "transform 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-1px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+        <Link href="/login" className="px-4 py-2 md:px-6 md:py-2.5 text-[11px] md:text-xs font-extrabold rounded-lg md:rounded-[10px] bg-gradient-to-br from-[#FFE259] to-[#FFA751] text-[#050606] no-underline shadow-[0_4px_15px_rgba(255,167,81,0.25)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0">
           Portal Login
         </Link>
       </nav>
@@ -205,6 +183,7 @@ export default function LandingPage() {
             <ArrowRight size={18} />
           </Link>
         </div>
+
         {/* Real-time stats preview cards */}
         <div
           style={{
@@ -302,10 +281,9 @@ export default function LandingPage() {
             ].map((stat, i, arr) => (
               <div
                 key={stat.label}
+                className="py-8 px-4 md:py-9 md:px-6 border-b md:border-b-0 md:border-r last:border-b-0 last:border-r-0 border-[#14B8A6]/10 border-solid"
                 style={{
-                  padding: "36px 24px",
                   textAlign: "center",
-                  borderRight: i < arr.length - 1 ? "1px solid rgba(20, 184, 166, 0.1)" : "none",
                 }}
               >
                 <div
