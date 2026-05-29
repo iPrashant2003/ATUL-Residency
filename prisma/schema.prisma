@@ -1,0 +1,230 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  TENANT
+}
+
+enum RentStatus {
+  PAID
+  PENDING
+  PARTIAL
+  OVERDUE
+  ADVANCE_PAID
+}
+
+enum PaymentMethod {
+  UPI
+  BANK_TRANSFER
+  CASH
+  QR_CODE
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum MaintenanceCategory {
+  PLUMBING
+  ELECTRICIAN
+  CARPENTER
+  CLEANING
+  SECURITY
+  OTHER
+}
+
+enum MaintenanceStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum NotificationType {
+  RENT_DUE
+  RENT_OVERDUE
+  PAYMENT_RECEIVED
+  PAYMENT_APPROVED
+  MAINTENANCE_UPDATE
+  GENERAL
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  phone         String?
+  role          UserRole  @default(TENANT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  tenant        Tenant?
+  notifications Notification[]
+}
+
+model Tower {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rooms       Room[]
+}
+
+model Room {
+  id           String   @id @default(cuid())
+  number       String
+  category     String   @default("Standard")
+  baseRent     Float
+  isOccupied   Boolean  @default(false)
+  meterNumber  String?
+  description  String?
+  towerId      String
+  tower        Tower    @relation(fields: [towerId], references: [id], onDelete: Cascade)
+  tenant       Tenant?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([number, towerId])
+}
+
+model Tenant {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId           String    @unique
+  room             Room      @relation(fields: [roomId], references: [id])
+  name             String
+  phone            String
+  whatsapp         String
+  alternatePhone   String?
+  email            String?
+  aadhaarNumber    String?
+  aadhaarImageUrl  String?
+  photoUrl         String?
+  rentAmount       Float
+  securityDeposit  Float     @default(0)
+  joiningDate      DateTime  @default(now())
+  isActive         Boolean   @default(true)
+  rentRecords      RentRecord[]
+  payments         Payment[]
+  maintenanceRequests MaintenanceRequest[]
+  documents        Document[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model RentRecord {
+  id              String     @id @default(cuid())
+  tenantId        String
+  tenant          Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  month           Int
+  year            Int
+  rentAmount      Float
+  electricityBill Float      @default(0)
+  meterReading    String?
+  meterPhotoUrl   String?
+  maintenanceCharge Float    @default(0)
+  lateFee         Float      @default(0)
+  discount        Float      @default(0)
+  totalAmount     Float
+  amountPaid      Float      @default(0)
+  status          RentStatus @default(PENDING)
+  dueDate         DateTime
+  paidDate        DateTime?
+  notes           String?
+  invoiceSent     Boolean    @default(false)
+  reminderSent    Boolean    @default(false)
+  overdueSent     Boolean    @default(false)
+  lastReminderSentAt DateTime?
+  payments        Payment[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@unique([tenantId, month, year])
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  tenantId        String
+  tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  rentRecordId    String?
+  rentRecord      RentRecord?   @relation(fields: [rentRecordId], references: [id])
+  amount          Float
+  method          PaymentMethod @default(UPI)
+  status          PaymentStatus @default(PENDING)
+  transactionId   String?
+  screenshotUrl   String?
+  notes           String?
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model MaintenanceRequest {
+  id          String              @id @default(cuid())
+  tenantId    String
+  tenant      Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  category    MaintenanceCategory @default(OTHER)
+  title       String
+  description String
+  photoUrl    String?
+  status      MaintenanceStatus   @default(OPEN)
+  priority    String              @default("NORMAL")
+  adminNotes  String?
+  resolvedAt  DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType @default(GENERAL)
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  data      String?
+  createdAt DateTime         @default(now())
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  type      String
+  url       String
+  filename  String
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  phone     String?
+  email     String?
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

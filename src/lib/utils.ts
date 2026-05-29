@@ -1,0 +1,100 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { format, formatDistanceToNow } from "date-fns";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+export function formatDate(date: Date | string): string {
+  return format(new Date(date), "dd MMM yyyy");
+}
+
+export function formatDateTime(date: Date | string): string {
+  return format(new Date(date), "dd MMM yyyy, hh:mm a");
+}
+
+export function timeAgo(date: Date | string): string {
+  return formatDistanceToNow(new Date(date), { addSuffix: true });
+}
+
+export function getMonthName(month: number): string {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+  return months[month - 1];
+}
+
+export function getRentStatusColor(status: string): string {
+  switch (status) {
+    case "PAID":
+      return "text-emerald-400 bg-emerald-400/10 border-emerald-400/20";
+    case "PENDING":
+      return "text-amber-400 bg-amber-400/10 border-amber-400/20";
+    case "PARTIAL":
+      return "text-blue-400 bg-blue-400/10 border-blue-400/20";
+    case "OVERDUE":
+      return "text-red-400 bg-red-400/10 border-red-400/20";
+    case "ADVANCE_PAID":
+      return "text-purple-400 bg-purple-400/10 border-purple-400/20";
+    default:
+      return "text-gray-400 bg-gray-400/10 border-gray-400/20";
+  }
+}
+
+export function getMaintenanceStatusColor(status: string): string {
+  switch (status) {
+    case "OPEN":
+      return "text-red-400 bg-red-400/10 border-red-400/20";
+    case "IN_PROGRESS":
+      return "text-amber-400 bg-amber-400/10 border-amber-400/20";
+    case "RESOLVED":
+      return "text-emerald-400 bg-emerald-400/10 border-emerald-400/20";
+    case "CLOSED":
+      return "text-gray-400 bg-gray-400/10 border-gray-400/20";
+    default:
+      return "text-gray-400 bg-gray-400/10 border-gray-400/20";
+  }
+}
+
+export function getCurrentMonth(): { month: number; year: number } {
+  const now = new Date();
+  return { month: now.getMonth() + 1, year: now.getFullYear() };
+}
+
+export function generateWhatsAppMessage(
+  tenantName: string,
+  roomNo: string,
+  month: string,
+  year: number,
+  rentAmount: number,
+  electricityBill: number,
+  total: number,
+  dueDate: string
+): string {
+  return encodeURIComponent(
+    `🏢 *ATUL RESIDENCY*\n\n` +
+    `Dear *${tenantName}*,\n\n` +
+    `Your monthly invoice is ready:\n\n` +
+    `📍 Room: *${roomNo}*\n` +
+    `📅 Month: *${month} ${year}*\n` +
+    `💰 Rent: *${formatCurrency(rentAmount)}*\n` +
+    `⚡ Electricity: *${formatCurrency(electricityBill)}*\n` +
+    `━━━━━━━━━━━━━━\n` +
+    `💵 Total: *${formatCurrency(total)}*\n` +
+    `📆 Due Date: *${dueDate}*\n\n` +
+    `💳 Pay via UPI: *atultiwari123321@oksbi*\n\n` +
+    `Thank you for your prompt payment! 🙏\n` +
+    `- Atul Residency Management`
+  );
+}

@@ -1,0 +1,444 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import AppLayout from "@/components/layout/AppLayout";
+import { CreditCard, Upload, Loader2, CheckCircle, QrCode, Copy, X, AlertTriangle, Phone } from "lucide-react";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import ImageUpload from "@/components/ui/ImageUpload";
+
+export default function TenantPaymentsPage() {
+  const { data: session } = useSession();
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [dbTenantId, setDbTenantId] = useState<string | null>(null);
+  
+  const userId = (session?.user as any)?.id;
+  const sessionTenantId = (session?.user as any)?.tenantId;
+
+  useEffect(() => {
+    // If we have tenantId in the session, use it!
+    if (sessionTenantId) {
+      setDbTenantId(sessionTenantId);
+      setProfileLoading(false);
+      return;
+    }
+
+    // If session doesn't have it (or it's stale), fetch from database profile API
+    if (userId) {
+      fetch("/api/tenant/profile")
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error();
+        })
+        .then((data) => {
+          if (data?.tenant?.id) {
+            setDbTenantId(data.tenant.id);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setProfileLoading(false));
+    } else {
+      setProfileLoading(false);
+    }
+  }, [userId, sessionTenantId]);
+
+  const [form, setForm] = useState({
+    amount: "",
+    method: "UPI",
+    transactionId: "",
+    screenshotUrl: "",
+    notes: "",
+    rentRecordId: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [upiDetails, setUpiDetails] = useState({
+    upiId: "atultiwari123321@oksbi",
+    upiName: "Atul Tiwari",
+  });
+
+  useEffect(() => {
+    fetch("/api/upi")
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error();
+      })
+      .then((data) => {
+        if (data.upiId && data.upiName) {
+          setUpiDetails({ upiId: data.upiId, upiName: data.upiName });
+        }
+      })
+      .catch(() => {
+        const savedUpiId = localStorage.getItem("landlord_upi_id");
+        const savedUpiName = localStorage.getItem("landlord_upi_name");
+        if (savedUpiId && savedUpiName) {
+          setUpiDetails({ upiId: savedUpiId, upiName: savedUpiName });
+        }
+      });
+  }, []);
+
+  function copyUPI() {
+    navigator.clipboard.writeText(upiDetails.upiId);
+    toast.success("UPI ID copied!");
+  }
+
+  function getUpiUrl(appScheme: string) {
+    const amount = form.amount ? parseFloat(form.amount) : 0;
+    const base = `pa=${upiDetails.upiId}&pn=${encodeURIComponent(upiDetails.upiName)}&cu=INR`;
+    const amtParam = amount > 0 ? `&am=${amount}` : "";
+
+    if (appScheme === "phonepe") {
+      return `phonepe://pay?${base}${amtParam}`;
+    } else if (appScheme === "paytm") {
+      return `paytmmp://pay?${base}${amtParam}`;
+    }
+    // GPay and others can use the default upi:// protocol
+    return `upi://pay?${base}${amtParam}`;
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!dbTenantId) {
+      toast.error("No active room assignment found. Cannot submit payment.");
+      return;
+    }
+    if (!form.amount || parseFloat(form.amount) <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, tenantId: dbTenantId }),
+      });
+      if (!res.ok) throw new Error();
+      setSubmitted(true);
+      toast.success("Payment submitted for verification! 🎉");
+    } catch {
+      toast.error("Failed to submit payment. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (profileLoading) {
+    return (
+      <AppLayout role="TENANT" title="Payments" subtitle="Upload your payment proof">
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px", maxWidth: "800px", margin: "0 auto" }}>
+          <div className="shimmer" style={{ height: "180px", borderRadius: "16px" }} />
+          <div className="shimmer" style={{ height: "450px", borderRadius: "16px" }} />
+        </div>
+      </AppLayout>
+    );
+  }
+
+  if (!dbTenantId) {
+    return (
+      <AppLayout role="TENANT" title="Payments" subtitle="Upload your payment proof">
+        <div style={{ maxWidth: "600px", margin: "40px auto", padding: "0 16px" }}>
+          <div className="glass-card" style={{
+            padding: "36px",
+            border: "1px solid rgba(245,158,11,0.25)",
+            background: "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.03) 100%)",
+            textAlign: "center",
+          }}>
+            <div style={{
+              width: "64px", height: "64px",
+              background: "rgba(245,158,11,0.1)",
+              border: "1px solid rgba(245,158,11,0.25)",
+              borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 20px"
+            }}>
+              <AlertTriangle size={32} color="#f59e0b" />
+            </div>
+            <h2 style={{ fontSize: "20px", fontWeight: 700, fontFamily: "var(--font-display)", color: "#e2e8f0", marginBottom: "12px" }}>
+              Room Assignment Pending
+            </h2>
+            <p style={{ color: "rgba(226,232,240,0.55)", fontSize: "14px", lineHeight: 1.6, marginBottom: "24px" }}>
+              Your account has been registered, but you have not been assigned to a room yet. Please contact the administrator to assign your room. Once assigned, you will be able to upload payment proof.
+            </p>
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+              background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)",
+              borderRadius: "10px", padding: "12px", fontSize: "14px", color: "rgba(226,232,240,0.7)"
+            }}>
+              <Phone size={16} color="#14B8A6" />
+              <span>Contact Landlord: <strong>+91 6392651108</strong> (Atul Tiwari)</span>
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <AppLayout role="TENANT" title="Payments" subtitle="Upload your payment proof">
+        <div style={{ maxWidth: "500px", margin: "60px auto", textAlign: "center" }}>
+          <div className="glass-card" style={{ padding: "48px" }}>
+            <div style={{ width: "80px", height: "80px", background: "rgba(16,185,129,0.1)", border: "2px solid rgba(16,185,129,0.3)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
+              <CheckCircle size={40} color="#10b981" />
+            </div>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, fontFamily: "var(--font-display)", marginBottom: "10px" }}>Payment Submitted!</h2>
+            <p style={{ color: "rgba(226,232,240,0.5)", marginBottom: "24px", fontSize: "14px" }}>
+              Your payment has been submitted and is awaiting admin verification. You'll be notified once approved.
+            </p>
+            <button className="btn-primary" onClick={() => setSubmitted(false)} style={{ width: "100%", justifyContent: "center" }}>
+              Submit Another Payment
+            </button>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  return (
+    <AppLayout role="TENANT" title="My Payments" subtitle="Pay rent and upload proof">
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "24px" }}>
+          {/* UPI Card */}
+          <div
+            style={{
+              background: "linear-gradient(135deg, rgba(229,9,20,0.15) 0%, rgba(184,29,36,0.1) 100%)",
+              border: "1px solid rgba(229,9,20,0.25)",
+              borderRadius: "16px",
+              padding: "24px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+              <div style={{ width: "40px", height: "40px", background: "rgba(229,9,20,0.2)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CreditCard size={20} color="#ff3333" />
+              </div>
+              <div>
+                <p style={{ fontWeight: 700, fontSize: "15px" }}>UPI Payment</p>
+                <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Pay to landlord</p>
+              </div>
+            </div>
+
+            <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: "10px", padding: "14px", marginBottom: "12px" }}>
+              <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)", marginBottom: "4px" }}>UPI ID</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <p style={{ fontSize: "15px", fontWeight: 700, color: "#ff3333" }}>{upiDetails.upiId}</p>
+                <button onClick={copyUPI} style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(226,232,240,0.5)" }}>
+                  <Copy size={14} />
+                </button>
+              </div>
+              <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)", marginTop: "4px" }}>{upiDetails.upiName}</p>
+            </div>
+
+            <div style={{ display: "flex", gap: "10px", width: "100%" }}>
+              <button
+                onClick={() => setShowQR(true)}
+                className="btn-ghost"
+                style={{ flex: 1, justifyContent: "center" }}
+              >
+                <QrCode size={16} />
+                Show QR Code
+              </button>
+            </div>
+
+            <div style={{ marginTop: "16px", borderTop: "1px dashed rgba(255,255,255,0.08)", paddingTop: "16px" }}>
+              <p style={{ fontSize: "11px", fontWeight: 600, color: "rgba(226,232,240,0.45)", marginBottom: "10px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <span>📱 Quick Pay on Mobile</span>
+                {form.amount && parseFloat(form.amount) > 0 && (
+                  <span style={{ fontSize: "10px", background: "rgba(16,185,129,0.15)", color: "#34d399", padding: "1px 6px", borderRadius: "4px" }}>
+                    Auto ₹{parseFloat(form.amount).toLocaleString("en-IN")}
+                  </span>
+                )}
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                <a
+                  href={getUpiUrl("gpay")}
+                  className="btn-ghost"
+                  style={{
+                    justifyContent: "center",
+                    fontSize: "12px",
+                    background: "rgba(66,133,244,0.06)",
+                    border: "1px solid rgba(66,133,244,0.2)",
+                    color: "#4285f4",
+                    padding: "8px",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  Google Pay
+                </a>
+                <a
+                  href={getUpiUrl("phonepe")}
+                  className="btn-ghost"
+                  style={{
+                    justifyContent: "center",
+                    fontSize: "12px",
+                    background: "rgba(95,37,159,0.06)",
+                    border: "1px solid rgba(95,37,159,0.2)",
+                    color: "#a78bfa",
+                    padding: "8px",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  PhonePe
+                </a>
+                <a
+                  href={getUpiUrl("paytm")}
+                  className="btn-ghost"
+                  style={{
+                    justifyContent: "center",
+                    fontSize: "12px",
+                    background: "rgba(0,185,245,0.06)",
+                    border: "1px solid rgba(0,185,245,0.2)",
+                    color: "#00b9f5",
+                    padding: "8px",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  Paytm
+                </a>
+                <a
+                  href={getUpiUrl("generic")}
+                  className="btn-ghost"
+                  style={{
+                    justifyContent: "center",
+                    fontSize: "12px",
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    color: "#e2e8f0",
+                    padding: "8px",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  UPI App
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Steps card */}
+          <div className="glass-card" style={{ padding: "24px" }}>
+            <p style={{ fontWeight: 700, fontSize: "15px", marginBottom: "16px" }}>How to Pay</p>
+            {[
+              { step: "1", text: "Scan QR or copy UPI ID" },
+              { step: "2", text: "Pay the exact amount" },
+              { step: "3", text: "Take screenshot of payment" },
+              { step: "4", text: "Upload screenshot below" },
+              { step: "5", text: "Enter Transaction ID" },
+              { step: "6", text: "Submit for verification" },
+            ].map((s) => (
+              <div key={s.step} style={{ display: "flex", gap: "12px", marginBottom: "10px", alignItems: "flex-start" }}>
+                <div style={{ width: "22px", height: "22px", background: "var(--gradient-primary)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, color: "white", flexShrink: 0 }}>
+                  {s.step}
+                </div>
+                <span style={{ fontSize: "13px", color: "rgba(226,232,240,0.7)", paddingTop: "2px" }}>{s.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Payment form */}
+        <div className="glass-card" style={{ padding: "28px" }}>
+          <h3 style={{ fontSize: "17px", fontWeight: 700, fontFamily: "var(--font-display)", marginBottom: "20px" }}>
+            Upload Payment Proof
+          </h3>
+
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              <div>
+                <label className="form-label">Amount Paid (₹) *</label>
+                <input
+                  type="number"
+                  className="form-input"
+                  placeholder="8000"
+                  value={form.amount}
+                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  required
+                />
+              </div>
+              <div>
+                <label className="form-label">Payment Method</label>
+                <select className="form-input" value={form.method} onChange={(e) => setForm({ ...form, method: e.target.value })}>
+                  <option value="UPI">UPI</option>
+                  <option value="BANK_TRANSFER">Bank Transfer</option>
+                  <option value="CASH">Cash</option>
+                  <option value="QR_CODE">QR Code</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="form-label">Transaction ID / UTR Number</label>
+              <input
+                className="form-input"
+                placeholder="Enter transaction ID"
+                value={form.transactionId}
+                onChange={(e) => setForm({ ...form, transactionId: e.target.value })}
+              />
+            </div>
+
+            <ImageUpload
+              value={form.screenshotUrl}
+              onChange={(url) => setForm({ ...form, screenshotUrl: url })}
+              label="Payment Screenshot *"
+              placeholder="Take a photo of your payment receipt or upload"
+            />
+
+            <div>
+              <label className="form-label">Notes (Optional)</label>
+              <textarea
+                className="form-input"
+                placeholder="Any notes about this payment..."
+                rows={2}
+                value={form.notes}
+                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                style={{ resize: "vertical" }}
+              />
+            </div>
+
+            <button type="submit" className="btn-primary" disabled={loading} style={{ width: "100%", justifyContent: "center", padding: "14px" }}>
+              {loading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
+              {loading ? "Submitting..." : "Submit Payment"}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* QR Modal */}
+      {showQR && (
+        <div className="modal-overlay" onClick={() => setShowQR(false)}>
+          <div className="modal-content" style={{ maxWidth: "380px", textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+              <h3 style={{ fontWeight: 700, fontSize: "16px" }}>Scan to Pay</h3>
+              <button onClick={() => setShowQR(false)} style={{ background: "transparent", border: "none", cursor: "pointer", color: "rgba(226,232,240,0.5)" }}><X size={20} /></button>
+            </div>
+            <div style={{ background: "white", borderRadius: "16px", padding: "20px", marginBottom: "16px" }}>
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upiDetails.upiId}&pn=${encodeURIComponent(upiDetails.upiName)}&cu=INR`}
+                alt="UPI QR Code"
+                style={{ width: "200px", height: "200px", display: "block", margin: "0 auto" }}
+              />
+            </div>
+            <p style={{ fontWeight: 700, fontSize: "16px", color: "#ff3333", marginBottom: "4px" }}>{upiDetails.upiId}</p>
+            <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.5)", marginBottom: "16px" }}>{upiDetails.upiName}</p>
+            <button onClick={copyUPI} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+              <Copy size={16} />
+              Copy UPI ID
+            </button>
+          </div>
+        </div>
+      )}
+    </AppLayout>
+  );
+}
