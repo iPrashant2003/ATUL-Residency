@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   keywords: "property management, rent tracker, renter management, Atul Residency",
   authors: [{ name: "Atul Tiwari" }],
   manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon-32x32.png",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
