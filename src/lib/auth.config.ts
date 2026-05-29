@@ -13,6 +13,10 @@ export const authConfig = {
       // Public routes
       const isPublicRoute =
         pathname === "/" ||
+        pathname === "/manifest.json" ||
+        pathname === "/sw.js" ||
+        pathname === "/offline" ||
+        pathname.startsWith("/.well-known") ||
         pathname.startsWith("/login") ||
         pathname.startsWith("/register") ||
         pathname.startsWith("/api/auth") ||
