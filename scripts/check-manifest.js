@@ -12,11 +12,9 @@ function getUrl(url) {
 
 async function run() {
   const assets = [
-    'https://atul-residency.vercel.app/manifest.json',
-    'https://atul-residency.vercel.app/screenshots/desktop-home.png',
-    'https://atul-residency.vercel.app/screenshots/mobile-home.png',
-    'https://atul-residency.vercel.app/screenshots/desktop-login.png',
-    'https://atul-residency.vercel.app/screenshots/mobile-login.png'
+    'https://atul-residency.vercel.app/apple-touch-icon.png',
+    'https://atul-residency.vercel.app/favicon-32x32.png',
+    'https://atul-residency.vercel.app/favicon-16x16.png'
   ];
 
   for (const asset of assets) {
