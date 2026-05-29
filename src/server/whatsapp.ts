@@ -563,6 +563,47 @@ app.post('/pair', async (req, res) => {
     }
 });
 
+// ==================== Automated Daily Database Backups ====================
+function runDailyBackup() {
+    console.log('⏰ [Daily Backup] Starting automated scheduled database backup...');
+    const { exec } = require('child_process');
+    exec('node scripts/backup-db.js', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`❌ [Daily Backup] Automated backup failed: ${error.message}`);
+            return;
+        }
+        if (stderr && !stderr.includes('Warning: SECURITY WARNING')) {
+            console.warn(`⚠️ [Daily Backup] Backup finished with warnings: ${stderr}`);
+        }
+        console.log(`✅ [Daily Backup] Automated backup successfully completed.\n`);
+    });
+}
+
+function startAutomatedBackups() {
+    console.log('🕒 Starting automated daily database backup scheduler (checks every 1h, runs at 2 AM)...');
+    let lastBackupDate = '';
+
+    const checkAndRunBackup = () => {
+        const now = new Date();
+        const dateStr = now.toDateString();
+        const currentHour = now.getHours();
+
+        // Run at 2:00 AM and make sure we only run it once per day
+        if (currentHour === 2 && lastBackupDate !== dateStr) {
+            lastBackupDate = dateStr;
+            runDailyBackup();
+        }
+    };
+
+    // Run once on startup after 30 seconds, then check every hour
+    setTimeout(() => {
+        console.log('⏰ [Startup Backup] Running initial database backup on boot...');
+        runDailyBackup();
+    }, 30000);
+
+    setInterval(checkAndRunBackup, 60 * 60 * 1000); // Check every hour
+}
+
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`WhatsApp API Server running on port ${PORT}`);
@@ -574,6 +615,9 @@ app.listen(PORT, () => {
     console.log('🔄 Starting database queue polling for WhatsApp reminders (every 5s)...');
     pollWhatsappQueue();
     setInterval(pollWhatsappQueue, 5000);
+
+    // Start automated database backups
+    startAutomatedBackups();
 });
 
 process.on('unhandledRejection', (reason, promise) => {
