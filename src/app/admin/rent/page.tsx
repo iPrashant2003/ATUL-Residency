@@ -619,7 +619,14 @@ export default function RentTrackerPage() {
                             href={typeof window !== 'undefined' ? (() => {
                               const clean = (record.tenant.whatsapp || "").replace(/\D/g, "");
                               const formatted = clean.length === 10 ? `91${clean}` : clean;
-                              return `https://wa.me/${formatted}?text=${encodeURIComponent(`🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n🏠 *Rent* : ₹${record.rentAmount}\n⚡ *Electricity Bill*: ₹${record.electricityBill}\n-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceBaseUrl}/api/rent/${record.id}/invoice\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`)}`;
+                              
+                              let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
+                              if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ₹${record.electricityBill}\n`;
+                              if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
+                              if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
+                              if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
+
+                              return `https://wa.me/${formatted}?text=${encodeURIComponent(`🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceBaseUrl}/api/rent/${record.id}/invoice\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`)}`;
                             })() : '#'}
                             target="_blank"
                             rel="noopener noreferrer"

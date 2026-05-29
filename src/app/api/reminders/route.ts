@@ -46,8 +46,7 @@ export async function POST(req: NextRequest) {
         const port = host.split(":")[1] || "3000";
         invoiceUrl = `http://${lanIp}:${port}/api/rent/${record.id}/invoice`;
       } else {
-        const proto = req.headers.get("x-forwarded-proto") || "http";
-        invoiceUrl = `${proto}://${host}/api/rent/${record.id}/invoice`;
+        invoiceUrl = `https://${host}/api/rent/${record.id}/invoice`;
       }
 
       let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
@@ -106,8 +105,7 @@ export async function POST(req: NextRequest) {
           const port = host.split(":")[1] || "3000";
           invoiceUrl = `http://${lanIp}:${port}/api/rent/${record.id}/invoice`;
         } else {
-          const proto = req.headers.get("x-forwarded-proto") || "http";
-          invoiceUrl = `${proto}://${host}/api/rent/${record.id}/invoice`;
+          invoiceUrl = `https://${host}/api/rent/${record.id}/invoice`;
         }
 
         let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;

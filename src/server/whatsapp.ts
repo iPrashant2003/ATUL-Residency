@@ -26,6 +26,13 @@ function getLocalIp() {
 
 function getBaseUrl() {
     if (process.env.APP_URL) return process.env.APP_URL;
+    if (process.env.NEXTAUTH_URL) {
+        const url = process.env.NEXTAUTH_URL;
+        if (url.includes('localhost') || url.includes('127.0.0.1')) {
+            return url;
+        }
+        return url.replace(/^http:/, 'https:');
+    }
     try {
         const fs = require('fs');
         const configPath = path.join(process.cwd(), 'app-config.json');
@@ -232,7 +239,14 @@ function startAutomatedReminders() {
                 const invoiceUrl = `${getBaseUrl()}/api/rent/${record.id}/invoice`;
                 
                 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                const msg = `🏢 ATUL RESIDENCY\n\nDear ${tenant.name},\n\nHere is your detailed rent invoice for ${months[record.month - 1]} ${record.year}.\nRent : ${record.rentAmount}     Electricity Bill: ${record.electricityBill} \nTotal Due: ₹${balance.toLocaleString('en-IN')}\nPlease Pay on time \n📄 View & Download PDF Invoice:\n${invoiceUrl}\n\nPlease pay: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\nThank you!`;
+                
+                let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
+                if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ₹${record.electricityBill}\n`;
+                if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
+                if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
+                if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
+
+                const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your detailed rent invoice for *${months[record.month - 1]} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
                 
                 const cleanNumber = tenant.whatsapp.replace(/\D/g, '');
                 const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
@@ -289,7 +303,14 @@ function startAutomatedReminders() {
                     const invoiceUrl = `${getBaseUrl()}/api/rent/${record.id}/invoice`;
                     
                     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                    const msg = `🏢 ATUL RESIDENCY\n\nDear ${tenant.name},\n\nHere is your detailed rent invoice for ${months[record.month - 1]} ${record.year}.\nRent : ${record.rentAmount}     Electricity Bill: ${record.electricityBill} \nTotal Due: ₹${balance.toLocaleString('en-IN')}\nPlease Pay on time \n📄 View & Download PDF Invoice:\n${invoiceUrl}\n\nPlease pay: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\nThank you!`;
+                    
+                    let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
+                    if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ₹${record.electricityBill}\n`;
+                    if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
+                    if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
+                    if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
+
+                    const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your detailed rent invoice for *${months[record.month - 1]} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
                     
                     const cleanNumber = tenant.whatsapp.replace(/\D/g, '');
                     const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;

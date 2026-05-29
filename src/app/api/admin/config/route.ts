@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1");
     const baseUrl = isLocalhost
       ? `http://${lanIp}:${port}` 
-      : `${req.headers.get("x-forwarded-proto") || "http"}://${host}`;
+      : `https://${host}`;
 
     // Persist non-localhost base URLs for the background WhatsApp process
     if (!isLocalhost) {
