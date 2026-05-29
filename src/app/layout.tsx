@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import Chatbot from "@/components/Chatbot";
 import PWARegister from "@/components/PWARegister";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 export const metadata: Metadata = {
   title: "Atul Residency — Premium Property Management",
@@ -63,6 +64,7 @@ export default function RootLayout({
             />
             <Chatbot />
             <PWARegister />
+            <PWAInstallPrompt />
           </ThemeProvider>
         </SessionProvider>
       </body>
