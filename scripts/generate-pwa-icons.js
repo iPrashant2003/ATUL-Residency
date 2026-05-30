@@ -13,31 +13,76 @@ if (!fs.existsSync(iconsDir)) {
 const logoSvg = `
 <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#FFE259" />
-      <stop offset="60%" stopColor="#FFA751" />
-      <stop offset="100%" stopColor="#FF6B6B" />
+    <!-- Background Bright Premium Gradient -->
+    <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#EC4899" />
     </linearGradient>
-    <linearGradient id="logoTeal" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#00F2FE" />
-      <stop offset="100%" stopColor="#4FACFE" />
+    
+    <!-- Glassmorphic Highlight/Sheen Gradient -->
+    <linearGradient id="highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
     </linearGradient>
-    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+
+    <!-- Glassmorphic Border/Bezel Gradient -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
+      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.45" />
+    </linearGradient>
+
+    <!-- Platinum/Gold Reflective Emblem Gradient -->
+    <linearGradient id="emblemGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="30%" stop-color="#FFF7E0" />
+      <stop offset="70%" stop-color="#FFE082" />
+      <stop offset="100%" stop-color="#FFB300" />
+    </linearGradient>
+
+    <!-- Glowing Electric Cyan/Teal Gradient for Central Pillar -->
+    <linearGradient id="emblemCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5FF" />
+      <stop offset="100%" stop-color="#00A8FF" />
+    </linearGradient>
+ 
+    <!-- Soft Drop Shadow to give 3D depth to the emblem -->
+    <filter id="emblemShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.5" />
     </filter>
   </defs>
   
-  <circle cx="50" cy="50" r="42" fill="url(#logoGold)" opacity="0.05" />
-  <circle cx="50" cy="50" r="45" stroke="url(#logoGold)" strokeWidth="1" strokeDasharray="3 6" opacity="0.4" />
+  <!-- Base Background Squircle (rx will be replaced by 0 for full bleed in maskable/Apple icons) -->
+  <rect class="icon-bg-rect" x="0" y="0" width="100" height="100" rx="22" fill="url(#iconBg)" />
   
-  <path d="M24 82 L47 18 C48 15, 52 15, 53 18 L76 82" stroke="url(#logoGold)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" filter="url(#logoGlow)" />
-  <path d="M33 58 L67 58" stroke="url(#logoGold)" strokeWidth="4" strokeLinecap="round" filter="url(#logoGlow)" />
-  <path d="M50 24 L50 82" stroke="url(#logoTeal)" strokeWidth="3.5" strokeLinecap="round" opacity="0.85" />
-  <path d="M38 42 L50 30 L62 42" stroke="url(#logoGold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-  <path d="M30 65 L50 50 L70 65" stroke="url(#logoGold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-  <path d="M18 82 L82 82" stroke="url(#logoGold)" strokeWidth="5" strokeLinecap="round" filter="url(#logoGlow)" />
-  <path d="M50 6 L52 11 L57 11 L53 14 L55 19 L50 16 L45 19 L47 14 L43 11 L48 11 Z" fill="url(#logoGold)" filter="url(#logoGlow)" />
+  <!-- Glassmorphic Diagonal Sheen Overlay -->
+  <rect class="icon-bg-rect" x="0" y="0" width="100" height="100" rx="22" fill="url(#highlight)" />
+  
+  <!-- Outer fine detailed rings for architectural luxury look -->
+  <circle cx="50" cy="50" r="42" stroke="#FFFFFF" stroke-width="0.75" stroke-dasharray="3 6" opacity="0.25" />
+  <circle cx="50" cy="50" r="39" stroke="#FFFFFF" stroke-width="0.5" opacity="0.15" />
+  
+  <!-- The A-Frame Structure (representing Atul Residency) -->
+  <path d="M24 82 L47 18 C48 15, 52 15, 53 18 L76 82" stroke="url(#emblemGold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#emblemShadow)" />
+  <path d="M33 58 L67 58" stroke="url(#emblemGold)" stroke-width="4" stroke-linecap="round" filter="url(#emblemShadow)" />
+  
+  <!-- Central Glass/Teal core rounded bar -->
+  <rect x="48.25" y="24" width="3.5" height="58" rx="1.75" fill="url(#emblemCyan)" filter="url(#emblemShadow)" />
+  
+  <!-- Decorative Modern Balconies -->
+  <path d="M38 42 L50 30 L62 42" stroke="url(#emblemGold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#emblemShadow)" opacity="0.8" />
+  <path d="M30 65 L50 50 L70 65" stroke="url(#emblemGold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#emblemShadow)" opacity="0.8" />
+  
+  <!-- Building Base Foundation -->
+  <path d="M18 82 L82 82" stroke="url(#emblemGold)" stroke-width="5" stroke-linecap="round" filter="url(#emblemShadow)" />
+  
+  <!-- Star representing excellence and luxury -->
+  <path d="M50 6 L52 11 L57 11 L53 14 L55 19 L50 16 L45 19 L47 14 L43 11 L48 11 Z" fill="url(#emblemGold)" filter="url(#emblemShadow)" />
+
+  <!-- Outer Glassmorphic Border (rx replaced similarly) -->
+  <rect class="icon-bg-rect" x="0.75" y="0.75" width="98.5" height="98.5" rx="21.25" stroke="url(#borderGrad)" stroke-width="1.5" fill="none" />
 </svg>
 `;
 
@@ -57,14 +102,23 @@ async function generateIcons() {
 
   // Helper function to render logo in HTML and take a screenshot
   const capturePng = async (width, height, isMaskable = false, isApple = false) => {
-    // Standard PWA transparent background icon
+    // Standard PWA transparent background icon (SVG contains the squircle, so outside is transparent)
     let containerStyle = 'width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;';
     if (isMaskable) {
       // Maskable icons need a solid background and padding (safe zone)
-      containerStyle += ' background: #050606; padding: 15vw; box-sizing: border-box;';
+      // Use the exact same premium gradient as the SVG background to bleed perfectly to the edges
+      containerStyle += ' background: linear-gradient(135deg, #4F46E5 0%, #8B5CF6 50%, #EC4899 100%); padding: 15vw; box-sizing: border-box;';
     } else if (isApple) {
-      // iOS icons cannot be transparent (otherwise they show black background on iOS)
-      containerStyle += ' background: #050606; padding: 10vw; box-sizing: border-box;';
+      // iOS icons cannot be transparent
+      containerStyle += ' background: linear-gradient(135deg, #4F46E5 0%, #8B5CF6 50%, #EC4899 100%); padding: 10vw; box-sizing: border-box;';
+    }
+
+    // Adapt SVG background corner radius for full bleed rendering if it's maskable or apple touch icon
+    let currentSvg = logoSvg;
+    if (isMaskable || isApple) {
+      currentSvg = currentSvg
+        .replace(/rx="22"/g, 'rx="0"')
+        .replace(/rx="21.25"/g, 'rx="0"');
     }
 
     const htmlContent = `
@@ -79,7 +133,7 @@ async function generateIcons() {
         </head>
         <body>
           <div class="container">
-            ${logoSvg}
+            ${currentSvg}
           </div>
         </body>
       </html>
