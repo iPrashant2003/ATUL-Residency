@@ -364,8 +364,6 @@ async function pollWhatsappQueue() {
             orderBy: { createdAt: 'asc' }
         });
         
-        console.log(`[Queue] Polled DB. Found ${pendingMessages.length} pending messages. (isReady1: ${isReady1}, isReady2: ${isReady2})`);
-
         if (pendingMessages.length === 0) {
             isPolling = false;
             return;
@@ -378,8 +376,17 @@ async function pollWhatsappQueue() {
 
         const activeClient = isReady1 ? client1 : client2;
         const botName = isReady1 ? 'Bot 1' : 'Bot 2';
+        const nowTime = new Date().getTime();
 
         for (const msg of pendingMessages) {
+            // Cool down retry messages for at least 30 seconds to prevent immediate loop spam
+            if (msg.error && msg.error.includes('[Attempts:')) {
+                const lastUpdated = new Date(msg.updatedAt).getTime();
+                if (nowTime - lastUpdated < 30000) {
+                    continue;
+                }
+            }
+
             console.log(`[Queue] Sending msg ${msg.id} to ${msg.number} via ${botName}...`);
             const cleanNumber = msg.number.replace(/\D/g, '');
             const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
@@ -397,15 +404,64 @@ async function pollWhatsappQueue() {
 
                 await prisma.whatsappQueue.update({
                     where: { id: msg.id },
-                    data: { status: 'SENT' }
+                    data: { status: 'SENT', error: null }
                 });
                 console.log(`[Queue] ✅ Msg ${msg.id} sent successfully.`);
             } catch (err) {
                 console.error(`[Queue] ❌ Failed to send ${msg.id}:`, err.message);
-                await prisma.whatsappQueue.update({
-                    where: { id: msg.id },
-                    data: { status: 'FAILED', error: err.message || 'Unknown error' }
-                });
+                
+                // Parse attempts from the previous error message if it exists
+                let attempts = 1;
+                if (msg.error && msg.error.includes('[Attempts:')) {
+                    const match = msg.error.match(/\[Attempts:\s*(\d+)\]/);
+                    if (match) {
+                        attempts = parseInt(match[1], 10) + 1;
+                    }
+                }
+                
+                if (attempts < 3) {
+                    await prisma.whatsappQueue.update({
+                        where: { id: msg.id },
+                        data: { 
+                            status: 'PENDING', 
+                            error: `[Attempts: ${attempts}] ${err.message || 'Unknown error'}` 
+                        }
+                    });
+                    console.log(`[Queue] Msg ${msg.id} scheduled for retry (Attempt ${attempts + 1}).`);
+                } else {
+                    await prisma.whatsappQueue.update({
+                        where: { id: msg.id },
+                        data: { 
+                            status: 'FAILED', 
+                            error: `[Attempts: ${attempts}] ${err.message || 'Unknown error'}` 
+                        }
+                    });
+                    console.log(`[Queue] Msg ${msg.id} failed permanently after ${attempts} attempts.`);
+                }
+
+                // If error is related to detached Frame/crashed browser, trigger a silent re-initialize on the client
+                if (err.message && (err.message.includes('detached') || err.message.includes('Session closed') || err.message.includes('Protocol error'))) {
+                    console.warn(`[Queue] Detected Puppeteer/Browser crash error. Resetting/Re-initializing ${botName} client...`);
+                    const targetClient = activeClient;
+                    const targetBotName = botName;
+                    if (targetBotName === 'Bot 1') {
+                        isReady1 = false;
+                    } else {
+                        isReady2 = false;
+                    }
+                    setTimeout(async () => {
+                        try {
+                            await targetClient.destroy();
+                        } catch (destroyErr) {
+                            console.warn(`Error during ${targetBotName} destroy:`, destroyErr.message);
+                        }
+                        try {
+                            await targetClient.initialize();
+                        } catch (initErr) {
+                            console.error(`Failed to reinitialize ${targetBotName}:`, initErr.message);
+                        }
+                    }, 1000);
+                }
             }
             await new Promise(r => setTimeout(r, 2000));
         }

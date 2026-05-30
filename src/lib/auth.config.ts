@@ -43,11 +43,17 @@ export const authConfig = {
       return true;
     },
     async jwt({ token, user }) {
+      // MINIMAL token — only store id and role, nothing else
+      // This keeps the JWT cookie tiny to avoid Vercel's 8KB header limit
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
-        token.tenantId = (user as any).tenantId;
-        token.image = (user as any).image;
+        token.tenantId = (user as any).tenantId ?? null;
+        // NEVER store image in token — fetch it fresh in session callback
+        delete token.image;
+        delete token.picture;
+        delete token.name;
+        delete token.email;
       }
       return token;
     },
@@ -56,12 +62,15 @@ export const authConfig = {
         (session.user as any).role = token.role;
         (session.user as any).id = token.id;
         (session.user as any).tenantId = token.tenantId;
-        session.user.image = token.image as string || null;
+        // Do NOT set image from token — keep it null/empty
+        session.user.image = null;
+        session.user.name = session.user.name || "";
+        session.user.email = session.user.email || "";
       }
       return session;
     },
   },
   providers: [], // Providers list is empty here; populated in auth.ts
-  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "atul-residency-secret-key-2024",
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   trustHost: true,
 } satisfies NextAuthConfig;

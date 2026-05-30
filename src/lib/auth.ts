@@ -9,29 +9,68 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
     async jwt({ token, user }) {
+      // MINIMAL token — only id, role, tenantId
+      // No image, no name, no email stored in JWT
+      // This prevents the 494 REQUEST_HEADER_TOO_LARGE error on Vercel
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
-        token.tenantId = (user as any).tenantId;
-        token.image = (user as any).image;
+        token.tenantId = (user as any).tenantId ?? null;
+        // Explicitly delete large/unnecessary fields
+        delete token.image;
+        delete token.picture;
+        delete token.name;
+        delete token.email;
       } else if (token.id) {
-        try {
-          const dbUser = await prisma.user.findUnique({
-            where: { id: token.id as string },
-            include: { tenant: true },
-          });
-          if (dbUser) {
-            token.role = dbUser.role;
-            token.tenantId = dbUser.tenant?.id || null;
-            token.image = dbUser.tenant?.photoUrl || null;
-            token.name = dbUser.name;
-            token.email = dbUser.email;
-          }
-        } catch (error) {
-          console.error("Error refreshing token in jwt callback:", error);
-        }
+        // On subsequent requests, only keep the 3 essential fields
+        // Do NOT re-fetch from DB here to avoid adding more data to JWT
+        token = {
+          role: token.role,
+          id: token.id,
+          tenantId: token.tenantId,
+          sub: token.sub,
+          iat: token.iat,
+          exp: token.exp,
+          jti: token.jti,
+        };
       }
       return token;
+    },
+    async session({ session, token }) {
+      if (session.user && token.id) {
+        (session.user as any).role = token.role;
+        (session.user as any).id = token.id;
+        (session.user as any).tenantId = token.tenantId;
+
+        try {
+          // Fetch fresh user data from database (only name, email, and photoUrl)
+          // This keeps cookie size extremely tiny while keeping the UI updated
+          const dbUser = await prisma.user.findUnique({
+            where: { id: token.id as string },
+            select: {
+              name: true,
+              email: true,
+              tenant: {
+                select: {
+                  photoUrl: true,
+                },
+              },
+            },
+          });
+
+          if (dbUser) {
+            session.user.name = dbUser.name;
+            session.user.email = dbUser.email;
+            
+            const photo = dbUser.tenant?.photoUrl;
+            // Never allow base64 string, only web URLs
+            session.user.image = (photo && photo.startsWith("data:")) ? null : (photo || null);
+          }
+        } catch (error) {
+          console.error("Error fetching fresh user data in session callback:", error);
+        }
+      }
+      return session;
     },
   },
   providers: [
@@ -40,7 +79,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         identifier: { label: "Email or Phone", type: "text" },
         password: { label: "Password", type: "password" },
-        // OTP login: pass otpVerified=true and userId
         otpVerified: { label: "OTP Verified", type: "text" },
         userId: { label: "User ID", type: "text" },
       },
@@ -49,7 +87,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (credentials?.otpVerified === "true" && credentials?.userId) {
           const user = await prisma.user.findUnique({
             where: { id: credentials.userId as string },
-            include: { tenant: true },
+            select: { id: true, email: true, name: true, role: true, tenant: { select: { id: true } } },
           });
           if (!user) return null;
           return {
@@ -58,7 +96,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             name: user.name,
             role: user.role,
             tenantId: user.tenant?.id || null,
-            image: user.tenant?.photoUrl || null,
           };
         }
 
@@ -73,12 +110,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (isEmail) {
           user = await prisma.user.findUnique({
             where: { email: identifier.toLowerCase().trim() },
-            include: { tenant: true },
+            select: { id: true, email: true, name: true, role: true, password: true, tenant: { select: { id: true } } },
           });
         } else {
           user = await prisma.user.findFirst({
             where: { phone: { endsWith: cleanPhone } },
-            include: { tenant: true },
+            select: { id: true, email: true, name: true, role: true, password: true, tenant: { select: { id: true } } },
           });
         }
 
@@ -97,7 +134,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.name,
           role: user.role,
           tenantId: user.tenant?.id || null,
-          image: user.tenant?.photoUrl || null,
         };
       },
     }),
