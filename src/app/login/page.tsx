@@ -100,8 +100,9 @@ function LoginPageContent() {
           return t - 1;
         });
       }, 1000);
-    } catch {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      console.error("OTP Send Error:", err);
+      toast.error(err?.message || "Something went wrong while sending OTP");
     } finally {
       setLoading(false);
     }
@@ -139,8 +140,9 @@ function LoginPageContent() {
         const role = data.role;
         router.push(role === "ADMIN" ? "/admin/dashboard" : "/tenant/dashboard");
       }
-    } catch {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      console.error("OTP Verification/Login Error:", err);
+      toast.error(err?.message || "Something went wrong during verification");
     } finally {
       setLoading(false);
     }
