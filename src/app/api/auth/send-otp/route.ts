@@ -164,30 +164,72 @@ export async function POST(req: NextRequest) {
     // 2. Send Email via NodeMailer (Dual-channel)
     let emailSent = false;
     if (targetEmail && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      const { sendEmailOTP } = await import("@/lib/mailer");
-      emailSent = await sendEmailOTP(targetEmail, code);
+      try {
+        const { sendEmailOTP } = await import("@/lib/mailer");
+        emailSent = await sendEmailOTP(targetEmail, code);
+      } catch (e) {
+        console.error("[SMTP Error]", e);
+      }
+    }
+
+    // 3. Send WhatsApp via active Bot (Ultra-reliable premium channel)
+    let whatsappSent = false;
+    const whatsappNum = tenant ? tenant.whatsapp : (cleanPhone ? `91${cleanPhone}` : null);
+    const receiverName = tenant ? tenant.name : "Admin";
+
+    if (whatsappNum) {
+      try {
+        // Standardize number (ensure country code 91 prefix)
+        const formattedNum = whatsappNum.replace(/\D/g, "");
+        const finalNum = formattedNum.startsWith("91") && formattedNum.length > 10 ? formattedNum : `91${formattedNum}`;
+
+        const whatsappMsg = `✨ *ATUL RESIDENCY* ✨\n🔐 *Your Secure Login OTP* 🔐\n\nDear *${receiverName}*,\n\nYour One-Time Password (OTP) for secure login to the Atul Residency Portal is:\n\n➡️ *${code}* ⬅️\n\n⏳ This code is valid for *10 minutes*. For security, please do not share this OTP with anyone.\n\nThank you for choosing Atul Residency! 🏠🌟\n\nWarm regards,\n*Atul Tiwari*\nAtul Residency`;
+
+        await prisma.whatsappQueue.create({
+          data: {
+            number: finalNum,
+            message: whatsappMsg,
+            status: "PENDING",
+          },
+        });
+        whatsappSent = true;
+        console.log(`[WhatsApp OTP] Successfully queued for ${receiverName} (${finalNum})`);
+      } catch (e) {
+        console.error("[WhatsApp OTP Error]", e);
+      }
     }
 
     let simulated = false;
-    if (!smsSent && !emailSent) {
+    if (!smsSent && !emailSent && !whatsappSent) {
       if (process.env.NODE_ENV === "development" || (!process.env.SMTP_USER && !process.env.FAST2SMS_API_KEY)) {
         simulated = true;
         console.log(`[OTP] SIMULATION MODE ACTIVE. OTP is: ${code}`);
       } else {
         return NextResponse.json(
-          { error: "Failed to send OTP via SMS and Email. Please check your service provider balances and credentials." },
+          { error: "Failed to send OTP. Please check your network connection, service provider balances, or credentials." },
           { status: 500 }
         );
       }
+    }
+
+    // Choose friendly success message
+    let deliveryMessage = "OTP sent successfully!";
+    if (whatsappSent && emailSent) {
+      deliveryMessage = "OTP sent successfully to your WhatsApp and Email!";
+    } else if (whatsappSent) {
+      deliveryMessage = "OTP sent successfully to your registered WhatsApp number!";
+    } else if (emailSent) {
+      deliveryMessage = "OTP sent successfully to your registered email!";
     }
 
     return NextResponse.json({
       success: true,
       message: simulated
         ? "OTP sent successfully! (Simulated mode)"
-        : "OTP sent successfully!",
+        : deliveryMessage,
       smsSent,
       emailSent,
+      whatsappSent,
       ...(simulated && { devOtp: code }),
     });
   } catch (err) {
