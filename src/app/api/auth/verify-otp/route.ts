@@ -10,8 +10,90 @@ export async function POST(req: NextRequest) {
     }
 
     const isEmail = identifier.includes("@");
-    let targetEmail = isEmail ? identifier.toLowerCase().trim() : "";
-    let cleanPhone = isEmail ? "" : identifier.replace(/\D/g, "").slice(-10);
+    let cleanPhone = "";
+    let targetEmail = "";
+
+    let isAdmin = false;
+    let tenant = null;
+    let resolvedUser = null;
+
+    if (isEmail) {
+      targetEmail = identifier.toLowerCase().trim();
+      resolvedUser = await prisma.user.findUnique({
+        where: { email: targetEmail },
+        include: { tenant: true },
+      });
+    } else {
+      const digitsOnly = identifier.replace(/\D/g, "");
+      if (digitsOnly.length >= 10) {
+        cleanPhone = digitsOnly.slice(-10);
+        const ADMIN_PHONES = ["7388389944", "6392651108"];
+        isAdmin = ADMIN_PHONES.includes(cleanPhone);
+
+        tenant = await prisma.tenant.findFirst({
+          where: {
+            isActive: true,
+            OR: [
+              { phone: { endsWith: cleanPhone } },
+              { whatsapp: { endsWith: cleanPhone } },
+            ],
+          },
+        });
+      } else {
+        // Name/username case-insensitive search
+        resolvedUser = await prisma.user.findFirst({
+          where: { name: { equals: identifier.trim(), mode: "insensitive" } },
+          include: { tenant: true }
+        });
+        if (!resolvedUser) {
+          const dbTenant = await prisma.tenant.findFirst({
+            where: {
+              isActive: true,
+              name: { equals: identifier.trim(), mode: "insensitive" }
+            },
+            include: { user: true }
+          });
+          if (dbTenant) {
+            tenant = dbTenant;
+            resolvedUser = dbTenant.user;
+          }
+        }
+      }
+    }
+
+    if (resolvedUser) {
+      if (resolvedUser.role === "ADMIN") {
+        isAdmin = true;
+        if (resolvedUser.phone) {
+          cleanPhone = resolvedUser.phone.replace(/\D/g, "").slice(-10);
+        }
+        if (resolvedUser.email) {
+          targetEmail = resolvedUser.email;
+        }
+      } else {
+        const dbTenant = await prisma.tenant.findUnique({
+          where: { userId: resolvedUser.id }
+        });
+        if (dbTenant && dbTenant.isActive) {
+          tenant = dbTenant;
+          cleanPhone = tenant.phone.replace(/\D/g, "").slice(-10);
+          targetEmail = tenant.email || resolvedUser.email;
+        }
+      }
+    }
+
+    if (isAdmin && !isEmail) {
+      targetEmail = cleanPhone === "7388389944" ? "prashantmanitripathi2003@gmail.com" : "atultiwari123321@gmail.com";
+    } else if (tenant && !isEmail && tenant.email) {
+      targetEmail = tenant.email;
+    }
+
+    if (isAdmin && isEmail) {
+      if (targetEmail === "prashantmanitripathi2003@gmail.com") cleanPhone = "7388389944";
+      if (targetEmail === "atultiwari123321@gmail.com") cleanPhone = "6392651108";
+    } else if (tenant && isEmail && tenant.phone) {
+      cleanPhone = tenant.phone.slice(-10);
+    }
 
     const orConditions = [];
     if (cleanPhone) orConditions.push({ phone: cleanPhone });
