@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { identifier } = await req.json();
 
     if (!identifier) {
-      return NextResponse.json({ error: "Enter a valid email or phone number" }, { status: 400 });
+      return NextResponse.json({ error: "Enter a valid username, email or phone number" }, { status: 400 });
     }
 
     const isEmail = identifier.includes("@");
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
           data: { phone: cleanPhone },
         });
       }
-    } else {
+    } else if (cleanPhone && /^\d+$/.test(cleanPhone)) {
       user = await prisma.user.findFirst({ where: { phone: { endsWith: cleanPhone } } });
       if (!user) {
         const tenant = await prisma.tenant.findFirst({
@@ -44,6 +44,26 @@ export async function POST(req: NextRequest) {
         });
         if (tenant) user = tenant.user;
       }
+    } else {
+      // Username / Name search case-insensitive
+      user = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { name: { equals: identifier.trim(), mode: "insensitive" } },
+            { email: { equals: identifier.toLowerCase().trim() } },
+          ]
+        }
+      });
+      if (!user) {
+        // Try tenant name search
+        const tenant = await prisma.tenant.findFirst({
+          where: {
+            name: { equals: identifier.trim(), mode: "insensitive" }
+          },
+          include: { user: true }
+        });
+        if (tenant) user = tenant.user;
+      }
     }
 
     if (!user) {
@@ -53,8 +73,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Set correct email and phone from retrieved user record for OTP delivery
     if (user.email) {
       targetEmail = user.email;
+    }
+    if (user.phone) {
+      cleanPhone = user.phone.replace(/\D/g, "").slice(-10);
     }
 
     // Generate 6-digit OTP

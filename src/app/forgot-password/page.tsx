@@ -126,7 +126,7 @@ export default function ForgotPasswordPage() {
             </h1>
             <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.45)", marginTop: "8px", lineHeight: "1.4" }}>
               {step === 1
-                ? "Enter your registered email or phone to receive a reset OTP."
+                ? "Enter your registered username, email or phone to receive a reset OTP."
                 : step === 2
                 ? `We sent a 6-digit code to ${identifier}`
                 : "Your password has been successfully reset. Redirecting to login..."}
@@ -136,7 +136,7 @@ export default function ForgotPasswordPage() {
           {step === 1 && (
             <form onSubmit={handleSendOtp} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               <div>
-                <label className="form-label" style={{ color: "rgba(226,232,240,0.6)", fontSize: "12px", fontWeight: 600 }}>Email Address or Phone Number</label>
+                <label className="form-label" style={{ color: "rgba(226,232,240,0.6)", fontSize: "12px", fontWeight: 600 }}>Enter Username</label>
                 <div style={{ position: "relative" }}>
                   <Mail size={16} color="rgba(226,232,240,0.4)" style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)" }} />
                   <input

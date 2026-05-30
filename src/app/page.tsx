@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Building, ArrowRight, Shield, Zap, Users, IndianRupee, Bell, FileText, Smartphone, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Logo from "@/components/Logo";
 
 function AnimatedNumber({ target, prefix = "", suffix = "" }: { target: number; prefix?: string; suffix?: string }) {
@@ -38,6 +39,11 @@ const features = [
 ];
 
 export default function LandingPage() {
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
+  const userRole = (session?.user as any)?.role;
+  const dashboardUrl = userRole === "ADMIN" ? "/admin/dashboard" : "/tenant/dashboard";
+
   const [mounted, setMounted] = useState(false);
   const [data, setData] = useState<{
     totalRooms: number;
@@ -98,15 +104,21 @@ export default function LandingPage() {
               <Logo width={28} height={28} />
             </div>
           </div>
-          <span className="text-xs xs:text-sm sm:text-base md:text-xl font-extrabold tracking-[-0.5px] font-['Poppins',sans-serif]">
+          <span className="text-xs xs:text-sm sm:text-base md:text-xl font-extrabold tracking-[-0.5px] font-['Poppins',sans-serif] whitespace-nowrap">
             <span style={{ color: "#f8fafc" }}>ATUL </span>
             <span style={{ background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", textShadow: "0px 2px 10px rgba(255, 167, 81, 0.2)" }}>Residency</span>
           </span>
         </div>
 
-        <Link href="/login" className="px-3.5 py-1.5 xs:px-4 xs:py-2 md:px-6 md:py-2.5 text-[10px] xs:text-[11px] md:text-xs font-extrabold rounded-lg md:rounded-[10px] bg-gradient-to-br from-[#FFE259] to-[#FFA751] text-[#050606] no-underline shadow-[0_4px_15px_rgba(255,167,81,0.25)] transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0">
-          Portal Login
-        </Link>
+        {isLoggedIn ? (
+          <Link href={dashboardUrl} style={{ padding: "10px 24px", fontSize: "13px", background: "linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)", color: "#050606", borderRadius: "10px", textDecoration: "none", fontWeight: 800, boxShadow: "0 4px 15px rgba(20, 184, 166, 0.25)", transition: "transform 0.2s", whiteSpace: "nowrap" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-1px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            Dashboard
+          </Link>
+        ) : (
+          <Link href="/login" style={{ padding: "10px 24px", fontSize: "13px", background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", color: "#050606", borderRadius: "10px", textDecoration: "none", fontWeight: 800, boxShadow: "0 4px 15px rgba(255, 167, 81, 0.25)", transition: "transform 0.2s", whiteSpace: "nowrap" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-1px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            Portal Login
+          </Link>
+        )}
       </nav>
 
       {/* ═══ HERO ═══ */}
@@ -196,8 +208,8 @@ export default function LandingPage() {
 
         {/* Unified CTA */}
         <div>
-          <Link href="/login" style={{ padding: "16px 40px", fontSize: "16px", background: "linear-gradient(135deg, #20B2AA 0%, #14B8A6 100%)", color: "#050606", borderRadius: "14px", textDecoration: "none", fontWeight: 800, boxShadow: "0 10px 30px rgba(20, 184, 166, 0.3)", display: "inline-flex", alignItems: "center", gap: "10px", transition: "transform 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-            Portal Login
+          <Link href={isLoggedIn ? dashboardUrl : "/login"} style={{ padding: "16px 40px", fontSize: "16px", background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", color: "#050606", borderRadius: "14px", textDecoration: "none", fontWeight: 800, boxShadow: "0 10px 30px rgba(255, 167, 81, 0.25)", display: "inline-flex", alignItems: "center", gap: "10px", transition: "transform 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            {isLoggedIn ? "Go to Dashboard" : "Portal Login"}
             <ArrowRight size={18} />
           </Link>
         </div>
@@ -416,8 +428,8 @@ export default function LandingPage() {
               Sign in to manage your rented property stats, inspect bills, or execute automation reminders instantly.
             </p>
             <div>
-              <Link href="/login" style={{ padding: "16px 40px", fontSize: "15px", background: "linear-gradient(135deg, #20B2AA 0%, #14B8A6 100%)", color: "#050606", borderRadius: "12px", textDecoration: "none", fontWeight: 800, display: "inline-flex", alignItems: "center", gap: "8px", boxShadow: "0 6px 20px rgba(20, 184, 166, 0.25)" }}>
-                Enter Portal
+              <Link href={isLoggedIn ? dashboardUrl : "/login"} style={{ padding: "18px 44px", fontSize: "16px", background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", color: "#050606", borderRadius: "12px", textDecoration: "none", fontWeight: 800, display: "inline-flex", alignItems: "center", gap: "8px", boxShadow: "0 6px 20px rgba(255, 167, 81, 0.25)" }}>
+                {isLoggedIn ? "Enter Dashboard" : "Enter Portal"}
                 <ArrowRight size={18} />
               </Link>
             </div>

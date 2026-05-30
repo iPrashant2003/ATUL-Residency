@@ -233,15 +233,10 @@ export default function AdminDashboard() {
 
           {/* Charts Row */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "2fr 1fr",
-              gap: "16px",
-              marginBottom: "24px",
-            }}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6"
           >
             {/* Revenue trend */}
-            <div className="chart-container">
+            <div className="chart-container lg:col-span-2">
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "20px", fontFamily: "var(--font-display)" }}>
                 Revenue Trend (Last 6 Months)
               </h3>
@@ -311,7 +306,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Bottom row: Tower cards + Recent pending */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Tower performance */}
             <div className="chart-container">
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "16px", fontFamily: "var(--font-display)" }}>

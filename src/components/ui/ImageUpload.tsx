@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { Upload, X, Loader2, Camera, FileImage } from "lucide-react";
 import { toast } from "sonner";
+import { compressImage } from "@/lib/utils";
 
 interface ImageUploadProps {
   value: string;
@@ -32,8 +33,15 @@ export default function ImageUpload({ value, onChange, label, placeholder }: Ima
     }
 
     setUploading(true);
+    let fileToUpload: File | Blob = file;
+    try {
+      fileToUpload = await compressImage(file);
+    } catch (compressErr) {
+      console.error("Compression failed, using original:", compressErr);
+    }
+
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", fileToUpload);
 
     try {
       const res = await fetch("/api/upload", {

@@ -18,12 +18,66 @@ export async function POST(req: NextRequest) {
     const targetEmail = isEmail ? identifier.toLowerCase().trim() : "";
     const cleanPhone = isEmail ? "" : identifier.replace(/\D/g, "").slice(-10);
 
+    const ADMIN_PHONES = ["7388389944", "6392651108"];
+    const isAdminPhone = cleanPhone && ADMIN_PHONES.includes(cleanPhone);
+
+    // 1. Resolve user first (using username, email, phone)
+    let user = null;
+    if (isEmail) {
+      user = await prisma.user.findUnique({ where: { email: targetEmail } });
+    } else if (isAdminPhone) {
+      const targetAdminEmail = cleanPhone === "7388389944" ? "prashantmanitripathi2003@gmail.com" : "atultiwari123321@gmail.com";
+      user = await prisma.user.findFirst({ where: { email: targetAdminEmail } });
+    } else if (cleanPhone && /^\d+$/.test(cleanPhone)) {
+      user = await prisma.user.findFirst({ where: { phone: { endsWith: cleanPhone } } });
+      if (!user) {
+        const tenant = await prisma.tenant.findFirst({
+          where: {
+            OR: [
+              { phone: { endsWith: cleanPhone } },
+              { whatsapp: { endsWith: cleanPhone } },
+            ],
+          },
+          include: { user: true },
+        });
+        if (tenant) user = tenant.user;
+      }
+    } else {
+      // Username / Name search case-insensitive
+      user = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { name: { equals: identifier.trim(), mode: "insensitive" } },
+            { email: { equals: identifier.toLowerCase().trim() } },
+          ]
+        }
+      });
+      if (!user) {
+        // Try tenant name search
+        const tenant = await prisma.tenant.findFirst({
+          where: {
+            name: { equals: identifier.trim(), mode: "insensitive" }
+          },
+          include: { user: true }
+        });
+        if (tenant) user = tenant.user;
+      }
+    }
+
+    if (!user) {
+      return NextResponse.json({ error: "Account not found to reset" }, { status: 404 });
+    }
+
+    // 2. Build OR conditions for OTP matching using the resolved user's database values
     const orConditions = [];
-    if (targetEmail) orConditions.push({ email: targetEmail });
-    if (cleanPhone) orConditions.push({ phone: cleanPhone });
+    if (user.email) orConditions.push({ email: user.email });
+    if (user.phone) {
+      const resolvedCleanPhone = user.phone.replace(/\D/g, "").slice(-10);
+      if (resolvedCleanPhone) orConditions.push({ phone: resolvedCleanPhone });
+    }
 
     if (orConditions.length === 0) {
-      return NextResponse.json({ error: "Invalid identifier" }, { status: 400 });
+      return NextResponse.json({ error: "No contact details associated with account" }, { status: 400 });
     }
 
     // Verify OTP
@@ -35,7 +89,6 @@ export async function POST(req: NextRequest) {
       },
       orderBy: { createdAt: "desc" },
     });
-
     if (!validOtp) {
       return NextResponse.json({ error: "Invalid or expired OTP" }, { status: 400 });
     }
@@ -54,37 +107,6 @@ export async function POST(req: NextRequest) {
     if (validOtp.expiresAt.getTime() <= dbNow.getTime()) {
       return NextResponse.json({ error: "Invalid or expired OTP" }, { status: 400 });
     }
-
-    // Find the user to reset
-    const ADMIN_PHONES = ["7388389944", "6392651108"];
-    const isAdminPhone = cleanPhone && ADMIN_PHONES.includes(cleanPhone);
-
-    let user = null;
-    if (isEmail) {
-      user = await prisma.user.findUnique({ where: { email: targetEmail } });
-    } else if (isAdminPhone) {
-      const targetAdminEmail = cleanPhone === "7388389944" ? "prashantmanitripathi2003@gmail.com" : "atultiwari123321@gmail.com";
-      user = await prisma.user.findFirst({ where: { email: targetAdminEmail } });
-    } else {
-      user = await prisma.user.findFirst({ where: { phone: { endsWith: cleanPhone } } });
-      if (!user) {
-        const tenant = await prisma.tenant.findFirst({
-          where: {
-            OR: [
-              { phone: { endsWith: cleanPhone } },
-              { whatsapp: { endsWith: cleanPhone } },
-            ],
-          },
-          include: { user: true },
-        });
-        if (tenant) user = tenant.user;
-      }
-    }
-
-    if (!user) {
-      return NextResponse.json({ error: "Account not found to reset" }, { status: 404 });
-    }
-
     // Mark OTP as used
     await prisma.otpCode.update({
       where: { id: validOtp.id },

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendPushNotification } from "@/lib/push";
 
 export async function GET(req: NextRequest) {
   try {
@@ -48,6 +49,36 @@ export async function POST(req: NextRequest) {
         tenant: { include: { room: { include: { tower: true } } } },
       },
     });
+
+    // Notify all admins about the maintenance request
+    try {
+      const admins = await prisma.user.findMany({ where: { role: "ADMIN" } });
+      const tenant = request.tenant;
+      const roomNo = tenant?.room?.number || "—";
+      const towerName = tenant?.room?.tower?.name || "";
+
+      // In-app database notifications
+      await prisma.notification.createMany({
+        data: admins.map((admin) => ({
+          userId: admin.id,
+          type: "MAINTENANCE_UPDATE",
+          title: `New Maintenance Request: ${category}`,
+          message: `Room ${roomNo} (${tenant?.name}) requested: "${title}".`,
+        })),
+      });
+
+      // Web push notifications
+      for (const admin of admins) {
+        await sendPushNotification(
+          admin.id,
+          `Maintenance Requested: ${category} 🔧`,
+          `Room ${roomNo} (${tenant?.name}): "${title}". Tap to view.`,
+          `/admin/maintenance`
+        ).catch((e) => console.error("Admin maintenance push error:", e));
+      }
+    } catch (notifErr) {
+      console.error("[Maintenance notification error]", notifErr);
+    }
 
     return NextResponse.json(request, { status: 201 });
   } catch {

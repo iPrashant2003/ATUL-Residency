@@ -266,12 +266,12 @@ export default function AdminSettingsPage() {
   return (
     <AppLayout role="ADMIN" title="Settings" subtitle="Configure application preferences and credentials">
       {loading ? (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="shimmer" style={{ height: "450px", borderRadius: "12px" }} />
           <div className="shimmer" style={{ height: "450px", borderRadius: "12px" }} />
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", flexWrap: "wrap" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           
           {/* Box 1: Admin Details */}
           <div className="glass-card" style={{ padding: "28px" }}>
@@ -450,7 +450,7 @@ export default function AdminSettingsPage() {
               </button>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Bot 1 */}
               <div style={{
                 background: "rgba(255, 255, 255, 0.02)",

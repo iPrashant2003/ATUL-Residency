@@ -2,6 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { sendPushNotification } from "@/lib/push";
+import { formatCurrency } from "@/lib/utils";
+import os from "os";
+
+function getLanIp(): string {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name] || []) {
+      if ((iface as any).family === "IPv4" && !(iface as any).internal) {
+        return (iface as any).address;
+      }
+    }
+  }
+  return "127.0.0.1";
+}
 
 // Approve or reject payment
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -37,14 +51,54 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       if (rentRecord) {
         const newAmountPaid = rentRecord.amountPaid + payment.amount;
         const newStatus = newAmountPaid >= rentRecord.totalAmount ? "PAID" : "PARTIAL";
-        await prisma.rentRecord.update({
+        const updatedRentRecord = await prisma.rentRecord.update({
           where: { id: payment.rentRecordId },
           data: {
             amountPaid: newAmountPaid,
             status: newStatus,
             paidDate: newStatus === "PAID" ? new Date() : undefined,
           },
+          include: { tenant: true }
         });
+
+        // If the new status is PAID, automatically queue a WhatsApp receipt message!
+        if (newStatus === "PAID" && updatedRentRecord.tenant && updatedRentRecord.tenant.whatsapp) {
+          try {
+            const record = updatedRentRecord;
+            const tenant = updatedRentRecord.tenant;
+            const host = req.headers.get("host") || "localhost:3000";
+            let invoiceUrl = "";
+            if (host.includes("localhost") || host.includes("127.0.0.1")) {
+              const lanIp = getLanIp();
+              const port = host.split(":")[1] || "3000";
+              invoiceUrl = `http://${lanIp}:${port}/api/rent/${record.id}/invoice`;
+            } else {
+              invoiceUrl = `https://${host}/api/rent/${record.id}/invoice`;
+            }
+
+            let breakdown = `🏠 *Rent*: ${formatCurrency(record.rentAmount)}\n`;
+            if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ${formatCurrency(record.electricityBill)}\n`;
+            if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ${formatCurrency(record.maintenanceCharge)}\n`;
+            if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ${formatCurrency(record.lateFee)}\n`;
+            if (record.discount > 0) breakdown += `🎁 *Discount*: -${formatCurrency(record.discount)}\n`;
+
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthName = months[record.month - 1] || "Billing Month";
+
+            const whatsappMsg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your *Payment Receipt* for *${monthName} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ${formatCurrency(record.totalAmount)}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+
+            await prisma.whatsappQueue.create({
+              data: {
+                number: tenant.whatsapp,
+                message: whatsappMsg,
+                status: "PENDING",
+              }
+            });
+            console.log(`Auto-queued WhatsApp Payment Receipt for ${tenant.name}`);
+          } catch (whatsappErr: any) {
+            console.error("Failed to auto-queue WhatsApp receipt:", whatsappErr.message);
+          }
+        }
       }
     }
 

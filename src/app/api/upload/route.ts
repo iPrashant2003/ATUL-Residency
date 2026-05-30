@@ -1,9 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+import { auth } from "@/lib/auth";
+
+// Configure Cloudinary if credentials are set and not placeholder values
+const isCloudinaryConfigured = 
+  process.env.CLOUDINARY_CLOUD_NAME && 
+  process.env.CLOUDINARY_CLOUD_NAME !== "your-cloud-name" &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_KEY !== "your-api-key" &&
+  process.env.CLOUDINARY_API_SECRET &&
+  process.env.CLOUDINARY_API_SECRET !== "your-api-secret";
+
+if (isCloudinaryConfigured) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    console.log("[Upload API] Session:", JSON.stringify(session));
+    console.log("[Upload API] Cookies:", req.headers.get("cookie"));
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await req.formData();
     const file = formData.get("file") as File;
 
@@ -14,27 +40,34 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create unique filename using timestamp
-    const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const filename = `${Date.now()}-${cleanFileName}`;
-    
-    // Define the public uploads directory
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    
-    // Ensure the uploads directory exists
-    await mkdir(uploadsDir, { recursive: true });
-    
-    // Write file to disk
-    const filePath = path.join(uploadsDir, filename);
-    await writeFile(filePath, new Uint8Array(buffer));
+    // 1. If Cloudinary is configured, upload to Cloudinary (Production/Cloud standard)
+    if (isCloudinaryConfigured) {
+      try {
+        const result = await new Promise<any>((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: "atul-residency" },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          ).end(buffer);
+        });
+        return NextResponse.json({ success: true, url: result.secure_url });
+      } catch (cloudinaryErr: any) {
+        console.error("Cloudinary upload failed, falling back to Base64:", cloudinaryErr.message);
+      }
+    }
 
-    // Return the public URL path
+    // 2. Fallback: Base64 Data URL (Gives zero-setup out-of-the-box upload functionality on read-only environments like Vercel)
+    const base64 = buffer.toString("base64");
+    const dataUrl = `data:${file.type};base64,${base64}`;
     return NextResponse.json({ 
       success: true, 
-      url: `/uploads/${filename}` 
+      url: dataUrl 
     });
-  } catch (error) {
-    console.error("Local file upload error:", error);
+
+  } catch (error: any) {
+    console.error("Upload handler error:", error);
     return NextResponse.json({ error: "Failed to upload file" }, { status: 500 });
   }
 }

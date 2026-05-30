@@ -35,7 +35,13 @@ export default function PWARegister() {
 
   const setupPushSubscription = async (registration: ServiceWorkerRegistration) => {
     try {
-      const publicVapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+      const res = await fetch("/api/notifications/vapid-key");
+      if (!res.ok) {
+        console.warn("VAPID key API endpoint returned non-ok status");
+        return;
+      }
+      const data = await res.json();
+      const publicVapidKey = data.publicKey;
       if (!publicVapidKey) {
         return;
       }

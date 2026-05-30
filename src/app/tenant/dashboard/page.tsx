@@ -5,7 +5,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import { useSession } from "next-auth/react";
 import {
   IndianRupee, Clock, CheckCircle, Wrench, Bell,
-  AlertTriangle, MessageCircle, FileText, CalendarDays, Phone,
+  AlertTriangle, MessageCircle, FileText, CalendarDays, Phone, Camera, X
 } from "lucide-react";
 import { formatCurrency, getRentStatusColor, getMonthName } from "@/lib/utils";
 import Link from "next/link";
@@ -17,6 +17,7 @@ export default function TenantDashboard() {
   const [loading, setLoading] = useState(true);
   const [tenantInfo, setTenantInfo] = useState<any>(null);
   const [dbTenantId, setDbTenantId] = useState<string | null>(null);
+  const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
 
   const userId = (session?.user as any)?.id;
   const sessionTenantId = (session?.user as any)?.tenantId;
@@ -111,9 +112,8 @@ export default function TenantDashboard() {
   }
 
   const now = new Date();
-  const currentMonthRecord = rentRecords.find(
-    (r) => r.month === now.getMonth() + 1 && r.year === now.getFullYear()
-  );
+  // Find the latest bill overall (first record in sorted list) instead of calendar-strict matching
+  const currentMonthRecord = rentRecords[0];
 
   const totalPaid = rentRecords.filter((r) => r.status === "PAID").length;
   const totalPending = rentRecords.filter((r) => r.status === "PENDING" || r.status === "OVERDUE").length;
@@ -145,7 +145,7 @@ export default function TenantDashboard() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
             <div>
               <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>
-                {getMonthName(currentMonthRecord.month)} {currentMonthRecord.year} — Current Invoice
+                {getMonthName(currentMonthRecord.month)} {currentMonthRecord.year} — Latest Invoice
               </p>
               <div style={{ fontSize: "42px", fontWeight: 900, fontFamily: "var(--font-display)", color: "#e2e8f0", lineHeight: 1 }}>
                 {formatCurrency(currentMonthRecord.totalAmount)}
@@ -157,9 +157,23 @@ export default function TenantDashboard() {
                   <span>📟 Meter: {currentMonthRecord.meterReading}</span>
                 )}
                 {currentMonthRecord.meterPhotoUrl && (
-                  <a href={currentMonthRecord.meterPhotoUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#a78bfa", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  <button
+                    onClick={() => setActivePhotoUrl(currentMonthRecord.meterPhotoUrl)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "#a78bfa",
+                      cursor: "pointer",
+                      padding: 0,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                    }}
+                  >
                     📸 View Photo
-                  </a>
+                  </button>
                 )}
               </div>
             </div>
@@ -254,7 +268,26 @@ export default function TenantDashboard() {
             {rentRecords.slice(0, 6).map((r) => (
               <div key={r.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.04)" }}>
                 <div>
-                  <p style={{ fontSize: "13px", fontWeight: 600 }}>{getMonthName(r.month)} {r.year}</p>
+                  <p style={{ fontSize: "13px", fontWeight: 600, display: "flex", alignItems: "center", gap: "6px" }}>
+                    {getMonthName(r.month)} {r.year}
+                    {r.meterPhotoUrl && (
+                      <button
+                        onClick={() => setActivePhotoUrl(r.meterPhotoUrl)}
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          color: "#14b8a6",
+                          padding: "2px",
+                          display: "inline-flex",
+                          alignItems: "center"
+                        }}
+                        title="View Meter Photo"
+                      >
+                        <Camera size={13} />
+                      </button>
+                    )}
+                  </p>
                   <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)" }}>Rent: {formatCurrency(r.rentAmount)} + Elec: {formatCurrency(r.electricityBill)}</p>
                 </div>
                 <div style={{ textAlign: "right" }}>
@@ -269,6 +302,72 @@ export default function TenantDashboard() {
           </div>
         )}
       </div>
+      {/* Meter Photo Modal Viewer */}
+      {activePhotoUrl && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setActivePhotoUrl(null)}
+          style={{
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.85)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div 
+            className="modal-content" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              width: "auto",
+              padding: "20px",
+              background: "rgba(10, 12, 12, 0.95)",
+              border: "1px solid rgba(20, 184, 166, 0.2)",
+              borderRadius: "16px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "relative"
+            }}
+          >
+            <button 
+              onClick={() => setActivePhotoUrl(null)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#e2e8f0",
+                borderRadius: "50%",
+                width: "32px",
+                height: "32px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(239, 68, 68, 0.8)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+            >
+              <X size={16} />
+            </button>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", paddingRight: "40px" }}>Electricity Meter Photo</h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden", borderRadius: "8px" }}>
+              <img 
+                src={activePhotoUrl} 
+                alt="Meter Reading Photo" 
+                style={{ maxWidth: "100%", maxHeight: "70vh", objectFit: "contain" }} 
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </AppLayout>
   );
 }

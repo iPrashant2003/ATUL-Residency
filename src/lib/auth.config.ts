@@ -19,9 +19,11 @@ export const authConfig = {
         pathname.startsWith("/.well-known") ||
         pathname.startsWith("/login") ||
         pathname.startsWith("/register") ||
+        pathname.startsWith("/forgot-password") ||
         pathname.startsWith("/api/auth") ||
         pathname.startsWith("/api/chat") ||
         pathname.startsWith("/api/public-stats") ||
+        pathname === "/api/upload" ||
         new RegExp("^/api/rent/[^/]+/invoice").test(pathname);
 
       if (isPublicRoute) return true;

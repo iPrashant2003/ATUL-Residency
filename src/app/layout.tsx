@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   description: "Smart property management system for Atul Residency. Manage rent, renters, maintenance, and payments seamlessly.",
   keywords: "property management, rent tracker, renter management, Atul Residency",
   authors: [{ name: "Atul Tiwari" }],
-  manifest: "/manifest.json?v=3",
+  manifest: "/manifest.json",
   icons: {
-    icon: "/favicon-32x32.png?v=3",
-    shortcut: "/favicon.ico?v=3",
-    apple: "/apple-touch-icon.png?v=3",
+    icon: "/favicon-32x32.png",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,

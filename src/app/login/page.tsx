@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -16,6 +16,15 @@ type OtpStep = "phone" | "verify";
 
 function LoginPageContent() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      const role = (session?.user as any)?.role;
+      router.push(role === "ADMIN" ? "/admin/dashboard" : "/tenant/dashboard");
+    }
+  }, [status, session, router]);
+
   const [loginMode, setLoginMode] = useState<LoginMode>("password");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -201,8 +210,8 @@ function LoginPageContent() {
 
         {/* glassmorphic card */}
         <div 
-          className="p-6 sm:p-9"
           style={{ 
+            padding: "36px",
             background: "rgba(10, 12, 12, 0.75)",
             border: "1px solid rgba(20, 184, 166, 0.2)",
             borderRadius: "24px",
@@ -315,7 +324,7 @@ function LoginPageContent() {
               {otpStep === "phone" && (
                 <form onSubmit={handleSendOtp} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "rgba(226,232,240,0.6)", marginBottom: "6px" }}>Registered Email or Phone Number</label>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "rgba(226,232,240,0.6)", marginBottom: "6px" }}>Enter Username</label>
                     <input
                       type="text"
                       style={{
@@ -331,7 +340,7 @@ function LoginPageContent() {
                         e.target.style.borderColor = "rgba(255,255,255,0.08)";
                         e.target.style.boxShadow = "none";
                       }}
-                      placeholder="e.g. atultiwari@gmail.com or 7388389944"
+                      placeholder="Enter Username"
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
                       required

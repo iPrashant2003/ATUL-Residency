@@ -344,8 +344,8 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
             </View>
           </View>
           <View style={styles.invoiceDetails}>
-            <Text style={styles.invoiceTitle}>INVOICE</Text>
-            <Text style={styles.invoiceText}>INV-{record.id.slice(-6).toUpperCase()}</Text>
+            <Text style={styles.invoiceTitle}>{isPaid ? "RECEIPT" : "INVOICE"}</Text>
+            <Text style={styles.invoiceText}>{isPaid ? "REC" : "INV"}-{record.id.slice(-6).toUpperCase()}</Text>
             <Text style={styles.invoiceText}>Date: {formatDateTime(new Date().toISOString()).split(" ")[0]}</Text>
             <Text style={styles.invoiceText}>Billing Cycle: {getMonthName(record.month)} {record.year}</Text>
           </View>
@@ -431,8 +431,8 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
               </View>
               
               <View style={styles.grandTotalRow}>
-                <Text style={styles.grandTotalLabel}>Balance Due:</Text>
-                <Text style={styles.grandTotalValue}>{formatCurrency(balance)}</Text>
+                <Text style={styles.grandTotalLabel}>{isPaid ? "Status:" : "Balance Due:"}</Text>
+                <Text style={styles.grandTotalValue}>{isPaid ? "PAID" : formatCurrency(balance)}</Text>
               </View>
             </View>
           </View>
@@ -471,13 +471,27 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
           {/* Payment Section with QR Code */}
           <View style={styles.paymentSection}>
              <View style={styles.paymentDetails}>
-                <Text style={styles.paymentTitle}>Payment Information</Text>
-                <Text style={styles.paymentText}>Please scan the QR code to pay via UPI.</Text>
-                <Text style={styles.paymentText}>UPI ID: atultiwari123321@oksbi</Text>
-                <Text style={[styles.paymentText, { marginTop: 4, color: "#ef4444", fontWeight: "bold", fontSize: 10 }]}>Amount Due: {formatCurrency(balance)}</Text>
+                <Text style={styles.paymentTitle}>{isPaid ? "Receipt Information" : "Payment Information"}</Text>
+                <Text style={styles.paymentText}>
+                  {isPaid 
+                    ? "This bill has been fully paid and verified. No further action is required." 
+                    : "Please scan the QR code to pay via UPI."}
+                </Text>
+                <Text style={styles.paymentText}>
+                  {isPaid ? `Paid Date: ${record.paidDate ? formatDateTime(record.paidDate.toISOString()).split(" ")[0] : formatDateTime(record.updatedAt.toISOString()).split(" ")[0]}` : "UPI ID: atultiwari123321@oksbi"}
+                </Text>
+                <Text style={[styles.paymentText, { marginTop: 4, color: isPaid ? "#10b981" : "#ef4444", fontWeight: "bold", fontSize: 10 }]}>
+                  {isPaid ? `Total Paid: ${formatCurrency(record.totalAmount)}` : `Amount Due: ${formatCurrency(balance)}`}
+                </Text>
              </View>
              <View style={styles.qrContainer}>
-                <Image src={qrDataUri} style={styles.qrCode} />
+                {isPaid ? (
+                  <View style={{ width: 70, height: 70, borderRadius: 4, borderWidth: 2, borderColor: "#10b981", alignItems: "center", justifyContent: "center", backgroundColor: "#e6fcf5" }}>
+                    <Text style={{ color: "#10b981", fontSize: 12, fontWeight: "bold" }}>PAID</Text>
+                  </View>
+                ) : (
+                  <Image src={qrDataUri} style={styles.qrCode} />
+                )}
               </View>
           </View>
         </View>

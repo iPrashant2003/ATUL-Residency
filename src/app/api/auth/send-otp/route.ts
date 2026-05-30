@@ -18,35 +18,70 @@ export async function POST(req: NextRequest) {
     
     let isAdmin = false;
     let tenant = null;
+    let resolvedUser = null;
 
     if (isEmail) {
       targetEmail = identifier.toLowerCase().trim();
-      const user = await prisma.user.findUnique({
+      resolvedUser = await prisma.user.findUnique({
         where: { email: targetEmail },
         include: { tenant: true },
       });
-      
-      if (user) {
-        if (user.role === "ADMIN") isAdmin = true;
-        else if (user.tenant && user.tenant.isActive) tenant = user.tenant;
-      }
     } else {
-      cleanPhone = identifier.replace(/\D/g, "").slice(-10);
-      if (cleanPhone.length < 10) {
-         return NextResponse.json({ error: "Enter a valid 10-digit mobile number" }, { status: 400 });
+      const digitsOnly = identifier.replace(/\D/g, "");
+      if (digitsOnly.length >= 10) {
+        cleanPhone = digitsOnly.slice(-10);
+        isAdmin = ADMIN_PHONES.includes(cleanPhone);
+        
+        tenant = await prisma.tenant.findFirst({
+          where: {
+            isActive: true,
+            OR: [
+              { phone: { endsWith: cleanPhone } },
+              { whatsapp: { endsWith: cleanPhone } },
+            ],
+          },
+        });
+      } else {
+        // Name/username case-insensitive search
+        resolvedUser = await prisma.user.findFirst({
+          where: { name: { equals: identifier.trim(), mode: "insensitive" } },
+          include: { tenant: true }
+        });
+        if (!resolvedUser) {
+          const dbTenant = await prisma.tenant.findFirst({
+            where: {
+              isActive: true,
+              name: { equals: identifier.trim(), mode: "insensitive" }
+            },
+            include: { user: true }
+          });
+          if (dbTenant) {
+            tenant = dbTenant;
+            resolvedUser = dbTenant.user;
+          }
+        }
       }
+    }
 
-      isAdmin = ADMIN_PHONES.includes(cleanPhone);
-      
-      tenant = await prisma.tenant.findFirst({
-        where: {
-          isActive: true,
-          OR: [
-            { phone: { endsWith: cleanPhone } },
-            { whatsapp: { endsWith: cleanPhone } },
-          ],
-        },
-      });
+    if (resolvedUser) {
+      if (resolvedUser.role === "ADMIN") {
+        isAdmin = true;
+        if (resolvedUser.phone) {
+          cleanPhone = resolvedUser.phone.replace(/\D/g, "").slice(-10);
+        }
+        if (resolvedUser.email) {
+          targetEmail = resolvedUser.email;
+        }
+      } else {
+        const dbTenant = await prisma.tenant.findUnique({
+          where: { userId: resolvedUser.id }
+        });
+        if (dbTenant && dbTenant.isActive) {
+          tenant = dbTenant;
+          cleanPhone = tenant.phone.replace(/\D/g, "").slice(-10);
+          targetEmail = tenant.email || resolvedUser.email;
+        }
+      }
     }
 
     if (!isAdmin && !tenant) {

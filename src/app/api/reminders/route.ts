@@ -55,10 +55,17 @@ export async function POST(req: NextRequest) {
       if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
       if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
 
-      const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
-      
-      const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
-      const qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+      const isPaid = record.status === "PAID" || record.status === "ADVANCE_PAID";
+      let msg = "";
+      let qrDataUri = null;
+
+      if (isPaid) {
+        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+      } else {
+        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+        const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
+        qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+      }
 
       try {
         await prisma.whatsappQueue.create({
@@ -114,10 +121,17 @@ export async function POST(req: NextRequest) {
         if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
         if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
 
-        const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+        const isPaid = record.status === "PAID" || record.status === "ADVANCE_PAID";
+        let msg = "";
+        let qrDataUri = null;
 
-        const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
-        const qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+        if (isPaid) {
+          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+        } else {
+          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+          const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
+          qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+        }
 
         try {
           await prisma.whatsappQueue.create({

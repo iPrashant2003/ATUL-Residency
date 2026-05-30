@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import Logo from "@/components/Logo";
 
 const adminNav = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
@@ -119,17 +118,18 @@ export default function Sidebar({ role, userName, isOpen, onClose }: SidebarProp
               style={{
                 width: "40px",
                 height: "40px",
-                background: "linear-gradient(135deg, rgba(15, 17, 17, 0.9), rgba(5, 6, 6, 0.95))",
+                background: "linear-gradient(135deg, #FFD700, #F59E0B, #D97706)",
                 borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
-                boxShadow: "0 4px 15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 12px rgba(245, 158, 11, 0.15)",
-                border: "1px solid rgba(245, 158, 11, 0.25)",
+                boxShadow: "0 0 20px rgba(245,158,11,0.5), inset 0 2px 4px rgba(255,255,255,0.4)",
+                border: "1px solid rgba(255,215,0,0.6)",
+                transform: "rotate(-5deg)",
               }}
             >
-              <Logo width={28} height={28} />
+              <Building size={22} color="#1E1E1E" style={{ transform: "rotate(5deg)" }} />
             </div>
             {!collapsed && (
               <div style={{ display: "flex", flexDirection: "column" as const, gap: "0px", marginLeft: "4px" }}>

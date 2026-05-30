@@ -8,7 +8,7 @@ import {
   ChevronDown, Calendar, Zap, FileText, Send,
 } from "lucide-react";
 import { toast } from "sonner";
-import { formatCurrency, getMonthName, getRentStatusColor } from "@/lib/utils";
+import { formatCurrency, getMonthName, getRentStatusColor, compressImage } from "@/lib/utils";
 
 interface RentRecord {
   id: string;
@@ -90,8 +90,14 @@ function EntryModal({
     try {
       let meterPhotoUrl = null;
       if (meterPhoto) {
+        let fileToUpload: File | Blob = meterPhoto;
+        try {
+          fileToUpload = await compressImage(meterPhoto);
+        } catch (compressErr) {
+          console.error("Compression failed, using original:", compressErr);
+        }
         const formData = new FormData();
-        formData.append("file", meterPhoto);
+        formData.append("file", fileToUpload);
         const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
         if (uploadRes.ok) {
           meterPhotoUrl = (await uploadRes.json()).url;
@@ -288,18 +294,31 @@ function StatusUpdateModal({
     if (record.lateFee > 0) breakdown += `⏳ Late Fee: *${formatCurrency(record.lateFee)}*\n`;
     if (record.discount > 0) breakdown += `🎁 Discount: *- ${formatCurrency(record.discount)}*\n`;
 
+    const isPaid = record.status === "PAID" || record.status === "ADVANCE_PAID";
+
     const msg = encodeURIComponent(
-      `🏢 *ATUL RESIDENCY*\n\n` +
-      `Dear *${tenant.name}*,\n\n` +
-      `Your rent for *${getMonthName(record.month)} ${record.year}* is:\n` +
-      breakdown +
-      `━━━━━━━━━\n` +
-      `💵 Total Due: *${formatCurrency(record.totalAmount - record.amountPaid)}*\n\n` +
-      `⚠️ *Please Pay on time!* ⚠️\n\n` +
-      `📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n` +
-      `💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n` +
-      `💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n` +
-      `Thank you! 🙏`
+      isPaid
+        ? `🏢 *ATUL RESIDENCY* 🏢\n\n` +
+          `Dear *${tenant.name}*,\n\n` +
+          `Here is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*:\n` +
+          breakdown +
+          `━━━━━━━━━\n` +
+          `💰 Amount Paid: *${formatCurrency(record.totalAmount)}*\n` +
+          `✅ Status: *PAID / Verified*\n\n` +
+          `📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n` +
+          `💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n` +
+          `Thank you! 🙏`
+        : `🏢 *ATUL RESIDENCY* 🏢\n\n` +
+          `Dear *${tenant.name}*,\n\n` +
+          `Your rent invoice for *${getMonthName(record.month)} ${record.year}* is:\n` +
+          breakdown +
+          `━━━━━━━━━\n` +
+          `💵 Total Due: *${formatCurrency(record.totalAmount - record.amountPaid)}*\n\n` +
+          `⚠️ *Please Pay on time!* ⚠️\n\n` +
+          `📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n` +
+          `💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n` +
+          `💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n` +
+          `Thank you! 🙏`
     );
     const cleanNumber = tenant.whatsapp.replace(/\D/g, "");
     const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;

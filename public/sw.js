@@ -12,18 +12,18 @@ if (workbox) {
   const { ExpirationPlugin } = workbox.expiration;
 
   // Pre-cache core shell resources on install
-  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v3';
+  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v1';
   const PRECACHE_ASSETS = [
     '/offline',
     '/manifest.json',
     '/favicon.ico',
-    '/favicon-32x32.png?v=3',
-    '/favicon-16x16.png?v=3',
-    '/apple-touch-icon.png?v=3',
-    '/icons/icon-192.png?v=3',
-    '/icons/icon-512.png?v=3',
-    '/icons/icon-maskable-192.png?v=3',
-    '/icons/icon-maskable-512.png?v=3'
+    '/favicon-32x32.png',
+    '/favicon-16x16.png',
+    '/apple-touch-icon.png',
+    '/icons/icon-192.png',
+    '/icons/icon-512.png',
+    '/icons/icon-maskable-192.png',
+    '/icons/icon-maskable-512.png'
   ];
 
   self.addEventListener('install', (event) => {
@@ -136,6 +136,7 @@ if (workbox) {
         body: data.body || 'New notification from Atul Residency',
         icon: data.icon || '/icons/icon-192.png',
         badge: data.badge || '/icons/icon-192.png',
+        sound: '/notification.wav',
         data: data.data || { url: '/' },
         vibrate: [100, 50, 100],
         actions: [

@@ -113,10 +113,10 @@ export default function AdminAnalyticsPage() {
           </div>
 
           {/* Core Analytics charts */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: "16px", flexWrap: "wrap" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
             
             {/* Chart 1: Revenue vs expected ComposedChart */}
-            <div className="chart-container">
+            <div className="chart-container lg:col-span-3">
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "20px", fontFamily: "var(--font-display)" }}>
                 Rent Billing vs Collection (12 Months)
               </h3>
@@ -145,7 +145,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Chart 2: Tower Comparison */}
-            <div className="chart-container">
+            <div className="chart-container lg:col-span-2">
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "20px", fontFamily: "var(--font-display)" }}>
                 Tower Revenue Distribution
               </h3>
@@ -175,10 +175,10 @@ export default function AdminAnalyticsPage() {
           </div>
 
           {/* Occupancy and properties split */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: "16px" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
             
             {/* Tower Performance details */}
-            <div className="chart-container">
+            <div className="chart-container lg:col-span-3">
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "20px", fontFamily: "var(--font-display)" }}>
                 Tower Operations Detail
               </h3>
@@ -210,7 +210,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Occupancy stats ring */}
-            <div className="chart-container" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+            <div className="chart-container lg:col-span-2" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
               <ShieldAlert size={36} color="#14B8A6" style={{ marginBottom: "14px", filter: "drop-shadow(0 0 10px rgba(20,184,166,0.5))" }} />
               <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "6px" }}>Residency Health Status</h3>
               <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.45)", maxWidth: "220px", marginBottom: "16px" }}>

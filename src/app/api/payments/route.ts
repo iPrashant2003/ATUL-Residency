@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { sendPushNotification } from "@/lib/push";
 
 export async function GET(req: NextRequest) {
   try {
@@ -67,6 +68,16 @@ export async function POST(req: NextRequest) {
           message: `Room ${roomNo} ${towerName} paid ₹${parseFloat(amount).toLocaleString("en-IN")} via ${method || "UPI"}. Awaiting your approval.`,
         })),
       });
+
+      // Send push notification to all admins
+      for (const admin of admins) {
+        await sendPushNotification(
+          admin.id,
+          `Payment Received from ${tenant?.name} 💰`,
+          `Room ${roomNo} (${towerName}) paid ₹${parseFloat(amount).toLocaleString("en-IN")} via ${method || "UPI"}. Tap to verify.`,
+          `/admin/payments`
+        ).catch(e => console.error("Admin payment push error:", e));
+      }
     } catch (notifErr) {
       console.error("[Payment notification error]", notifErr);
     }

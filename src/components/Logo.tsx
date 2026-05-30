@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 interface LogoProps {
   width?: number | string;
@@ -8,6 +8,11 @@ interface LogoProps {
 }
 
 export default function Logo({ width = 48, height = 48, className = "", glow = true }: LogoProps) {
+  const uniqueId = useId();
+  const goldId = `logoGold-${uniqueId.replace(/:/g, "")}`;
+  const tealId = `logoTeal-${uniqueId.replace(/:/g, "")}`;
+  const glowId = `logoGlow-${uniqueId.replace(/:/g, "")}`;
+
   return (
     <svg
       viewBox="0 0 100 100"
@@ -18,17 +23,17 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={goldId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#FFE259" />
           <stop offset="60%" stopColor="#FFA751" />
           <stop offset="100%" stopColor="#FF6B6B" />
         </linearGradient>
-        <linearGradient id="logoTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={tealId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#00F2FE" />
           <stop offset="100%" stopColor="#4FACFE" />
         </linearGradient>
         {glow && (
-          <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
@@ -36,35 +41,35 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
       </defs>
       
       {/* Background soft glow circle */}
-      <circle cx="50" cy="50" r="42" fill="url(#logoGold)" opacity="0.05" />
+      <circle cx="50" cy="50" r="42" fill={`url(#${goldId})`} opacity="0.05" />
       
       {/* Outermost elegant thin ring */}
-      <circle cx="50" cy="50" r="45" stroke="url(#logoGold)" strokeWidth="1" strokeDasharray="3 6" opacity="0.4" />
+      <circle cx="50" cy="50" r="45" stroke={`url(#${goldId})`} strokeWidth="1" strokeDasharray="3 6" opacity="0.4" />
       
       {/* Stylized A-Frame modern high-rise tower structure */}
       {/* Left & Right pillars forming the shape of A */}
       <path
         d="M24 82 L47 18 C48 15, 52 15, 53 18 L76 82"
-        stroke="url(#logoGold)"
+        stroke={`url(#${goldId})`}
         strokeWidth="6"
         strokeLinecap="round"
         strokeLinejoin="round"
-        filter={glow ? "url(#logoGlow)" : undefined}
+        filter={glow ? `url(#${glowId})` : undefined}
       />
 
       {/* Horizontal beam representing residential levels (making it look like an 'A') */}
       <path
         d="M33 58 L67 58"
-        stroke="url(#logoGold)"
+        stroke={`url(#${goldId})`}
         strokeWidth="4"
         strokeLinecap="round"
-        filter={glow ? "url(#logoGlow)" : undefined}
+        filter={glow ? `url(#${glowId})` : undefined}
       />
       
       {/* Inner modern tower structure with glass panel design */}
       <path
         d="M50 24 L50 82"
-        stroke="url(#logoTeal)"
+        stroke={`url(#${tealId})`}
         strokeWidth="3.5"
         strokeLinecap="round"
         opacity="0.85"
@@ -73,7 +78,7 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
       {/* Modern architectural wings / balconies */}
       <path
         d="M38 42 L50 30 L62 42"
-        stroke="url(#logoGold)"
+        stroke={`url(#${goldId})`}
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -81,7 +86,7 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
       />
       <path
         d="M30 65 L50 50 L70 65"
-        stroke="url(#logoGold)"
+        stroke={`url(#${goldId})`}
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -91,65 +96,18 @@ export default function Logo({ width = 48, height = 48, className = "", glow = t
       {/* Foundation base line */}
       <path
         d="M18 82 L82 82"
-        stroke="url(#logoGold)"
+        stroke={`url(#${goldId})`}
         strokeWidth="5"
         strokeLinecap="round"
-        filter={glow ? "url(#logoGlow)" : undefined}
+        filter={glow ? `url(#${glowId})` : undefined}
       />
       
       {/* Radiant star on top representing excellence */}
       <path
         d="M50 6 L52 11 L57 11 L53 14 L55 19 L50 16 L45 19 L47 14 L43 11 L48 11 Z"
-        fill="url(#logoGold)"
-        filter={glow ? "url(#logoGlow)" : undefined}
+        fill={`url(#${goldId})`}
+        filter={glow ? `url(#${glowId})` : undefined}
       />
-
-      {/* Creative Badge at Bottom-Right (cx=76, cy=72) */}
-      <g>
-        {/* Solid background mask circle to block out underlying lines cleanly */}
-        <circle cx="76" cy="72" r="14" fill="#050606" />
-
-        {/* Outer glowing border and glassmorphic base of the badge */}
-        <circle
-          cx="76"
-          cy="72"
-          r="12"
-          fill="#050606"
-          stroke="url(#logoGold)"
-          strokeWidth="1.5"
-          filter={glow ? "url(#logoGlow)" : undefined}
-        />
-        <circle
-          cx="76"
-          cy="72"
-          r="12"
-          stroke="url(#logoTeal)"
-          strokeWidth="0.75"
-          opacity="0.8"
-        />
-        
-        {/* Crown emblem inside the badge representing premium status */}
-        <path
-          d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z"
-          fill="url(#logoGold)"
-          filter={glow ? "url(#logoGlow)" : undefined}
-        />
-        <path
-          d="M71 77 L69 71 L73 73 L76 68 L79 73 L83 71 L81 77 Z"
-          fill="url(#logoGold)"
-        />
-        <rect
-          x="71.5"
-          y="78"
-          width="9"
-          height="1.2"
-          rx="0.4"
-          fill="url(#logoGold)"
-        />
-        <circle cx="69" cy="70" r="0.75" fill="url(#logoGold)" />
-        <circle cx="76" cy="67" r="0.9" fill="url(#logoGold)" />
-        <circle cx="83" cy="70" r="0.75" fill="url(#logoGold)" />
-      </g>
     </svg>
   );
 }

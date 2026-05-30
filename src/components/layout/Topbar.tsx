@@ -29,6 +29,7 @@ export default function Topbar({ title, subtitle, onMenuClick }: TopbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const [prevUnreadCount, setPrevUnreadCount] = useState<number | null>(null);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
@@ -37,7 +38,15 @@ export default function Topbar({ title, subtitle, onMenuClick }: TopbarProps) {
       const res = await fetch("/api/notifications");
       if (!res.ok) return;
       const data = await res.json();
-      setNotifications(Array.isArray(data) ? data.slice(0, 8) : []);
+      const list = Array.isArray(data) ? data.slice(0, 8) : [];
+      setNotifications(list);
+
+      const newUnreadCount = list.filter((n) => !n.isRead).length;
+      if (prevUnreadCount !== null && newUnreadCount > prevUnreadCount) {
+        const audio = new Audio("/notification.wav");
+        audio.play().catch((err) => console.error("Audio play blocked/failed:", err));
+      }
+      setPrevUnreadCount(newUnreadCount);
     } catch {}
   };
 
@@ -46,7 +55,7 @@ export default function Topbar({ title, subtitle, onMenuClick }: TopbarProps) {
     // Poll every 60 seconds
     const interval = setInterval(fetchNotifications, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [prevUnreadCount]);
 
   // Close panels on outside click
   useEffect(() => {
