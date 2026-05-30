@@ -634,8 +634,15 @@ export default function RoomsPage() {
                             whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                             lineHeight: "1.2",
                           }}>{room.tenant!.name}</p>
-                          <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", lineHeight: "1.2", marginTop: "2px" }}>
-                            {room.tenant!.phone}
+                          <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", lineHeight: "1.2", marginTop: "2px" }} onClick={(e) => e.stopPropagation()}>
+                            <a
+                              href={`tel:${room.tenant!.phone}`}
+                              style={{ color: "#60a5fa", textDecoration: "none" }}
+                              onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"}
+                              onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}
+                            >
+                              {room.tenant!.phone}
+                            </a>
                           </p>
                         </div>
                       </div>

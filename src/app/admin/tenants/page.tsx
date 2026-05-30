@@ -761,6 +761,11 @@ function RenterCard({
   const roomColor = isTowerA ? "#a78bfa" : "#22d3ee"; // Purple for A, Cyan for B
   const avatarCol = isTowerA ? "#8b5cf6" : "#06b6d4";
   const latestRecord = renter.rentRecords?.[0] || renter.latestRent;
+  console.log("RenterCard latestRecord debug for " + renter.name + ":", {
+    rentRecordsCount: renter.rentRecords?.length,
+    latestRecord,
+    latestRent: renter.latestRent
+  });
 
   return (
     <div
@@ -846,9 +851,16 @@ function RenterCard({
         )}
 
         {/* Phone */}
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px" }} onClick={(e) => e.stopPropagation()}>
           <Phone size={11} color="rgba(226,232,240,0.35)" />
-          <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)" }}>{renter.phone}</span>
+          <a
+            href={`tel:${renter.phone}`}
+            style={{ fontSize: "12px", color: "#60a5fa", textDecoration: "none" }}
+            onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"}
+            onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}
+          >
+            {renter.phone}
+          </a>
         </div>
 
         {/* Rent amount + Latest Bill */}
