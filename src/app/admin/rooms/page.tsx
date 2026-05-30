@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import AppLayout from "@/components/layout/AppLayout";
 import { Plus, Edit, Trash2, X, Loader2, Building2, ChevronUp, ChevronDown, User, FileText, Zap, IndianRupee, Send } from "lucide-react";
 import { toast } from "sonner";
-import { formatCurrency, getMonthName } from "@/lib/utils";
+import { formatCurrency, getMonthName, compressImage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
 /* ───────────── Types ───────────── */
@@ -196,8 +196,14 @@ function QuickEntryModal({
     try {
       let meterPhotoUrl = null;
       if (meterPhoto) {
+        let fileToUpload: File | Blob = meterPhoto;
+        try {
+          fileToUpload = await compressImage(meterPhoto);
+        } catch (compressErr) {
+          console.error("Compression failed, using original:", compressErr);
+        }
         const formData = new FormData();
-        formData.append("file", meterPhoto);
+        formData.append("file", fileToUpload);
         const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
         if (uploadRes.ok) {
           meterPhotoUrl = (await uploadRes.json()).url;

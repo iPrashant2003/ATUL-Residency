@@ -23,11 +23,14 @@ if (isCloudinaryConfigured) {
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await auth();
-    console.log("[Upload API] Session:", JSON.stringify(session));
-    console.log("[Upload API] Cookies:", req.headers.get("cookie"));
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // Validate same-origin/referer to protect against cross-site abuse
+    const origin = req.headers.get("origin");
+    const host = req.headers.get("host");
+    if (origin && host) {
+      const cleanOrigin = origin.replace(/^https?:\/\//, "");
+      if (!cleanOrigin.includes(host)) {
+        return NextResponse.json({ error: "Unauthorized origin" }, { status: 403 });
+      }
     }
 
     const formData = await req.formData();
