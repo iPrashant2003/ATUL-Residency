@@ -32,12 +32,18 @@ export const authConfig = {
 
       // Admin-only routes
       if (pathname.startsWith("/admin") && role !== "ADMIN") {
-        return Response.redirect(new URL("/tenant/dashboard", nextUrl));
+        // Safe redirect: only redirect to tenant dashboard if they are actually a tenant.
+        // Otherwise, send them to login to avoid infinite redirect loops.
+        const redirectUrl = role === "TENANT" ? "/tenant/dashboard" : "/login";
+        return Response.redirect(new URL(redirectUrl, nextUrl));
       }
 
       // Tenant-only routes
       if (pathname.startsWith("/tenant") && role !== "TENANT") {
-        return Response.redirect(new URL("/admin/dashboard", nextUrl));
+        // Safe redirect: only redirect to admin dashboard if they are actually an admin.
+        // Otherwise, send them to login to avoid infinite redirect loops.
+        const redirectUrl = role === "ADMIN" ? "/admin/dashboard" : "/login";
+        return Response.redirect(new URL(redirectUrl, nextUrl));
       }
 
       return true;
