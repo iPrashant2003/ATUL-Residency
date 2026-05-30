@@ -5,7 +5,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import {
   IndianRupee, Plus, X, Loader2, CheckCircle, Clock,
   AlertTriangle, MessageCircle, Search, Filter,
-  ChevronDown, Calendar, Zap, FileText, Send,
+  ChevronDown, Calendar, Zap, FileText, Send, Camera,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getMonthName, getRentStatusColor, compressImage } from "@/lib/utils";
@@ -16,6 +16,7 @@ interface RentRecord {
   year: number;
   rentAmount: number;
   electricityBill: number;
+  meterPhotoUrl?: string | null;
   maintenanceCharge: number;
   lateFee: number;
   discount: number;
@@ -391,6 +392,7 @@ export default function RentTrackerPage() {
   const [filterTower, setFilterTower] = useState("all");
   const [search, setSearch] = useState("");
   const [adminConfig, setAdminConfig] = useState<{ baseUrl: string } | null>(null);
+  const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -609,7 +611,28 @@ export default function RentTrackerPage() {
                       </td>
                       <td style={{ fontWeight: 600 }}>Room {record.tenant.room.number}</td>
                       <td>{formatCurrency(record.rentAmount)}</td>
-                      <td>{formatCurrency(record.electricityBill)}</td>
+                       <td>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          {formatCurrency(record.electricityBill)}
+                          {record.meterPhotoUrl && (
+                            <button
+                              onClick={() => setActivePhotoUrl(record.meterPhotoUrl || null)}
+                              style={{
+                                background: "transparent",
+                                border: "none",
+                                cursor: "pointer",
+                                color: "#14b8a6",
+                                padding: "2px",
+                                display: "inline-flex",
+                                alignItems: "center"
+                              }}
+                              title="View Meter Reading Photo"
+                            >
+                              <Camera size={13} />
+                            </button>
+                          )}
+                        </div>
+                      </td>
                       <td style={{ fontWeight: 700 }}>{formatCurrency(record.totalAmount)}</td>
                       <td style={{ color: "#10b981", fontWeight: 600 }}>{formatCurrency(record.amountPaid)}</td>
                       <td>
@@ -682,6 +705,71 @@ export default function RentTrackerPage() {
           onSave={fetchData}
           invoiceBaseUrl={invoiceBaseUrl}
         />
+      )}
+      {activePhotoUrl && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setActivePhotoUrl(null)}
+          style={{
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.85)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div 
+            className="modal-content" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              width: "auto",
+              padding: "20px",
+              background: "rgba(10, 12, 12, 0.95)",
+              border: "1px solid rgba(20, 184, 166, 0.2)",
+              borderRadius: "16px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "relative"
+            }}
+          >
+            <button 
+              onClick={() => setActivePhotoUrl(null)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#e2e8f0",
+                borderRadius: "50%",
+                width: "32px",
+                height: "32px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(239, 68, 68, 0.8)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+            >
+              <X size={16} />
+            </button>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", paddingRight: "40px" }}>Electricity Meter Photo</h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden", borderRadius: "8px" }}>
+              <img 
+                src={activePhotoUrl} 
+                alt="Meter Reading Photo" 
+                style={{ maxWidth: "100%", maxHeight: "70vh", objectFit: "contain" }} 
+              />
+            </div>
+          </div>
+        </div>
       )}
     </AppLayout>
   );

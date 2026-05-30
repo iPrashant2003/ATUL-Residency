@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import { Plus, Edit, Trash2, X, Loader2, Building2, ChevronUp, ChevronDown, User, FileText, Zap, IndianRupee, Send } from "lucide-react";
+import { Plus, Edit, Trash2, X, Loader2, Building2, ChevronUp, ChevronDown, User, FileText, Zap, IndianRupee, Send, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getMonthName, compressImage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -18,6 +18,7 @@ interface RentRecord {
   totalAmount: number;
   amountPaid: number;
   status: "PAID" | "PENDING" | "PARTIAL" | "OVERDUE" | "ADVANCE_PAID";
+  meterPhotoUrl?: string | null;
 }
 
 interface Room {
@@ -350,6 +351,7 @@ export default function RoomsPage() {
   const [entryModal, setEntryModal] = useState<{ open: boolean; room?: Room | null }>({ open: false });
   const [updatingRent, setUpdatingRent] = useState<string | null>(null);
   const [sendingInvoice, setSendingInvoice] = useState<string | null>(null);
+  const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
 
   const handleSendInvoice = async (e: React.MouseEvent, recordId: string, roomId: string) => {
     e.stopPropagation();
@@ -710,9 +712,28 @@ export default function RoomsPage() {
                              <Zap size={12} color="#fbbf24" />
                              <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Latest Bill</p>
                           </div>
-                          <p style={{ fontSize: "14px", fontWeight: 700, color: "#fbbf24" }}>
-                            {formatCurrency(latestRecord.electricityBill)}
-                          </p>
+                          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                             <p style={{ fontSize: "14px", fontWeight: 700, color: "#fbbf24" }}>
+                               {formatCurrency(latestRecord.electricityBill)}
+                             </p>
+                             {latestRecord.meterPhotoUrl && (
+                               <button
+                                 onClick={(e) => { e.stopPropagation(); setActivePhotoUrl(latestRecord.meterPhotoUrl || null); }}
+                                 style={{
+                                   background: "transparent",
+                                   border: "none",
+                                   cursor: "pointer",
+                                   color: "#14b8a6",
+                                   padding: "2px",
+                                   display: "inline-flex",
+                                   alignItems: "center"
+                                 }}
+                                 title="View Meter Reading Photo"
+                               >
+                                 <Camera size={13} />
+                               </button>
+                             )}
+                           </div>
                        </div>
                     )}
                   </div>
@@ -834,6 +855,71 @@ export default function RoomsPage() {
           onClose={() => setEntryModal({ open: false })}
           onSave={fetchData}
         />
+      )}
+      {activePhotoUrl && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setActivePhotoUrl(null)}
+          style={{
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.85)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div 
+            className="modal-content" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              width: "auto",
+              padding: "20px",
+              background: "rgba(10, 12, 12, 0.95)",
+              border: "1px solid rgba(20, 184, 166, 0.2)",
+              borderRadius: "16px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "relative"
+            }}
+          >
+            <button 
+              onClick={() => setActivePhotoUrl(null)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#e2e8f0",
+                borderRadius: "50%",
+                width: "32px",
+                height: "32px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(239, 68, 68, 0.8)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+            >
+              <X size={16} />
+            </button>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", paddingRight: "40px" }}>Electricity Meter Photo</h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden", borderRadius: "8px" }}>
+              <img 
+                src={activePhotoUrl} 
+                alt="Meter Reading Photo" 
+                style={{ maxWidth: "100%", maxHeight: "70vh", objectFit: "contain" }} 
+              />
+            </div>
+          </div>
+        </div>
       )}
     </AppLayout>
   );
