@@ -7,7 +7,7 @@ import {
   Users, Plus, X, Loader2, Search, Phone, MessageCircle, Send,
   Building2, Home, Calendar, Shield, Trash2, ChevronRight,
   IndianRupee, CreditCard, FileText, Filter, UserCheck,
-  AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle,
+  AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle, Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getRentStatusColor, formatDate } from "@/lib/utils";
@@ -32,10 +32,12 @@ interface RentRecord {
   id: string;
   month: number;
   year: number;
+  electricityBill?: number;
   totalAmount: number;
   amountPaid: number;
   status: string;
   dueDate?: string;
+  meterPhotoUrl?: string | null;
 }
 
 interface Renter {
@@ -716,10 +718,12 @@ function RenterCard({
   tenant: renter,
   onClick,
   onAddBill,
+  onViewPhoto,
 }: {
   tenant: Renter;
   onClick: () => void;
   onAddBill: () => void;
+  onViewPhoto: (url: string) => void;
 }) {
   const [sending, setSending] = useState(false);
 
@@ -756,6 +760,7 @@ function RenterCard({
   // Dynamic color palette per tower for clean multi-color room styling
   const roomColor = isTowerA ? "#a78bfa" : "#22d3ee"; // Purple for A, Cyan for B
   const avatarCol = isTowerA ? "#8b5cf6" : "#06b6d4";
+  const latestRecord = renter.rentRecords?.[0] || renter.latestRent;
 
   return (
     <div
@@ -846,12 +851,59 @@ function RenterCard({
           <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)" }}>{renter.phone}</span>
         </div>
 
-        {/* Rent amount */}
-        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "10px 12px", marginBottom: "14px" }}>
-          <p style={{ fontSize: "10px", color: "rgba(226,232,240,0.4)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "4px" }}>Monthly Rent</p>
-          <p style={{ fontSize: "18px", fontWeight: 800, fontFamily: "var(--font-display)", color: "#e2e8f0" }}>
-            {formatCurrency(renter.rentAmount)}
-          </p>
+        {/* Rent amount + Latest Bill */}
+        <div style={{
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: "12px",
+          padding: "12px 14px",
+          marginBottom: "14px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px"
+        }}>
+          {/* Rent Amount */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <IndianRupee size={12} color="rgba(226,232,240,0.4)" />
+              <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Monthly Rent</p>
+            </div>
+            <p style={{ fontSize: "16px", fontWeight: 800, fontFamily: "var(--font-display)", color: "#e2e8f0" }}>
+              {formatCurrency(renter.rentAmount)}
+            </p>
+          </div>
+
+          {/* Electricity Bill */}
+          {latestRecord && latestRecord.electricityBill !== undefined && (
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <Zap size={12} color="#fbbf24" />
+                <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Latest Bill</p>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <p style={{ fontSize: "14px", fontWeight: 700, color: "#fbbf24" }}>
+                  {formatCurrency(latestRecord.electricityBill)}
+                </p>
+                {latestRecord.meterPhotoUrl && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onViewPhoto(latestRecord.meterPhotoUrl!); }}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      color: "#14b8a6",
+                      padding: "2px",
+                      display: "inline-flex",
+                      alignItems: "center"
+                    }}
+                    title="View Meter Reading Photo"
+                  >
+                    <Camera size={13} />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Actions row */}
@@ -917,6 +969,7 @@ export default function RentersPage() {
   const [filterTower, setFilterTower] = useState("all");
   const [showAdd, setShowAdd] = useState(false);
   const [selectedRenter, setSelectedRenter] = useState<Renter | null>(null);
+  const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -1107,6 +1160,7 @@ export default function RentersPage() {
                         tenant={renterVal}
                         onClick={() => setSelectedRenter(renterVal)}
                         onAddBill={() => router.push(`/admin/rent?addBillFor=${renterVal.id}`)}
+                        onViewPhoto={(url) => setActivePhotoUrl(url)}
                       />
                     </div>
                   ))}
@@ -1131,6 +1185,72 @@ export default function RentersPage() {
           onClose={() => setSelectedRenter(null)}
           onDeleted={fetchData}
         />
+      )}
+
+      {activePhotoUrl && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setActivePhotoUrl(null)}
+          style={{
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.85)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div 
+            className="modal-content" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              width: "auto",
+              padding: "20px",
+              background: "rgba(10, 12, 12, 0.95)",
+              border: "1px solid rgba(20, 184, 166, 0.2)",
+              borderRadius: "16px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "relative"
+            }}
+          >
+            <button 
+              onClick={() => setActivePhotoUrl(null)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#e2e8f0",
+                borderRadius: "50%",
+                width: "32px",
+                height: "32px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "rgba(239, 68, 68, 0.8)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
+            >
+              <X size={16} />
+            </button>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "16px", paddingRight: "40px" }}>Electricity Meter Photo</h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden", borderRadius: "8px" }}>
+              <img 
+                src={activePhotoUrl} 
+                alt="Meter Reading Photo" 
+                style={{ maxWidth: "100%", maxHeight: "70vh", objectFit: "contain" }} 
+              />
+            </div>
+          </div>
+        </div>
       )}
     </AppLayout>
   );
