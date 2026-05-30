@@ -78,6 +78,17 @@ function EntryModal({
     if (tenant) setForm((f) => ({ ...f, rentAmount: String(tenant.rentAmount) }));
   }, [form.tenantId, tenants]);
 
+  // Load billing default preferences on mount
+  useEffect(() => {
+    const savedMaintenance = localStorage.getItem("default_maintenance_charge") || "500";
+    const savedLateFee = localStorage.getItem("default_late_fee") || "0";
+    setForm((f) => ({
+      ...f,
+      maintenanceCharge: savedMaintenance,
+      lateFee: savedLateFee,
+    }));
+  }, []);
+
   const total =
     parseFloat(form.rentAmount || "0") +
     parseFloat(form.electricityBill || "0") +

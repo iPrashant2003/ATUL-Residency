@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import { User, Phone, Mail, Shield, Save, Key, Loader2, Building, CreditCard, Plus } from "lucide-react";
+import { User, Phone, Mail, Shield, Save, Key, Loader2, Building, CreditCard, Plus, Sliders } from "lucide-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 
@@ -24,9 +24,11 @@ export default function AdminSettingsPage() {
     upiId: "atultiwari123321@oksbi",
     upiName: "Atul Tiwari",
   });
-  const [newTower, setNewTower] = useState({
-    name: "",
-    description: "",
+  const [preferences, setPreferences] = useState({
+    defaultMaintenance: "500",
+    defaultElectricityRate: "8",
+    defaultLateFee: "50",
+    defaultDueDateDay: "10",
   });
   const [whatsappStatus, setWhatsappStatus] = useState<any>(null);
   const [fetchingWhatsapp, setFetchingWhatsapp] = useState(false);
@@ -62,6 +64,18 @@ export default function AdminSettingsPage() {
           setUpiForm({ upiId: savedUpiId, upiName: savedUpiName });
         }
       }
+
+      // Load billing preferences
+      const savedMaintenance = localStorage.getItem("default_maintenance_charge") || "500";
+      const savedElectricity = localStorage.getItem("default_electricity_rate") || "8";
+      const savedLateFee = localStorage.getItem("default_late_fee") || "50";
+      const savedDueDate = localStorage.getItem("default_due_date_day") || "10";
+      setPreferences({
+        defaultMaintenance: savedMaintenance,
+        defaultElectricityRate: savedElectricity,
+        defaultLateFee: savedLateFee,
+        defaultDueDateDay: savedDueDate,
+      });
     } catch {
       toast.error("Failed to load settings details");
     } finally {
@@ -236,28 +250,17 @@ export default function AdminSettingsPage() {
     }
   }
 
-  async function handleAddTower(e: React.FormEvent) {
+  async function handleSavePreferences(e: React.FormEvent) {
     e.preventDefault();
-    if (!newTower.name) {
-      toast.error("Tower Name is required");
-      return;
-    }
     setUpdating(true);
     try {
-      const res = await fetch("/api/towers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTower),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.error || "Failed to add tower");
-      } else {
-        toast.success("Tower added successfully! 🏢");
-        setNewTower({ name: "", description: "" });
-      }
+      localStorage.setItem("default_maintenance_charge", preferences.defaultMaintenance);
+      localStorage.setItem("default_electricity_rate", preferences.defaultElectricityRate);
+      localStorage.setItem("default_late_fee", preferences.defaultLateFee);
+      localStorage.setItem("default_due_date_day", preferences.defaultDueDateDay);
+      toast.success("Billing preferences saved successfully! ⚙️");
     } catch {
-      toast.error("Failed to add tower");
+      toast.error("Failed to save preferences");
     } finally {
       setUpdating(false);
     }
@@ -385,38 +388,78 @@ export default function AdminSettingsPage() {
             </form>
           </div>
 
-          {/* Box 4: Fast Tower Creation */}
+          {/* Box 4: Property & Billing Preferences */}
           <div className="glass-card" style={{ padding: "28px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
               <div style={{
-                width: "40px", height: "40px", background: "rgba(229,9,20,0.1)",
-                border: "1px solid rgba(229,9,20,0.25)", borderRadius: "10px",
+                width: "40px", height: "40px", background: "rgba(20,184,166,0.1)",
+                border: "1px solid rgba(20,184,166,0.25)", borderRadius: "10px",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <Building size={20} color="#ff3333" />
+                <Sliders size={20} color="#14B8A6" />
               </div>
               <div>
-                <h3 style={{ fontSize: "16px", fontWeight: 700, fontFamily: "var(--font-display)" }}>Add Tower</h3>
-                <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Add a new Tower block to the residency (e.g. Tower C/D)</p>
+                <h3 style={{ fontSize: "16px", fontWeight: 700, fontFamily: "var(--font-display)" }}>Billing Preferences</h3>
+                <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Set default values for rent entries to save time</p>
               </div>
             </div>
 
-            <form onSubmit={handleAddTower} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "16px", marginBottom: "16px" }}>
+            <form onSubmit={handleSavePreferences} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 <div>
-                  <label className="form-label">Tower Name</label>
-                  <input type="text" className="form-input" placeholder="e.g. Tower A" value={newTower.name} onChange={(e) => setNewTower({ ...newTower, name: e.target.value })} required />
+                  <label className="form-label">Default Maintenance (₹)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    placeholder="e.g. 500" 
+                    value={preferences.defaultMaintenance} 
+                    onChange={(e) => setPreferences({ ...preferences, defaultMaintenance: e.target.value })} 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label className="form-label">Electricity Unit Rate (₹)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    placeholder="e.g. 8" 
+                    value={preferences.defaultElectricityRate} 
+                    onChange={(e) => setPreferences({ ...preferences, defaultElectricityRate: e.target.value })} 
+                    required 
+                  />
                 </div>
               </div>
 
-              <div>
-                <label className="form-label">Description</label>
-                <input className="form-input" placeholder="Description of block..." value={newTower.description} onChange={(e) => setNewTower({ ...newTower, description: e.target.value })} />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <div>
+                  <label className="form-label">Daily Late Fee (₹)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    placeholder="e.g. 50" 
+                    value={preferences.defaultLateFee} 
+                    onChange={(e) => setPreferences({ ...preferences, defaultLateFee: e.target.value })} 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label className="form-label">Default Due Day (1-28)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    placeholder="e.g. 10" 
+                    min="1" 
+                    max="28" 
+                    value={preferences.defaultDueDateDay} 
+                    onChange={(e) => setPreferences({ ...preferences, defaultDueDateDay: e.target.value })} 
+                    required 
+                  />
+                </div>
               </div>
 
               <button type="submit" className="btn-primary" disabled={updating} style={{ marginTop: "8px", alignSelf: "flex-end" }}>
-                {updating ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-                Add Tower
+                {updating ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+                Save Preferences
               </button>
             </form>
           </div>
