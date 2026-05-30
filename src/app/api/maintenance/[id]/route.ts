@@ -36,6 +36,37 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ).catch(e => console.error("Push notify error:", e));
     }
 
+    // Notify tenant on status resolution/closure in a premium, creative manner (WhatsApp & Portal)
+    if (request.tenant && (status === "RESOLVED" || status === "CLOSED")) {
+      try {
+        const tenant = request.tenant;
+        // Portal Notification
+        await prisma.notification.create({
+          data: {
+            userId: tenant.userId,
+            type: "MAINTENANCE_UPDATE",
+            title: "Maintenance Completed! 🎉",
+            message: `Dear ${tenant.name}, your maintenance request "${request.title}" has been successfully completed and closed. Thank you! Atul Residency.`
+          }
+        });
+
+        // WhatsApp message
+        if (tenant.whatsapp) {
+          const completedWhatsappMsg = `✨ *ATUL RESIDENCY* ✨\n✅ *Maintenance Request Completed*\n\nDear *${tenant.name}*,\n\nWe are pleased to inform you that your maintenance request has been successfully resolved & closed! 🎉\n\n📝 *Task*: ${request.title}\n🔧 *Status*: COMPLETED & CLOSED\n\nThank you for your cooperation. We strive to provide you with the highest standard of living at Atul Residency. 🌟\n\nWarm regards,\n*Atul Residency Support*`;
+          
+          await prisma.whatsappQueue.create({
+            data: {
+              number: tenant.whatsapp,
+              message: completedWhatsappMsg,
+              status: "PENDING"
+            }
+          });
+        }
+      } catch (tenantErr) {
+        console.error("[Tenant maintenance resolved notification error]", tenantErr);
+      }
+    }
+
     return NextResponse.json(request);
   } catch {
     return NextResponse.json({ error: "Failed to update maintenance request" }, { status: 500 });

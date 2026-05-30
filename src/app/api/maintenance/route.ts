@@ -49,15 +49,13 @@ export async function POST(req: NextRequest) {
         tenant: { include: { room: { include: { tower: true } } } },
       },
     });
-
     // Notify all admins about the maintenance request
     try {
       const admins = await prisma.user.findMany({ where: { role: "ADMIN" } });
       const tenant = request.tenant;
       const roomNo = tenant?.room?.number || "—";
-      const towerName = tenant?.room?.tower?.name || "";
 
-      // In-app database notifications
+      // In-app database notifications for admins
       await prisma.notification.createMany({
         data: admins.map((admin) => ({
           userId: admin.id,
@@ -67,7 +65,7 @@ export async function POST(req: NextRequest) {
         })),
       });
 
-      // Web push notifications
+      // Web push notifications for admins
       for (const admin of admins) {
         await sendPushNotification(
           admin.id,
@@ -80,6 +78,36 @@ export async function POST(req: NextRequest) {
       console.error("[Maintenance notification error]", notifErr);
     }
 
+    // Notify tenant about request creation in a premium, creative manner (WhatsApp & Portal)
+    try {
+      const tenant = request.tenant;
+      if (tenant) {
+        // Portal notification
+        await prisma.notification.create({
+          data: {
+            userId: tenant.userId,
+            type: "MAINTENANCE_UPDATE",
+            title: "Maintenance Service Logged 🔧",
+            message: `Dear ${tenant.name}, your request "${title}" has been logged successfully. Your work will be done as soon as possible. Atul Residency.`
+          }
+        });
+
+        // WhatsApp message
+        if (tenant.whatsapp) {
+          const maintenanceMsg = `🔧 *ATUL RESIDENCY* 🔧\n🛠️ *Premium Maintenance Services*\n\nDear *${tenant.name}*,\n\nWe have successfully received and registered your maintenance request. 📝\n\n📂 *Category*: ${category}\n📝 *Task*: ${title}\n⚡ *Priority*: ${priority || "NORMAL"}\n\nOur maintenance team has been assigned, and your work will be done as soon as possible. We are dedicated to ensuring your stay remains luxurious and comfortable! 🌟\n\nIf you have any questions, you can track the real-time status directly on your resident portal.\n\nWarm regards,\n*Atul Residency Support*`;
+          
+          await prisma.whatsappQueue.create({
+            data: {
+              number: tenant.whatsapp,
+              message: maintenanceMsg,
+              status: "PENDING"
+            }
+          });
+        }
+      }
+    } catch (tenantNotifErr) {
+      console.error("[Tenant maintenance notification error]", tenantNotifErr);
+    }
     return NextResponse.json(request, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Failed to create maintenance request" }, { status: 500 });

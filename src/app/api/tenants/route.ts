@@ -40,7 +40,16 @@ export async function GET(req: NextRequest) {
       orderBy: { name: "asc" },
     });
 
-    return NextResponse.json(tenants);
+    const tenantsWithLatest = tenants.map((t) => ({
+      ...t,
+      latestRent: t.rentRecords?.[0] || null,
+    }));
+
+    return NextResponse.json(tenantsWithLatest, {
+      headers: {
+        "Cache-Control": "no-store, max-age=0, must-revalidate",
+      },
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Failed to fetch tenants" }, { status: 500 });

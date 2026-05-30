@@ -874,7 +874,7 @@ function RenterCard({
           </div>
 
           {/* Electricity Bill */}
-          {latestRecord && latestRecord.electricityBill !== undefined && (
+          {latestRecord && (
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "8px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                 <Zap size={12} color="#fbbf24" />
@@ -882,7 +882,7 @@ function RenterCard({
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                 <p style={{ fontSize: "14px", fontWeight: 700, color: "#fbbf24" }}>
-                  {formatCurrency(latestRecord.electricityBill)}
+                  {formatCurrency(latestRecord.electricityBill ?? 0)}
                 </p>
                 {latestRecord.meterPhotoUrl && (
                   <button
@@ -975,8 +975,8 @@ export default function RentersPage() {
     setLoading(true);
     try {
       const [tenantsRes, towersRes] = await Promise.all([
-        fetch("/api/tenants"),
-        fetch("/api/towers"),
+        fetch("/api/tenants", { cache: "no-store" }),
+        fetch("/api/towers", { cache: "no-store" }),
       ]);
       const [tenantsData, towersData] = await Promise.all([tenantsRes.json(), towersRes.json()]);
       setRenters(Array.isArray(tenantsData) ? tenantsData : []);
