@@ -73,7 +73,17 @@ app.use(express.json());
 const client1 = new Client({
     authStrategy: new LocalAuth({ clientId: 'bot1', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security',
+            '--disable-gpu',
+            '--disable-blink-features=AutomationControlled',
+            '--disable-features=IsolateOrigins,site-per-process',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-device-discovery-notifications'
+        ],
         headless: true,
         handleSIGINT: false,
         handleSIGTERM: false
@@ -85,7 +95,17 @@ const client1 = new Client({
 const client2 = new Client({
     authStrategy: new LocalAuth({ clientId: 'bot2', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security',
+            '--disable-gpu',
+            '--disable-blink-features=AutomationControlled',
+            '--disable-features=IsolateOrigins,site-per-process',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-device-discovery-notifications'
+        ],
         headless: true,
         handleSIGINT: false,
         handleSIGTERM: false
@@ -130,8 +150,20 @@ client1.on('authenticated', () => {
     console.log('✅ Bot 1 authenticated successfully.');
 });
 
-client1.on('auth_failure', msg => {
+client1.on('auth_failure', async msg => {
     console.error('❌ Bot 1 authentication failure', msg);
+    // Auto-wipe corrupted session to trigger new QR code scan instead of staying disconnected
+    try {
+        const fs = require('fs');
+        const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot1');
+        if (fs.existsSync(sessionPath)) {
+            fs.rmSync(sessionPath, { recursive: true, force: true });
+            console.log('Wiped corrupted session-bot1 files to allow a fresh scan.');
+        }
+        await client1.initialize();
+    } catch (e) {
+        console.error('Failed to auto-recover Bot 1 after auth failure:', e.message);
+    }
 });
 
 client1.on('disconnected', async (reason) => {
@@ -182,8 +214,20 @@ client2.on('authenticated', () => {
     console.log('✅ Bot 2 authenticated successfully.');
 });
 
-client2.on('auth_failure', msg => {
+client2.on('auth_failure', async msg => {
     console.error('❌ Bot 2 authentication failure', msg);
+    // Auto-wipe corrupted session to trigger new QR code scan instead of staying disconnected
+    try {
+        const fs = require('fs');
+        const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot2');
+        if (fs.existsSync(sessionPath)) {
+            fs.rmSync(sessionPath, { recursive: true, force: true });
+            console.log('Wiped corrupted session-bot2 files to allow a fresh scan.');
+        }
+        await client2.initialize();
+    } catch (e) {
+        console.error('Failed to auto-recover Bot 2 after auth failure:', e.message);
+    }
 });
 
 client2.on('disconnected', async (reason) => {
