@@ -101,8 +101,8 @@ model Tenant {
   id               String    @id @default(cuid())
   userId           String    @unique
   user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  roomId           String    @unique
-  room             Room      @relation(fields: [roomId], references: [id])
+  roomId           String?   @unique
+  room             Room?     @relation(fields: [roomId], references: [id])
   name             String
   phone            String
   whatsapp         String
@@ -115,6 +115,10 @@ model Tenant {
   securityDeposit  Float     @default(0)
   joiningDate      DateTime  @default(now())
   isActive         Boolean   @default(true)
+  isDeleted        Boolean   @default(false)
+  deletedAt        DateTime?
+  deletionReason   String?
+  archivedFromRoomId String?
   rentRecords      RentRecord[]
   payments         Payment[]
   maintenanceRequests MaintenanceRequest[]

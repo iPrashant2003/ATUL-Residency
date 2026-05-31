@@ -8,6 +8,7 @@ import {
   Building2, Home, Calendar, Shield, Trash2, ChevronRight,
   IndianRupee, CreditCard, FileText, Filter, UserCheck,
   AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle, Zap,
+  Archive, RotateCcw, Clock,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getRentStatusColor, formatDate } from "@/lib/utils";
@@ -459,7 +460,7 @@ function RenterDetailModal({
   }, [renter.id]);
 
   async function handleDelete() {
-    const password = prompt(`Are you sure you want to remove ${renter.name} as a renter? This action cannot be undone.\n\nPlease enter your admin password to confirm:`);
+    const password = prompt(`Remove ${renter.name} from active renters?\n\nDon't worry — they will be moved to the "Archived Renters" section and can be recovered anytime.\n\nPlease enter your admin password to confirm:`);
     if (password === null) return;
     if (!password.trim()) {
       toast.error("Password is required to remove a renter");
@@ -475,7 +476,7 @@ function RenterDetailModal({
         const d = await res.json();
         toast.error(d.error || "Failed to delete renter");
       } else {
-        toast.success("Renter removed successfully");
+        toast.success("Renter archived! You can restore them from 'Archived Renters' section.");
         onDeleted();
         onClose();
       }
@@ -689,21 +690,24 @@ function RenterDetailModal({
                 </button>
               )}
 
-              {/* Delete */}
+              {/* Archive (Soft Delete) */}
               <button
                 onClick={handleDelete}
                 disabled={deleting}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                   width: "100%", padding: "11px", borderRadius: "10px",
-                  background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)",
-                  color: "#f87171", fontSize: "13px", fontWeight: 600, cursor: "pointer",
+                  background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)",
+                  color: "#fbbf24", fontSize: "13px", fontWeight: 600, cursor: "pointer",
                   opacity: deleting ? 0.6 : 1,
                 }}
               >
-                {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                {deleting ? "Removing Renter..." : "Remove Renter"}
+                {deleting ? <Loader2 size={14} className="animate-spin" /> : <Archive size={14} />}
+                {deleting ? "Archiving Renter..." : "Archive Renter"}
               </button>
+              <p style={{ textAlign: "center", fontSize: "10px", color: "rgba(226,232,240,0.3)", marginTop: "4px" }}>
+                Archived renters can be recovered anytime
+              </p>
             </>
           )}
         </div>
@@ -982,6 +986,11 @@ export default function RentersPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [selectedRenter, setSelectedRenter] = useState<Renter | null>(null);
   const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
+  const [showArchived, setShowArchived] = useState(false);
+  const [archivedRenters, setArchivedRenters] = useState<any[]>([]);
+  const [loadingArchived, setLoadingArchived] = useState(false);
+  const [restoringId, setRestoringId] = useState<string | null>(null);
+  const [permanentDeletingId, setPermanentDeletingId] = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -997,6 +1006,66 @@ export default function RentersPage() {
       toast.error("Failed to load renters");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchArchived = async () => {
+    setLoadingArchived(true);
+    try {
+      const res = await fetch("/api/tenants/archived", { cache: "no-store" });
+      const data = await res.json();
+      setArchivedRenters(Array.isArray(data) ? data : []);
+    } catch {
+      toast.error("Failed to load archived renters");
+    } finally {
+      setLoadingArchived(false);
+    }
+  };
+
+  const handleRestore = async (tenantId: string, tenantName: string) => {
+    if (!window.confirm(`Restore ${tenantName} back to active renters?\n\nThey will be assigned to their previous room if it's available.`)) return;
+    setRestoringId(tenantId);
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/restore`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Failed to restore renter");
+      } else {
+        toast.success(`${tenantName} restored successfully!`);
+        fetchArchived();
+        fetchData();
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setRestoringId(null);
+    }
+  };
+
+  const handlePermanentDelete = async (tenantId: string, tenantName: string) => {
+    const password = prompt(`⚠️ PERMANENTLY delete ${tenantName}?\n\nThis cannot be undone! All their data (rent records, payments, documents) will be erased forever.\n\nEnter admin password to confirm:`);
+    if (!password) return;
+    setPermanentDeletingId(tenantId);
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/permanent-delete`, {
+        method: "DELETE",
+        headers: { "x-admin-password": password },
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        toast.error(d.error || "Failed to permanently delete");
+      } else {
+        toast.success(`${tenantName} permanently deleted.`);
+        fetchArchived();
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setPermanentDeletingId(null);
     }
   };
 
@@ -1182,6 +1251,166 @@ export default function RentersPage() {
           })}
         </div>
       )}
+
+      {/* ── Archived Renters Section ── */}
+      <div style={{ marginTop: "40px" }}>
+        <button
+          onClick={() => {
+            setShowArchived(!showArchived);
+            if (!showArchived) fetchArchived();
+          }}
+          style={{
+            display: "flex", alignItems: "center", gap: "10px",
+            width: "100%", padding: "16px 20px", borderRadius: "16px",
+            background: showArchived 
+              ? "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.03) 100%)" 
+              : "rgba(255,255,255,0.02)",
+            border: showArchived 
+              ? "1px solid rgba(245,158,11,0.2)" 
+              : "1px solid rgba(255,255,255,0.06)",
+            cursor: "pointer", transition: "all 0.3s ease",
+            color: showArchived ? "#fbbf24" : "rgba(226,232,240,0.5)",
+          }}
+        >
+          <Archive size={18} />
+          <span style={{ flex: 1, textAlign: "left", fontSize: "14px", fontWeight: 700, fontFamily: "var(--font-display)" }}>
+            Archived Renters
+          </span>
+          <span style={{
+            fontSize: "11px", background: "rgba(245,158,11,0.15)",
+            border: "1px solid rgba(245,158,11,0.3)", borderRadius: "999px",
+            padding: "2px 10px", color: "#fbbf24", fontWeight: 700,
+          }}>
+            {archivedRenters.length}
+          </span>
+          <ChevronRight
+            size={16}
+            style={{
+              transition: "transform 0.3s",
+              transform: showArchived ? "rotate(90deg)" : "rotate(0deg)",
+            }}
+          />
+        </button>
+
+        {showArchived && (
+          <div style={{
+            marginTop: "16px", padding: "20px", borderRadius: "16px",
+            background: "linear-gradient(135deg, rgba(245,158,11,0.03) 0%, rgba(0,0,0,0.1) 100%)",
+            border: "1px solid rgba(245,158,11,0.1)",
+          }}>
+            {loadingArchived ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {[1, 2].map((i) => (
+                  <div key={i} className="shimmer" style={{ height: "80px", borderRadius: "12px" }} />
+                ))}
+              </div>
+            ) : archivedRenters.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 20px", color: "rgba(226,232,240,0.3)" }}>
+                <Archive size={36} style={{ margin: "0 auto 12px", opacity: 0.25 }} />
+                <p style={{ fontSize: "14px", fontWeight: 600 }}>No archived renters</p>
+                <p style={{ fontSize: "12px", marginTop: "4px" }}>When you remove a renter, they'll appear here for recovery</p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {archivedRenters.map((t: any) => (
+                  <div
+                    key={t.id}
+                    className="animate-fade-in-up"
+                    style={{
+                      display: "flex", alignItems: "center", gap: "14px",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: "14px", padding: "16px",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {/* Avatar */}
+                    <div style={{
+                      width: "48px", height: "48px", borderRadius: "50%",
+                      background: t.photoUrl ? "transparent" : "rgba(245,158,11,0.2)",
+                      border: "2px solid rgba(245,158,11,0.3)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      overflow: "hidden", flexShrink: 0,
+                    }}>
+                      {t.photoUrl ? (
+                        <img src={t.photoUrl} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      ) : (
+                        <span style={{ fontSize: "16px", fontWeight: 800, color: "#fbbf24" }}>{getInitials(t.name)}</span>
+                      )}
+                    </div>
+
+                    {/* Info */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: "14px", fontWeight: 700, color: "#e2e8f0", marginBottom: "2px" }}>{t.name}</p>
+                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+                        <span style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)" }}>
+                          <Phone size={10} style={{ display: "inline", verticalAlign: "middle", marginRight: "3px" }} />
+                          {t.phone}
+                        </span>
+                        {t.room && (
+                          <span style={{ fontSize: "11px", color: "rgba(226,232,240,0.4)" }}>
+                            Room {t.room.number} · {t.room.tower?.name}
+                          </span>
+                        )}
+                      </div>
+                      <div style={{ display: "flex", gap: "6px", alignItems: "center", marginTop: "4px" }}>
+                        <Clock size={10} color="rgba(245,158,11,0.6)" />
+                        <span style={{ fontSize: "10px", color: "rgba(245,158,11,0.6)" }}>
+                          Archived {t.deletedAt ? new Date(t.deletedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : ""}
+                        </span>
+                        {t.deletionReason && (
+                          <span style={{ fontSize: "10px", color: "rgba(226,232,240,0.3)" }}>
+                            · {t.deletionReason}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
+                      <button
+                        onClick={() => handleRestore(t.id, t.name)}
+                        disabled={restoringId === t.id}
+                        title="Restore this renter"
+                        style={{
+                          display: "flex", alignItems: "center", gap: "6px",
+                          padding: "8px 14px", borderRadius: "10px",
+                          background: "rgba(16,185,129,0.1)",
+                          border: "1px solid rgba(16,185,129,0.25)",
+                          color: "#34d399", fontSize: "12px", fontWeight: 600,
+                          cursor: restoringId === t.id ? "not-allowed" : "pointer",
+                          opacity: restoringId === t.id ? 0.6 : 1,
+                          transition: "all 0.2s",
+                        }}
+                      >
+                        {restoringId === t.id ? <Loader2 size={13} className="animate-spin" /> : <RotateCcw size={13} />}
+                        Restore
+                      </button>
+                      <button
+                        onClick={() => handlePermanentDelete(t.id, t.name)}
+                        disabled={permanentDeletingId === t.id}
+                        title="Permanently delete (no recovery)"
+                        style={{
+                          display: "flex", alignItems: "center", gap: "4px",
+                          padding: "8px 10px", borderRadius: "10px",
+                          background: "rgba(239,68,68,0.08)",
+                          border: "1px solid rgba(239,68,68,0.15)",
+                          color: "#f87171", fontSize: "12px", fontWeight: 600,
+                          cursor: permanentDeletingId === t.id ? "not-allowed" : "pointer",
+                          opacity: permanentDeletingId === t.id ? 0.6 : 1,
+                          transition: "all 0.2s",
+                        }}
+                      >
+                        {permanentDeletingId === t.id ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* ── Modals ── */}
       {showAdd && (

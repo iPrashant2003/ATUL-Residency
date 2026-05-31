@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
     const tenants = await prisma.tenant.findMany({
       where: {
         isActive: true,
+        isDeleted: false,
         ...(userId && { userId }),
         ...(search && {
           OR: [

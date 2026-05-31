@@ -72,13 +72,40 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     const tenant = await prisma.tenant.findUnique({ where: { id } });
     if (!tenant) return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
 
+    // Get deletion reason from request body (optional)
+    let deletionReason = "Removed by admin";
+    try {
+      const body = await req.json();
+      if (body?.reason) deletionReason = body.reason;
+    } catch {
+      // No body provided, use default reason
+    }
+
+    // SOFT DELETE: Mark tenant as deleted, save original room for restore, and free the room
+    await prisma.tenant.update({
+      where: { id },
+      data: {
+        isActive: false,
+        isDeleted: true,
+        deletedAt: new Date(),
+        deletionReason,
+        archivedFromRoomId: tenant.roomId, // Remember which room they were in
+        roomId: null, // Free the room's unique constraint so it can be reassigned
+      },
+    });
+
     // Mark room as vacant
-    await prisma.room.update({ where: { id: tenant.roomId }, data: { isOccupied: false } });
+    if (tenant.roomId) {
+      await prisma.room.update({ where: { id: tenant.roomId }, data: { isOccupied: false } });
+    }
 
-    // Hard delete the associated User, which will cascade-delete the Tenant and all related records
-    await prisma.user.delete({ where: { id: tenant.userId } });
+    // Mark the associated user as archived (but don't delete)
+    await prisma.user.update({
+      where: { id: tenant.userId },
+      data: { name: `[Archived] ${tenant.name}` },
+    });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "Tenant archived successfully. Can be recovered from Archived Renters." });
   } catch (error) {
     console.error("Delete tenant error:", error);
     return NextResponse.json({ error: "Failed to remove tenant" }, { status: 500 });
