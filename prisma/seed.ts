@@ -1,10 +1,81 @@
 import { prisma } from "../src/lib/prisma";
 import bcrypt from "bcryptjs";
+import * as readline from "readline";
+
+// =====================================================
+// 🛡️ SAFETY GUARD: This script WIPES ALL DATA.
+// It will force you to confirm before proceeding.
+// =====================================================
+
+async function confirmDangerousOperation(): Promise<boolean> {
+  // Check if there are any tenants in the database
+  const tenantCount = await prisma.tenant.count();
+  const rentCount = await prisma.rentRecord.count();
+  const paymentCount = await prisma.payment.count();
+  
+  if (tenantCount === 0 && rentCount === 0 && paymentCount === 0) {
+    console.log("ℹ️ Database has no tenant/rent/payment data. Proceeding with seed...");
+    return true;
+  }
+
+  console.log("\n⚠️ ═══════════════════════════════════════════════════════");
+  console.log("⚠️  DANGER: DATABASE CONTAINS LIVE DATA!");
+  console.log("⚠️ ═══════════════════════════════════════════════════════");
+  console.log(`   📋 Tenants: ${tenantCount}`);
+  console.log(`   📋 Rent Records: ${rentCount}`);
+  console.log(`   📋 Payments: ${paymentCount}`);
+  console.log("⚠️ ═══════════════════════════════════════════════════════");
+  console.log("⚠️  Running seed will DELETE ALL THIS DATA permanently!");
+  console.log("⚠️  Run 'npm run db:backup' first if you haven't!");
+  console.log("⚠️ ═══════════════════════════════════════════════════════\n");
+
+  // Force manual confirmation
+  if (process.env.FORCE_SEED === 'true') {
+    console.log("🔓 FORCE_SEED=true detected. Skipping confirmation...");
+    return true;
+  }
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    rl.question("Type 'DELETE ALL DATA' to confirm: ", (answer) => {
+      rl.close();
+      if (answer.trim() === 'DELETE ALL DATA') {
+        console.log("✅ Confirmed. Proceeding...");
+        resolve(true);
+      } else {
+        console.log("❌ Aborted. Your data is safe.");
+        resolve(false);
+      }
+    });
+  });
+}
 
 async function main() {
-  console.log("🌱 Seeding Atul Residency database...");
+  console.log("🌱 Seeding Atul Residency database...\n");
+
+  // Safety check before wiping
+  const confirmed = await confirmDangerousOperation();
+  if (!confirmed) {
+    process.exit(0);
+  }
+
+  // Auto-backup before wiping (safety net)
+  console.log("💾 Creating automatic pre-seed backup...");
+  try {
+    const { execSync } = require("child_process");
+    execSync("node scripts/backup-db.js", { stdio: "inherit", cwd: process.cwd() });
+    console.log("✅ Pre-seed backup created successfully.\n");
+  } catch (err) {
+    console.warn("⚠️ Could not create pre-seed backup. Continuing anyway...\n");
+  }
 
   // 1. Delete dependent data first
+  await prisma.pushSubscription.deleteMany({});
+  await prisma.whatsappQueue.deleteMany({});
   await prisma.activityLog.deleteMany({});
   await prisma.otpCode.deleteMany({});
   await prisma.document.deleteMany({});

@@ -50,61 +50,112 @@ const connectionString = databaseUrl.includes('?')
 
 const client = new Client({ connectionString });
 
+// Tables must be deleted in reverse dependency order (children first)
+// and restored in dependency order (parents first)
+const DELETE_ORDER = [
+    'PushSubscription',
+    'WhatsappQueue',
+    'OtpCode',
+    'ActivityLog',
+    'Document',
+    'Notification',
+    'MaintenanceRequest',
+    'Payment',
+    'RentRecord',
+    'Tenant',
+    'Room',
+    'Tower',
+    'User'
+];
+
+const RESTORE_ORDER = [
+    'User',
+    'Tower',
+    'Room',
+    'Tenant',
+    'RentRecord',
+    'Payment',
+    'MaintenanceRequest',
+    'Notification',
+    'Document',
+    'ActivityLog',
+    'OtpCode',
+    'WhatsappQueue',
+    'PushSubscription'
+];
+
 async function runRestore() {
     console.log('🔄 Connecting to PostgreSQL database...');
     await client.connect();
     console.log('✅ Connected successfully.');
 
     try {
-        console.log('⚠️ Preparing to restore data. Bypassing foreign key constraints...');
-        // Disable foreign keys and triggers for the session using PostgreSQL replication role
-        await client.query("SET session_replication_role = 'replica'");
-
-        const tablesToRestore = Object.keys(backupData.tables);
-        
-        console.log('🧹 Clearing existing tables...');
-        for (const table of tablesToRestore) {
-            console.log(`  Truncating table "${table}"...`);
-            await client.query(`TRUNCATE TABLE "${table}" CASCADE`);
+        // Step 1: Delete all data in reverse dependency order
+        console.log('\n🧹 Clearing existing tables (reverse dependency order)...');
+        for (const table of DELETE_ORDER) {
+            if (!backupData.tables[table] && backupData.tables[table] === undefined) {
+                continue; // Skip tables not in backup
+            }
+            try {
+                const res = await client.query(`DELETE FROM "${table}"`);
+                console.log(`  ✔️ Cleared "${table}" (${res.rowCount} rows removed)`);
+            } catch (err) {
+                if (err.code === '42P01') {
+                    console.log(`  ⚠️ Table "${table}" does not exist. Skipping.`);
+                } else {
+                    console.error(`  ❌ Error clearing "${table}":`, err.message);
+                }
+            }
         }
 
-        console.log('📥 Restoring table rows...');
-        for (const table of tablesToRestore) {
+        // Step 2: Insert data in dependency order
+        console.log('\n📥 Restoring table rows (dependency order)...');
+        let totalRestored = 0;
+
+        for (const table of RESTORE_ORDER) {
             const rows = backupData.tables[table];
-            if (rows.length === 0) {
-                console.log(`  Table "${table}" has 0 rows. Skipping.`);
+            if (!rows || rows.length === 0) {
+                console.log(`  ⏭️ Table "${table}" has 0 rows. Skipping.`);
                 continue;
             }
 
-            console.log(`  Restoring ${rows.length} rows to "${table}"...`);
-            
+            console.log(`  📦 Restoring ${rows.length} rows to "${table}"...`);
+            let restored = 0;
+            let skipped = 0;
+
             // Get columns from the first row
             const columns = Object.keys(rows[0]);
             const columnsStr = columns.map(c => `"${c}"`).join(', ');
-            
+
             for (const row of rows) {
                 const values = columns.map(c => row[c]);
                 const placeholders = columns.map((_, idx) => `$${idx + 1}`).join(', ');
-                
-                const insertQuery = `INSERT INTO "${table}" (${columnsStr}) VALUES (${placeholders})`;
-                await client.query(insertQuery, values);
-            }
-            console.log(`  ✔️ Restored "${table}" successfully.`);
-        }
 
-        console.log('🔐 Restoring foreign key constraints...');
-        await client.query("SET session_replication_role = 'origin'");
+                try {
+                    const insertQuery = `INSERT INTO "${table}" (${columnsStr}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`;
+                    const res = await client.query(insertQuery, values);
+                    if (res.rowCount > 0) {
+                        restored++;
+                    } else {
+                        skipped++;
+                    }
+                } catch (err) {
+                    console.error(`    ❌ Failed to insert row in "${table}":`, err.message);
+                    skipped++;
+                }
+            }
+
+            console.log(`  ✔️ "${table}": ${restored} restored, ${skipped} skipped`);
+            totalRestored += restored;
+        }
 
         console.log('\n==================================================');
         console.log('🎉 DATABASE RESTORE COMPLETED SUCCESSFULLY!');
-        console.log(`✅ Fully restored from: ${backupFilePath}`);
+        console.log(`✅ Total rows restored: ${totalRestored}`);
+        console.log(`📂 Restored from: ${backupFilePath}`);
         console.log('==================================================\n');
     } catch (err) {
         console.error('❌ Restore failed:', err);
-        console.log('🔐 Re-enabling constraints just in case...');
-        try {
-            await client.query("SET session_replication_role = 'origin'");
-        } catch (_) {}
     } finally {
         await client.end();
     }

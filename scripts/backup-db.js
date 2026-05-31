@@ -29,7 +29,8 @@ const TABLES = [
     'Document',
     'ActivityLog',
     'OtpCode',
-    'WhatsappQueue'
+    'WhatsappQueue',
+    'PushSubscription'
 ];
 
 async function runBackup() {
@@ -84,10 +85,37 @@ async function runBackup() {
 
         // Email the backup file to admin for off-site cloud sync
         await emailBackup(filePath, fileName);
+
+        // Clean up old backups (keep last 30)
+        cleanupOldBackups(backupsDir, 30);
     } catch (err) {
         console.error('❌ Backup failed:', err);
     } finally {
         await client.end();
+    }
+}
+
+function cleanupOldBackups(dir, keepCount) {
+    try {
+        const files = fs.readdirSync(dir)
+            .filter(f => f.startsWith('backup-') && f.endsWith('.json'))
+            .map(f => ({ name: f, time: fs.statSync(path.join(dir, f)).mtime.getTime() }))
+            .sort((a, b) => b.time - a.time); // newest first
+
+        if (files.length <= keepCount) {
+            console.log(`🗂️ ${files.length} backups found. No cleanup needed (keeping ${keepCount}).`);
+            return;
+        }
+
+        const toDelete = files.slice(keepCount);
+        console.log(`🗑️ Cleaning up ${toDelete.length} old backup(s)...`);
+        for (const file of toDelete) {
+            fs.unlinkSync(path.join(dir, file.name));
+            console.log(`  Deleted: ${file.name}`);
+        }
+        console.log(`✅ Kept ${keepCount} most recent backups.`);
+    } catch (err) {
+        console.error('⚠️ Backup cleanup warning:', err.message);
     }
 }
 
@@ -131,3 +159,4 @@ async function emailBackup(filePath, fileName) {
 }
 
 runBackup();
+
