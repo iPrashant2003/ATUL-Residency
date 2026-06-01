@@ -5,45 +5,69 @@ import type { NextRequest } from "next/server";
 
 const authMiddleware = NextAuth(authConfig).auth;
 
-// Wrap the auth middleware with a cookie size guard
 export default async function middleware(request: NextRequest) {
   // Calculate total cookie header size
   const cookieHeader = request.headers.get("cookie") || "";
   const cookieSize = new TextEncoder().encode(cookieHeader).length;
 
-  // Vercel's limit is ~8KB for headers. If cookies are too large (>6KB to be safe),
-  // clear the session cookies and redirect to login
-  if (cookieSize > 6000) {
-    console.warn(`⚠️ Cookie header too large (${cookieSize} bytes). Clearing session cookies.`);
-    
-    const response = NextResponse.redirect(new URL("/login", request.url));
-    
-    // Delete all auth-related cookies
-    response.cookies.delete("authjs.session-token");
-    response.cookies.delete("authjs.callback-url");
-    response.cookies.delete("authjs.csrf-token");
-    response.cookies.delete("__Secure-authjs.session-token");
-    response.cookies.delete("__Secure-authjs.callback-url");
-    response.cookies.delete("__Secure-authjs.csrf-token");
-    response.cookies.delete("next-auth.session-token");
-    response.cookies.delete("next-auth.callback-url");
-    response.cookies.delete("next-auth.csrf-token");
-    response.cookies.delete("__Secure-next-auth.session-token");
-    response.cookies.delete("__Secure-next-auth.callback-url");
-    response.cookies.delete("__Secure-next-auth.csrf-token");
-    
-    // Also clear any chunked session cookies (authjs splits large JWTs into chunks)
-    for (let i = 0; i < 10; i++) {
-      response.cookies.delete(`authjs.session-token.${i}`);
-      response.cookies.delete(`__Secure-authjs.session-token.${i}`);
-      response.cookies.delete(`next-auth.session-token.${i}`);
-      response.cookies.delete(`__Secure-next-auth.session-token.${i}`);
+  // Vercel's limit is ~8KB for headers. If cookies are too large (>4KB to be safe),
+  // return a self-clearing HTML page that nukes all cookies via JavaScript
+  if (cookieSize > 4000) {
+    console.warn(`⚠️ Cookie header too large (${cookieSize} bytes). Sending cookie-clearing page.`);
+
+    // Return an HTML page that clears ALL cookies client-side, then redirects to /login
+    const html = `<!DOCTYPE html>
+<html>
+<head><title>Clearing session...</title></head>
+<body style="background:#0a0c0c;color:#e2e8f0;display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui;margin:0">
+<div style="text-align:center">
+<p style="font-size:18px;font-weight:700">🔄 Clearing session...</p>
+<p style="font-size:13px;color:#94a3b8;margin-top:8px">Please wait, redirecting to login...</p>
+</div>
+<script>
+// Delete ALL cookies for this domain (every path variant)
+document.cookie.split(';').forEach(function(c) {
+  var name = c.split('=')[0].trim();
+  if (!name) return;
+  // Clear for all possible path combinations
+  var paths = ['/', '/admin', '/tenant', '/api', '/login', ''];
+  paths.forEach(function(p) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/');
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';secure';
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=' + location.hostname;
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=.' + location.hostname;
+  });
+});
+// Redirect to login after cookies are cleared
+setTimeout(function() { window.location.href = '/login'; }, 500);
+</script>
+</body>
+</html>`;
+
+    // Also set server-side Set-Cookie headers to delete known auth cookies
+    const response = new NextResponse(html, {
+      status: 200,
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    });
+
+    // Server-side deletion of all auth cookie variants
+    const cookieNames = [
+      "authjs.session-token", "authjs.callback-url", "authjs.csrf-token",
+      "__Secure-authjs.session-token", "__Secure-authjs.callback-url", "__Secure-authjs.csrf-token",
+      "next-auth.session-token", "next-auth.callback-url", "next-auth.csrf-token",
+      "__Secure-next-auth.session-token", "__Secure-next-auth.callback-url", "__Secure-next-auth.csrf-token",
+    ];
+    for (const name of cookieNames) {
+      response.cookies.delete(name);
+      for (let i = 0; i < 10; i++) {
+        response.cookies.delete(`${name}.${i}`);
+      }
     }
-    
+
     return response;
   }
 
-  // @ts-ignore - auth middleware type mismatch is fine
+  // @ts-ignore
   return authMiddleware(request);
 }
 
