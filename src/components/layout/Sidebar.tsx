@@ -20,7 +20,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, clearAllAuthCookies } from "@/lib/utils";
 
 const adminNav = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
@@ -233,7 +233,10 @@ export default function Sidebar({ role, userName, isOpen, onClose }: SidebarProp
         <div style={{ padding: "12px", borderTop: "1px solid var(--glass-border)" }}>
           {/* Sign out */}
           <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => {
+              clearAllAuthCookies();
+              signOut({ callbackUrl: "/login" });
+            }}
             className="sidebar-item"
             style={{ width: "100%", border: "none", background: "transparent", cursor: "pointer", color: "rgba(239,68,68,0.7)" }}
             title={collapsed ? "Sign out" : ""}

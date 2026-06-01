@@ -150,3 +150,53 @@ export async function compressImage(file: File, maxWidth = 1000, maxHeight = 100
     reader.onerror = () => resolve(file);
   });
 }
+
+/**
+ * Forcefully clears all NextAuth / Auth.js cookies from the browser.
+ * This includes secure, __Host-, and chunked cookies.
+ */
+export function clearAllAuthCookies() {
+  if (typeof window === "undefined") return;
+
+  const cookieNames = [
+    "authjs.session-token", "authjs.callback-url", "authjs.csrf-token",
+    "__Secure-authjs.session-token", "__Secure-authjs.callback-url", "__Secure-authjs.csrf-token",
+    "__Host-authjs.session-token", "__Host-authjs.callback-url", "__Host-authjs.csrf-token",
+    "next-auth.session-token", "next-auth.callback-url", "next-auth.csrf-token",
+    "__Secure-next-auth.session-token", "__Secure-next-auth.callback-url", "__Secure-next-auth.csrf-token",
+    "__Host-next-auth.session-token", "__Host-next-auth.callback-url", "__Host-next-auth.csrf-token",
+  ];
+
+  try {
+    const cookies = document.cookie.split(";");
+    cookies.forEach((c) => {
+      const name = c.split("=")[0].trim();
+      if (!name) return;
+
+      const baseName = name.replace(/\.\d+$/, ""); // Handle chunked cookies (.0, .1, etc.)
+      if (cookieNames.includes(name) || cookieNames.includes(baseName)) {
+        const isHostPrefixed = name.startsWith("__Host-");
+        
+        // __Host- cookies MUST be deleted with path=/, secure, and NO domain.
+        if (isHostPrefixed) {
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; secure`;
+        } else {
+          // Try to clear standard cookies with all path and domain variants
+          const paths = ["/", "/admin", "/tenant", "/api", "/login", ""];
+          paths.forEach((p) => {
+            const pathVal = p || "/";
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}`;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}; secure`;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}; domain=${window.location.hostname}`;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}; domain=.${window.location.hostname}`;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}; domain=${window.location.hostname}; secure`;
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${pathVal}; domain=.${window.location.hostname}; secure`;
+          });
+        }
+      }
+    });
+    console.log("🧹 Wiped all auth cookies successfully.");
+  } catch (error) {
+    console.error("Failed to clear auth cookies:", error);
+  }
+}

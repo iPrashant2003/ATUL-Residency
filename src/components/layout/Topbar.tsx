@@ -4,7 +4,7 @@ import { Bell, Menu, Search, X, AlertCircle, CheckCircle2, Info, LogOut } from "
 import { useSession, signOut } from "next-auth/react";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { formatDateTime } from "@/lib/utils";
+import { formatDateTime, clearAllAuthCookies } from "@/lib/utils";
 
 interface TopbarProps {
   title: string;
@@ -334,7 +334,11 @@ export default function Topbar({ title, subtitle, onMenuClick }: TopbarProps) {
               {/* Menu items */}
               <div style={{ padding: "6px" }}>
                 <button
-                  onClick={() => { setShowUserMenu(false); signOut({ callbackUrl: "/login" }); }}
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    clearAllAuthCookies();
+                    signOut({ callbackUrl: "/login" });
+                  }}
                   style={{
                     width: "100%", padding: "9px 12px",
                     background: "transparent", border: "none", cursor: "pointer",

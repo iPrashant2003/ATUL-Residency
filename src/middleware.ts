@@ -29,14 +29,18 @@ export default async function middleware(request: NextRequest) {
 document.cookie.split(';').forEach(function(c) {
   var name = c.split('=')[0].trim();
   if (!name) return;
-  // Clear for all possible path combinations
-  var paths = ['/', '/admin', '/tenant', '/api', '/login', ''];
-  paths.forEach(function(p) {
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/');
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';secure';
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=' + location.hostname;
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=.' + location.hostname;
-  });
+  if (name.indexOf('__Host-') === 0) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;secure';
+  } else {
+    // Clear for all possible path combinations
+    var paths = ['/', '/admin', '/tenant', '/api', '/login', ''];
+    paths.forEach(function(p) {
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/');
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';secure';
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=' + location.hostname;
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + (p || '/') + ';domain=.' + location.hostname;
+    });
+  }
 });
 // Redirect to login after cookies are cleared
 setTimeout(function() { window.location.href = '/login'; }, 500);
@@ -50,12 +54,14 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
       headers: { "Content-Type": "text/html; charset=utf-8" },
     });
 
-    // Server-side deletion of all auth cookie variants
+    // Server-side deletion of all auth cookie variants (including secure and Host prefixes)
     const cookieNames = [
       "authjs.session-token", "authjs.callback-url", "authjs.csrf-token",
       "__Secure-authjs.session-token", "__Secure-authjs.callback-url", "__Secure-authjs.csrf-token",
+      "__Host-authjs.session-token", "__Host-authjs.callback-url", "__Host-authjs.csrf-token",
       "next-auth.session-token", "next-auth.callback-url", "next-auth.csrf-token",
       "__Secure-next-auth.session-token", "__Secure-next-auth.callback-url", "__Secure-next-auth.csrf-token",
+      "__Host-next-auth.session-token", "__Host-next-auth.callback-url", "__Host-next-auth.csrf-token",
     ];
     for (const name of cookieNames) {
       response.cookies.delete(name);
