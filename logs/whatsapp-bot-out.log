@@ -432,3 +432,7 @@
 {"message":"🔍 Checking for overdue rent records...\n","timestamp":"2026-05-31 23:29:59","type":"out","process_id":0,"app_name":"whatsapp-bot"}
 {"message":"🔍 Checking for 1st-of-month pending invoices...\n","timestamp":"2026-06-01 00:29:59","type":"out","process_id":0,"app_name":"whatsapp-bot"}
 {"message":"🔍 Checking for overdue rent records...\n","timestamp":"2026-06-01 00:29:59","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🔍 Checking for 1st-of-month pending invoices...\n🔍 Checking for overdue rent records...\n","timestamp":"2026-06-01 01:31:47","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"⏰ [Daily Backup] Starting automated scheduled database backup...\n","timestamp":"2026-06-01 02:31:46","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🔍 Checking for 1st-of-month pending invoices...\n","timestamp":"2026-06-01 02:31:46","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🔍 Checking for overdue rent records...\n","timestamp":"2026-06-01 02:31:46","type":"out","process_id":0,"app_name":"whatsapp-bot"}

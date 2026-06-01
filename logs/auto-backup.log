@@ -1,0 +1,38 @@
+[01-06-2026  2:13:51.88] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:5392) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: getaddrinfo ENOTFOUND ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:121:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech'
+}
+
+Node.js v25.6.1
+[01-06-2026  2:13:52.06] Backup finished. 
+ 
+[01-06-2026 23:19:21.37] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:13648) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+^C
