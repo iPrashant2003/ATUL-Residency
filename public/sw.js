@@ -12,7 +12,7 @@ if (workbox) {
   const { ExpirationPlugin } = workbox.expiration;
 
   // Pre-cache core shell resources on install
-  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v2';
+  const OFFLINE_CACHE_NAME = 'atul-residency-offline-v3';
   const PRECACHE_ASSETS = [
     '/offline',
     '/manifest.json',
@@ -50,7 +50,7 @@ if (workbox) {
   // Network first, fall back to offline pre-cached page if connection is unavailable
   const navigationHandler = async (params) => {
     const networkFirst = new NetworkFirst({
-      cacheName: 'atul-residency-pages',
+      cacheName: 'atul-residency-pages-v2',
       plugins: [
         new CacheableResponsePlugin({
           statuses: [0, 200]
@@ -78,7 +78,7 @@ if (workbox) {
   registerRoute(
     ({ request }) => request.destination === 'style' || request.destination === 'script' || request.destination === 'worker',
     new StaleWhileRevalidate({
-      cacheName: 'atul-residency-static-assets',
+      cacheName: 'atul-residency-static-assets-v2',
       plugins: [
         new CacheableResponsePlugin({
           statuses: [0, 200]
