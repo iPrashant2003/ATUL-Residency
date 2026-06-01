@@ -19,6 +19,44 @@ function LoginPageContent() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    // Clear cookies client-side if they are bloated (>2000 characters) to prevent 494 REQUEST_HEADER_TOO_LARGE.
+    // This wipes bloated session cookies from prior roles/sessions to make room for a fresh sign-in request.
+    if (typeof window !== "undefined" && document.cookie.length > 2000) {
+      try {
+        const deleteCookie = (name: string) => {
+          const paths = ["/", "/admin", "/tenant", "/api", "/login", ""];
+          paths.forEach(p => {
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=" + (p || "/");
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=" + (p || "/") + ";secure";
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=" + (p || "/") + ";domain=" + location.hostname;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=" + (p || "/") + ";domain=." + location.hostname;
+          });
+        };
+
+        const cookieNames = [
+          "authjs.session-token", "authjs.callback-url", "authjs.csrf-token",
+          "__Secure-authjs.session-token", "__Secure-authjs.callback-url", "__Secure-authjs.csrf-token",
+          "next-auth.session-token", "next-auth.callback-url", "next-auth.csrf-token",
+          "__Secure-next-auth.session-token", "__Secure-next-auth.callback-url", "__Secure-next-auth.csrf-token",
+        ];
+
+        document.cookie.split(";").forEach(c => {
+          const name = c.split("=")[0].trim();
+          if (!name) return;
+          
+          const baseName = name.replace(/\.\d+$/, "");
+          if (cookieNames.includes(name) || cookieNames.includes(baseName)) {
+            deleteCookie(name);
+          }
+        });
+        console.log("🧹 Cleared bloated cookies on login load.");
+      } catch (e) {
+        console.error("Failed to clear cookies on login load:", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (status === "authenticated") {
       const role = (session?.user as any)?.role;
       router.push(role === "ADMIN" ? "/admin/dashboard" : "/tenant/dashboard");
