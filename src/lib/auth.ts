@@ -10,31 +10,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ...authConfig.callbacks,
     async jwt({ token, user }) {
       // MINIMAL token — only id, role, tenantId
-      // No image, no name, no email stored in JWT
-      // This prevents the 494 REQUEST_HEADER_TOO_LARGE error on Vercel
+      // ALWAYS strip to essentials on EVERY request to prevent cookie bloat
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
         token.tenantId = (user as any).tenantId ?? null;
-        // Explicitly delete large/unnecessary fields
-        delete token.image;
-        delete token.picture;
-        delete token.name;
-        delete token.email;
-      } else if (token.id) {
-        // On subsequent requests, only keep the 3 essential fields
-        // Do NOT re-fetch from DB here to avoid adding more data to JWT
-        token = {
-          role: token.role,
-          id: token.id,
-          tenantId: token.tenantId,
-          sub: token.sub,
-          iat: token.iat,
-          exp: token.exp,
-          jti: token.jti,
-        };
       }
-      return token;
+      return {
+        role: token.role,
+        id: token.id,
+        tenantId: token.tenantId,
+        sub: token.sub,
+        iat: token.iat,
+        exp: token.exp,
+        jti: token.jti,
+      };
     },
     async session({ session, token }) {
       if (session.user && token.id) {

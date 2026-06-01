@@ -49,19 +49,24 @@ export const authConfig = {
       return true;
     },
     async jwt({ token, user }) {
-      // MINIMAL token — only store id and role, nothing else
+      // MINIMAL token — only store id, role, tenantId
       // This keeps the JWT cookie tiny to avoid Vercel's 8KB header limit
+      // CRITICAL: Strip on EVERY request, not just initial login
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
         token.tenantId = (user as any).tenantId ?? null;
-        // NEVER store image in token — fetch it fresh in session callback
-        delete token.image;
-        delete token.picture;
-        delete token.name;
-        delete token.email;
       }
-      return token;
+      // ALWAYS return only essential fields — prevents cookie bloat over time
+      return {
+        role: token.role,
+        id: token.id,
+        tenantId: token.tenantId,
+        sub: token.sub,
+        iat: token.iat,
+        exp: token.exp,
+        jti: token.jti,
+      };
     },
     async session({ session, token }) {
       if (session.user) {
