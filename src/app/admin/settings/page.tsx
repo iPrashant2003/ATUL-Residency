@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import { User, Phone, Mail, Shield, Save, Key, Loader2, Building, CreditCard, Plus, Sliders } from "lucide-react";
+import { User, Phone, Mail, Shield, Save, Key, Loader2, CreditCard, Sliders, Database, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function AdminSettingsPage() {
   const { update } = useSession();
@@ -36,6 +37,24 @@ export default function AdminSettingsPage() {
   const [pairingPhones, setPairingPhones] = useState({ bot1: "", bot2: "" });
   const [pairingCodes, setPairingCodes] = useState({ bot1: "", bot2: "" });
   const [requestingCode, setRequestingCode] = useState<string | null>(null);
+  const [backingUp, setBackingUp] = useState(false);
+
+  const handleTriggerBackup = async () => {
+    setBackingUp(true);
+    try {
+      const res = await fetch("/api/admin/backup", { method: "POST" });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        toast.success(`Database backup completed successfully! ${data.totalRows} rows compiled and emailed to admin. 💾`);
+      } else {
+        toast.error(data.error || "Failed to trigger database backup");
+      }
+    } catch {
+      toast.error("Failed to trigger database backup");
+    } finally {
+      setBackingUp(false);
+    }
+  };
 
   const fetchSettings = async () => {
     try {
@@ -749,6 +768,98 @@ export default function AdminSettingsPage() {
                   >
                     {resettingBot === "bot2" ? <Loader2 size={12} className="animate-spin" /> : "Disconnect & Reset"}
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Box 6: Database Backup & Security */}
+          <div className="glass-card" style={{ padding: "28px", gridColumn: "span 2", marginTop: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <div style={{
+                width: "40px", height: "40px", background: "rgba(20,184,166,0.1)",
+                border: "1px solid rgba(20,184,166,0.25)", borderRadius: "10px",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                <Database size={20} color="#14B8A6" />
+              </div>
+              <div>
+                <h3 style={{ fontSize: "16px", fontWeight: 700, fontFamily: "var(--font-display)" }}>Database Backup & Security</h3>
+                <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Secure your tenancy records, rent history, and logs from data loss</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Left Side: Backup trigger and Info */}
+              <div style={{
+                background: "rgba(255, 255, 255, 0.02)",
+                border: "1px solid rgba(255, 255, 255, 0.05)",
+                borderRadius: "12px",
+                padding: "20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: "180px"
+              }}>
+                <div>
+                  <h4 style={{ fontWeight: 700, fontSize: "14px", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span>🛡️ Automated Protection</span>
+                  </h4>
+                  <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.7)", lineHeight: "1.6" }}>
+                    <p>⏰ <strong>Daily Schedule:</strong> 2:00 AM & 2:00 PM IST (Local scheduler)</p>
+                    <p>☁️ <strong>Cloud Cron Backup:</strong> Active (Daily at 3:00 AM UTC)</p>
+                    <p>📧 <strong>Email Sync:</strong> Enabled (Backup sent to admin inbox)</p>
+                    <p>📂 <strong>Retention:</strong> Last 30 backups kept automatically</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
+                  <button
+                    onClick={handleTriggerBackup}
+                    disabled={backingUp}
+                    className="btn-primary"
+                    style={{ padding: "8px 14px", fontSize: "12px", display: "flex", alignItems: "center", gap: "6px" }}
+                  >
+                    {backingUp ? <Loader2 size={14} className="animate-spin" /> : <RefreshCw size={14} />}
+                    Trigger Manual Backup
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Side: Data recovery & soft-deleted list */}
+              <div style={{
+                background: "rgba(255, 255, 255, 0.02)",
+                border: "1px solid rgba(255, 255, 255, 0.05)",
+                borderRadius: "12px",
+                padding: "20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: "180px"
+              }}>
+                <div>
+                  <h4 style={{ fontWeight: 700, fontSize: "14px", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span>🗄️ Soft-Deleted Records</span>
+                  </h4>
+                  <p style={{ fontSize: "12.5px", color: "rgba(226, 232, 240, 0.6)", lineHeight: "1.5" }}>
+                    Renters you delete are automatically preserved in the archive for security and audit reasons. They can be restored to active rooms at any time.
+                  </p>
+                </div>
+                <div style={{ marginTop: "16px" }}>
+                  <Link href="/admin/tenants" className="btn-ghost" style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "8px 14px",
+                    fontSize: "12px",
+                    background: "rgba(139, 92, 246, 0.08)",
+                    border: "1px solid rgba(139, 92, 246, 0.2)",
+                    color: "#a78bfa",
+                    textDecoration: "none",
+                    borderRadius: "6px",
+                    fontWeight: 600
+                  }}>
+                    Go to Renters & Archive
+                  </Link>
                 </div>
               </div>
             </div>
