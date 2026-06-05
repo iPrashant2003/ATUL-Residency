@@ -8,7 +8,8 @@ module.exports = {
       cwd: 'C:/Users/prash/.gemini/antigravity/scratch/atul-residency',
 
       // --- Restart policy ---
-      watch: false,                  // Don't watch files (would cause restart loops)
+      watch: ['src/server/whatsapp.ts', 'src/lib/whatsapp/'],
+      ignore_watch: ['node_modules', '.next', 'logs', 'backups', '.wwebjs_cache', '.wwebjs_auth', 'public', 'dev.db', 'package-lock.json', 'package.json', 'app-config.json', 'watch-and-deploy.ps1'],
       autorestart: true,             // Restart automatically on crash
       max_restarts: 20,              // Max restarts before giving up
       min_uptime: '10s',             // Must stay alive 10s to count as successful start

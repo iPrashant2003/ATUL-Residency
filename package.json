@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:all": "concurrently \"npm run dev\" \"tsx src/server/whatsapp.ts\"",
+    "deploy:watch": "powershell -File watch-and-deploy.ps1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
