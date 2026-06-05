@@ -69,6 +69,20 @@ const prisma = createPrismaClient();
 const app = express();
 app.use(express.json());
 
+// Clean stale session lock files to prevent lock deadlocks
+function cleanSessionLock(botId) {
+    const fs = require('fs');
+    const lockPath = path.join(os.homedir(), '.wwebjs_auth', `session-${botId}`, 'SingletonLock');
+    if (fs.existsSync(lockPath)) {
+        try {
+            fs.unlinkSync(lockPath);
+            console.log(`🧹 Cleaned stale SingletonLock for ${botId}`);
+        } catch (e) {
+            console.warn(`Could not delete SingletonLock for ${botId} (it might be locked by an active process):`, e.message);
+        }
+    }
+}
+
 // Initialize Client 1 (Bot 1)
 const client1 = new Client({
     authStrategy: new LocalAuth({ clientId: 'bot1', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
@@ -82,7 +96,10 @@ const client1 = new Client({
             '--disable-features=IsolateOrigins,site-per-process',
             '--no-first-run',
             '--no-zygote',
-            '--disable-device-discovery-notifications'
+            '--disable-device-discovery-notifications',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding'
         ],
         headless: true,
         handleSIGINT: false,
@@ -104,7 +121,10 @@ const client2 = new Client({
             '--disable-features=IsolateOrigins,site-per-process',
             '--no-first-run',
             '--no-zygote',
-            '--disable-device-discovery-notifications'
+            '--disable-device-discovery-notifications',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding'
         ],
         headless: true,
         handleSIGINT: false,
@@ -160,6 +180,7 @@ client1.on('auth_failure', async msg => {
             fs.rmSync(sessionPath, { recursive: true, force: true });
             console.log('Wiped corrupted session-bot1 files to allow a fresh scan.');
         }
+        cleanSessionLock('bot1');
         await client1.initialize();
     } catch (e) {
         console.error('Failed to auto-recover Bot 1 after auth failure:', e.message);
@@ -179,6 +200,7 @@ client1.on('disconnected', async (reason) => {
     }
     console.log('Restarting WhatsApp client 1...');
     try {
+        cleanSessionLock('bot1');
         await client1.initialize();
     } catch (e) {
         console.error('Failed to reinitialize client 1:', e.message);
@@ -224,6 +246,7 @@ client2.on('auth_failure', async msg => {
             fs.rmSync(sessionPath, { recursive: true, force: true });
             console.log('Wiped corrupted session-bot2 files to allow a fresh scan.');
         }
+        cleanSessionLock('bot2');
         await client2.initialize();
     } catch (e) {
         console.error('Failed to auto-recover Bot 2 after auth failure:', e.message);
@@ -243,6 +266,7 @@ client2.on('disconnected', async (reason) => {
     }
     console.log('Restarting WhatsApp client 2...');
     try {
+        cleanSessionLock('bot2');
         await client2.initialize();
     } catch (e) {
         console.error('Failed to reinitialize client 2:', e.message);
@@ -635,6 +659,7 @@ app.post('/logout', async (req, res) => {
 
         // Reinitialize client
         console.log(`Re-initializing WhatsApp ${bot}...`);
+        cleanSessionLock(bot);
         await targetBot.initialize();
 
         return res.json({ success: true, message: `Successfully reset and reinitialized ${bot}` });
@@ -729,7 +754,9 @@ const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`WhatsApp API Server running on port ${PORT}`);
     console.log(`Starting WhatsApp clients initialization (Dual-Bot)...`);
+    cleanSessionLock('bot1');
     client1.initialize().catch(e => console.error('Failed to initialize client 1:', e.message));
+    cleanSessionLock('bot2');
     client2.initialize().catch(e => console.error('Failed to initialize client 2:', e.message));
     
     // Start database queue polling
