@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { getBotUrl } from "@/lib/whatsappUrl";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Bot name and phone number are required" }, { status: 400 });
     }
 
-    const botUrl = process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
+    const botUrl = await getBotUrl();
     const res = await fetch(`${botUrl}/pair`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

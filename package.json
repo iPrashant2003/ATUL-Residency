@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:all": "concurrently \"npm run dev\" \"tsx src/server/whatsapp.ts\"",
+    "dev:tunnel": "node scripts/start-bot-tunnel.js",
     "deploy:watch": "powershell -File watch-and-deploy.ps1",
     "build": "next build",
     "start": "next start",

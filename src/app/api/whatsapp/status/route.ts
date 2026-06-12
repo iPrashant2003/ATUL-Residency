@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { getBotUrl } from "@/lib/whatsappUrl";
 
 export async function GET() {
   const session = await auth();
@@ -8,7 +9,7 @@ export async function GET() {
   }
 
   try {
-    const botUrl = process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
+    const botUrl = await getBotUrl();
     const res = await fetch(`${botUrl}/status`);
     if (!res.ok) throw new Error("Bot server down");
     const data = await res.json();

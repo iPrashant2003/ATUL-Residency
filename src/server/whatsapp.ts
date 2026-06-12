@@ -766,6 +766,22 @@ app.listen(PORT, () => {
 
     // Start automated database backups
     startAutomatedBackups();
+
+    // Register bot URL in database if present in env (e.g. from localtunnel or config)
+    const urlToRegister = process.env.TUNNEL_URL || process.env.WHATSAPP_BOT_URL;
+    if (urlToRegister && !urlToRegister.includes('localhost') && !urlToRegister.includes('127.0.0.1')) {
+        prisma.activityLog.create({
+            data: {
+                action: 'WHATSAPP_BOT_URL',
+                entity: 'SYSTEM',
+                details: urlToRegister
+            }
+        }).then(() => {
+            console.log(`✅ Registered bot URL in database: ${urlToRegister}`);
+        }).catch(err => {
+            console.error('❌ Failed to register bot URL in database:', err.message);
+        });
+    }
 });
 
 process.on('unhandledRejection', (reason, promise) => {
