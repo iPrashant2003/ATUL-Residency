@@ -1,12 +1,11 @@
 const { spawn } = require('child_process');
 const { PrismaClient } = require('@prisma/client');
 const path = require('path');
-const fs = require('fs');
 
 // Load environment variables from .env.local
 require('@next/env').loadEnvConfig(process.cwd());
 
-// Create Prisma client (same logic as whatsapp.ts)
+// Create Prisma client
 const databaseUrl = process.env.DATABASE_URL;
 let prisma;
 if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://'))) {
@@ -22,25 +21,21 @@ if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.start
     prisma = new PrismaClient({ adapter });
 }
 
-console.log('🌐 Spawning SSH tunnel to expose port 3001...');
-const ssh = spawn('ssh', [
-    '-o', 'StrictHostKeyChecking=no', 
-    '-o', 'ServerAliveInterval=30', 
-    '-R', '80:localhost:3001', 
-    'a.pinggy.io'
-]);
+console.log('🌐 Starting localtunnel to expose port 3001...');
+const lt = spawn('npx', ['localtunnel', '--port', '3001'], { shell: true });
 
 let tunnelUrl = '';
 let botStarted = false;
 let botProcess = null;
 
-ssh.stdout.on('data', async (data) => {
+lt.stdout.on('data', async (data) => {
     const output = data.toString();
+    console.log(`[Tunnel] ${output.trim()}`);
     
-    // Scan output for the Pinggy public HTTPS URL
-    const match = output.match(/https:\/\/[a-z0-9-]+\.pinggy\.(?:link|io)/i);
+    // Scan output for localtunnel URL (e.g. your url is: https://silver-aliens-search.loca.lt)
+    const match = output.match(/your url is:\s+(https:\/\/\S+)/i);
     if (match && !botStarted) {
-        tunnelUrl = match[0];
+        tunnelUrl = match[1];
         console.log(`\n🎉 Public Tunnel URL Established: ${tunnelUrl}`);
         
         try {
@@ -76,31 +71,31 @@ ssh.stdout.on('data', async (data) => {
     }
 });
 
-ssh.stderr.on('data', (data) => {
+lt.stderr.on('data', (data) => {
     const msg = data.toString().trim();
-    if (msg) console.log(`[Tunnel Warning/Error] ${msg}`);
+    if (msg) console.log(`[Tunnel Error] ${msg}`);
 });
 
-ssh.on('close', (code) => {
-    console.log(`\n❌ SSH Tunnel process exited with code ${code}`);
+lt.on('close', (code) => {
+    console.log(`\n❌ Localtunnel process exited with code ${code}`);
     cleanup();
     process.exit(code);
 });
 
 function cleanup() {
-    if (ssh) ssh.kill();
+    if (lt) lt.kill();
     if (botProcess) botProcess.kill();
 }
 
 // Handle exit signals
 process.on('SIGINT', () => {
-    console.log('\nStopping SSH Tunnel and WhatsApp bot...');
+    console.log('\nStopping Localtunnel and WhatsApp bot...');
     cleanup();
     process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-    console.log('\nStopping SSH Tunnel and WhatsApp bot...');
+    console.log('\nStopping Localtunnel and WhatsApp bot...');
     cleanup();
     process.exit(0);
 });

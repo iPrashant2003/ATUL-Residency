@@ -159,3 +159,96 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Failed to update payment" }, { status: 500 });
   }
 }
+
+// Delete payment and adjust rent record if approved
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const session = await auth();
+    if (!session || (session.user as any)?.role !== "ADMIN") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+
+    // Fetch payment details first
+    const payment = await prisma.payment.findUnique({
+      where: { id },
+      include: {
+        tenant: { include: { user: true } },
+      },
+    });
+
+    if (!payment) {
+      return NextResponse.json({ error: "Payment not found" }, { status: 404 });
+    }
+
+    // Begin database transaction to ensure atomic deletion & adjustment
+    await prisma.$transaction(async (tx) => {
+      // 1. If payment was approved, adjust the associated RentRecord
+      if (payment.status === "APPROVED" && payment.rentRecordId) {
+        const rentRecord = await tx.rentRecord.findUnique({
+          where: { id: payment.rentRecordId },
+        });
+
+        if (rentRecord) {
+          const newAmountPaid = Math.max(0, rentRecord.amountPaid - payment.amount);
+          const newStatus = newAmountPaid === 0 
+            ? "PENDING" 
+            : newAmountPaid >= rentRecord.totalAmount 
+              ? "PAID" 
+              : "PARTIAL";
+
+          await tx.rentRecord.update({
+            where: { id: payment.rentRecordId },
+            data: {
+              amountPaid: newAmountPaid,
+              status: newStatus,
+              paidDate: newStatus === "PAID" ? rentRecord.paidDate : null,
+            },
+          });
+        }
+      }
+
+      // 2. Delete the payment
+      await tx.payment.delete({
+        where: { id },
+      });
+    });
+
+    // 3. Send WhatsApp message to tenant
+    if (payment.tenant && payment.tenant.whatsapp) {
+      try {
+        const tenantName = payment.tenant.name;
+        const amountStr = payment.amount.toLocaleString('en-IN');
+        
+        const whatsappMsg = `⚠️ *ATUL RESIDENCY - PAYMENT DELETED* ⚠️\n\nDear *${tenantName}*,\n\nYour submitted payment of *₹${amountStr}* has been deleted by the admin.\n\n📝 Please submit your payment details again on the portal, or contact the owner if you have questions.\n\nWarm regards,\n*Atul Tiwari*\nAtul Residency`;
+
+        await prisma.whatsappQueue.create({
+          data: {
+            number: payment.tenant.whatsapp,
+            message: whatsappMsg,
+            status: "PENDING",
+          },
+        });
+        console.log(`Queued payment deletion notification for ${tenantName}`);
+      } catch (err: any) {
+        console.error("Failed to queue deletion WhatsApp message:", err.message);
+      }
+    }
+
+    // 4. Trigger PWA Push Notification if possible
+    if (payment.tenant && payment.tenant.userId) {
+      await sendPushNotification(
+        payment.tenant.userId,
+        "Payment Deleted ⚠️",
+        `Your payment of ₹${payment.amount.toLocaleString('en-IN')} has been deleted. Please submit again.`,
+        "/tenant/payments"
+      ).catch(e => console.error("Push notify error on delete:", e));
+    }
+
+    return NextResponse.json({ success: true, message: "Payment deleted successfully." });
+  } catch (error: any) {
+    console.error("Failed to delete payment:", error);
+    return NextResponse.json({ error: error.message || "Failed to delete payment" }, { status: 500 });
+  }
+}

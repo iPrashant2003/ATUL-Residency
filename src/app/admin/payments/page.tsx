@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
 import {
   CheckCircle2, XCircle, Clock, IndianRupee, Filter, Search,
-  ExternalLink, Eye, MessageCircle, RefreshCw, Bell,
+  ExternalLink, Eye, MessageCircle, RefreshCw, Bell, Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, formatDateTime } from "@/lib/utils";
@@ -76,6 +76,27 @@ export default function AdminPaymentsPage() {
       setViewPayment(null);
     } catch {
       toast.error("Failed to update payment");
+    } finally {
+      setProcessing(null);
+    }
+  }
+
+  async function handleDelete(paymentId: string) {
+    if (!window.confirm("Are you sure you want to delete this payment permanently? This will remove it from the database, adjust any approved amounts, and notify the renter via WhatsApp.")) {
+      return;
+    }
+    setProcessing(paymentId);
+    try {
+      const res = await fetch(`/api/payments/${paymentId}`, { method: "DELETE" });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to delete payment");
+      }
+      toast.success("Payment deleted successfully and renter notified 🗑️");
+      fetchPayments();
+      setViewPayment(null);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to delete payment");
     } finally {
       setProcessing(null);
     }
@@ -243,6 +264,14 @@ export default function AdminPaymentsPage() {
                     >
                       <MessageCircle size={15} />
                     </a>
+                    <button
+                      onClick={() => handleDelete(p.id)}
+                      disabled={processing === p.id}
+                      style={{ width: "34px", height: "34px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "8px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#f87171" }}
+                      title="Delete payment permanently"
+                    >
+                      <Trash2 size={15} />
+                    </button>
                     {p.status === "PENDING" && (
                       <>
                         <button
@@ -328,25 +357,50 @@ export default function AdminPaymentsPage() {
             )}
 
             {/* Actions */}
-            {viewPayment.status === "PENDING" && (
-              <div style={{ display: "flex", gap: "10px" }}>
-                <button
-                  onClick={() => handleAction(viewPayment.id, "APPROVED", (viewPayment as any).rentRecordId)}
-                  disabled={processing === viewPayment.id}
-                  className="btn-primary"
-                  style={{ flex: 1, justifyContent: "center" }}
-                >
-                  <CheckCircle2 size={16} /> Approve Payment
-                </button>
-                <button
-                  onClick={() => handleAction(viewPayment.id, "REJECTED")}
-                  disabled={processing === viewPayment.id}
-                  style={{ flex: 1, padding: "10px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: "8px", cursor: "pointer", color: "#ef4444", fontSize: "14px", fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
-                >
-                  <XCircle size={16} /> Reject
-                </button>
-              </div>
-            )}
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              {viewPayment.status === "PENDING" && (
+                <>
+                  <button
+                    onClick={() => handleAction(viewPayment.id, "APPROVED", (viewPayment as any).rentRecordId)}
+                    disabled={processing === viewPayment.id}
+                    className="btn-primary"
+                    style={{ flex: 1, justifyContent: "center" }}
+                  >
+                    <CheckCircle2 size={16} /> Approve Payment
+                  </button>
+                  <button
+                    onClick={() => handleAction(viewPayment.id, "REJECTED")}
+                    disabled={processing === viewPayment.id}
+                    style={{ flex: 1, padding: "10px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: "8px", cursor: "pointer", color: "#ef4444", fontSize: "14px", fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+                  >
+                    <XCircle size={16} /> Reject
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => handleDelete(viewPayment.id)}
+                disabled={processing === viewPayment.id}
+                style={{
+                  flex: viewPayment.status === "PENDING" ? "0 0 44px" : 1,
+                  padding: "10px",
+                  background: "rgba(239,68,68,0.12)",
+                  border: "1px solid rgba(239,68,68,0.3)",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  color: "#ef4444",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                }}
+                title="Delete payment permanently"
+              >
+                <Trash2 size={16} />
+                {viewPayment.status !== "PENDING" && "Delete Payment"}
+              </button>
+            </div>
           </div>
         </div>
       )}
