@@ -9,6 +9,9 @@ const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
+
+// ==================== Utility ====================
 
 function getLocalIp() {
     const interfaces = os.networkInterfaces();
@@ -28,27 +31,19 @@ function getBaseUrl() {
     if (process.env.APP_URL) return process.env.APP_URL;
     if (process.env.NEXTAUTH_URL) {
         const url = process.env.NEXTAUTH_URL;
-        if (url.includes('localhost') || url.includes('127.0.0.1')) {
-            return url;
-        }
+        if (url.includes('localhost') || url.includes('127.0.0.1')) return url;
         return url.replace(/^http:/, 'https:');
     }
     try {
-        const fs = require('fs');
         const configPath = path.join(process.cwd(), 'app-config.json');
         if (fs.existsSync(configPath)) {
             const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-            if (config.baseUrl) {
-                return config.baseUrl;
-            }
+            if (config.baseUrl) return config.baseUrl;
         }
-    } catch (e) {
-        console.error('Error reading app-config.json', e);
-    }
+    } catch (e) {}
     return `http://${getLocalIp()}:3000`;
 }
 
-// Create Prisma client — PostgreSQL in production, SQLite for local dev
 function createPrismaClient() {
     const databaseUrl = process.env.DATABASE_URL;
     if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://'))) {
@@ -58,736 +53,466 @@ function createPrismaClient() {
         const adapter = new PrismaPg(pool);
         return new PrismaClient({ adapter });
     }
-    // Fallback: local SQLite
     const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
     const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
     const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
     return new PrismaClient({ adapter });
 }
 
-const prisma = createPrismaClient();
-const app = express();
-app.use(express.json());
-
-// Clean stale session lock files to prevent lock deadlocks
-function cleanSessionLock(botId) {
-    const fs = require('fs');
-    const lockPath = path.join(os.homedir(), '.wwebjs_auth', `session-${botId}`, 'SingletonLock');
+function cleanSessionLock() {
+    const lockPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot', 'SingletonLock');
     if (fs.existsSync(lockPath)) {
-        try {
-            fs.unlinkSync(lockPath);
-            console.log(`🧹 Cleaned stale SingletonLock for ${botId}`);
-        } catch (e) {
-            console.warn(`Could not delete SingletonLock for ${botId} (it might be locked by an active process):`, e.message);
-        }
+        try { fs.unlinkSync(lockPath); console.log('🧹 Cleaned stale SingletonLock'); } catch (e) {}
     }
 }
 
-// Initialize Client 1 (Bot 1)
-const client1 = new Client({
-    authStrategy: new LocalAuth({ clientId: 'bot1', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
-    puppeteer: {
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-web-security',
-            '--disable-gpu',
-            '--disable-blink-features=AutomationControlled',
-            '--disable-features=IsolateOrigins,site-per-process',
-            '--no-first-run',
-            '--no-zygote',
-            '--disable-device-discovery-notifications',
-            '--disable-background-timer-throttling',
-            '--disable-backgrounding-occluded-windows',
-            '--disable-renderer-backgrounding'
-        ],
-        headless: true,
-        handleSIGINT: false,
-        handleSIGTERM: false
-    },
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+// ==================== State ====================
+
+const prisma = createPrismaClient();
+const app = express();
+app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    if (req.method === 'OPTIONS') return res.sendStatus(200);
+    next();
 });
 
-// Initialize Client 2 (Bot 2)
-const client2 = new Client({
-    authStrategy: new LocalAuth({ clientId: 'bot2', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
-    puppeteer: {
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-web-security',
-            '--disable-gpu',
-            '--disable-blink-features=AutomationControlled',
-            '--disable-features=IsolateOrigins,site-per-process',
-            '--no-first-run',
-            '--no-zygote',
-            '--disable-device-discovery-notifications',
-            '--disable-background-timer-throttling',
-            '--disable-backgrounding-occluded-windows',
-            '--disable-renderer-backgrounding'
-        ],
-        headless: true,
-        handleSIGINT: false,
-        handleSIGTERM: false
-    },
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-});
-
-let isReady1 = false;
-let isReady2 = false;
-let currentQr1 = null;
-let currentQr2 = null;
-let currentQrImage1 = null;
-let currentQrImage2 = null;
+let botClient = null;
+let botReady = false;
+let botQr = null;
+let botQrImage = null;
+let botPairingCode = null;
+let botInitializing = false;
 let isCronStarted = false;
 
-// ==================== Bot 1 Event Handlers ====================
-client1.on('qr', async (qr) => {
-    currentQr1 = qr;
-    console.log('\n======================================================');
-    console.log('📲 SCAN THIS QR CODE FOR BOT 1 (Admin 1)');
-    console.log('======================================================\n');
-    qrcodeTerminal.generate(qr, { small: true });
-    try {
-        currentQrImage1 = await QRCode.toDataURL(qr);
-    } catch (e) {
-        console.error('Failed to generate QR data URL for Bot 1:', e);
+// ==================== Bot Initialization ====================
+
+async function initializeBot(pairingPhone = null) {
+    if (botInitializing) {
+        console.log('⚠️ Bot is already initializing, skipping duplicate call.');
+        return;
     }
-});
+    botInitializing = true;
+    console.log('🤖 Initializing WhatsApp bot...' + (pairingPhone ? ` (pairing mode: ${pairingPhone})` : ''));
 
-client1.on('ready', () => {
-    isReady1 = true;
-    currentQr1 = null;
-    currentQrImage1 = null;
-    console.log('\n✅ WHATSAPP BOT 1 IS READY!');
-    console.log(`Connected as: ${client1.info.pushname || 'Admin 1'} (${client1.info.wid.user})`);
-    
-    // Start automated reminders cron job
-    startAutomatedReminders();
-});
+    // Destroy existing client
+    if (botClient) {
+        try { await Promise.race([botClient.destroy(), new Promise(r => setTimeout(r, 5000))]); } catch (e) {}
+        botClient = null;
+    }
 
-client1.on('authenticated', () => {
-    console.log('✅ Bot 1 authenticated successfully.');
-});
+    // Clean lock file
+    cleanSessionLock();
 
-client1.on('auth_failure', async msg => {
-    console.error('❌ Bot 1 authentication failure', msg);
-    // Auto-wipe corrupted session to trigger new QR code scan instead of staying disconnected
-    try {
-        const fs = require('fs');
-        const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot1');
-        if (fs.existsSync(sessionPath)) {
-            fs.rmSync(sessionPath, { recursive: true, force: true });
-            console.log('Wiped corrupted session-bot1 files to allow a fresh scan.');
+    const puppeteerArgs = [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-web-security',
+        '--disable-gpu',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-features=IsolateOrigins,site-per-process',
+        '--no-first-run',
+        '--no-zygote',
+        '--disable-device-discovery-notifications',
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding',
+    ];
+
+    const options = {
+        authStrategy: new LocalAuth({ clientId: 'bot', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
+        puppeteer: { args: puppeteerArgs, headless: true, handleSIGINT: false, handleSIGTERM: false },
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
+        webVersionCache: { type: 'none' },
+        qrMaxRetries: 0,
+    };
+
+    if (pairingPhone) {
+        options.pairWithPhoneNumber = { phoneNumber: pairingPhone, showNotification: true, intervalMs: 120000 };
+    }
+
+    botClient = new Client(options);
+
+    botClient.on('qr', async (qr) => {
+        console.log('\n======================================================');
+        console.log('📲 NEW QR CODE READY — Scan with WhatsApp');
+        console.log('======================================================\n');
+        qrcodeTerminal.generate(qr, { small: true });
+        botQr = qr;
+        botPairingCode = null;
+        try {
+            botQrImage = await QRCode.toDataURL(qr);
+            console.log('✅ QR image generated successfully');
+        } catch (e) {
+            console.error('❌ Failed to generate QR image:', e.message);
         }
-        cleanSessionLock('bot1');
-        await client1.initialize();
-    } catch (e) {
-        console.error('Failed to auto-recover Bot 1 after auth failure:', e.message);
-    }
-});
+    });
 
-client1.on('disconnected', async (reason) => {
-    isReady1 = false;
-    currentQr1 = null;
-    currentQrImage1 = null;
-    console.log('❌ WhatsApp client 1 was disconnected', reason);
-    
+    botClient.on('code', (code) => {
+        console.log(`🔑 Pairing code received: ${code}`);
+        botPairingCode = code;
+        botQr = null;
+        botQrImage = null;
+    });
+
+    botClient.on('ready', () => {
+        botReady = true;
+        botQr = null;
+        botQrImage = null;
+        botPairingCode = null;
+        botInitializing = false;
+        console.log('\n✅ WHATSAPP BOT IS READY!');
+        try { console.log(`Connected as: ${botClient.info.pushname} (+${botClient.info.wid.user})`); } catch (e) {}
+        startAutomatedReminders();
+    });
+
+    botClient.on('authenticated', () => {
+        console.log('✅ Bot authenticated successfully.');
+        botInitializing = false;
+    });
+
+    botClient.on('auth_failure', async (msg) => {
+        console.error('❌ Bot authentication failure:', msg);
+        botReady = false;
+        botQr = null;
+        botQrImage = null;
+        botPairingCode = null;
+        botInitializing = false;
+        // Wipe bad session and restart
+        try {
+            const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot');
+            if (fs.existsSync(sessionPath)) fs.rmSync(sessionPath, { recursive: true, force: true });
+        } catch (e) {}
+        setTimeout(() => initializeBot(), 5000);
+    });
+
+    botClient.on('disconnected', async (reason) => {
+        console.log('❌ Bot disconnected:', reason);
+        botReady = false;
+        botQr = null;
+        botQrImage = null;
+        botPairingCode = null;
+        botInitializing = false;
+        try { await botClient.destroy(); } catch (e) {}
+        console.log('🔄 Restarting bot in 5s...');
+        setTimeout(() => initializeBot(), 5000);
+    });
+
     try {
-        await client1.destroy();
+        await botClient.initialize();
     } catch (e) {
-        console.warn('Error during client 1 destroy:', e.message);
+        console.error('❌ Bot initialize() threw:', e.message);
+        botInitializing = false;
     }
-    console.log('Restarting WhatsApp client 1...');
-    try {
-        cleanSessionLock('bot1');
-        await client1.initialize();
-    } catch (e) {
-        console.error('Failed to reinitialize client 1:', e.message);
-    }
-});
+}
 
-// ==================== Bot 2 Event Handlers ====================
-client2.on('qr', async (qr) => {
-    currentQr2 = qr;
-    console.log('\n======================================================');
-    console.log('📲 SCAN THIS QR CODE FOR BOT 2 (Admin 2)');
-    console.log('======================================================\n');
-    qrcodeTerminal.generate(qr, { small: true });
-    try {
-        currentQrImage2 = await QRCode.toDataURL(qr);
-    } catch (e) {
-        console.error('Failed to generate QR data URL for Bot 2:', e);
-    }
-});
+// ==================== Automated Reminders ====================
 
-client2.on('ready', () => {
-    isReady2 = true;
-    currentQr2 = null;
-    currentQrImage2 = null;
-    console.log('\n✅ WHATSAPP BOT 2 IS READY!');
-    console.log(`Connected as: ${client2.info.pushname || 'Admin 2'} (${client2.info.wid.user})`);
-    
-    // Start automated reminders cron job
-    startAutomatedReminders();
-});
-
-client2.on('authenticated', () => {
-    console.log('✅ Bot 2 authenticated successfully.');
-});
-
-client2.on('auth_failure', async msg => {
-    console.error('❌ Bot 2 authentication failure', msg);
-    // Auto-wipe corrupted session to trigger new QR code scan instead of staying disconnected
-    try {
-        const fs = require('fs');
-        const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot2');
-        if (fs.existsSync(sessionPath)) {
-            fs.rmSync(sessionPath, { recursive: true, force: true });
-            console.log('Wiped corrupted session-bot2 files to allow a fresh scan.');
-        }
-        cleanSessionLock('bot2');
-        await client2.initialize();
-    } catch (e) {
-        console.error('Failed to auto-recover Bot 2 after auth failure:', e.message);
-    }
-});
-
-client2.on('disconnected', async (reason) => {
-    isReady2 = false;
-    currentQr2 = null;
-    currentQrImage2 = null;
-    console.log('❌ WhatsApp client 2 was disconnected', reason);
-    
-    try {
-        await client2.destroy();
-    } catch (e) {
-        console.warn('Error during client 2 destroy:', e.message);
-    }
-    console.log('Restarting WhatsApp client 2...');
-    try {
-        cleanSessionLock('bot2');
-        await client2.initialize();
-    } catch (e) {
-        console.error('Failed to reinitialize client 2:', e.message);
-    }
-});
-
-// ==================== Automated Reminders Cron Job ====================
 function startAutomatedReminders() {
     if (isCronStarted) return;
     isCronStarted = true;
+    console.log('🕒 Starting automated reminders cron (hourly)...');
 
-    console.log('🕒 Starting automated reminders cron job (checks every 1h)...');
-    
-    const checkFirstOfMonthInvoices = async () => {
-        // Run reminders if at least one bot is ready
-        if (!isReady1 && !isReady2) return;
-        const now = new Date();
-        if (now.getDate() !== 1) return;
-        
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const buildMessage = (tenant, record) => {
+        const balance = record.totalAmount - record.amountPaid;
+        const invoiceUrl = `${getBaseUrl()}/api/rent/${record.id}/invoice`;
+        let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
+        if (record.electricityBill > 0) breakdown += `⚡ *Electricity*: ₹${record.electricityBill}\n`;
+        if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
+        if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
+        if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
+        return `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your rent invoice for *${months[record.month - 1]} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n📄 Invoice: ${invoiceUrl}\n💳 Pay via UPI: atultiwari123321@oksbi\n\n🙏 Thank you!`;
+    };
+
+    const sendMsg = async (whatsapp, msg) => {
+        if (!botReady || !botClient) return false;
         try {
-            console.log('🔍 Checking for 1st-of-month pending invoices...');
-            const pendingRecords = await prisma.rentRecord.findMany({
-                where: { 
-                    status: 'PENDING',
-                    month: now.getMonth() + 1,
-                    year: now.getFullYear(),
-                    invoiceSent: false
-                },
-                include: { tenant: true }
-            });
-            
-            let sentCount = 0;
-            for (const record of pendingRecords) {
-                const tenant = record.tenant;
-                if (!tenant.whatsapp) continue;
-                
-                const balance = record.totalAmount - record.amountPaid;
-                const invoiceUrl = `${getBaseUrl()}/api/rent/${record.id}/invoice`;
-                
-                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                
-                let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
-                if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ₹${record.electricityBill}\n`;
-                if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
-                if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
-                if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
-
-                const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your detailed rent invoice for *${months[record.month - 1]} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
-                
-                const cleanNumber = tenant.whatsapp.replace(/\D/g, '');
-                const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
-                const chatId = `${formattedNumber}@c.us`;
-                
-                // Fallback to active bot client
-                const activeClient = isReady1 ? client1 : client2;
-                
-                try {
-                    await activeClient.sendMessage(chatId, msg);
-                    await prisma.rentRecord.update({
-                        where: { id: record.id },
-                        data: { invoiceSent: true, lastReminderSentAt: now }
-                    });
-                    console.log(`✅ Sent monthly invoice to ${tenant.name} using Bot ${activeClient === client1 ? '1' : '2'}`);
-                    sentCount++;
-                } catch (e) {
-                    console.error(`❌ Failed to send monthly invoice to ${tenant.name}`, e);
-                }
-                
-                await new Promise(r => setTimeout(r, 2000));
-            }
-            if (sentCount > 0) {
-                console.log(`✅ Automated monthly invoice check complete. Sent ${sentCount} invoices.`);
-            }
+            const clean = whatsapp.replace(/\D/g, '');
+            const num = clean.length === 10 ? `91${clean}` : clean;
+            await botClient.sendMessage(`${num}@c.us`, msg);
+            return true;
         } catch (e) {
-            console.error('Error in automated monthly invoice check:', e);
+            console.error('Send failed:', e.message);
+            return false;
         }
     };
 
-    const checkOverdue = async () => {
-        if (!isReady1 && !isReady2) return;
-        
-        try {
-            console.log('🔍 Checking for overdue rent records...');
-            const overdueRecords = await prisma.rentRecord.findMany({
-                where: { status: 'OVERDUE' },
-                include: { tenant: true }
-            });
-            
-            const now = new Date();
-            let sentCount = 0;
-            
-            for (const record of overdueRecords) {
-                // Check if last reminder was sent more than 48 hours ago
-                const lastSent = record.lastReminderSentAt ? new Date(record.lastReminderSentAt) : null;
-                const hoursSinceLast = lastSent ? (now.getTime() - lastSent.getTime()) / (1000 * 60 * 60) : Infinity;
-                
-                if (hoursSinceLast >= 48) {
-                    const tenant = record.tenant;
-                    if (!tenant.whatsapp) continue;
-                    
-                    const balance = record.totalAmount - record.amountPaid;
-                    const invoiceUrl = `${getBaseUrl()}/api/rent/${record.id}/invoice`;
-                    
-                    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                    
-                    let breakdown = `🏠 *Rent*: ₹${record.rentAmount}\n`;
-                    if (record.electricityBill > 0) breakdown += `⚡ *Electricity Bill*: ₹${record.electricityBill}\n`;
-                    if (record.maintenanceCharge > 0) breakdown += `🔧 *Maintenance*: ₹${record.maintenanceCharge}\n`;
-                    if (record.lateFee > 0) breakdown += `⏳ *Late Fee*: ₹${record.lateFee}\n`;
-                    if (record.discount > 0) breakdown += `🎁 *Discount*: -₹${record.discount}\n`;
+    const runChecks = async () => {
+        if (!botReady) return;
+        const now = new Date();
 
-                    const msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${tenant.name}*,\n\nHere is your detailed rent invoice for *${months[record.month - 1]} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
-                    
-                    const cleanNumber = tenant.whatsapp.replace(/\D/g, '');
-                    const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
-                    const chatId = `${formattedNumber}@c.us`;
-                    
-                    // Fallback to active bot client
-                    const activeClient = isReady1 ? client1 : client2;
-                    
-                    try {
-                        await activeClient.sendMessage(chatId, msg);
-                        await prisma.rentRecord.update({
-                            where: { id: record.id },
-                            data: { lastReminderSentAt: now }
-                        });
-                        console.log(`✅ Sent overdue reminder to ${tenant.name} using Bot ${activeClient === client1 ? '1' : '2'}`);
-                        sentCount++;
-                    } catch (e) {
-                        console.error(`❌ Failed to send reminder to ${tenant.name}`, e);
+        // Monthly invoices on 1st
+        if (now.getDate() === 1) {
+            try {
+                const pending = await prisma.rentRecord.findMany({
+                    where: { status: 'PENDING', month: now.getMonth() + 1, year: now.getFullYear(), invoiceSent: false },
+                    include: { tenant: true }
+                });
+                for (const rec of pending) {
+                    if (!rec.tenant.whatsapp) continue;
+                    const sent = await sendMsg(rec.tenant.whatsapp, buildMessage(rec.tenant, rec));
+                    if (sent) {
+                        await prisma.rentRecord.update({ where: { id: rec.id }, data: { invoiceSent: true, lastReminderSentAt: now } });
                     }
-                    
-                    // Small delay to avoid spamming WhatsApp
+                    await new Promise(r => setTimeout(r, 2000));
+                }
+            } catch (e) { console.error('Monthly invoice check failed:', e.message); }
+        }
+
+        // Overdue reminders (48h gap)
+        try {
+            const overdue = await prisma.rentRecord.findMany({ where: { status: 'OVERDUE' }, include: { tenant: true } });
+            for (const rec of overdue) {
+                if (!rec.tenant.whatsapp) continue;
+                const lastSent = rec.lastReminderSentAt ? new Date(rec.lastReminderSentAt) : null;
+                const hoursSince = lastSent ? (now.getTime() - lastSent.getTime()) / 3600000 : Infinity;
+                if (hoursSince >= 48) {
+                    const sent = await sendMsg(rec.tenant.whatsapp, buildMessage(rec.tenant, rec));
+                    if (sent) await prisma.rentRecord.update({ where: { id: rec.id }, data: { lastReminderSentAt: now } });
                     await new Promise(r => setTimeout(r, 2000));
                 }
             }
-            if (sentCount > 0) {
-                console.log(`✅ Automated check complete. Sent ${sentCount} reminders.`);
-            }
-        } catch (e) {
-            console.error('Error in automated reminder check:', e);
-        }
+        } catch (e) { console.error('Overdue reminder check failed:', e.message); }
     };
 
-    const runChecks = () => {
-        checkFirstOfMonthInvoices();
-        checkOverdue();
-    };
-
-    // Check immediately, then every 1 hour
     runChecks();
     setInterval(runChecks, 60 * 60 * 1000);
 }
 
+// ==================== Queue Polling ====================
+
 let isPolling = false;
 async function pollWhatsappQueue() {
-    if (isPolling) return;
+    if (isPolling || !botReady || !botClient) return;
     isPolling = true;
-
     try {
-        const pendingMessages = await prisma.whatsappQueue.findMany({
-            where: { status: 'PENDING' },
-            orderBy: { createdAt: 'asc' }
-        });
-        
-        if (pendingMessages.length === 0) {
-            isPolling = false;
-            return;
-        }
-
-        if (!isReady1 && !isReady2) {
-            isPolling = false;
-            return;
-        }
-
-        const activeClient = isReady1 ? client1 : client2;
-        const botName = isReady1 ? 'Bot 1' : 'Bot 2';
-        const nowTime = new Date().getTime();
-
-        for (const msg of pendingMessages) {
-            // Cool down retry messages for at least 30 seconds to prevent immediate loop spam
-            if (msg.error && msg.error.includes('[Attempts:')) {
-                const lastUpdated = new Date(msg.updatedAt).getTime();
-                if (nowTime - lastUpdated < 30000) {
-                    continue;
-                }
+        const pending = await prisma.whatsappQueue.findMany({ where: { status: 'PENDING' }, orderBy: { createdAt: 'asc' } });
+        const now = Date.now();
+        for (const msg of pending) {
+            // Rate-limit retries to 30s cooldown
+            if (msg.error?.includes('[Attempts:')) {
+                const age = now - new Date(msg.updatedAt).getTime();
+                if (age < 30000) continue;
             }
-
-            console.log(`[Queue] Sending msg ${msg.id} to ${msg.number} via ${botName}...`);
-            const cleanNumber = msg.number.replace(/\D/g, '');
-            const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
-            const chatId = `${formattedNumber}@c.us`;
-
+            const clean = msg.number.replace(/\D/g, '');
+            const num = clean.length === 10 ? `91${clean}` : clean;
             try {
-                let response;
                 if (msg.mediaBase64) {
-                    const base64Data = msg.mediaBase64.split(',')[1] || msg.mediaBase64;
-                    const media = new MessageMedia('image/png', base64Data, 'payment-qr.png');
-                    response = await activeClient.sendMessage(chatId, media, { caption: msg.message });
+                    const b64 = msg.mediaBase64.split(',')[1] || msg.mediaBase64;
+                    await botClient.sendMessage(`${num}@c.us`, new MessageMedia('image/png', b64, 'payment-qr.png'), { caption: msg.message });
                 } else {
-                    response = await activeClient.sendMessage(chatId, msg.message);
+                    await botClient.sendMessage(`${num}@c.us`, msg.message);
                 }
-
-                await prisma.whatsappQueue.update({
-                    where: { id: msg.id },
-                    data: { status: 'SENT', error: null }
-                });
-                console.log(`[Queue] ✅ Msg ${msg.id} sent successfully.`);
-            } catch (err) {
-                console.error(`[Queue] ❌ Failed to send ${msg.id}:`, err.message);
-                
-                // Parse attempts from the previous error message if it exists
+                await prisma.whatsappQueue.update({ where: { id: msg.id }, data: { status: 'SENT', error: null } });
+                console.log(`[Queue] ✅ Sent ${msg.id}`);
+            } catch (e) {
                 let attempts = 1;
-                if (msg.error && msg.error.includes('[Attempts:')) {
-                    const match = msg.error.match(/\[Attempts:\s*(\d+)\]/);
-                    if (match) {
-                        attempts = parseInt(match[1], 10) + 1;
-                    }
-                }
-                
-                if (attempts < 3) {
-                    await prisma.whatsappQueue.update({
-                        where: { id: msg.id },
-                        data: { 
-                            status: 'PENDING', 
-                            error: `[Attempts: ${attempts}] ${err.message || 'Unknown error'}` 
-                        }
-                    });
-                    console.log(`[Queue] Msg ${msg.id} scheduled for retry (Attempt ${attempts + 1}).`);
-                } else {
-                    await prisma.whatsappQueue.update({
-                        where: { id: msg.id },
-                        data: { 
-                            status: 'FAILED', 
-                            error: `[Attempts: ${attempts}] ${err.message || 'Unknown error'}` 
-                        }
-                    });
-                    console.log(`[Queue] Msg ${msg.id} failed permanently after ${attempts} attempts.`);
-                }
-
-                // If error is related to detached Frame/crashed browser, trigger a silent re-initialize on the client
-                if (err.message && (err.message.includes('detached') || err.message.includes('Session closed') || err.message.includes('Protocol error'))) {
-                    console.warn(`[Queue] Detected Puppeteer/Browser crash error. Resetting/Re-initializing ${botName} client...`);
-                    const targetClient = activeClient;
-                    const targetBotName = botName;
-                    if (targetBotName === 'Bot 1') {
-                        isReady1 = false;
-                    } else {
-                        isReady2 = false;
-                    }
-                    setTimeout(async () => {
-                        try {
-                            await targetClient.destroy();
-                        } catch (destroyErr) {
-                            console.warn(`Error during ${targetBotName} destroy:`, destroyErr.message);
-                        }
-                        try {
-                            await targetClient.initialize();
-                        } catch (initErr) {
-                            console.error(`Failed to reinitialize ${targetBotName}:`, initErr.message);
-                        }
-                    }, 1000);
+                const m = msg.error?.match(/\[Attempts:\s*(\d+)\]/);
+                if (m) attempts = parseInt(m[1]) + 1;
+                const status = attempts < 3 ? 'PENDING' : 'FAILED';
+                await prisma.whatsappQueue.update({ where: { id: msg.id }, data: { status, error: `[Attempts: ${attempts}] ${e.message}` } });
+                if (e.message?.includes('detached') || e.message?.includes('Session closed') || e.message?.includes('Protocol error')) {
+                    botReady = false;
+                    setTimeout(() => initializeBot(), 3000);
+                    break;
                 }
             }
             await new Promise(r => setTimeout(r, 2000));
         }
-    } catch (e) {
-        console.error('Error in pollWhatsappQueue:', e);
-    } finally {
-        isPolling = false;
-    }
+    } catch (e) { console.error('Queue poll error:', e.message); }
+    finally { isPolling = false; }
 }
 
-// ==================== Express Server Routes ====================
+// ==================== Express Routes ====================
 
-// Basic endpoint to send message
-app.post('/send', async (req, res) => {
-    if (!isReady1 && !isReady2) {
-        return res.status(503).json({ error: 'WhatsApp bot clients are not ready yet.' });
-    }
+// Health check
+app.get('/health', (req, res) => res.json({ ok: true, uptime: process.uptime() }));
 
-    try {
-        const { number, message, mediaBase64 } = req.body;
-        if (!number || !message) {
-            return res.status(400).json({ error: 'Number and message are required.' });
-        }
-
-        // Format number to WhatsApp ID format (e.g., 919876543210@c.us)
-        const cleanNumber = number.replace(/\D/g, '');
-        // Default to India country code if length is 10
-        const formattedNumber = cleanNumber.length === 10 ? `91${cleanNumber}` : cleanNumber;
-        const chatId = `${formattedNumber}@c.us`;
-
-        // Select an active client: bot 1 takes priority if ready, else bot 2
-        const activeClient = isReady1 ? client1 : client2;
-        console.log(`Sending message via Bot ${activeClient === client1 ? '1' : '2'}...`);
-
-        let response;
-        if (mediaBase64) {
-            const base64Data = mediaBase64.split(',')[1] || mediaBase64;
-            const media = new MessageMedia('image/png', base64Data, 'payment-qr.png');
-            response = await activeClient.sendMessage(chatId, media, { caption: message });
-        } else {
-            response = await activeClient.sendMessage(chatId, message);
-        }
-        return res.json({ success: true, response });
-    } catch (err) {
-        console.error('Failed to send message:', err);
-        return res.status(500).json({ error: 'Failed to send message' });
-    }
-});
-
+// Status — used by the settings page to show QR / connected state
 app.get('/status', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    
-    // Return standard fields for backwards compatibility and detailed status for each bot
-    res.json({ 
-        isReady: isReady1 || isReady2, 
-        qr: currentQr1 || currentQr2,
-        bot1: { 
-            isReady: isReady1, 
-            qr: currentQr1,
-            qrImage: currentQrImage1,
-            phone: isReady1 && client1.info && client1.info.wid ? client1.info.wid.user : null,
-            pushname: isReady1 && client1.info ? client1.info.pushname : null
-        },
-        bot2: { 
-            isReady: isReady2, 
-            qr: currentQr2,
-            qrImage: currentQrImage2,
-            phone: isReady2 && client2.info && client2.info.wid ? client2.info.wid.user : null,
-            pushname: isReady2 && client2.info ? client2.info.pushname : null
+    res.json({
+        isReady: botReady,
+        initialized: !!botClient,
+        qrImage: botQrImage || null,
+        pairingCode: botPairingCode || null,
+        phone: botReady && botClient?.info?.wid ? botClient.info.wid.user : null,
+        pushname: botReady && botClient?.info ? botClient.info.pushname : null,
+        // Keep bot1 wrapper for backward compat with any existing callers
+        bot1: {
+            isReady: botReady,
+            initialized: !!botClient,
+            qrImage: botQrImage || null,
+            pairingCode: botPairingCode || null,
+            phone: botReady && botClient?.info?.wid ? botClient.info.wid.user : null,
+            pushname: botReady && botClient?.info ? botClient.info.pushname : null,
         }
     });
 });
 
+// Send a message directly
+app.post('/send', async (req, res) => {
+    if (!botReady || !botClient) return res.status(503).json({ error: 'WhatsApp bot is not connected yet.' });
+    const { number, message, mediaBase64 } = req.body;
+    if (!number || !message) return res.status(400).json({ error: 'number and message are required.' });
+    const clean = number.replace(/\D/g, '');
+    const num = clean.length === 10 ? `91${clean}` : clean;
+    try {
+        if (mediaBase64) {
+            const b64 = mediaBase64.split(',')[1] || mediaBase64;
+            await botClient.sendMessage(`${num}@c.us`, new MessageMedia('image/png', b64, 'payment-qr.png'), { caption: message });
+        } else {
+            await botClient.sendMessage(`${num}@c.us`, message);
+        }
+        return res.json({ success: true });
+    } catch (e) {
+        console.error('Send error:', e.message);
+        return res.status(500).json({ error: e.message });
+    }
+});
+
+// Reset — wipe session, kill chrome, reinit fresh
 app.post('/logout', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    
-    const { bot } = req.body;
-    if (bot !== 'bot1' && bot !== 'bot2') {
-        return res.status(400).json({ error: 'Invalid bot name. Must be bot1 or bot2.' });
+    console.log('🔄 Hard reset requested...');
+    botReady = false;
+    botQr = null;
+    botQrImage = null;
+    botPairingCode = null;
+
+    // Destroy existing client with timeout
+    const oldClient = botClient;
+    botClient = null;
+    if (oldClient) {
+        try { await Promise.race([oldClient.logout(), new Promise(r => setTimeout(r, 3000))]); } catch (e) {}
+        try { await Promise.race([oldClient.destroy(), new Promise(r => setTimeout(r, 3000))]); } catch (e) {}
     }
 
+    // Kill leftover chrome
     try {
-        const targetBot = bot === 'bot1' ? client1 : client2;
-        const isReady = bot === 'bot1' ? isReady1 : isReady2;
-        
-        console.log(`Resetting session for ${bot}...`);
-        
-        if (isReady) {
-            try {
-                await targetBot.logout();
-            } catch (logoutErr) {
-                console.warn(`Logout command failed for ${bot}, will force destroy:`, logoutErr.message);
-                await targetBot.destroy();
-            }
+        const { execSync } = require('child_process');
+        if (process.platform === 'win32') {
+            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul & exit 0', { shell: 'cmd.exe', stdio: 'ignore' });
         } else {
-            try {
-                await targetBot.destroy();
-            } catch (e) {
-                console.warn(`Destroy failed for ${bot}:`, e.message);
-            }
+            execSync('pkill -f "chrome" 2>/dev/null || true');
         }
+    } catch (e) {}
 
-        // Delete session files
-        const fs = require('fs');
-        const sessionPath = path.join(os.homedir(), '.wwebjs_auth', `session-${bot}`);
-        if (fs.existsSync(sessionPath)) {
-            try {
-                fs.rmSync(sessionPath, { recursive: true, force: true });
-                console.log(`Deleted session folder at ${sessionPath}`);
-            } catch (rmErr) {
-                console.error(`Failed to delete session folder:`, rmErr);
-            }
-        }
+    await new Promise(r => setTimeout(r, 2000));
 
-        // Reset state
-        if (bot === 'bot1') {
-            isReady1 = false;
-            currentQr1 = null;
-            currentQrImage1 = null;
-        } else {
-            isReady2 = false;
-            currentQr2 = null;
-            currentQrImage2 = null;
-        }
-
-        // Reinitialize client
-        console.log(`Re-initializing WhatsApp ${bot}...`);
-        cleanSessionLock(bot);
-        await targetBot.initialize();
-
-        return res.json({ success: true, message: `Successfully reset and reinitialized ${bot}` });
-    } catch (err) {
-        console.error(`Error resetting session for ${bot}:`, err);
-        return res.status(500).json({ error: err.message || 'Failed to reset session' });
+    // Wipe session files
+    const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot');
+    if (fs.existsSync(sessionPath)) {
+        try { fs.rmSync(sessionPath, { recursive: true, force: true }); console.log('🗑️ Session wiped'); } catch (e) {}
     }
+    const cachePath = path.join(process.cwd(), '.wwebjs_cache');
+    if (fs.existsSync(cachePath)) {
+        try { fs.rmSync(cachePath, { recursive: true, force: true }); } catch (e) {}
+    }
+    cleanSessionLock();
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    // Restart
+    console.log('🚀 Reinitializing bot...');
+    initializeBot().catch(e => console.error('Reinit failed:', e.message));
+
+    return res.json({ success: true, message: 'Bot reset. Fresh QR will appear in 15-30 seconds.' });
 });
 
+// Pairing code — works on existing browser page (no restart needed)
 app.post('/pair', async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    
-    const { bot, phone } = req.body;
-    if (!bot || !phone) {
-        return res.status(400).json({ error: 'Bot name and phone number are required.' });
-    }
-    
-    const cleanPhone = phone.replace(/\D/g, '');
-    if (cleanPhone.length < 10) {
-        return res.status(400).json({ error: 'Invalid phone number. Must have at least 10 digits.' });
-    }
-    // Format to include country code (default 91 for India if length is 10)
-    const formattedPhone = cleanPhone.length === 10 ? `91${cleanPhone}` : cleanPhone;
-    
-    try {
-        console.log(`Requesting pairing code for ${bot} with phone: ${formattedPhone}...`);
-        
-        if (bot === 'bot1') {
-            if (isReady1) {
-                return res.status(400).json({ error: 'Bot 1 is already linked and ready.' });
+    const { phone } = req.body;
+    if (!phone) return res.status(400).json({ error: 'phone is required.' });
+
+    const clean = phone.replace(/\D/g, '');
+    if (clean.length < 10) return res.status(400).json({ error: 'Invalid phone number — need at least 10 digits.' });
+    const formatted = clean.length === 10 ? `91${clean}` : clean;
+
+    if (botReady) return res.status(400).json({ error: 'Bot is already connected. Disconnect first to re-link.' });
+
+    console.log(`[Pair] Requesting code for +${formatted}`);
+
+    // Strategy 1: Use existing browser page (best — no restart, no rate limit)
+    if (botClient?.pupPage) {
+        try {
+            console.log('[Pair] Browser page exists — calling requestPairingCode directly...');
+            const code = await botClient.requestPairingCode(formatted, true, 120000);
+            if (code) {
+                botPairingCode = code;
+                console.log(`[Pair] ✅ Code: ${code}`);
+                return res.json({ success: true, code });
             }
-            const code = await client1.requestPairingCode(formattedPhone);
-            return res.json({ success: true, code });
-        } else if (bot === 'bot2') {
-            if (isReady2) {
-                return res.status(400).json({ error: 'Bot 2 is already linked and ready.' });
-            }
-            const code = await client2.requestPairingCode(formattedPhone);
-            return res.json({ success: true, code });
-        } else {
-            return res.status(400).json({ error: 'Invalid bot name. Must be bot1 or bot2.' });
+        } catch (e) {
+            console.warn('[Pair] Direct call failed:', e.message, '— falling back to reinit');
         }
-    } catch (err) {
-        console.error(`Failed to request pairing code for ${bot}:`, err);
-        return res.status(500).json({ error: err.message || 'Failed to request pairing code. Make sure the bot client is running and not already linked.' });
+    }
+
+    // Strategy 2: No browser yet — reinit in pairing mode
+    console.log('[Pair] No browser page — reinitializing in pairing mode...');
+    botPairingCode = null;
+    initializeBot(formatted).catch(e => console.error('[Pair] Init failed:', e.message));
+
+    // Wait up to 45s for the code event
+    try {
+        const code = await new Promise((resolve, reject) => {
+            const t = setTimeout(() => reject(new Error('Timed out — WhatsApp did not return a code. Wait 30s and try again.')), 45000);
+            const i = setInterval(() => {
+                if (botPairingCode) { clearTimeout(t); clearInterval(i); resolve(botPairingCode); }
+            }, 500);
+        });
+        console.log(`[Pair] ✅ Code via reinit: ${code}`);
+        return res.json({ success: true, code });
+    } catch (e) {
+        console.error('[Pair] ❌', e.message);
+        return res.status(500).json({ error: e.message });
     }
 });
 
-// ==================== Automated Daily Database Backups ====================
-function runDailyBackup() {
-    console.log('⏰ [Daily Backup] Starting automated scheduled database backup...');
-    const { exec } = require('child_process');
-    exec('node scripts/backup-db.js', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`❌ [Daily Backup] Automated backup failed: ${error.message}`);
-            return;
-        }
-        if (stderr && !stderr.includes('Warning: SECURITY WARNING')) {
-            console.warn(`⚠️ [Daily Backup] Backup finished with warnings: ${stderr}`);
-        }
-        console.log(`✅ [Daily Backup] Automated backup successfully completed.\n`);
-    });
-}
+// ==================== Automated Daily Backups ====================
 
 function startAutomatedBackups() {
-    console.log('🕒 Starting automated daily database backup scheduler (checks every 1h, runs at 2 AM)...');
     let lastBackupDate = '';
-
-    const checkAndRunBackup = () => {
+    const check = () => {
         const now = new Date();
-        const dateStr = now.toDateString();
-        const currentHour = now.getHours();
-
-        // Run at 2:00 AM and make sure we only run it once per day
-        if (currentHour === 2 && lastBackupDate !== dateStr) {
-            lastBackupDate = dateStr;
-            runDailyBackup();
+        if (now.getHours() === 2 && lastBackupDate !== now.toDateString()) {
+            lastBackupDate = now.toDateString();
+            const { exec } = require('child_process');
+            exec('node scripts/backup-db.js', (err, out, stderr) => {
+                if (err) console.error('Daily backup failed:', err.message);
+                else console.log('✅ Daily backup done');
+            });
         }
     };
-
-    // Run once on startup after 30 seconds, then check every hour
-    setTimeout(() => {
-        console.log('⏰ [Startup Backup] Running initial database backup on boot...');
-        runDailyBackup();
-    }, 30000);
-
-    setInterval(checkAndRunBackup, 60 * 60 * 1000); // Check every hour
+    setTimeout(() => { const { exec } = require('child_process'); exec('node scripts/backup-db.js', (e) => { if (!e) console.log('✅ Startup backup done'); }); }, 30000);
+    setInterval(check, 60 * 60 * 1000);
 }
+
+// ==================== Start Server ====================
 
 const PORT = 3001;
 app.listen(PORT, () => {
-    console.log(`WhatsApp API Server running on port ${PORT}`);
-    console.log(`Starting WhatsApp clients initialization (Dual-Bot)...`);
-    cleanSessionLock('bot1');
-    client1.initialize().catch(e => console.error('Failed to initialize client 1:', e.message));
-    cleanSessionLock('bot2');
-    client2.initialize().catch(e => console.error('Failed to initialize client 2:', e.message));
-    
-    // Start database queue polling
-    console.log('🔄 Starting database queue polling for WhatsApp reminders (every 5s)...');
+    console.log(`\n🟢 WhatsApp Bot Server running on port ${PORT}`);
+    console.log('📱 Starting bot initialization...\n');
+    initializeBot().catch(e => console.error('Initial bot start failed:', e.message));
+
+    console.log('🔄 Starting queue polling (every 5s)...');
     pollWhatsappQueue();
     setInterval(pollWhatsappQueue, 5000);
 
-    // Start automated database backups
     startAutomatedBackups();
 
-    // Register bot URL in database if present in env (e.g. from localtunnel or config)
-    const urlToRegister = process.env.TUNNEL_URL || process.env.WHATSAPP_BOT_URL;
-    if (urlToRegister && !urlToRegister.includes('localhost') && !urlToRegister.includes('127.0.0.1')) {
-        prisma.activityLog.create({
-            data: {
-                action: 'WHATSAPP_BOT_URL',
-                entity: 'SYSTEM',
-                details: urlToRegister
-            }
-        }).then(() => {
-            console.log(`✅ Registered bot URL in database: ${urlToRegister}`);
-        }).catch(err => {
-            console.error('❌ Failed to register bot URL in database:', err.message);
-        });
+    // Register tunnel URL in DB
+    const tunnelUrl = process.env.TUNNEL_URL || process.env.WHATSAPP_BOT_URL;
+    if (tunnelUrl && !tunnelUrl.includes('localhost')) {
+        prisma.activityLog.create({ data: { action: 'WHATSAPP_BOT_URL', entity: 'SYSTEM', details: tunnelUrl } })
+            .then(() => console.log(`✅ Registered tunnel URL: ${tunnelUrl}`))
+            .catch(e => console.error('Failed to register URL:', e.message));
     }
 });
 
-process.on('unhandledRejection', (reason, promise) => {
-    console.warn('Unhandled Rejection at:', promise, 'reason:', reason);
-});
-
-process.on('uncaughtException', (err) => {
-    console.error('Uncaught Exception thrown:', err);
-});
+process.on('unhandledRejection', (reason) => { console.warn('Unhandled rejection:', reason); });
+process.on('uncaughtException', (err) => { console.error('Uncaught exception:', err); });

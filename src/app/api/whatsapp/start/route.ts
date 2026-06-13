@@ -9,28 +9,26 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const botUrl = await getBotUrl();
-    const res = await fetch(`${botUrl}/logout`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    });
-
-    const text = await res.text();
-    let data: any;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      return NextResponse.json({ error: "Bot server returned invalid response" }, { status: 502 });
+    const { bot } = await req.json();
+    if (bot !== "bot1" && bot !== "bot2") {
+      return NextResponse.json({ error: "Invalid bot name" }, { status: 400 });
     }
 
+    const botUrl = await getBotUrl();
+    const res = await fetch(`${botUrl}/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bot }),
+    });
+
+    const data = await res.json();
     if (!res.ok) {
-      return NextResponse.json({ error: data.error || "Failed to reset bot" }, { status: res.status });
+      throw new Error(data.error || "Failed to start bot");
     }
 
     return NextResponse.json(data);
   } catch (err: any) {
-    console.error("[WhatsApp Logout API Error]", err);
-    return NextResponse.json({ error: err.message || "Failed to reset WhatsApp session" }, { status: 500 });
+    console.error("[WhatsApp Start API Error]", err);
+    return NextResponse.json({ error: err.message || "Failed to start bot" }, { status: 500 });
   }
 }

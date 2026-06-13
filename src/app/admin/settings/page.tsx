@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
@@ -33,26 +33,73 @@ export default function AdminSettingsPage() {
   });
   const [whatsappStatus, setWhatsappStatus] = useState<any>(null);
   const [fetchingWhatsapp, setFetchingWhatsapp] = useState(false);
-  const [resettingBot, setResettingBot] = useState<string | null>(null);
-  const [pairingPhones, setPairingPhones] = useState({ bot1: "", bot2: "" });
-  const [pairingCodes, setPairingCodes] = useState({ bot1: "", bot2: "" });
-  const [requestingCode, setRequestingCode] = useState<string | null>(null);
+  const [resettingBot, setResettingBot] = useState(false);
+  const [pairingPhone, setPairingPhone] = useState("6392651108");
+  const [pairingCode, setPairingCode] = useState("");
+  const [requestingCode, setRequestingCode] = useState(false);
   const [backingUp, setBackingUp] = useState(false);
 
-  const handleTriggerBackup = async () => {
-    setBackingUp(true);
+  const fetchWhatsappStatus = async () => {
+    setFetchingWhatsapp(true);
     try {
-      const res = await fetch("/api/admin/backup", { method: "POST" });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        toast.success(`Database backup completed successfully! ${data.totalRows} rows compiled and emailed to admin. 💾`);
+      const res = await fetch("/api/whatsapp/status");
+      // Always safe-parse â€” status route now returns valid JSON even when bot is offline
+      const data = await res.json().catch(() => ({}));
+      setWhatsappStatus(data);
+    } catch (e) {
+      // Network error â€” bot server is unreachable
+      setWhatsappStatus({ isReady: false, initialized: false, qrImage: null, pairingCode: null });
+    } finally {
+      setFetchingWhatsapp(false);
+    }
+  };
+
+  const handleResetBot = async () => {
+    if (!confirm("This will disconnect the bot, wipe the session, and restart with a fresh QR code. Continue?")) return;
+    setResettingBot(true);
+    setPairingCode("");
+    try {
+      const res = await fetch("/api/whatsapp/logout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        toast.success("Bot reset! Fresh QR will appear in 15â€“30 seconds.");
+        // Start polling for new QR
+        let attempts = 0;
+        const poll = setInterval(async () => { attempts++; await fetchWhatsappStatus(); if (attempts >= 20) clearInterval(poll); }, 3000);
       } else {
-        toast.error(data.error || "Failed to trigger database backup");
+        toast.error(data.error || "Failed to reset bot");
       }
     } catch {
-      toast.error("Failed to trigger database backup");
+      toast.error("Network error â€” could not reach bot server");
     } finally {
-      setBackingUp(false);
+      setResettingBot(false);
+    }
+  };
+
+  const handleGetCode = async () => {
+    if (!pairingPhone.trim()) { toast.error("Enter your WhatsApp phone number first"); return; }
+    setRequestingCode(true);
+    setPairingCode("");
+    toast.info("â³ Contacting WhatsApp... may take up to 40 seconds", { duration: 45000, id: "pair-toast" });
+    try {
+      const res = await fetch("/api/whatsapp/pair", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: pairingPhone.trim() }),
+      });
+      const data = await res.json().catch(() => ({ error: "Bot server returned an invalid response" }));
+      toast.dismiss("pair-toast");
+      if (res.ok && data.code) {
+        setPairingCode(data.code);
+        toast.success("âœ… Code ready! Open WhatsApp â†’ Settings â†’ Linked Devices â†’ Link with Phone Number", { duration: 12000 });
+      } else {
+        toast.error(data.error || "Failed to get pairing code", { duration: 8000 });
+      }
+    } catch {
+      toast.dismiss("pair-toast");
+      toast.error("Network error â€” could not reach bot server");
+    } finally {
+      setRequestingCode(false);
     }
   };
 
@@ -61,40 +108,23 @@ export default function AdminSettingsPage() {
       const res = await fetch("/api/admin/settings");
       if (!res.ok) throw new Error();
       const data = await res.json();
-      setProfileForm({
-        name: data.name || "",
-        email: data.email || "",
-        phone: data.phone || "",
-      });
-
-      // Load UPI configs from backend API
+      setProfileForm({ name: data.name || "", email: data.email || "", phone: data.phone || "" });
       try {
         const upiRes = await fetch("/api/upi");
         if (upiRes.ok) {
           const upiData = await upiRes.json();
-          if (upiData.upiId && upiData.upiName) {
-            setUpiForm({ upiId: upiData.upiId, upiName: upiData.upiName });
-          }
+          if (upiData.upiId && upiData.upiName) setUpiForm({ upiId: upiData.upiId, upiName: upiData.upiName });
         }
       } catch {
         const savedUpiId = localStorage.getItem("landlord_upi_id");
         const savedUpiName = localStorage.getItem("landlord_upi_name");
-        if (savedUpiId && savedUpiName) {
-          setUpiForm({ upiId: savedUpiId, upiName: savedUpiName });
-        }
+        if (savedUpiId && savedUpiName) setUpiForm({ upiId: savedUpiId, upiName: savedUpiName });
       }
-
-      // Load billing preferences
       const savedMaintenance = localStorage.getItem("default_maintenance_charge") || "500";
       const savedElectricity = localStorage.getItem("default_electricity_rate") || "8";
       const savedLateFee = localStorage.getItem("default_late_fee") || "50";
       const savedDueDate = localStorage.getItem("default_due_date_day") || "10";
-      setPreferences({
-        defaultMaintenance: savedMaintenance,
-        defaultElectricityRate: savedElectricity,
-        defaultLateFee: savedLateFee,
-        defaultDueDateDay: savedDueDate,
-      });
+      setPreferences({ defaultMaintenance: savedMaintenance, defaultElectricityRate: savedElectricity, defaultLateFee: savedLateFee, defaultDueDateDay: savedDueDate });
     } catch {
       toast.error("Failed to load settings details");
     } finally {
@@ -102,93 +132,29 @@ export default function AdminSettingsPage() {
     }
   };
 
-  const fetchWhatsappStatus = async () => {
-    setFetchingWhatsapp(true);
+  const handleTriggerBackup = async () => {
+    setBackingUp(true);
     try {
-      const res = await fetch("/api/whatsapp/status");
-      if (res.ok) {
-        const data = await res.json();
-        setWhatsappStatus({
-          bot1: data.bot1 || { isReady: false },
-          bot2: data.bot2 || { isReady: false },
-        });
-      }
-    } catch (e) {
-      console.error("Failed to fetch WhatsApp status", e);
-    } finally {
-      setFetchingWhatsapp(false);
-    }
-  };
-
-  const handleResetWhatsapp = async (bot: "bot1" | "bot2") => {
-    if (!confirm(`Are you sure you want to disconnect and reset ${bot === 'bot1' ? 'Bot 1' : 'Bot 2'}? This will delete the session and require scanning the QR code again.`)) {
-      return;
-    }
-    setResettingBot(bot);
-    try {
-      const res = await fetch("/api/whatsapp/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bot }),
-      });
+      const res = await fetch("/api/admin/backup", { method: "POST" });
       const data = await res.json();
-      if (res.ok) {
-        toast.success(`${bot === 'bot1' ? 'Bot 1' : 'Bot 2'} session reset successfully! 🎉`);
-        setPairingCodes(prev => ({ ...prev, [bot]: "" }));
-        fetchWhatsappStatus();
+      if (res.ok && data.success) {
+        toast.success(`Database backup completed! ${data.totalRows} rows compiled and emailed. ðŸ’¾`);
       } else {
-        toast.error(data.error || "Failed to reset session");
+        toast.error(data.error || "Failed to trigger backup");
       }
     } catch {
-      toast.error("Failed to reset session");
+      toast.error("Failed to trigger database backup");
     } finally {
-      setResettingBot(null);
-    }
-  };
-
-  const handleRequestPairingCode = async (bot: "bot1" | "bot2") => {
-    const phone = bot === "bot1" ? pairingPhones.bot1 : pairingPhones.bot2;
-    if (!phone) {
-      toast.error("Please enter a phone number to link.");
-      return;
-    }
-    setRequestingCode(bot);
-    try {
-      const res = await fetch("/api/whatsapp/pair", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bot, phone }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setPairingCodes(prev => ({
-          ...prev,
-          [bot]: data.code
-        }));
-        toast.success("Pairing code generated! 🎉");
-      } else {
-        toast.error(data.error || "Failed to request pairing code");
-      }
-    } catch {
-      toast.error("Failed to request pairing code");
-    } finally {
-      setRequestingCode(null);
+      setBackingUp(false);
     }
   };
 
   useEffect(() => {
     fetchSettings();
     fetchWhatsappStatus();
+    const interval = setInterval(fetchWhatsappStatus, 5000);
+    return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    if (profileForm.phone) {
-      setPairingPhones(prev => ({
-        ...prev,
-        bot1: profileForm.phone
-      }));
-    }
-  }, [profileForm.phone]);
 
   async function handleUpdateProfile(e: React.FormEvent) {
     e.preventDefault();
@@ -203,7 +169,7 @@ export default function AdminSettingsPage() {
       if (!res.ok) {
         toast.error(data.error || "Failed to update profile");
       } else {
-        toast.success("Admin profile updated successfully! 🎉");
+        toast.success("Admin profile updated successfully! ðŸŽ‰");
         await update();
         fetchSettings();
       }
@@ -238,7 +204,7 @@ export default function AdminSettingsPage() {
       if (!res.ok) {
         toast.error(data.error || "Failed to change password");
       } else {
-        toast.success("Password updated successfully! 🔑");
+        toast.success("Password updated successfully! ðŸ”‘");
         setPasswords({ currentPassword: "", newPassword: "", confirmPassword: "" });
         await update();
       }
@@ -261,7 +227,7 @@ export default function AdminSettingsPage() {
       if (!res.ok) throw new Error();
       localStorage.setItem("landlord_upi_id", upiForm.upiId);
       localStorage.setItem("landlord_upi_name", upiForm.upiName);
-      toast.success("UPI Configuration saved on server! 💳");
+      toast.success("UPI Configuration saved on server! ðŸ’³");
     } catch {
       toast.error("Failed to save UPI config on server");
     } finally {
@@ -277,7 +243,7 @@ export default function AdminSettingsPage() {
       localStorage.setItem("default_electricity_rate", preferences.defaultElectricityRate);
       localStorage.setItem("default_late_fee", preferences.defaultLateFee);
       localStorage.setItem("default_due_date_day", preferences.defaultDueDateDay);
-      toast.success("Billing preferences saved successfully! ⚙️");
+      toast.success("Billing preferences saved successfully! âš™ï¸");
     } catch {
       toast.error("Failed to save preferences");
     } finally {
@@ -353,17 +319,17 @@ export default function AdminSettingsPage() {
             <form onSubmit={handleChangePassword} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div>
                 <label className="form-label">Current Password</label>
-                <input type="password" className="form-input" placeholder="••••••••" value={passwords.currentPassword} onChange={(e) => setPasswords({ ...passwords, currentPassword: e.target.value })} required />
+                <input type="password" className="form-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" value={passwords.currentPassword} onChange={(e) => setPasswords({ ...passwords, currentPassword: e.target.value })} required />
               </div>
 
               <div>
                 <label className="form-label">New Password</label>
-                <input type="password" className="form-input" placeholder="••••••••" value={passwords.newPassword} onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })} required />
+                <input type="password" className="form-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" value={passwords.newPassword} onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })} required />
               </div>
 
               <div>
                 <label className="form-label">Confirm New Password</label>
-                <input type="password" className="form-input" placeholder="••••••••" value={passwords.confirmPassword} onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })} required />
+                <input type="password" className="form-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" value={passwords.confirmPassword} onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })} required />
               </div>
 
               <button type="submit" className="btn-primary" disabled={updating} style={{ marginTop: "8px", alignSelf: "flex-end" }}>
@@ -426,7 +392,7 @@ export default function AdminSettingsPage() {
             <form onSubmit={handleSavePreferences} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 <div>
-                  <label className="form-label">Default Maintenance (₹)</label>
+                  <label className="form-label">Default Maintenance (â‚¹)</label>
                   <input 
                     type="number" 
                     className="form-input" 
@@ -437,7 +403,7 @@ export default function AdminSettingsPage() {
                   />
                 </div>
                 <div>
-                  <label className="form-label">Electricity Unit Rate (₹)</label>
+                  <label className="form-label">Electricity Unit Rate (â‚¹)</label>
                   <input 
                     type="number" 
                     className="form-input" 
@@ -451,7 +417,7 @@ export default function AdminSettingsPage() {
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 <div>
-                  <label className="form-label">Daily Late Fee (₹)</label>
+                  <label className="form-label">Daily Late Fee (â‚¹)</label>
                   <input 
                     type="number" 
                     className="form-input" 
@@ -483,295 +449,127 @@ export default function AdminSettingsPage() {
             </form>
           </div>
 
-          {/* Box 5: WhatsApp Bot Status */}
+          {/* Box 5: WhatsApp Bot */}
           <div className="glass-card" style={{ padding: "28px", gridColumn: "span 2" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <div style={{
-                  width: "40px", height: "40px", background: "rgba(37,211,102,0.1)",
-                  border: "1px solid rgba(37,211,102,0.25)", borderRadius: "10px",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                <div style={{ width: "40px", height: "40px", background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.25)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#25D366"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.59 2.022 14.12 1.001 11.905 1c-5.441 0-9.866 4.372-9.87 9.802 0 1.814.504 3.59 1.46 5.184l-.944 3.45 3.58-.934zM16.71 13.9c-.3-.15-1.782-.88-2.03-.97-.25-.09-.43-.13-.62.15-.19.28-.73.91-.89 1.09-.16.18-.33.2-.63.05-.3-.15-1.265-.47-2.41-1.485-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.62-1.5-.85-2.05-.23-.55-.47-.48-.62-.48-.15 0-.33-.02-.51-.02-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.98 2.62 1.11 2.8c.14.18 1.93 2.95 4.67 4.14.65.28 1.16.45 1.56.57.66.21 1.26.18 1.73.11.53-.08 1.782-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.08-.13-.28-.21-.58-.36z"/></svg>
+                </div>
+                <div>
+                  <h3 style={{ fontSize: "16px", fontWeight: 700, fontFamily: "var(--font-display)" }}>WhatsApp Bot</h3>
+                  <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Connect your WhatsApp to send automated rent reminders and invoices</p>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ padding: "4px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: 700, border: "1px solid",
+                  ...(whatsappStatus?.isReady
+                    ? { color: "#34d399", background: "rgba(52,211,153,0.1)", borderColor: "rgba(52,211,153,0.25)" }
+                    : { color: "#fbbf24", background: "rgba(251,191,36,0.1)", borderColor: "rgba(251,191,36,0.25)" })
                 }}>
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#25D366">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.59 2.022 14.12 1.001 11.905 1c-5.441 0-9.866 4.372-9.87 9.802 0 1.814.504 3.59 1.46 5.184l-.944 3.45 3.58-.934zM16.71 13.9c-.3-.15-1.782-.88-2.03-.97-.25-.09-.43-.13-.62.15-.19.28-.73.91-.89 1.09-.16.18-.33.2-.63.05-.3-.15-1.265-.47-2.41-1.485-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.62-1.5-.85-2.05-.23-.55-.47-.48-.62-.48-.15 0-.33-.02-.51-.02-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.98 2.62 1.11 2.8c.14.18 1.93 2.95 4.67 4.14.65.28 1.16.45 1.56.57.66.21 1.26.18 1.73.11.53-.08 1.782-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.08-.13-.28-.21-.58-.36z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 style={{ fontSize: "16px", fontWeight: 700, fontFamily: "var(--font-display)" }}>WhatsApp Bots Integration</h3>
-                  <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)" }}>Manage your dual-bot WhatsApp connections for automated reminders and invoices</p>
-                </div>
+                  {whatsappStatus?.isReady ? "â— Connected" : "â—‹ Disconnected"}
+                </span>
+                <button onClick={fetchWhatsappStatus} disabled={fetchingWhatsapp} className="btn-ghost" style={{ padding: "6px 10px", fontSize: "12px" }}>
+                  {fetchingWhatsapp ? <Loader2 size={13} className="animate-spin" /> : "â†» Refresh"}
+                </button>
               </div>
-
-              <button 
-                onClick={fetchWhatsappStatus} 
-                className="btn-ghost" 
-                disabled={fetchingWhatsapp}
-                style={{ padding: "6px 12px", fontSize: "12px" }}
-              >
-                {fetchingWhatsapp ? <Loader2 size={14} className="animate-spin" /> : "Refresh Status"}
-              </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Bot 1 */}
-              <div style={{
-                background: "rgba(255, 255, 255, 0.02)",
-                border: "1px solid rgba(255, 255, 255, 0.05)",
-                borderRadius: "12px",
-                padding: "20px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                minHeight: "180px"
-              }}>
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-                    <h4 style={{ fontWeight: 700, fontSize: "14px" }}>Bot 1 (Primary Admin)</h4>
-                    <span className={`badge ${whatsappStatus?.bot1?.isReady ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20" : "text-amber-400 bg-amber-400/10 border-amber-400/20"}`} style={{ border: "1px solid", padding: "4px 8px", borderRadius: "6px", fontSize: "11px", fontWeight: 600 }}>
-                      {whatsappStatus?.bot1?.isReady ? "Connected" : "Waiting for scan"}
-                    </span>
+            {whatsappStatus?.isReady ? (
+              /* â”€â”€ CONNECTED STATE â”€â”€ */
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "16px", background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "10px" }}>
+                  <div style={{ width: "44px", height: "44px", background: "rgba(52,211,153,0.15)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>âœ…</div>
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: "14px", color: "#34d399" }}>Bot is connected and active!</p>
+                    <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.7)" }}>ðŸ“± Logged in as <strong>{whatsappStatus.pushname || "Admin"}</strong> (+{whatsappStatus.phone || "â€”"})</p>
+                    <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", marginTop: "2px" }}>Automated rent reminders are active. Messages are sent from this number.</p>
                   </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <button onClick={handleResetBot} disabled={resettingBot} className="btn-ghost" style={{ fontSize: "12px", padding: "7px 14px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444" }}>
+                    {resettingBot ? <><Loader2 size={12} className="animate-spin" /> Resetting...</> : "âš ï¸ Disconnect &amp; Reset"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* â”€â”€ DISCONNECTED STATE â”€â”€ */
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
 
-                  {whatsappStatus?.bot1?.isReady ? (
-                    <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.7)", lineHeight: "1.6" }}>
-                      <p>👤 <strong>Logged in as:</strong> {whatsappStatus.bot1.pushname || "Admin 1"}</p>
-                      <p>📞 <strong>Phone:</strong> +{whatsappStatus.bot1.phone}</p>
-                      <p style={{ marginTop: "10px", color: "#10b981", fontSize: "12px" }}>✓ Primary bot is active and ready to send reminders.</p>
+                {/* Left: QR Code */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <p style={{ fontWeight: 600, fontSize: "13px", color: "#a78bfa" }}>Option 1 â€” Scan QR Code</p>
+                  {whatsappStatus?.qrImage ? (
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                      <div style={{ background: "#fff", padding: "12px", borderRadius: "12px", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
+                        <img src={whatsappStatus.qrImage} alt="WhatsApp QR" style={{ width: 180, height: 180, display: "block" }} />
+                      </div>
+                      <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.45)", textAlign: "center" }}>Open WhatsApp â†’ Linked Devices â†’ Link a Device â†’ Scan this QR</p>
                     </div>
                   ) : (
-                    <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.6)", lineHeight: "1.5", display: "flex", flexDirection: "column", gap: "14px" }}>
-                      <div>
-                        <p style={{ color: "#f59e0b", fontWeight: 600, marginBottom: "4px" }}>⚠️ Offline / Disconnected</p>
-                        <p style={{ color: "rgba(226, 232, 240, 0.4)", fontSize: "12px" }}>Please scan the QR code below or use a phone number pairing code to connect.</p>
-                      </div>
-
-                      {/* Direct QR display */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <p style={{ fontWeight: 600, color: "#a78bfa" }}>Link via QR Code:</p>
-                        {whatsappStatus?.bot1?.qrImage ? (
-                          <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            padding: "16px",
-                            background: "#ffffff",
-                            borderRadius: "14px",
-                            width: "fit-content",
-                            alignSelf: "center",
-                            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)"
-                          }}>
-                            <img 
-                              src={whatsappStatus.bot1.qrImage} 
-                              alt="Bot 1 QR Code" 
-                              style={{ width: "180px", height: "180px" }}
-                            />
-                            <p style={{ fontSize: "11px", color: "#1e293b", marginTop: "8px", fontWeight: 700 }}>Scan with WhatsApp on your phone</p>
-                          </div>
-                        ) : (
-                          <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            padding: "20px",
-                            background: "rgba(255,255,255,0.01)",
-                            border: "1px dashed rgba(255,255,255,0.1)",
-                            borderRadius: "12px",
-                            minHeight: "150px"
-                          }}>
-                            <Loader2 size={24} className="animate-spin text-amber-500" style={{ animationDuration: '2s' }} />
-                            <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", marginTop: "10px", textAlign: "center" }}>Waiting for WhatsApp QR from server...</p>
-                          </div>
-                        )}
-                      </div>
-
-                      <div style={{ borderTop: "1px dashed rgba(255, 255, 255, 0.1)", paddingTop: "14px" }}>
-                        <p style={{ fontWeight: 600, color: "#a78bfa", marginBottom: "8px" }}>Or link with Phone Number Pairing Code:</p>
-                        <div style={{ display: "flex", gap: "8px" }}>
-                          <input 
-                            type="text" 
-                            className="form-input" 
-                            style={{ padding: "6px 10px", fontSize: "12px" }}
-                            placeholder="e.g. 7388389944" 
-                            value={pairingPhones.bot1} 
-                            onChange={(e) => setPairingPhones({ ...pairingPhones, bot1: e.target.value })}
-                          />
-                          <button 
-                            type="button" 
-                            onClick={() => handleRequestPairingCode("bot1")}
-                            disabled={requestingCode === "bot1"}
-                            className="btn-primary" 
-                            style={{ padding: "6px 12px", fontSize: "12px", flexShrink: 0 }}
-                          >
-                            {requestingCode === "bot1" ? <Loader2 size={12} className="animate-spin" /> : "Get Code"}
-                          </button>
-                        </div>
-                        {pairingCodes.bot1 && (
-                          <div style={{ marginTop: "12px", padding: "10px", background: "rgba(37, 211, 102, 0.08)", border: "1px solid rgba(37, 211, 102, 0.25)", borderRadius: "8px", textAlign: "center" }}>
-                            <p style={{ fontSize: "11px", color: "rgba(226, 232, 240, 0.6)", marginBottom: "4px" }}>Enter this code on WhatsApp on your phone:</p>
-                            <p style={{ fontSize: "20px", fontWeight: 900, letterSpacing: "2px", color: "#25d366", fontFamily: "monospace" }}>{pairingCodes.bot1}</p>
-                            <p style={{ fontSize: "10px", color: "rgba(226, 232, 240, 0.4)", marginTop: "4px" }}>Settings → Linked Devices → Link with Phone Number</p>
-                          </div>
-                        )}
-                      </div>
-
-                      <div style={{ background: "rgba(139, 92, 246, 0.05)", border: "1px solid rgba(139, 92, 246, 0.15)", borderRadius: "10px", padding: "10px 12px" }}>
-                        <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)", lineHeight: "1.4" }}>
-                          💡 <strong>Scanner Trouble?</strong> If QR scanning fails or shows "Failed to scan", click the "Disconnect & Reset" button below to reset the bot state, then try again or use the Pairing Code.
-                        </p>
-                      </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "200px", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.1)", borderRadius: "12px", gap: "12px" }}>
+                      {whatsappStatus?.initialized ? (
+                        <>
+                          <Loader2 size={28} className="animate-spin" style={{ color: "#f59e0b" }} />
+                          <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)", textAlign: "center" }}>Bot is starting...<br/>QR code will appear shortly</p>
+                        </>
+                      ) : (
+                        <>
+                          <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.4)", textAlign: "center" }}>Bot server is offline</p>
+                          <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.3)", textAlign: "center" }}>Start the bot on your PC using PM2 or run the start script</p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
 
-                <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
-                  <button
-                    onClick={() => handleResetWhatsapp("bot1")}
-                    disabled={resettingBot === "bot1"}
-                    className="btn-ghost"
-                    style={{
-                      padding: "8px 14px",
-                      fontSize: "12px",
-                      background: "rgba(239, 68, 68, 0.08)",
-                      border: "1px solid rgba(239, 68, 68, 0.2)",
-                      color: "#ef4444",
-                    }}
-                  >
-                    {resettingBot === "bot1" ? <Loader2 size={12} className="animate-spin" /> : "Disconnect & Reset"}
-                  </button>
-                </div>
-              </div>
+                {/* Right: Pairing Code */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <p style={{ fontWeight: 600, fontSize: "13px", color: "#a78bfa" }}>Option 2 â€” Phone Number Code</p>
+                  <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)" }}>If the QR scan fails, enter your WhatsApp number and click Get Code. WhatsApp will send a 8-digit code to enter in the app.</p>
 
-              {/* Bot 2 */}
-              <div style={{
-                background: "rgba(255, 255, 255, 0.02)",
-                border: "1px solid rgba(255, 255, 255, 0.05)",
-                borderRadius: "12px",
-                padding: "20px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                minHeight: "180px"
-              }}>
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-                    <h4 style={{ fontWeight: 700, fontSize: "14px" }}>Bot 2 (Secondary Admin)</h4>
-                    <span className={`badge ${whatsappStatus?.bot2?.isReady ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20" : "text-amber-400 bg-amber-400/10 border-amber-400/20"}`} style={{ border: "1px solid", padding: "4px 8px", borderRadius: "6px", fontSize: "11px", fontWeight: 600 }}>
-                      {whatsappStatus?.bot2?.isReady ? "Connected" : "Waiting for scan"}
-                    </span>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input
+                      type="tel"
+                      className="form-input"
+                      placeholder="e.g. 6392651108"
+                      value={pairingPhone}
+                      onChange={(e) => setPairingPhone(e.target.value)}
+                      style={{ fontSize: "13px", padding: "8px 12px" }}
+                    />
+                    <button
+                      onClick={handleGetCode}
+                      disabled={requestingCode}
+                      className="btn-primary"
+                      style={{ flexShrink: 0, minWidth: "100px", fontSize: "13px", display: "flex", alignItems: "center", gap: "6px" }}
+                    >
+                      {requestingCode ? <><Loader2 size={13} className="animate-spin" /> Waiting...</> : "Get Code"}
+                    </button>
                   </div>
 
-                  {whatsappStatus?.bot2?.isReady ? (
-                    <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.7)", lineHeight: "1.6" }}>
-                      <p>👤 <strong>Logged in as:</strong> {whatsappStatus.bot2.pushname || "Admin 2"}</p>
-                      <p>📞 <strong>Phone:</strong> +{whatsappStatus.bot2.phone}</p>
-                      <p style={{ marginTop: "10px", color: "#10b981", fontSize: "12px" }}>✓ Secondary bot is active and ready to send reminders.</p>
-                    </div>
-                  ) : (
-                    <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.6)", lineHeight: "1.5", display: "flex", flexDirection: "column", gap: "14px" }}>
-                      <div>
-                        <p style={{ color: "#f59e0b", fontWeight: 600, marginBottom: "4px" }}>⚠️ Offline / Disconnected</p>
-                        <p style={{ color: "rgba(226, 232, 240, 0.4)", fontSize: "12px" }}>Please scan the QR code below or use a phone number pairing code to connect.</p>
-                      </div>
-
-                      {/* Direct QR display */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <p style={{ fontWeight: 600, color: "#a78bfa" }}>Link via QR Code:</p>
-                        {whatsappStatus?.bot2?.qrImage ? (
-                          <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            padding: "16px",
-                            background: "#ffffff",
-                            borderRadius: "14px",
-                            width: "fit-content",
-                            alignSelf: "center",
-                            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)"
-                          }}>
-                            <img 
-                              src={whatsappStatus.bot2.qrImage} 
-                              alt="Bot 2 QR Code" 
-                              style={{ width: "180px", height: "180px" }}
-                            />
-                            <p style={{ fontSize: "11px", color: "#1e293b", marginTop: "8px", fontWeight: 700 }}>Scan with WhatsApp on your phone</p>
-                          </div>
-                        ) : (
-                          <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            padding: "20px",
-                            background: "rgba(255,255,255,0.01)",
-                            border: "1px dashed rgba(255,255,255,0.1)",
-                            borderRadius: "12px",
-                            minHeight: "150px"
-                          }}>
-                            <Loader2 size={24} className="animate-spin text-amber-500" style={{ animationDuration: '2s' }} />
-                            <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.4)", marginTop: "10px", textAlign: "center" }}>Waiting for WhatsApp QR from server...</p>
-                          </div>
-                        )}
-                      </div>
-
-                      <div style={{ borderTop: "1px dashed rgba(255, 255, 255, 0.1)", paddingTop: "14px" }}>
-                        <p style={{ fontWeight: 600, color: "#a78bfa", marginBottom: "8px" }}>Or link with Phone Number Pairing Code:</p>
-                        <div style={{ display: "flex", gap: "8px" }}>
-                          <input 
-                            type="text" 
-                            className="form-input" 
-                            style={{ padding: "6px 10px", fontSize: "12px" }}
-                            placeholder="e.g. 6388888888" 
-                            value={pairingPhones.bot2} 
-                            onChange={(e) => setPairingPhones({ ...pairingPhones, bot2: e.target.value })}
-                          />
-                          <button 
-                            type="button" 
-                            onClick={() => handleRequestPairingCode("bot2")}
-                            disabled={requestingCode === "bot2"}
-                            className="btn-primary" 
-                            style={{ padding: "6px 12px", fontSize: "12px", flexShrink: 0 }}
-                          >
-                            {requestingCode === "bot2" ? <Loader2 size={12} className="animate-spin" /> : "Get Code"}
-                          </button>
-                        </div>
-                        {pairingCodes.bot2 && (
-                          <div style={{ marginTop: "12px", padding: "10px", background: "rgba(37, 211, 102, 0.08)", border: "1px solid rgba(37, 211, 102, 0.25)", borderRadius: "8px", textAlign: "center" }}>
-                            <p style={{ fontSize: "11px", color: "rgba(226, 232, 240, 0.6)", marginBottom: "4px" }}>Enter this code on WhatsApp on your phone:</p>
-                            <p style={{ fontSize: "20px", fontWeight: 900, letterSpacing: "2px", color: "#25d366", fontFamily: "monospace" }}>{pairingCodes.bot2}</p>
-                            <p style={{ fontSize: "10px", color: "rgba(226, 232, 240, 0.4)", marginTop: "4px" }}>Settings → Linked Devices → Link with Phone Number</p>
-                          </div>
-                        )}
-                      </div>
-
-                      <div style={{ background: "rgba(139, 92, 246, 0.05)", border: "1px solid rgba(139, 92, 246, 0.15)", borderRadius: "10px", padding: "10px 12px" }}>
-                        <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)", lineHeight: "1.4" }}>
-                          💡 <strong>Scanner Trouble?</strong> If QR scanning fails or shows "Failed to scan", click the "Disconnect & Reset" button below to reset the bot state, then try again or use the Pairing Code.
-                        </p>
-                      </div>
+                  {pairingCode && (
+                    <div style={{ padding: "14px", background: "rgba(37,211,102,0.08)", border: "1px solid rgba(37,211,102,0.3)", borderRadius: "10px", textAlign: "center" }}>
+                      <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.55)", marginBottom: "6px" }}>Enter this code in WhatsApp:</p>
+                      <p style={{ fontSize: "26px", fontWeight: 900, letterSpacing: "4px", color: "#25d366", fontFamily: "monospace" }}>{pairingCode}</p>
+                      <p style={{ fontSize: "10px", color: "rgba(226,232,240,0.35)", marginTop: "4px" }}>Settings â†’ Linked Devices â†’ Link with Phone Number</p>
                     </div>
                   )}
-                </div>
 
-                <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
-                  <button
-                    onClick={() => handleResetWhatsapp("bot2")}
-                    disabled={resettingBot === "bot2"}
-                    className="btn-ghost"
-                    style={{
-                      padding: "8px 14px",
-                      fontSize: "12px",
-                      background: "rgba(239, 68, 68, 0.08)",
-                      border: "1px solid rgba(239, 68, 68, 0.2)",
-                      color: "#ef4444",
-                    }}
-                  >
-                    {resettingBot === "bot2" ? <Loader2 size={12} className="animate-spin" /> : "Disconnect & Reset"}
-                  </button>
+                  <div style={{ padding: "10px 12px", background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.15)", borderRadius: "8px", fontSize: "11px", color: "rgba(226,232,240,0.45)", lineHeight: "1.6" }}>
+                    ðŸ’¡ <strong>QR not scanning?</strong> Click <strong>"Disconnect &amp; Reset"</strong> below â†’ wait 20s â†’ try again.<br/>
+                    ðŸ”‘ <strong>Code not arriving?</strong> Make sure the QR is visible first, then click Get Code.
+                  </div>
+
+                  <div style={{ marginTop: "auto", paddingTop: "8px" }}>
+                    <button onClick={handleResetBot} disabled={resettingBot} className="btn-ghost" style={{ fontSize: "12px", padding: "7px 14px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444", width: "100%" }}>
+                      {resettingBot ? <><Loader2 size={12} className="animate-spin" /> Resetting...</> : "âš ï¸ Disconnect &amp; Reset Bot"}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
+
 
           {/* Box 6: Database Backup & Security */}
           <div className="glass-card" style={{ padding: "28px", gridColumn: "span 2", marginTop: "10px" }}>
@@ -803,13 +601,13 @@ export default function AdminSettingsPage() {
               }}>
                 <div>
                   <h4 style={{ fontWeight: 700, fontSize: "14px", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>🛡️ Automated Protection</span>
+                    <span>ðŸ›¡ï¸ Automated Protection</span>
                   </h4>
                   <div style={{ fontSize: "13px", color: "rgba(226, 232, 240, 0.7)", lineHeight: "1.6" }}>
-                    <p>⏰ <strong>Daily Schedule:</strong> 2:00 AM & 2:00 PM IST (Local scheduler)</p>
-                    <p>☁️ <strong>Cloud Cron Backup:</strong> Active (Daily at 3:00 AM UTC)</p>
-                    <p>📧 <strong>Email Sync:</strong> Enabled (Backup sent to admin inbox)</p>
-                    <p>📂 <strong>Retention:</strong> Last 30 backups kept automatically</p>
+                    <p>â° <strong>Daily Schedule:</strong> 2:00 AM & 2:00 PM IST (Local scheduler)</p>
+                    <p>â˜ï¸ <strong>Cloud Cron Backup:</strong> Active (Daily at 3:00 AM UTC)</p>
+                    <p>ðŸ“§ <strong>Email Sync:</strong> Enabled (Backup sent to admin inbox)</p>
+                    <p>ðŸ“‚ <strong>Retention:</strong> Last 30 backups kept automatically</p>
                   </div>
                 </div>
                 <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
@@ -838,7 +636,7 @@ export default function AdminSettingsPage() {
               }}>
                 <div>
                   <h4 style={{ fontWeight: 700, fontSize: "14px", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>🗄️ Soft-Deleted Records</span>
+                    <span>ðŸ—„ï¸ Soft-Deleted Records</span>
                   </h4>
                   <p style={{ fontSize: "12.5px", color: "rgba(226, 232, 240, 0.6)", lineHeight: "1.5" }}>
                     Renters you delete are automatically preserved in the archive for security and audit reasons. They can be restored to active rooms at any time.

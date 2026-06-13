@@ -35,4 +35,454 @@ To prepare for this change:
 
 See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
 (Use `node --trace-warnings ...` to show where the warning was created)
+^C[02-06-2026  2:00:02.94] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:17852) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 4 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 2 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 3 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 2 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 25 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 21 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 18 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 3 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-06-01T20-30-16-530Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+📧 Database backup successfully emailed to atultiwari123321@gmail.com!
+🗂️ 17 backups found. No cleanup needed (keeping 30).
+[02-06-2026  2:00:24.89] Backup finished. 
+ 
+[03-06-2026  0:52:34.78] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:9456) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 5 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 3 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 3 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 4 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 39 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 21 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 24 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 2 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-06-02T19-22-51-589Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+📧 Database backup successfully emailed to atultiwari123321@gmail.com!
+🗂️ 21 backups found. No cleanup needed (keeping 30).
+[03-06-2026  0:52:59.41] Backup finished. 
+ 
+[03-06-2026  2:00:01.74] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:24260) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+^C[03-06-2026 14:00:02.49] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:11876) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 6 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 4 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 2 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 3 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 45 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 3 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-06-03T08-30-13-854Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+📧 Database backup successfully emailed to atultiwari123321@gmail.com!
+🗂️ 25 backups found. No cleanup needed (keeping 30).
+[03-06-2026 14:00:27.67] Backup finished. 
+ 
+[05-06-2026 14:18:19.43] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:11532) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 6 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 4 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 2 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 3 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 45 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 3 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-06-05T08-48-30-450Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+📧 Database backup successfully emailed to atultiwari123321@gmail.com!
+🗂️ 27 backups found. No cleanup needed (keeping 30).
+[05-06-2026 14:18:43.71] Backup finished. 
+ 
+[06-06-2026  4:06:09.82] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:7664) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: getaddrinfo ENOTFOUND ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:121:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech'
+}
+
+Node.js v25.6.1
+[06-06-2026  4:06:09.99] Backup finished. 
+ 
+[06-06-2026 14:00:01.95] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:8104) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 6 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 4 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 2 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 3 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 45 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 3 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-06-06T08-30-16-176Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+📧 Database backup successfully emailed to atultiwari123321@gmail.com!
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-05-29T03-27-56-099Z.json
+✅ Kept 30 most recent backups.
+[06-06-2026 14:00:30.17] Backup finished. 
+ 
+[07-06-2026  5:38:19.54] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:10364) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: getaddrinfo ENOTFOUND ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:121:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech'
+}
+
+Node.js v25.6.1
+[07-06-2026  5:38:19.73] Backup finished. 
+ 
+[07-06-2026 17:48:44.27] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:5212) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 6 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 4 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 2 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 3 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+^C[09-06-2026  6:13:36.31] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:2180) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+^C[10-06-2026 16:16:54.89] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:7136) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+^C[11-06-2026  7:14:33.12] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:11248) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 6 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 4 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 4 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 2 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 3 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 0 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+^C[12-06-2026 11:38:18.93] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:18944) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 7 rows from "User".
+📦 Exporting table "Tower"...
+^C[12-06-2026 23:48:37.04] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:16360) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+^C[13-06-2026  2:00:01.96] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:9940) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+^C[13-06-2026 18:32:22.07] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:4248) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
 ^C
