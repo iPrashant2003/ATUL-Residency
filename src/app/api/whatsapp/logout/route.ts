@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
     const botUrl = await getBotUrl();
     const res = await fetch(`${botUrl}/logout`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "bypass-tunnel-reminder": "true"
+      },
       body: JSON.stringify({}),
     });
 

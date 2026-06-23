@@ -11,7 +11,10 @@ export async function GET() {
   try {
     const botUrl = await getBotUrl();
     const res = await fetch(`${botUrl}/status`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "bypass-tunnel-reminder": "true"
+      },
       // Short timeout — status should respond instantly
       signal: AbortSignal.timeout(8000),
     });

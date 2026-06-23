@@ -27,7 +27,10 @@ export async function POST(req: NextRequest) {
     try {
       res = await fetch(`${botUrl}/pair`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "bypass-tunnel-reminder": "true"
+        },
         body: JSON.stringify({ phone }),
         signal: controller.signal,
       });

@@ -10,6 +10,7 @@ const { PrismaClient } = require('@prisma/client');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const localtunnel = require('localtunnel');
 
 // ==================== Utility ====================
 
@@ -59,6 +60,18 @@ function createPrismaClient() {
     return new PrismaClient({ adapter });
 }
 
+function killStaleChrome() {
+    try {
+        const { execSync } = require('child_process');
+        if (process.platform === 'win32') {
+            console.log('🧹 Killing stale Chrome/Chromium processes...');
+            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul & exit 0', { shell: 'cmd.exe', stdio: 'ignore' });
+        } else {
+            execSync('pkill -f "chrome" 2>/dev/null || true');
+        }
+    } catch (e) {}
+}
+
 function cleanSessionLock() {
     const lockPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot', 'SingletonLock');
     if (fs.existsSync(lockPath)) {
@@ -102,6 +115,9 @@ async function initializeBot(pairingPhone = null) {
         try { await Promise.race([botClient.destroy(), new Promise(r => setTimeout(r, 5000))]); } catch (e) {}
         botClient = null;
     }
+
+    // Kill any leftover chrome processes from crash/force-restart
+    killStaleChrome();
 
     // Clean lock file
     cleanSessionLock();
@@ -494,8 +510,50 @@ function startAutomatedBackups() {
 // ==================== Start Server ====================
 
 const PORT = 3001;
+let activeTunnel = null;
+
+async function establishTunnel() {
+    console.log('🌐 Establishing localtunnel programmatically...');
+    try {
+        if (activeTunnel) {
+            try { activeTunnel.close(); } catch (e) {}
+        }
+        activeTunnel = await localtunnel({ port: PORT });
+        const tunnelUrl = activeTunnel.url;
+        console.log(`🎉 Public Tunnel URL Established: ${tunnelUrl}`);
+
+        // Register in DB
+        await prisma.activityLog.create({
+            data: {
+                action: 'WHATSAPP_BOT_URL',
+                entity: 'SYSTEM',
+                details: tunnelUrl
+            }
+        });
+        console.log('✅ Registered tunnel URL successfully in database.');
+
+        activeTunnel.on('close', () => {
+            console.log('❌ Localtunnel closed. Reconnecting in 5 seconds...');
+            setTimeout(establishTunnel, 5000);
+        });
+
+        activeTunnel.on('error', (err) => {
+            console.error('❌ Localtunnel error:', err.message);
+            try { activeTunnel.close(); } catch (e) {}
+            setTimeout(establishTunnel, 5000);
+        });
+    } catch (err) {
+        console.error('❌ Failed to establish localtunnel programmatically:', err.message);
+        setTimeout(establishTunnel, 10000);
+    }
+}
+
 app.listen(PORT, () => {
     console.log(`\n🟢 WhatsApp Bot Server running on port ${PORT}`);
+    
+    // Kill stale chrome on boot to prevent locks
+    killStaleChrome();
+
     console.log('📱 Starting bot initialization...\n');
     initializeBot().catch(e => console.error('Initial bot start failed:', e.message));
 
@@ -504,14 +562,7 @@ app.listen(PORT, () => {
     setInterval(pollWhatsappQueue, 5000);
 
     startAutomatedBackups();
-
-    // Register tunnel URL in DB
-    const tunnelUrl = process.env.TUNNEL_URL || process.env.WHATSAPP_BOT_URL;
-    if (tunnelUrl && !tunnelUrl.includes('localhost')) {
-        prisma.activityLog.create({ data: { action: 'WHATSAPP_BOT_URL', entity: 'SYSTEM', details: tunnelUrl } })
-            .then(() => console.log(`✅ Registered tunnel URL: ${tunnelUrl}`))
-            .catch(e => console.error('Failed to register URL:', e.message));
-    }
+    establishTunnel();
 });
 
 process.on('unhandledRejection', (reason) => { console.warn('Unhandled rejection:', reason); });
