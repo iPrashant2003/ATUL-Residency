@@ -62,12 +62,12 @@ function createPrismaClient() {
 
 function killStaleChrome() {
     try {
-        const { execSync } = require('child_process');
+        const { exec } = require('child_process');
         if (process.platform === 'win32') {
-            console.log('🧹 Killing stale Chrome/Chromium processes...');
-            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul & exit 0', { shell: 'cmd.exe', stdio: 'ignore' });
+            console.log('🧹 Killing stale Chrome/Chromium processes in background...');
+            exec('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul', { shell: 'cmd.exe' });
         } else {
-            execSync('pkill -f "chrome" 2>/dev/null || true');
+            exec('pkill -f "chrome" 2>/dev/null || true');
         }
     } catch (e) {}
 }
