@@ -139,7 +139,13 @@ async function initializeBot(pairingPhone = null) {
 
     const options = {
         authStrategy: new LocalAuth({ clientId: 'bot', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
-        puppeteer: { args: puppeteerArgs, headless: true, handleSIGINT: false, handleSIGTERM: false },
+        puppeteer: { 
+            args: puppeteerArgs, 
+            headless: true, 
+            handleSIGINT: false, 
+            handleSIGTERM: false,
+            executablePath: process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : undefined
+        },
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
         webVersionCache: { type: 'none' },
         qrMaxRetries: 0,
