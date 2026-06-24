@@ -572,24 +572,9 @@ export default function AdminSettingsPage() {
                 <div style={{ flex: 1 }}>
                   <h4 style={{ fontWeight: 700, fontSize: "14px", color: "#f87171", marginBottom: "4px" }}>Local Bot Server is Offline</h4>
                   <p style={{ fontSize: "13px", color: "rgba(226,232,240,0.65)", lineHeight: "1.5" }}>
-                    The backend service that runs the WhatsApp Web instance is currently not running on your host computer. 
-                    To connect your device, please open a command window on your PC, navigate to the folder, and run:
-                  </p>
-                  <code style={{ 
-                    display: "block", 
-                    background: "rgba(0,0,0,0.35)", 
-                    padding: "8px 12px", 
-                    borderRadius: "6px", 
-                    fontFamily: "monospace", 
-                    fontSize: "12.5px", 
-                    color: "#a78bfa", 
-                    marginTop: "8px",
-                    border: "1px solid rgba(255,255,255,0.05)"
-                  }}>
-                    pm2 start ecosystem.config.js
-                  </code>
-                  <p style={{ fontSize: "11.5px", color: "rgba(226,232,240,0.4)", marginTop: "6px" }}>
-                    Alternatively, double-click the <code>start-bot.bat</code> file inside the project directory.
+                    The backend service that runs the WhatsApp Web instance is currently offline. 
+                    It is configured to run automatically in the background when the host computer starts up. 
+                    Please make sure your host computer is turned on and has a stable internet connection.
                   </p>
                 </div>
               </div>

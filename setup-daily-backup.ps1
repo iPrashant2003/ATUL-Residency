@@ -22,7 +22,8 @@ if ($existingTask) {
 }
 
 # Create task action
-$action = New-ScheduledTaskAction -Execute $batchFile -WorkingDirectory $projectPath
+$vbsPath = Join-Path $projectPath "run-backup-hidden.vbs"
+$action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "`"$vbsPath`"" -WorkingDirectory $projectPath
 
 # Create two triggers:
 # 1. Daily at 2:00 AM (overnight safety backup)

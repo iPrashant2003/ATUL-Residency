@@ -10,7 +10,7 @@ const { PrismaClient } = require('@prisma/client');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const localtunnel = require('localtunnel');
+
 
 // ==================== Utility ====================
 
@@ -62,12 +62,12 @@ function createPrismaClient() {
 
 function killStaleChrome() {
     try {
-        const { exec } = require('child_process');
+        const { execSync } = require('child_process');
         if (process.platform === 'win32') {
-            console.log('🧹 Killing stale Chrome/Chromium processes in background...');
-            exec('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul', { shell: 'cmd.exe' });
+            console.log('🧹 Killing stale Chrome/Chromium processes synchronously...');
+            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul', { shell: 'cmd.exe', stdio: 'ignore', windowsHide: true });
         } else {
-            exec('pkill -f "chrome" 2>/dev/null || true');
+            execSync('pkill -f "chrome" 2>/dev/null || true', { stdio: 'ignore' });
         }
     } catch (e) {}
 }
@@ -227,6 +227,8 @@ async function initializeBot(pairingPhone = null) {
     } catch (e) {
         console.error('❌ Bot initialize() threw:', e.message);
         botInitializing = false;
+        console.log('🔄 Retrying bot initialization in 10 seconds...');
+        setTimeout(() => initializeBot(pairingPhone), 10000);
     }
 }
 
@@ -417,7 +419,7 @@ app.post('/logout', async (req, res) => {
     try {
         const { execSync } = require('child_process');
         if (process.platform === 'win32') {
-            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul & exit 0', { shell: 'cmd.exe', stdio: 'ignore' });
+            execSync('taskkill /F /IM chrome.exe /T 2>nul & taskkill /F /IM chromium.exe /T 2>nul & exit 0', { shell: 'cmd.exe', stdio: 'ignore', windowsHide: true });
         } else {
             execSync('pkill -f "chrome" 2>/dev/null || true');
         }
@@ -503,53 +505,93 @@ function startAutomatedBackups() {
         if (now.getHours() === 2 && lastBackupDate !== now.toDateString()) {
             lastBackupDate = now.toDateString();
             const { exec } = require('child_process');
-            exec('node scripts/backup-db.js', (err, out, stderr) => {
+            exec('node scripts/backup-db.js', { windowsHide: true }, (err, out, stderr) => {
                 if (err) console.error('Daily backup failed:', err.message);
                 else console.log('✅ Daily backup done');
             });
         }
     };
-    setTimeout(() => { const { exec } = require('child_process'); exec('node scripts/backup-db.js', (e) => { if (!e) console.log('✅ Startup backup done'); }); }, 30000);
+    setTimeout(() => { const { exec } = require('child_process'); exec('node scripts/backup-db.js', { windowsHide: true }, (e) => { if (!e) console.log('✅ Startup backup done'); }); }, 30000);
     setInterval(check, 60 * 60 * 1000);
 }
 
 // ==================== Start Server ====================
 
 const PORT = 3001;
-let activeTunnel = null;
+let activeTunnelProcess = null;
 
 async function establishTunnel() {
-    console.log('🌐 Establishing localtunnel programmatically...');
+    console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
     try {
-        if (activeTunnel) {
-            try { activeTunnel.close(); } catch (e) {}
+        if (activeTunnelProcess) {
+            try { activeTunnelProcess.kill(); } catch (e) {}
+            activeTunnelProcess = null;
         }
-        activeTunnel = await localtunnel({ port: PORT });
-        const tunnelUrl = activeTunnel.url;
-        console.log(`🎉 Public Tunnel URL Established: ${tunnelUrl}`);
 
-        // Register in DB
-        await prisma.activityLog.create({
-            data: {
-                action: 'WHATSAPP_BOT_URL',
-                entity: 'SYSTEM',
-                details: tunnelUrl
+        const { spawn } = require('child_process');
+        // Spawn SSH child process with keepalives and hidden window
+        activeTunnelProcess = spawn('ssh', [
+            '-o', 'StrictHostKeyChecking=no',
+            '-o', 'ServerAliveInterval=30',
+            '-o', 'ServerAliveCountMax=3',
+            '-R', `80:localhost:${PORT}`,
+            'nokey@localhost.run'
+        ], {
+            windowsHide: true
+        });
+
+        let urlFound = false;
+
+        activeTunnelProcess.stdout.on('data', async (data) => {
+            const output = data.toString();
+            console.log(`[Tunnel Raw]: ${output.trim()}`);
+
+            // Find URL like: https://xxxx.lhr.life or similar
+            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.lhr\.(life|rocks|run)/);
+            if (match && !urlFound) {
+                urlFound = true;
+                const tunnelUrl = match[0];
+                console.log(`🎉 Public SSH Tunnel URL Established: ${tunnelUrl}`);
+
+                // Register in DB
+                try {
+                    await prisma.activityLog.create({
+                        data: {
+                            action: 'WHATSAPP_BOT_URL',
+                            entity: 'SYSTEM',
+                            details: tunnelUrl
+                        }
+                    });
+                    console.log('✅ Registered tunnel URL successfully in database.');
+                } catch (dbErr) {
+                    console.error('❌ Failed to register tunnel URL in database:', dbErr.message);
+                }
             }
         });
-        console.log('✅ Registered tunnel URL successfully in database.');
 
-        activeTunnel.on('close', () => {
-            console.log('❌ Localtunnel closed. Reconnecting in 5 seconds...');
-            setTimeout(establishTunnel, 5000);
+        activeTunnelProcess.stderr.on('data', (data) => {
+            const errOutput = data.toString();
+            if (errOutput.includes('Warning') || errOutput.includes('Pseudo-terminal')) {
+                console.log(`[Tunnel SSH]: ${errOutput.trim()}`);
+            } else {
+                console.warn(`[Tunnel Warning]: ${errOutput.trim()}`);
+            }
         });
 
-        activeTunnel.on('error', (err) => {
-            console.error('❌ Localtunnel error:', err.message);
-            try { activeTunnel.close(); } catch (e) {}
-            setTimeout(establishTunnel, 5000);
+        activeTunnelProcess.on('close', (code) => {
+            console.log(`❌ SSH tunnel process exited with code ${code}. Reconnecting in 8 seconds...`);
+            activeTunnelProcess = null;
+            setTimeout(establishTunnel, 8000);
         });
+
+        activeTunnelProcess.on('error', (err) => {
+            console.error('❌ SSH tunnel spawn error:', err.message);
+            activeTunnelProcess = null;
+            setTimeout(establishTunnel, 10000);
+        });
+
     } catch (err) {
-        console.error('❌ Failed to establish localtunnel programmatically:', err.message);
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
         setTimeout(establishTunnel, 10000);
     }
 }
