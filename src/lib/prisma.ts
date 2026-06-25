@@ -21,12 +21,21 @@ function createPrismaClient(): PrismaClient {
     return new PrismaClient({ adapter } as any);
   }
 
+  // Do not fall back to SQLite on Vercel or in production if DATABASE_URL is not set (e.g. during build)
+  if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+    return new PrismaClient();
+  }
+
   // Fallback to SQLite for local development (when DATABASE_URL is not set or is a file: URL)
-  const path = require("path");
-  const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
-  const dbPath = path.join(process.cwd(), "prisma", "dev.db");
-  const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
-  return new PrismaClient({ adapter } as any);
+  try {
+    const path = require("path");
+    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const dbPath = path.join(process.cwd(), "prisma", "dev.db");
+    const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
+    return new PrismaClient({ adapter } as any);
+  } catch (e) {
+    return new PrismaClient();
+  }
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
