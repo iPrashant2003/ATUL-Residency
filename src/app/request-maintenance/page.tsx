@@ -2,18 +2,19 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import {
   Wrench,
   CheckCircle2,
   AlertCircle,
   UploadCloud,
-  Sparkles,
-  PhoneCall,
   Clock,
   ShieldCheck,
-  Building2,
+  Building,
   ChevronRight,
+  Sparkles,
+  AlertTriangle,
+  Building2,
+  Sliders,
 } from "lucide-react";
 import { toast, Toaster } from "react-hot-toast";
 
@@ -28,25 +29,34 @@ interface RoomOption {
 
 const CATEGORIES = [
   { id: "PLUMBING", label: "Plumbing", icon: "🚰", desc: "Leaking tap, flush, pipe, shower" },
-  { id: "ELECTRICIAN", label: "Electrical", icon: "⚡", desc: "Fan, light, switchboard, power socket" },
-  { id: "CARPENTER", label: "Carpentry", icon: "🪵", desc: "Door lock, cabinet, bed, window, table" },
+  { id: "ELECTRICIAN", label: "Electrical", icon: "⚡", desc: "Fan, light, switchboard, socket" },
+  { id: "CARPENTER", label: "Carpentry", icon: "🪵", desc: "Door lock, cabinet, bed, window" },
   { id: "CLEANING", label: "Cleaning & Pest", icon: "🧹", desc: "Room cleaning, waste, pest control" },
-  { id: "SECURITY", label: "Security & Lock", icon: "🔒", desc: "Main gate, key replacement, safety" },
-  { id: "OTHER", label: "Other Query", icon: "🔧", desc: "General repair or custom maintenance" },
+  { id: "SECURITY", label: "Security & Lock", icon: "🔒", desc: "Main gate, key, door safety" },
+  { id: "OTHER", label: "Other Repair", icon: "🔧", desc: "General repair or custom query" },
+];
+
+const PRIORITIES = [
+  { id: "NORMAL", label: "Normal", badge: "🟢 Standard", desc: "Routine maintenance query", color: "#34d399", bg: "rgba(52, 211, 153, 0.15)", border: "rgba(52, 211, 153, 0.4)" },
+  { id: "HIGH", label: "High Priority", badge: "🟡 Important", desc: "Repair needed soon", color: "#fbbf24", bg: "rgba(251, 191, 36, 0.15)", border: "rgba(251, 191, 36, 0.4)" },
+  { id: "CRITICAL", label: "Critical Emergency", badge: "🚨 Urgent", desc: "Water burst, power outage, main lock issue", color: "#f87171", bg: "rgba(248, 113, 113, 0.2)", border: "rgba(248, 113, 113, 0.5)" },
 ];
 
 function MaintenanceRequestForm() {
   const searchParams = useSearchParams();
   const initialRoomQuery = searchParams.get("room") || searchParams.get("roomId") || "";
+  const initialTowerQuery = searchParams.get("tower") || "";
 
-  const [rooms, setRooms] = useState<RoomOption[]>([]);
+  const [allRooms, setAllRooms] = useState<RoomOption[]>([]);
   const [loadingRooms, setLoadingRooms] = useState(true);
 
+  // Step state
+  const [selectedTower, setSelectedTower] = useState<string>("ALL");
   const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("PLUMBING");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<"NORMAL" | "URGENT">("NORMAL");
+  const [priority, setPriority] = useState<"NORMAL" | "HIGH" | "CRITICAL">("NORMAL");
 
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -54,9 +64,6 @@ function MaintenanceRequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [ticketId, setTicketId] = useState<string | null>(null);
-
-  // Auto-detected tenant info
-  const selectedRoom = rooms.find((r) => r.roomId === selectedRoomId || r.roomNumber === selectedRoomId);
 
   useEffect(() => {
     fetchRooms();
@@ -68,9 +75,9 @@ function MaintenanceRequestForm() {
       const res = await fetch("/api/public/rooms");
       if (res.ok) {
         const data: RoomOption[] = await res.json();
-        setRooms(data);
+        setAllRooms(data);
 
-        // Match initial room from URL search parameter
+        // Auto-match room from URL search param if present
         if (initialRoomQuery) {
           const match = data.find(
             (r) =>
@@ -78,8 +85,11 @@ function MaintenanceRequestForm() {
               r.roomId === initialRoomQuery
           );
           if (match) {
+            setSelectedTower(match.towerName || "ALL");
             setSelectedRoomId(match.roomId);
           }
+        } else if (initialTowerQuery) {
+          setSelectedTower(initialTowerQuery.toUpperCase().includes("A") ? "Tower A" : "Tower B");
         }
       }
     } catch (e) {
@@ -88,6 +98,16 @@ function MaintenanceRequestForm() {
       setLoadingRooms(false);
     }
   }
+
+  // Filter available towers and rooms sequentially
+  const towers = Array.from(new Set(allRooms.map((r) => r.towerName))).filter(Boolean);
+
+  const filteredRooms = allRooms
+    .filter((r) => selectedTower === "ALL" || r.towerName.toLowerCase().includes(selectedTower.toLowerCase()))
+    .sort((a, b) => (parseInt(a.roomNumber, 10) || 0) - (parseInt(b.roomNumber, 10) || 0));
+
+  // Selected Room & Tenant Details
+  const selectedRoom = allRooms.find((r) => r.roomId === selectedRoomId || r.roomNumber === selectedRoomId);
 
   // Handle Photo Upload
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +151,7 @@ function MaintenanceRequestForm() {
     }
 
     if (!title.trim()) {
-      toast.error("Please describe your maintenance issue");
+      toast.error("Please enter a short description of the issue");
       return;
     }
 
@@ -158,7 +178,7 @@ function MaintenanceRequestForm() {
       } else {
         setSubmitted(true);
         setTicketId(data.requestId ? data.requestId.slice(-6).toUpperCase() : "REQ-101");
-        toast.success("Maintenance request submitted! Check WhatsApp for confirmation.");
+        toast.success("Maintenance query logged! Confirmation sent to your WhatsApp.");
       }
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -171,99 +191,134 @@ function MaintenanceRequestForm() {
     <div
       style={{
         minHeight: "100vh",
-        background: "radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%, #090d16 100%)",
+        background: "radial-gradient(ellipse at 50% -10%, #0f2b28 0%, #070d19 60%, #030712 100%)",
         color: "#f8fafc",
         fontFamily: "var(--font-sans, system-ui, -apple-system, sans-serif)",
-        padding: "24px 16px 60px 16px",
+        padding: "24px 16px 80px 16px",
+        position: "relative",
+        overflowX: "hidden",
       }}
     >
       <Toaster position="top-center" />
 
-      {/* Header Container */}
-      <div style={{ maxWidth: "540px", margin: "0 auto" }}>
-        {/* Brand Bar */}
+      {/* Decorative Floating Sea-Green Glass Glow Orbs */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-80px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "350px",
+          height: "350px",
+          background: "radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, rgba(6, 182, 212, 0) 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "100px",
+          right: "-100px",
+          width: "250px",
+          height: "250px",
+          background: "radial-gradient(circle, rgba(45, 212, 191, 0.15) 0%, rgba(0, 0, 0, 0) 70%)",
+          filter: "blur(50px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ maxWidth: "560px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* ─── ORIGINAL YELLOW LOGO HEADER ─── */}
         <div style={{ textAlign: "center", marginBottom: "32px", paddingTop: "12px" }}>
+          {/* Original Golden Yellow Badge */}
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "10px",
-              background: "rgba(30, 41, 59, 0.7)",
-              border: "1px solid rgba(20, 184, 166, 0.3)",
-              borderRadius: "9999px",
-              padding: "8px 20px",
-              boxShadow: "0 0 25px rgba(20, 184, 166, 0.15)",
+              gap: "12px",
+              background: "rgba(15, 23, 42, 0.85)",
+              border: "1px solid rgba(255, 215, 0, 0.4)",
+              borderRadius: "20px",
+              padding: "10px 22px",
+              boxShadow: "0 0 30px rgba(245, 158, 11, 0.25)",
               marginBottom: "16px",
+              backdropFilter: "blur(12px)",
             }}
           >
             <div
               style={{
-                width: "28px",
-                height: "28px",
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #14b8a6, #06b6d4)",
+                width: "42px",
+                height: "42px",
+                background: "linear-gradient(135deg, #FFD700 0%, #F59E0B 50%, #D97706 100%)",
+                borderRadius: "14px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#0f172a",
-                fontWeight: "bold",
-                fontSize: "14px",
+                flexShrink: 0,
+                boxShadow: "0 0 20px rgba(245, 158, 11, 0.6), inset 0 2px 4px rgba(255,255,255,0.4)",
+                border: "1px solid rgba(255, 215, 0, 0.7)",
+                transform: "rotate(-4deg)",
               }}
             >
-              A
+              <Building size={24} color="#1E1E1E" style={{ transform: "rotate(4deg)" }} />
             </div>
-            <span style={{ fontWeight: 700, letterSpacing: "1px", fontSize: "15px", color: "#f8fafc" }}>
-              ATUL RESIDENCY
-            </span>
-            <span
-              style={{
-                fontSize: "11px",
-                background: "rgba(20, 184, 166, 0.2)",
-                color: "#2dd4bf",
-                padding: "2px 8px",
-                borderRadius: "12px",
-                fontWeight: "600",
-              }}
-            >
-              24h Service
-            </span>
+
+            <div style={{ textAlign: "left" }}>
+              <div
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 900,
+                  fontFamily: "var(--font-display)",
+                  lineHeight: 1.1,
+                  background: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                ATUL RESIDENCY
+              </div>
+              <div style={{ fontSize: "11px", color: "#2dd4bf", fontWeight: 600, letterSpacing: "0.5px" }}>
+                ✨ A SYMBOL OF LUXURY LIVING
+              </div>
+            </div>
           </div>
 
           <h1
             style={{
               fontSize: "26px",
               fontWeight: 800,
-              background: "linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              marginBottom: "8px",
+              color: "#f8fafc",
+              marginBottom: "6px",
+              textShadow: "0 2px 10px rgba(0,0,0,0.5)",
             }}
           >
-            Maintenance Desk 🛠️
+            Maintenance & Service Desk 🛠️
           </h1>
           <p style={{ fontSize: "14px", color: "#94a3b8", margin: 0 }}>
-            Quick repair request form for Atul Residency residents
+            Submit repair queries • Work completed in 24 hours max
           </p>
         </div>
 
-        {/* Form / Success Card */}
+        {/* ─── FORM / SUCCESS CONTAINER ─── */}
         {submitted ? (
           <div
             style={{
-              background: "rgba(15, 23, 42, 0.8)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(20, 184, 166, 0.4)",
-              borderRadius: "24px",
+              background: "rgba(15, 23, 42, 0.85)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(20, 184, 166, 0.5)",
+              borderRadius: "28px",
               padding: "36px 24px",
               textAlign: "center",
-              boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+              boxShadow: "0 25px 60px rgba(0, 0, 0, 0.6)",
               animation: "fadeIn 0.4s ease-out",
             }}
           >
             <div
               style={{
-                width: "72px",
-                height: "72px",
+                width: "80px",
+                height: "80px",
                 borderRadius: "50%",
                 background: "rgba(20, 184, 166, 0.15)",
                 border: "2px solid #14b8a6",
@@ -272,72 +327,81 @@ function MaintenanceRequestForm() {
                 justifyContent: "center",
                 margin: "0 auto 20px auto",
                 color: "#2dd4bf",
+                boxShadow: "0 0 30px rgba(20, 184, 166, 0.4)",
               }}
             >
-              <CheckCircle2 size={40} />
+              <CheckCircle2 size={46} />
             </div>
 
-            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#f8fafc", marginBottom: "8px" }}>
-              Query Logged Successfully! 🎉
+            <h2 style={{ fontSize: "22px", fontWeight: 800, color: "#f8fafc", marginBottom: "8px" }}>
+              Request Logged Successfully! 🎉
             </h2>
 
             <div
               style={{
                 display: "inline-block",
-                background: "rgba(30, 41, 59, 0.8)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(30, 41, 59, 0.9)",
+                border: "1px solid rgba(20, 184, 166, 0.3)",
                 borderRadius: "12px",
-                padding: "8px 16px",
-                fontSize: "13px",
-                color: "#94a3b8",
+                padding: "8px 18px",
+                fontSize: "14px",
+                color: "#cbd5e1",
                 marginBottom: "20px",
               }}
             >
               Ticket Number: <strong style={{ color: "#2dd4bf" }}>#{ticketId}</strong>
             </div>
 
-            {/* Promise Banner */}
+            {/* Promise Box */}
             <div
               style={{
-                background: "linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%)",
-                border: "1px solid rgba(20, 184, 166, 0.5)",
-                borderRadius: "16px",
-                padding: "16px",
+                background: "linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(6, 182, 212, 0.2) 100%)",
+                border: "1px solid rgba(20, 184, 166, 0.6)",
+                borderRadius: "18px",
+                padding: "18px",
                 marginBottom: "24px",
+                boxShadow: "0 10px 25px rgba(20, 184, 166, 0.15)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", color: "#2dd4bf", fontWeight: 700, fontSize: "16px", marginBottom: "4px" }}>
-                <Clock size={20} />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", color: "#2dd4bf", fontWeight: 800, fontSize: "17px", marginBottom: "4px" }}>
+                <Clock size={22} />
                 Work Done in 24 Hours Max!
               </div>
-              <p style={{ fontSize: "13px", color: "#cbd5e1", margin: 0, lineHeight: 1.5 }}>
-                Our maintenance technician has been assigned to <strong>Room {selectedRoom?.roomNumber}</strong>. You will receive progress updates on WhatsApp.
+              <p style={{ fontSize: "13.5px", color: "#e2e8f0", margin: 0, lineHeight: 1.5 }}>
+                Our technician has been assigned to <strong>Room {selectedRoom?.roomNumber} ({selectedRoom?.towerName})</strong>. Updates will be sent to your WhatsApp.
               </p>
             </div>
 
-            {/* Auto Detected Tenant summary */}
+            {/* Details Summary */}
             <div
               style={{
-                background: "rgba(30, 41, 59, 0.5)",
-                borderRadius: "14px",
-                padding: "14px",
+                background: "rgba(30, 41, 59, 0.6)",
+                borderRadius: "16px",
+                padding: "16px",
                 textAlign: "left",
                 fontSize: "13px",
                 color: "#94a3b8",
                 marginBottom: "28px",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
                 <span>Resident Name:</span>
                 <strong style={{ color: "#f8fafc" }}>{selectedRoom?.tenantName}</strong>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                <span>Room Number:</span>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                <span>Room & Tower:</span>
                 <strong style={{ color: "#f8fafc" }}>Room {selectedRoom?.roomNumber} ({selectedRoom?.towerName})</strong>
               </div>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                <span>Priority:</span>
+                <strong style={{ color: priority === "CRITICAL" ? "#f87171" : priority === "HIGH" ? "#fbbf24" : "#34d399" }}>
+                  {priority === "CRITICAL" ? "🚨 Critical Emergency" : priority === "HIGH" ? "🟡 High Priority" : "🟢 Normal"}
+                </strong>
+              </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span>Confirmation Sent To:</span>
-                <strong style={{ color: "#2dd4bf" }}>{selectedRoom?.tenantPhone} (WhatsApp)</strong>
+                <span>WhatsApp Receipt:</span>
+                <strong style={{ color: "#2dd4bf" }}>{selectedRoom?.tenantPhone}</strong>
               </div>
             </div>
 
@@ -350,15 +414,15 @@ function MaintenanceRequestForm() {
               }}
               style={{
                 width: "100%",
-                padding: "14px",
-                borderRadius: "14px",
-                background: "linear-gradient(135deg, #14b8a6, #0d9488)",
+                padding: "16px",
+                borderRadius: "16px",
+                background: "linear-gradient(135deg, #14b8a6, #06b6d4)",
                 color: "#0f172a",
-                fontWeight: 700,
-                fontSize: "15px",
+                fontWeight: 800,
+                fontSize: "16px",
                 border: "none",
                 cursor: "pointer",
-                boxShadow: "0 10px 25px rgba(20, 184, 166, 0.3)",
+                boxShadow: "0 10px 30px rgba(20, 184, 166, 0.4)",
               }}
             >
               Raise Another Query 🔧
@@ -369,24 +433,62 @@ function MaintenanceRequestForm() {
             onSubmit={handleSubmit}
             style={{
               background: "rgba(15, 23, 42, 0.8)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              borderRadius: "24px",
-              padding: "24px",
-              boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(20, 184, 166, 0.35)",
+              borderRadius: "28px",
+              padding: "26px",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(20, 184, 166, 0.1)",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: "22px",
             }}
           >
-            {/* 1. Room Selection */}
+            {/* 1. STEP 1: Tower Selection */}
             <div>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#cbd5e1", marginBottom: "8px" }}>
-                1. Select Room Number *
+              <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13.5px", fontWeight: 700, color: "#2dd4bf", marginBottom: "10px" }}>
+                <Building2 size={16} /> 1. Select Tower First *
+              </label>
+              <div style={{ display: "flex", gap: "10px" }}>
+                {["ALL", ...towers].map((tw) => {
+                  const isSel = selectedTower === tw;
+                  const label = tw === "ALL" ? "🏢 All Towers" : `🏢 ${tw}`;
+                  return (
+                    <button
+                      key={tw}
+                      type="button"
+                      onClick={() => {
+                        setSelectedTower(tw);
+                        setSelectedRoomId(""); // Reset room selection on tower change
+                      }}
+                      style={{
+                        flex: 1,
+                        padding: "12px 14px",
+                        borderRadius: "14px",
+                        background: isSel ? "linear-gradient(135deg, rgba(20, 184, 166, 0.3), rgba(6, 182, 212, 0.25))" : "rgba(30, 41, 59, 0.6)",
+                        border: isSel ? "1.5px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.1)",
+                        color: isSel ? "#2dd4bf" : "#94a3b8",
+                        fontWeight: 700,
+                        fontSize: "13.5px",
+                        cursor: "pointer",
+                        boxShadow: isSel ? "0 0 15px rgba(20, 184, 166, 0.25)" : "none",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. STEP 2: Sequential Room Selection */}
+            <div>
+              <label style={{ display: "block", fontSize: "13.5px", fontWeight: 700, color: "#2dd4bf", marginBottom: "8px" }}>
+                2. Select Room (Sequential List) *
               </label>
               {loadingRooms ? (
-                <div style={{ padding: "12px", background: "rgba(30, 41, 59, 0.6)", borderRadius: "12px", color: "#94a3b8", fontSize: "13px" }}>
-                  Loading occupied rooms directory...
+                <div style={{ padding: "14px", background: "rgba(30, 41, 59, 0.6)", borderRadius: "14px", color: "#94a3b8", fontSize: "13px" }}>
+                  Loading occupied room directory...
                 </div>
               ) : (
                 <select
@@ -397,16 +499,17 @@ function MaintenanceRequestForm() {
                     width: "100%",
                     padding: "14px",
                     borderRadius: "14px",
-                    background: "rgba(30, 41, 59, 0.9)",
-                    border: selectedRoomId ? "1px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.15)",
+                    background: "rgba(30, 41, 59, 0.95)",
+                    border: selectedRoomId ? "1.5px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.15)",
                     color: "#f8fafc",
                     fontSize: "15px",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     outline: "none",
+                    boxShadow: selectedRoomId ? "0 0 15px rgba(20, 184, 166, 0.2)" : "none",
                   }}
                 >
-                  <option value="">-- Choose Room Number --</option>
-                  {rooms.map((r) => (
+                  <option value="">-- Choose Room Number ({filteredRooms.length} Occupied Rooms) --</option>
+                  {filteredRooms.map((r) => (
                     <option key={r.roomId} value={r.roomId}>
                       Room {r.roomNumber} ({r.towerName}) — {r.tenantName}
                     </option>
@@ -415,23 +518,24 @@ function MaintenanceRequestForm() {
               )}
             </div>
 
-            {/* 2. Auto Detected Resident Badge */}
+            {/* Auto Detected Resident Card */}
             {selectedRoom && (
               <div
                 style={{
-                  background: "rgba(20, 184, 166, 0.1)",
-                  border: "1px solid rgba(20, 184, 166, 0.3)",
-                  borderRadius: "14px",
-                  padding: "14px",
+                  background: "linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%)",
+                  border: "1px solid rgba(20, 184, 166, 0.4)",
+                  borderRadius: "16px",
+                  padding: "14px 18px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
+                  boxShadow: "0 8px 20px rgba(20, 184, 166, 0.15)",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <ShieldCheck size={20} style={{ color: "#2dd4bf" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <ShieldCheck size={24} style={{ color: "#2dd4bf" }} />
                   <div>
-                    <div style={{ fontSize: "13px", fontWeight: 700, color: "#f8fafc" }}>
+                    <div style={{ fontSize: "14px", fontWeight: 800, color: "#f8fafc" }}>
                       Verified Resident: {selectedRoom.tenantName}
                     </div>
                     <div style={{ fontSize: "12px", color: "#94a3b8" }}>
@@ -439,16 +543,25 @@ function MaintenanceRequestForm() {
                     </div>
                   </div>
                 </div>
-                <span style={{ fontSize: "11px", background: "#14b8a6", color: "#0f172a", fontWeight: 700, padding: "3px 8px", borderRadius: "10px" }}>
+                <span
+                  style={{
+                    fontSize: "11px",
+                    background: "#14b8a6",
+                    color: "#0f172a",
+                    fontWeight: 800,
+                    padding: "4px 10px",
+                    borderRadius: "12px",
+                  }}
+                >
                   Auto-Detected
                 </span>
               </div>
             )}
 
-            {/* 3. Issue Category Grid */}
+            {/* 3. Category Grid */}
             <div>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#cbd5e1", marginBottom: "10px" }}>
-                2. Select Issue Category *
+              <label style={{ display: "block", fontSize: "13.5px", fontWeight: 700, color: "#2dd4bf", marginBottom: "10px" }}>
+                3. Select Repair Category *
               </label>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
                 {CATEGORIES.map((cat) => {
@@ -458,16 +571,19 @@ function MaintenanceRequestForm() {
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
                       style={{
-                        padding: "12px",
-                        borderRadius: "14px",
-                        background: isSelected ? "rgba(20, 184, 166, 0.2)" : "rgba(30, 41, 59, 0.6)",
-                        border: isSelected ? "1px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.08)",
+                        padding: "12px 14px",
+                        borderRadius: "16px",
+                        background: isSelected
+                          ? "linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(6, 182, 212, 0.2) 100%)"
+                          : "rgba(30, 41, 59, 0.6)",
+                        border: isSelected ? "1.5px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.08)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
+                        boxShadow: isSelected ? "0 0 15px rgba(20, 184, 166, 0.2)" : "none",
                       }}
                     >
-                      <div style={{ fontSize: "20px", marginBottom: "4px" }}>{cat.icon}</div>
-                      <div style={{ fontSize: "13px", fontWeight: 700, color: isSelected ? "#2dd4bf" : "#f8fafc" }}>
+                      <div style={{ fontSize: "22px", marginBottom: "4px" }}>{cat.icon}</div>
+                      <div style={{ fontSize: "13.5px", fontWeight: 800, color: isSelected ? "#2dd4bf" : "#f8fafc" }}>
                         {cat.label}
                       </div>
                       <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "2px" }}>
@@ -479,22 +595,57 @@ function MaintenanceRequestForm() {
               </div>
             </div>
 
-            {/* 4. Issue Title */}
+            {/* 4. Priority Selector (Normal, High, Critical / Urgent) */}
             <div>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#cbd5e1", marginBottom: "8px" }}>
-                3. What is the issue? (Short Title) *
+              <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13.5px", fontWeight: 700, color: "#2dd4bf", marginBottom: "10px" }}>
+                <Sliders size={16} /> 4. Priority Level *
+              </label>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
+                {PRIORITIES.map((p) => {
+                  const isSel = priority === p.id;
+                  return (
+                    <div
+                      key={p.id}
+                      onClick={() => setPriority(p.id as any)}
+                      style={{
+                        padding: "12px 10px",
+                        borderRadius: "14px",
+                        background: isSel ? p.bg : "rgba(30, 41, 59, 0.6)",
+                        border: isSel ? `1.5px solid ${p.color}` : "1px solid rgba(255, 255, 255, 0.08)",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        transition: "all 0.2s ease",
+                        boxShadow: isSel ? `0 0 15px ${p.color}40` : "none",
+                      }}
+                    >
+                      <div style={{ fontSize: "12px", fontWeight: 800, color: p.color, marginBottom: "2px" }}>
+                        {p.badge}
+                      </div>
+                      <div style={{ fontSize: "11px", color: "#94a3b8" }}>
+                        {p.desc.split(",")[0]}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 5. Issue Title */}
+            <div>
+              <label style={{ display: "block", fontSize: "13.5px", fontWeight: 700, color: "#cbd5e1", marginBottom: "8px" }}>
+                5. What is the issue? (Short Title) *
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Tap leaking in bathroom / Fan not working"
+                placeholder="e.g. Tap leaking in bathroom / Fan not spinning"
                 required
                 style={{
                   width: "100%",
                   padding: "14px",
                   borderRadius: "14px",
-                  background: "rgba(30, 41, 59, 0.9)",
+                  background: "rgba(30, 41, 59, 0.95)",
                   border: "1px solid rgba(255, 255, 255, 0.15)",
                   color: "#f8fafc",
                   fontSize: "14px",
@@ -503,21 +654,21 @@ function MaintenanceRequestForm() {
               />
             </div>
 
-            {/* 5. Additional Notes */}
+            {/* 6. Notes & Photo */}
             <div>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#cbd5e1", marginBottom: "8px" }}>
-                4. Additional Notes / Details (Optional)
+              <label style={{ display: "block", fontSize: "13.5px", fontWeight: 700, color: "#cbd5e1", marginBottom: "8px" }}>
+                6. Additional Notes / Details (Optional)
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Provide any specific details (e.g. preferred time for technician to visit)..."
-                rows={3}
+                placeholder="Preferred time for technician visit, specific instructions..."
+                rows={2}
                 style={{
                   width: "100%",
                   padding: "14px",
                   borderRadius: "14px",
-                  background: "rgba(30, 41, 59, 0.9)",
+                  background: "rgba(30, 41, 59, 0.95)",
                   border: "1px solid rgba(255, 255, 255, 0.15)",
                   color: "#f8fafc",
                   fontSize: "14px",
@@ -527,10 +678,10 @@ function MaintenanceRequestForm() {
               />
             </div>
 
-            {/* 6. Attach Photo */}
+            {/* 7. Attach Photo */}
             <div>
-              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#cbd5e1", marginBottom: "8px" }}>
-                5. Attach Photo (Optional)
+              <label style={{ display: "block", fontSize: "13.5px", fontWeight: 700, color: "#cbd5e1", marginBottom: "8px" }}>
+                7. Attach Issue Photo (Optional)
               </label>
               {photoUrl ? (
                 <div style={{ position: "relative", width: "100%", height: "140px", borderRadius: "14px", overflow: "hidden", border: "1px solid #14b8a6" }}>
@@ -562,17 +713,17 @@ function MaintenanceRequestForm() {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "20px",
+                    padding: "18px",
                     borderRadius: "14px",
                     background: "rgba(30, 41, 59, 0.6)",
-                    border: "2px dashed rgba(255, 255, 255, 0.15)",
+                    border: "2px dashed rgba(20, 184, 166, 0.3)",
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                   }}
                 >
-                  <UploadCloud size={28} style={{ color: "#94a3b8", marginBottom: "6px" }} />
+                  <UploadCloud size={26} style={{ color: "#2dd4bf", marginBottom: "4px" }} />
                   <span style={{ fontSize: "13px", color: "#cbd5e1", fontWeight: 600 }}>
-                    {uploadingPhoto ? "Uploading Photo..." : "Click to Upload Issue Photo"}
+                    {uploadingPhoto ? "Uploading Photo..." : "Click to Upload Photo"}
                   </span>
                   <span style={{ fontSize: "11px", color: "#64748b" }}>JPG, PNG up to 10MB</span>
                   <input type="file" accept="image/*" onChange={handlePhotoUpload} disabled={uploadingPhoto} style={{ display: "none" }} />
@@ -580,35 +731,11 @@ function MaintenanceRequestForm() {
               )}
             </div>
 
-            {/* 7. Priority Switch */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(30, 41, 59, 0.5)", padding: "12px 16px", borderRadius: "14px" }}>
-              <div>
-                <div style={{ fontSize: "13px", fontWeight: 700, color: "#f8fafc" }}>Urgent Priority Request</div>
-                <div style={{ fontSize: "11px", color: "#94a3b8" }}>Mark if immediate emergency (water burst, main power failure)</div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setPriority(priority === "NORMAL" ? "URGENT" : "NORMAL")}
-                style={{
-                  padding: "6px 14px",
-                  borderRadius: "20px",
-                  border: "none",
-                  fontWeight: 700,
-                  fontSize: "12px",
-                  cursor: "pointer",
-                  background: priority === "URGENT" ? "#f43f5e" : "rgba(255,255,255,0.1)",
-                  color: priority === "URGENT" ? "#ffffff" : "#94a3b8",
-                }}
-              >
-                {priority === "URGENT" ? "🚨 URGENT" : "Normal"}
-              </button>
-            </div>
-
             {/* Promise Banner */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "rgba(20, 184, 166, 0.1)", padding: "12px 16px", borderRadius: "14px", border: "1px solid rgba(20, 184, 166, 0.2)" }}>
-              <Clock size={18} style={{ color: "#2dd4bf", flexShrink: 0 }} />
-              <div style={{ fontSize: "12px", color: "#2dd4bf", fontWeight: 600 }}>
-                Guaranteed Resolution: Work will be done in 24 hours max. Confirmation sent via WhatsApp.
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", background: "rgba(20, 184, 166, 0.12)", padding: "14px 16px", borderRadius: "16px", border: "1px solid rgba(20, 184, 166, 0.3)" }}>
+              <Clock size={20} style={{ color: "#2dd4bf", flexShrink: 0 }} />
+              <div style={{ fontSize: "12.5px", color: "#2dd4bf", fontWeight: 700 }}>
+                Resolution Commitment: Work done in 24 hours max. Confirmation receipt sent via WhatsApp.
               </div>
             </div>
 
@@ -621,7 +748,7 @@ function MaintenanceRequestForm() {
                 borderRadius: "16px",
                 background: "linear-gradient(135deg, #14b8a6, #06b6d4)",
                 color: "#0f172a",
-                fontWeight: 800,
+                fontWeight: 900,
                 fontSize: "16px",
                 border: "none",
                 cursor: submitting ? "not-allowed" : "pointer",
@@ -636,7 +763,7 @@ function MaintenanceRequestForm() {
                 "Logging Request..."
               ) : (
                 <>
-                  Submit Request Now <ChevronRight size={18} />
+                  Submit Repair Request <ChevronRight size={18} />
                 </>
               )}
             </button>
