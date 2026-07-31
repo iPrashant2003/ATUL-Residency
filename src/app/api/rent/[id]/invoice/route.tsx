@@ -530,7 +530,7 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
              {!isPaid && (
                <View style={styles.payNowSection}>
                  <Link
-                   src={`https://atul-residency.vercel.app/tenant/payments?rentRecordId=${record.id}&amount=${balance}&month=${record.month}&year=${record.year}`}
+                   src={`https://atul-residency.vercel.app/pay-rent?rentRecordId=${record.id}`}
                    style={styles.payNowButton}
                  >
                    <Text style={styles.payNowButtonText}>💳 PAY NOW</Text>

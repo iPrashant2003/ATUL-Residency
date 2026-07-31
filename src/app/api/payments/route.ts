@@ -46,7 +46,17 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { tenantId, rentRecordId, amount, method, transactionId, screenshotUrl, notes } = await req.json();
+    let { tenantId, rentRecordId, amount, method, transactionId, screenshotUrl, notes } = await req.json();
+
+    if (!tenantId && rentRecordId) {
+      const rec = await prisma.rentRecord.findUnique({ where: { id: rentRecordId } });
+      if (rec) {
+        tenantId = rec.tenantId;
+        if (!amount) {
+          amount = rec.totalAmount - rec.amountPaid;
+        }
+      }
+    }
 
     if (!tenantId || !amount) {
       return NextResponse.json({ error: "Tenant and amount are required" }, { status: 400 });

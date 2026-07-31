@@ -22,6 +22,7 @@ export const authConfig = {
         pathname.startsWith("/forgot-password") ||
         pathname.startsWith("/request-maintenance") ||
         pathname.startsWith("/maintenance-request") ||
+        pathname.startsWith("/pay-rent") ||
         pathname.startsWith("/api/public") ||
         pathname.startsWith("/api/auth") ||
         pathname.startsWith("/api/chat") ||
