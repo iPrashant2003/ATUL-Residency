@@ -765,136 +765,200 @@ export default function RoomsPage() {
                     )}
                   </div>
 
-                  {/* ── Row 4: Actions ── */}
+                  {/* ── Systematic Actions (Structured like Renter Cards) ── */}
                   <div style={{
-                    padding: "14px 16px",
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    flexDirection: "column",
                     gap: "8px",
+                    padding: "14px 16px 16px 16px",
                     borderTop: "1px solid rgba(226,232,240,0.06)",
                     marginTop: "auto",
+                    background: "rgba(15, 23, 42, 0.4)",
                   }}>
                     {hasRenter ? (
-                      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", flex: 1 }}>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setUploadPaymentRenter({
-                              id: room.tenant!.id,
-                              name: room.tenant!.name,
-                              phone: room.tenant!.phone,
-                              rentAmount: room.tenant!.rentAmount,
-                              room: { number: room.number, tower: { name: room.tower.name } },
-                              rentRecords: room.tenant!.rentRecords,
-                            });
-                          }}
-                          style={{
-                            height: "32px",
-                            padding: "0 10px",
-                            borderRadius: "8px",
-                            background: "linear-gradient(135deg, rgba(20,184,166,0.2) 0%, rgba(13,148,136,0.15) 100%)",
-                            border: "1px solid rgba(20,184,166,0.4)",
-                            cursor: "pointer",
-                            color: "#2dd4bf",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "4px",
-                            fontSize: "11.5px",
-                            fontWeight: 700,
-                          }}
-                          title="Upload Payment Screenshot for Renter"
-                        >
-                          <CreditCard size={13} /> Pay Rent
-                        </button>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setHistoryTenant({
-                              id: room.tenant!.id,
-                              name: room.tenant!.name,
-                              roomNumber: room.number,
-                              towerName: room.tower.name,
-                            });
-                          }}
-                          style={{
-                            height: "32px",
-                            padding: "0 10px",
-                            borderRadius: "8px",
-                            background: "linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(99,102,241,0.15) 100%)",
-                            border: "1px solid rgba(139,92,246,0.35)",
-                            cursor: "pointer",
-                            color: "#c4b5fd",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "4px",
-                            fontSize: "11.5px",
-                            fontWeight: 700,
-                          }}
-                          title="View 1-Year Payment History"
-                        >
-                          <History size={13} /> 1-Yr History
-                        </button>
-
-                        {latestRecord && (
+                      <>
+                        {/* Tier 1: 2-Column Equal Grid */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                           <button
-                            onClick={(e) => { e.stopPropagation(); handleSendInvoice(e, latestRecord.id, room.id); }}
-                            disabled={sendingInvoice === room.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setUploadPaymentRenter({
+                                id: room.tenant!.id,
+                                name: room.tenant!.name,
+                                phone: room.tenant!.phone,
+                                rentAmount: room.tenant!.rentAmount,
+                                room: { number: room.number, tower: { name: room.tower.name } },
+                                rentRecords: room.tenant!.rentRecords,
+                              });
+                            }}
                             style={{
-                              height: "32px",
-                              padding: "0 10px",
-                              borderRadius: "8px",
-                              background: "linear-gradient(135deg, rgba(37,211,102,0.15) 0%, rgba(16,185,129,0.1) 100%)",
-                              border: "1px solid rgba(37,211,102,0.35)",
-                              cursor: sendingInvoice === room.id ? "not-allowed" : "pointer",
-                              color: "#4ade80",
+                              height: "36px",
+                              borderRadius: "10px",
+                              background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(13,148,136,0.1) 100%)",
+                              border: "1px solid rgba(20,184,166,0.3)",
+                              cursor: "pointer",
+                              color: "#14B8A6",
                               display: "flex",
                               alignItems: "center",
-                              gap: "4px",
-                              fontSize: "11.5px",
+                              justifyContent: "center",
+                              gap: "6px",
+                              fontSize: "12.5px",
                               fontWeight: 700,
-                              opacity: sendingInvoice === room.id ? 0.6 : 1,
+                              transition: "all 0.2s ease",
                             }}
-                            title="Send Bill Reminder via WhatsApp"
+                            title="Upload Payment Screenshot for Renter"
                           >
-                            {sendingInvoice === room.id ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />} Send Bill
+                            <CreditCard size={14} /> Pay Rent
                           </button>
-                        )}
-                      </div>
-                    ) : (
-                      <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.3)" }}>Vacant Room</span>
-                    )}
 
-                    {/* Edit / Delete icons */}
-                    <div style={{ display: "flex", gap: "4px", marginLeft: "auto" }}>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setModal({ open: true, room }); }}
-                        style={{
-                          width: "30px", height: "30px", borderRadius: "8px",
-                          background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)",
-                          cursor: "pointer", color: "#a78bfa",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                        }}
-                        title="Edit Room"
-                      >
-                        <Edit size={13} />
-                      </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); deleteRoom(room.id, room.number); }}
-                        disabled={room.isOccupied}
-                        style={{
-                          width: "30px", height: "30px", borderRadius: "8px",
-                          background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.12)",
-                          cursor: room.isOccupied ? "not-allowed" : "pointer",
-                          color: "rgba(239,68,68,0.5)", opacity: room.isOccupied ? 0.3 : 1,
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                        }}
-                        title={room.isOccupied ? "Cannot delete occupied room" : "Delete"}
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setHistoryTenant({
+                                id: room.tenant!.id,
+                                name: room.tenant!.name,
+                                roomNumber: room.number,
+                                towerName: room.tower.name,
+                              });
+                            }}
+                            style={{
+                              height: "36px",
+                              borderRadius: "10px",
+                              background: "rgba(139,92,246,0.12)",
+                              border: "1px solid rgba(139,92,246,0.25)",
+                              cursor: "pointer",
+                              color: "#a78bfa",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "6px",
+                              fontSize: "12.5px",
+                              fontWeight: 700,
+                              transition: "all 0.2s ease",
+                            }}
+                            title="View 1-Year Payment History"
+                          >
+                            <History size={14} /> 1-Yr History
+                          </button>
+                        </div>
+
+                        {/* Tier 2: Full-Width WhatsApp Bill Action & Admin Controls */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          {latestRecord ? (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleSendInvoice(e, latestRecord.id, room.id); }}
+                              disabled={sendingInvoice === room.id}
+                              style={{
+                                flex: 1,
+                                height: "36px",
+                                borderRadius: "10px",
+                                background: "rgba(37,211,102,0.1)",
+                                border: "1px solid rgba(37,211,102,0.25)",
+                                cursor: sendingInvoice === room.id ? "not-allowed" : "pointer",
+                                color: "#4ade80",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "6px",
+                                fontSize: "12.5px",
+                                fontWeight: 700,
+                                transition: "all 0.2s ease",
+                                opacity: sendingInvoice === room.id ? 0.6 : 1,
+                              }}
+                              title="Send Bill Reminder via WhatsApp"
+                            >
+                              {sendingInvoice === room.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />} Send Bill
+                            </button>
+                          ) : (
+                            <div style={{ flex: 1 }} />
+                          )}
+
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setModal({ open: true, room }); }}
+                            style={{
+                              height: "36px",
+                              width: "36px",
+                              borderRadius: "10px",
+                              background: "rgba(139,92,246,0.1)",
+                              border: "1px solid rgba(139,92,246,0.2)",
+                              cursor: "pointer",
+                              color: "#a78bfa",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexShrink: 0,
+                            }}
+                            title="Edit Room"
+                          >
+                            <Edit size={14} />
+                          </button>
+
+                          <button
+                            onClick={(e) => { e.stopPropagation(); deleteRoom(room.id, room.number); }}
+                            disabled={room.isOccupied}
+                            style={{
+                              height: "36px",
+                              width: "36px",
+                              borderRadius: "10px",
+                              background: "rgba(239,68,68,0.06)",
+                              border: "1px solid rgba(239,68,68,0.12)",
+                              cursor: room.isOccupied ? "not-allowed" : "pointer",
+                              color: "rgba(239,68,68,0.5)",
+                              opacity: room.isOccupied ? 0.3 : 1,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexShrink: 0,
+                            }}
+                            title={room.isOccupied ? "Cannot delete occupied room" : "Delete"}
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.3)" }}>Vacant Room</span>
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setModal({ open: true, room }); }}
+                            style={{
+                              height: "36px",
+                              width: "36px",
+                              borderRadius: "10px",
+                              background: "rgba(139,92,246,0.1)",
+                              border: "1px solid rgba(139,92,246,0.2)",
+                              cursor: "pointer",
+                              color: "#a78bfa",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                            title="Edit Room"
+                          >
+                            <Edit size={14} />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); deleteRoom(room.id, room.number); }}
+                            style={{
+                              height: "36px",
+                              width: "36px",
+                              borderRadius: "10px",
+                              background: "rgba(239,68,68,0.08)",
+                              border: "1px solid rgba(239,68,68,0.2)",
+                              cursor: "pointer",
+                              color: "#f87171",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                            title="Delete Room"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
