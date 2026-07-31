@@ -8,11 +8,13 @@ import {
   Building2, Home, Calendar, Shield, Trash2, ChevronRight,
   IndianRupee, CreditCard, FileText, Filter, UserCheck,
   AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle, Zap,
-  Archive, RotateCcw, Clock,
+  Archive, RotateCcw, Clock, History, FileCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getRentStatusColor, formatDate } from "@/lib/utils";
 import ImageUpload from "@/components/ui/ImageUpload";
+import ManualPaymentModal from "@/components/admin/ManualPaymentModal";
+import RenterHistoryModal from "@/components/admin/RenterHistoryModal";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -411,10 +413,14 @@ function RenterDetailModal({
   tenant: renter,
   onClose,
   onDeleted,
+  onUploadPayment,
+  onViewHistory,
 }: {
   tenant: Renter;
   onClose: () => void;
   onDeleted: () => void;
+  onUploadPayment: () => void;
+  onViewHistory: () => void;
 }) {
   const [deleting, setDeleting] = useState(false);
   const [resettingPwd, setResettingPwd] = useState(false);
@@ -626,6 +632,42 @@ function RenterDetailModal({
                 )}
               </div>
 
+              {/* Quick Actions Strip */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
+                <button
+                  onClick={() => {
+                    onClose();
+                    onUploadPayment();
+                  }}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                    padding: "11px", borderRadius: "10px",
+                    background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(13,148,136,0.1) 100%)",
+                    border: "1px solid rgba(20,184,166,0.3)",
+                    color: "#14B8A6", fontSize: "13px", fontWeight: 700, cursor: "pointer",
+                  }}
+                >
+                  <CreditCard size={15} />
+                  Upload Payment
+                </button>
+
+                <button
+                  onClick={() => {
+                    onClose();
+                    onViewHistory();
+                  }}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                    padding: "11px", borderRadius: "10px",
+                    background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.25)",
+                    color: "#a78bfa", fontSize: "13px", fontWeight: 700, cursor: "pointer",
+                  }}
+                >
+                  <History size={15} />
+                  1-Year History
+                </button>
+              </div>
+
               {/* WhatsApp quick action */}
               <div style={{ marginBottom: "20px" }}>
                 <a
@@ -723,11 +765,15 @@ function RenterCard({
   onClick,
   onAddBill,
   onViewPhoto,
+  onUploadPayment,
+  onViewHistory,
 }: {
   tenant: Renter;
   onClick: () => void;
   onAddBill: () => void;
   onViewPhoto: (url: string) => void;
+  onUploadPayment: () => void;
+  onViewHistory: () => void;
 }) {
   const [sending, setSending] = useState(false);
 
@@ -923,51 +969,87 @@ function RenterCard({
         </div>
 
         {/* Actions row */}
-        <div style={{ display: "flex", gap: "8px" }}>
-          {/* Add Bill */}
-          <button
-            onClick={(e) => { e.stopPropagation(); onAddBill(); }}
-            style={{
-              flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
-              padding: "9px", borderRadius: "10px",
-              background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)",
-              color: "#60a5fa", fontSize: "12px", fontWeight: 600, cursor: "pointer",
-              transition: "background 0.2s"
-            }}
-          >
-            <Plus size={13} />
-            Bill
-          </button>
-          
-          {/* Send Invoice */}
-          <button
-            onClick={handleSendInvoice}
-            disabled={sending}
-            style={{
-              flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
-              padding: "9px", borderRadius: "10px",
-              background: "rgba(37,211,102,0.09)", border: "1px solid rgba(37,211,102,0.2)",
-              color: "#4ade80", fontSize: "12px", fontWeight: 600, cursor: sending ? "not-allowed" : "pointer",
-              transition: "background 0.2s", opacity: sending ? 0.7 : 1
-            }}
-          >
-            {sending ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
-            Send Bill
-          </button>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {/* Upload Payment Button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onUploadPayment(); }}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+                padding: "8px 10px", borderRadius: "10px",
+                background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(13,148,136,0.1) 100%)",
+                border: "1px solid rgba(20,184,166,0.3)",
+                color: "#14B8A6", fontSize: "12px", fontWeight: 700, cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+              title="Upload Payment Screenshot for Renter"
+            >
+              <CreditCard size={13} />
+              Upload Payment
+            </button>
 
-          {/* View details */}
-          <button
-            onClick={onClick}
-            style={{
-              flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
-              padding: "9px", borderRadius: "10px",
-              background: isTowerA ? "rgba(139,92,246,0.1)" : "rgba(6,182,212,0.1)", border: `1px solid ${isTowerA ? "rgba(139,92,246,0.2)" : "rgba(6,182,212,0.2)"}`,
-              color: isTowerA ? "#a78bfa" : "#22d3ee", fontSize: "12px", fontWeight: 600, cursor: "pointer",
-            }}
-          >
-            <Eye size={13} />
-            Details
-          </button>
+            {/* 1-Yr History Button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onViewHistory(); }}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+                padding: "8px 10px", borderRadius: "10px",
+                background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.25)",
+                color: "#a78bfa", fontSize: "12px", fontWeight: 700, cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+              title="View 1-Year Payment & Rent History"
+            >
+              <History size={13} />
+              1-Yr History
+            </button>
+          </div>
+
+          <div style={{ display: "flex", gap: "8px" }}>
+            {/* Add Bill */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onAddBill(); }}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+                padding: "7px", borderRadius: "8px",
+                background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.2)",
+                color: "#60a5fa", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
+              }}
+            >
+              <Plus size={12} />
+              Bill
+            </button>
+            
+            {/* Send Invoice */}
+            <button
+              onClick={handleSendInvoice}
+              disabled={sending}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+                padding: "7px", borderRadius: "8px",
+                background: "rgba(37,211,102,0.08)", border: "1px solid rgba(37,211,102,0.2)",
+                color: "#4ade80", fontSize: "11.5px", fontWeight: 600, cursor: sending ? "not-allowed" : "pointer",
+                opacity: sending ? 0.7 : 1
+              }}
+            >
+              {sending ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
+              Send Bill
+            </button>
+
+            {/* View details */}
+            <button
+              onClick={onClick}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+                padding: "7px", borderRadius: "8px",
+                background: isTowerA ? "rgba(139,92,246,0.08)" : "rgba(6,182,212,0.08)", border: `1px solid ${isTowerA ? "rgba(139,92,246,0.2)" : "rgba(6,182,212,0.2)"}`,
+                color: isTowerA ? "#a78bfa" : "#22d3ee", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
+              }}
+            >
+              <Eye size={12} />
+              Details
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -985,6 +1067,8 @@ export default function RentersPage() {
   const [filterTower, setFilterTower] = useState("all");
   const [showAdd, setShowAdd] = useState(false);
   const [selectedRenter, setSelectedRenter] = useState<Renter | null>(null);
+  const [uploadPaymentRenter, setUploadPaymentRenter] = useState<Renter | null>(null);
+  const [historyTenant, setHistoryTenant] = useState<{ id: string; name: string; roomNumber?: string; towerName?: string } | null>(null);
   const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [archivedRenters, setArchivedRenters] = useState<any[]>([]);
@@ -1242,6 +1326,15 @@ export default function RentersPage() {
                         onClick={() => setSelectedRenter(renterVal)}
                         onAddBill={() => router.push(`/admin/rent?addBillFor=${renterVal.id}`)}
                         onViewPhoto={(url) => setActivePhotoUrl(url)}
+                        onUploadPayment={() => setUploadPaymentRenter(renterVal)}
+                        onViewHistory={() =>
+                          setHistoryTenant({
+                            id: renterVal.id,
+                            name: renterVal.name,
+                            roomNumber: renterVal.room?.number,
+                            towerName: renterVal.room?.tower?.name,
+                          })
+                        }
                       />
                     </div>
                   ))}
@@ -1425,6 +1518,44 @@ export default function RentersPage() {
           tenant={selectedRenter}
           onClose={() => setSelectedRenter(null)}
           onDeleted={fetchData}
+          onUploadPayment={() => {
+            setUploadPaymentRenter(selectedRenter);
+          }}
+          onViewHistory={() => {
+            setHistoryTenant({
+              id: selectedRenter.id,
+              name: selectedRenter.name,
+              roomNumber: selectedRenter.room?.number,
+              towerName: selectedRenter.room?.tower?.name,
+            });
+          }}
+        />
+      )}
+
+      {uploadPaymentRenter && (
+        <ManualPaymentModal
+          tenant={uploadPaymentRenter}
+          onClose={() => setUploadPaymentRenter(null)}
+          onSuccess={() => {
+            fetchData();
+            if (selectedRenter?.id === uploadPaymentRenter.id) {
+              setSelectedRenter(null);
+            }
+          }}
+        />
+      )}
+
+      {historyTenant && (
+        <RenterHistoryModal
+          tenantId={historyTenant.id}
+          tenantName={historyTenant.name}
+          roomNumber={historyTenant.roomNumber}
+          towerName={historyTenant.towerName}
+          onClose={() => setHistoryTenant(null)}
+          onOpenUploadModal={() => {
+            const match = renters.find((r) => r.id === historyTenant.id);
+            if (match) setUploadPaymentRenter(match);
+          }}
         />
       )}
 
