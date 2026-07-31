@@ -51,7 +51,7 @@ function MaintenanceRequestForm() {
   const [loadingRooms, setLoadingRooms] = useState(true);
 
   // Step state
-  const [selectedTower, setSelectedTower] = useState<string>("ALL");
+  const [selectedTower, setSelectedTower] = useState<string>("Tower A");
   const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("PLUMBING");
   const [title, setTitle] = useState("");
@@ -443,39 +443,45 @@ function MaintenanceRequestForm() {
               gap: "22px",
             }}
           >
-            {/* 1. STEP 1: Tower Selection */}
+            {/* 1. STEP 1: Tower Selection (Two Dedicated Cards) */}
             <div>
               <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13.5px", fontWeight: 700, color: "#2dd4bf", marginBottom: "10px" }}>
-                <Building2 size={16} /> 1. Select Tower First *
+                <Building2 size={16} /> 1. Select Tower *
               </label>
-              <div style={{ display: "flex", gap: "10px" }}>
-                {["ALL", ...towers].map((tw) => {
-                  const isSel = selectedTower === tw;
-                  const label = tw === "ALL" ? "🏢 All Towers" : `🏢 ${tw}`;
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
+                {[
+                  { name: "Tower A", count: allRooms.filter((r) => r.towerName.toLowerCase().includes("a")).length, icon: "🏢" },
+                  { name: "Tower B", count: allRooms.filter((r) => r.towerName.toLowerCase().includes("b")).length, icon: "🏢" },
+                ].map((t) => {
+                  const isSel = selectedTower.toLowerCase().includes(t.name.slice(-1).toLowerCase());
                   return (
-                    <button
-                      key={tw}
-                      type="button"
+                    <div
+                      key={t.name}
                       onClick={() => {
-                        setSelectedTower(tw);
+                        setSelectedTower(t.name);
                         setSelectedRoomId(""); // Reset room selection on tower change
                       }}
                       style={{
-                        flex: 1,
-                        padding: "12px 14px",
-                        borderRadius: "14px",
-                        background: isSel ? "linear-gradient(135deg, rgba(20, 184, 166, 0.3), rgba(6, 182, 212, 0.25))" : "rgba(30, 41, 59, 0.6)",
+                        padding: "16px 14px",
+                        borderRadius: "18px",
+                        background: isSel
+                          ? "linear-gradient(135deg, rgba(20, 184, 166, 0.3) 0%, rgba(6, 182, 212, 0.25) 100%)"
+                          : "rgba(30, 41, 59, 0.6)",
                         border: isSel ? "1.5px solid #14b8a6" : "1px solid rgba(255, 255, 255, 0.1)",
-                        color: isSel ? "#2dd4bf" : "#94a3b8",
-                        fontWeight: 700,
-                        fontSize: "13.5px",
                         cursor: "pointer",
-                        boxShadow: isSel ? "0 0 15px rgba(20, 184, 166, 0.25)" : "none",
+                        textAlign: "center",
+                        boxShadow: isSel ? "0 0 20px rgba(20, 184, 166, 0.3)" : "none",
                         transition: "all 0.2s ease",
                       }}
                     >
-                      {label}
-                    </button>
+                      <div style={{ fontSize: "24px", marginBottom: "4px" }}>{t.icon}</div>
+                      <div style={{ fontSize: "16px", fontWeight: 800, color: isSel ? "#2dd4bf" : "#f8fafc" }}>
+                        {t.name}
+                      </div>
+                      <div style={{ fontSize: "12px", color: isSel ? "#99f6e4" : "#94a3b8", marginTop: "2px" }}>
+                        {t.count} Occupied Rooms
+                      </div>
+                    </div>
                   );
                 })}
               </div>
