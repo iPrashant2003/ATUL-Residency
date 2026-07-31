@@ -20,6 +20,9 @@ export const authConfig = {
         pathname.startsWith("/login") ||
         pathname.startsWith("/register") ||
         pathname.startsWith("/forgot-password") ||
+        pathname.startsWith("/request-maintenance") ||
+        pathname.startsWith("/maintenance-request") ||
+        pathname.startsWith("/api/public") ||
         pathname.startsWith("/api/auth") ||
         pathname.startsWith("/api/chat") ||
         pathname.startsWith("/api/public-stats") ||
