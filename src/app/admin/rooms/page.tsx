@@ -808,7 +808,7 @@ export default function RoomsPage() {
                             }}
                             title="Upload Payment Screenshot for Renter"
                           >
-                            <CreditCard size={14} /> Pay Rent
+                            <CreditCard size={14} /> Upload Payment
                           </button>
 
                           <button
