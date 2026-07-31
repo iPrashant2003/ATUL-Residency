@@ -760,141 +760,131 @@ export default function RoomsPage() {
                                  <Camera size={13} />
                                </button>
                              )}
-                           </div>
+                          </div>
                        </div>
                     )}
                   </div>
 
                   {/* ── Row 4: Actions ── */}
                   <div style={{
-                    padding: "16px 20px",
+                    padding: "14px 16px",
                     display: "flex",
-                    justifyContent: "flex-end",
                     alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "8px",
+                    borderTop: "1px solid rgba(226,232,240,0.06)",
                     marginTop: "auto",
                   }}>
-                    <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                      {hasRenter && (
-                        <>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setUploadPaymentRenter({
-                                id: room.tenant!.id,
-                                name: room.tenant!.name,
-                                phone: room.tenant!.phone,
-                                rentAmount: room.tenant!.rentAmount,
-                                room: { number: room.number, tower: { name: room.tower.name } },
-                                rentRecords: room.tenant!.rentRecords,
-                              });
-                            }}
-                            style={{
-                              height: "32px", padding: "0 10px", borderRadius: "8px",
-                              background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(13,148,136,0.1) 100%)",
-                              border: "1px solid rgba(20,184,166,0.3)",
-                              cursor: "pointer", color: "#14B8A6",
-                              display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
-                              fontSize: "11.5px", fontWeight: 700, transition: "all 0.2s",
-                            }}
-                            title="Upload Payment Screenshot for Renter"
-                          >
-                            <CreditCard size={13} /> Pay
-                          </button>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedQrRoom({ number: room.number, towerName: room.tower.name });
-                            }}
-                            style={{
-                              height: "32px", padding: "0 10px", borderRadius: "8px",
-                              background: "rgba(6,182,212,0.12)", border: "1px solid rgba(6,182,212,0.25)",
-                              cursor: "pointer", color: "#22d3ee",
-                              display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
-                              fontSize: "11.5px", fontWeight: 700, transition: "all 0.2s",
-                            }}
-                            title="View / Download Room Maintenance QR Code"
-                          >
-                            <QrCode size={13} /> QR
-                          </button>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setHistoryTenant({
-                                id: room.tenant!.id,
-                                name: room.tenant!.name,
-                                roomNumber: room.number,
-                                towerName: room.tower.name,
-                              });
-                            }}
-                            style={{
-                              height: "32px", padding: "0 10px", borderRadius: "8px",
-                              background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.25)",
-                              cursor: "pointer", color: "#a78bfa",
-                              display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
-                              fontSize: "11.5px", fontWeight: 700, transition: "all 0.2s",
-                            }}
-                            title="View 1-Year Payment History"
-                          >
-                            <History size={13} /> History
-                          </button>
-                        </>
-                      )}
-                      {hasRenter && latestRecord && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleSendInvoice(e, latestRecord.id, room.id); }}
-                          disabled={sendingInvoice === room.id}
-                          style={{
-                            height: "32px", padding: "0 10px", borderRadius: "8px",
-                            background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.25)",
-                            cursor: sendingInvoice === room.id ? "not-allowed" : "pointer", color: "#4ade80",
-                            display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
-                            fontSize: "11.5px", fontWeight: 700,
-                            transition: "all 0.2s", opacity: sendingInvoice === room.id ? 0.6 : 1
-                          }}
-                          title="Send Bill Reminder via WhatsApp"
-                        >
-                          {sendingInvoice === room.id ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} strokeWidth={2.5} />} Bill
-                        </button>
-                      )}
-                      {hasRenter && (
+                    {hasRenter ? (
+                      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", flex: 1 }}>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            router.push(`/admin/tenants?search=${encodeURIComponent(room.number)}`);
+                            setUploadPaymentRenter({
+                              id: room.tenant!.id,
+                              name: room.tenant!.name,
+                              phone: room.tenant!.phone,
+                              rentAmount: room.tenant!.rentAmount,
+                              room: { number: room.number, tower: { name: room.tower.name } },
+                              rentRecords: room.tenant!.rentRecords,
+                            });
                           }}
                           style={{
-                            height: "32px", padding: "0 10px", borderRadius: "8px",
-                            background: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(52,211,153,0.1))",
-                            border: "1px solid rgba(16,185,129,0.3)",
-                            cursor: "pointer", color: "#34d399",
-                            display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
-                            fontSize: "11.5px", fontWeight: 700,
-                            transition: "all 0.2s",
+                            height: "32px",
+                            padding: "0 10px",
+                            borderRadius: "8px",
+                            background: "linear-gradient(135deg, rgba(20,184,166,0.2) 0%, rgba(13,148,136,0.15) 100%)",
+                            border: "1px solid rgba(20,184,166,0.4)",
+                            cursor: "pointer",
+                            color: "#2dd4bf",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            fontSize: "11.5px",
+                            fontWeight: 700,
                           }}
-                          title="View Renter Details"
+                          title="Upload Payment Screenshot for Renter"
                         >
-                          <User size={13} strokeWidth={2.5} /> Renter
+                          <CreditCard size={13} /> Pay Rent
                         </button>
-                      )}
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setHistoryTenant({
+                              id: room.tenant!.id,
+                              name: room.tenant!.name,
+                              roomNumber: room.number,
+                              towerName: room.tower.name,
+                            });
+                          }}
+                          style={{
+                            height: "32px",
+                            padding: "0 10px",
+                            borderRadius: "8px",
+                            background: "linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(99,102,241,0.15) 100%)",
+                            border: "1px solid rgba(139,92,246,0.35)",
+                            cursor: "pointer",
+                            color: "#c4b5fd",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            fontSize: "11.5px",
+                            fontWeight: 700,
+                          }}
+                          title="View 1-Year Payment History"
+                        >
+                          <History size={13} /> 1-Yr History
+                        </button>
+
+                        {latestRecord && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleSendInvoice(e, latestRecord.id, room.id); }}
+                            disabled={sendingInvoice === room.id}
+                            style={{
+                              height: "32px",
+                              padding: "0 10px",
+                              borderRadius: "8px",
+                              background: "linear-gradient(135deg, rgba(37,211,102,0.15) 0%, rgba(16,185,129,0.1) 100%)",
+                              border: "1px solid rgba(37,211,102,0.35)",
+                              cursor: sendingInvoice === room.id ? "not-allowed" : "pointer",
+                              color: "#4ade80",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              fontSize: "11.5px",
+                              fontWeight: 700,
+                              opacity: sendingInvoice === room.id ? 0.6 : 1,
+                            }}
+                            title="Send Bill Reminder via WhatsApp"
+                          >
+                            {sendingInvoice === room.id ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />} Send Bill
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.3)" }}>Vacant Room</span>
+                    )}
+
+                    {/* Edit / Delete icons */}
+                    <div style={{ display: "flex", gap: "4px", marginLeft: "auto" }}>
                       <button
                         onClick={(e) => { e.stopPropagation(); setModal({ open: true, room }); }}
                         style={{
-                          width: "32px", height: "32px", borderRadius: "8px",
+                          width: "30px", height: "30px", borderRadius: "8px",
                           background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)",
                           cursor: "pointer", color: "#a78bfa",
                           display: "flex", alignItems: "center", justifyContent: "center",
                         }}
                         title="Edit Room"
                       >
-                        <Edit size={14} />
+                        <Edit size={13} />
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); deleteRoom(room.id, room.number); }}
                         disabled={room.isOccupied}
                         style={{
-                          width: "32px", height: "32px", borderRadius: "8px",
+                          width: "30px", height: "30px", borderRadius: "8px",
                           background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.12)",
                           cursor: room.isOccupied ? "not-allowed" : "pointer",
                           color: "rgba(239,68,68,0.5)", opacity: room.isOccupied ? 0.3 : 1,
@@ -902,7 +892,7 @@ export default function RoomsPage() {
                         }}
                         title={room.isOccupied ? "Cannot delete occupied room" : "Delete"}
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={13} />
                       </button>
                     </div>
                   </div>
