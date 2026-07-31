@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { getMonthName } from "@/lib/utils";
 import QRCode from "qrcode";
 import os from "os";
+import { generateInvoicePdfBuffer } from "@/app/api/rent/[id]/invoice/route";
 
 function getLanIp(): string {
   const interfaces = os.networkInterfaces();
@@ -30,7 +31,13 @@ export async function POST(req: NextRequest) {
       // Fetch specific record
       const record = await prisma.rentRecord.findUnique({
         where: { id: rentRecordId },
-        include: { tenant: true },
+        include: {
+          tenant: {
+            include: {
+              room: { include: { tower: true } },
+            },
+          },
+        },
       });
 
       if (!record || !record.tenant.whatsapp) {
@@ -57,14 +64,23 @@ export async function POST(req: NextRequest) {
 
       const isPaid = record.status === "PAID" || record.status === "ADVANCE_PAID";
       let msg = "";
-      let qrDataUri = null;
+      let pdfBase64: string | null = null;
+      let qrDataUri: string | null = null;
 
       if (isPaid) {
-        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 Your detailed PDF receipt is attached to this message.\n\n🙏 Thank you for being a valued resident!`;
       } else {
-        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
-        const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
-        qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+        msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *PDF invoice attached* — open it and tap *PAY NOW* to pay instantly!\n\n🙏 Thank you!`;
+
+        // Generate PDF with Pay Now button
+        try {
+          const pdfBuffer = await generateInvoicePdfBuffer(record);
+          pdfBase64 = `data:application/pdf;base64,${pdfBuffer.toString("base64")}`;
+        } catch (pdfErr) {
+          console.error("PDF generation failed, falling back to QR:", pdfErr);
+          const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
+          qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+        }
       }
 
       try {
@@ -72,7 +88,7 @@ export async function POST(req: NextRequest) {
           data: {
             number: record.tenant.whatsapp,
             message: msg,
-            mediaBase64: qrDataUri,
+            mediaBase64: pdfBase64 ?? qrDataUri,
             status: "PENDING",
           }
         });
@@ -93,7 +109,13 @@ export async function POST(req: NextRequest) {
           ...(month && { month: parseInt(month) }),
           ...(year && { year: parseInt(year) })
         },
-        include: { tenant: true },
+        include: {
+          tenant: {
+            include: {
+              room: { include: { tower: true } },
+            },
+          },
+        },
       });
 
       if (records.length === 0) {
@@ -123,14 +145,22 @@ export async function POST(req: NextRequest) {
 
         const isPaid = record.status === "PAID" || record.status === "ADVANCE_PAID";
         let msg = "";
-        let qrDataUri = null;
+        let pdfBase64: string | null = null;
+        let qrDataUri: string | null = null;
 
         if (isPaid) {
-          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 *View & Download PDF Receipt*:\n${invoiceUrl}\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
+          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your *Payment Receipt* for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Amount Paid*: ₹${record.totalAmount.toLocaleString('en-IN')}\n✅ *Status*: PAID / Verified\n-------------------------------\n\n📄 Your detailed PDF receipt is attached.\n\n🙏 Thank you!`;
         } else {
-          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your detailed rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *View & Download PDF Invoice*:\n${invoiceUrl}\n\n💳 *Please pay via UPI*: atultiwari123321@oksbi\n*(Scan the QR code below to pay instantly)*\n\n💡 *Tip*: If the link is not clickable, please reply with "Ok" or save this contact.\n\n🙏 Thank you!`;
-          const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
-          qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+          msg = `🏢 *ATUL RESIDENCY* 🏢\n\n👤 Dear *${record.tenant.name}*,\n\nHere is your rent invoice for *${getMonthName(record.month)} ${record.year}*.\n\n${breakdown}-------------------------------\n💰 *Total Due*: ₹${balance.toLocaleString('en-IN')}\n-------------------------------\n\n⚠️ *Please Pay on time!* ⚠️\n\n📄 *PDF invoice attached* — open it and tap *PAY NOW* to pay instantly!\n\n🙏 Thank you!`;
+
+          try {
+            const pdfBuffer = await generateInvoicePdfBuffer(record);
+            pdfBase64 = `data:application/pdf;base64,${pdfBuffer.toString("base64")}`;
+          } catch (pdfErr) {
+            console.error("Bulk PDF generation failed for", record.tenant.name, "- falling back to QR");
+            const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
+            qrDataUri = await QRCode.toDataURL(upiString, { width: 400, margin: 2, color: { dark: '#0f172a' } });
+          }
         }
 
         try {
@@ -138,7 +168,7 @@ export async function POST(req: NextRequest) {
             data: {
               number: record.tenant.whatsapp,
               message: msg,
-              mediaBase64: qrDataUri,
+              mediaBase64: pdfBase64 ?? qrDataUri,
               status: "PENDING",
             }
           });

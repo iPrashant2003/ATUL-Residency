@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { Page, Text, View, Document, StyleSheet, renderToStream, Image, Svg, Path, Circle, Defs, LinearGradient, Stop } from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet, renderToStream, renderToBuffer, Image, Svg, Path, Circle, Defs, LinearGradient, Stop, Link } from "@react-pdf/renderer";
 import { formatCurrency, getMonthName, formatDateTime } from "@/lib/utils";
 import QRCode from "qrcode";
 import fs from "fs";
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   paymentDetails: {
     flexDirection: "column",
-    width: "70%",
+    width: "55%",
   },
   paymentTitle: {
     fontSize: 12,
@@ -248,14 +248,44 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   qrContainer: {
-    width: "30%",
+    width: "20%",
     alignItems: "flex-end",
   },
   qrCode: {
     width: 70,
     height: 70,
     borderRadius: 4,
-  }
+  },
+  payNowSection: {
+    width: "25%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 10,
+  },
+  payNowButton: {
+    backgroundColor: "#0f766e",
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    marginBottom: 6,
+    textDecoration: "none",
+  },
+  payNowButtonText: {
+    color: "#ffffff",
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+    letterSpacing: 0.5,
+  },
+  payNowSubText: {
+    fontSize: 7,
+    color: "#64748b",
+    textAlign: "center",
+    lineHeight: 1.4,
+  },
 });
 
 const PdfLogo = () => (
@@ -468,14 +498,14 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
             </View>
           )}
 
-          {/* Payment Section with QR Code */}
+          {/* Payment Section with QR Code + Pay Now Button */}
           <View style={styles.paymentSection}>
              <View style={styles.paymentDetails}>
                 <Text style={styles.paymentTitle}>{isPaid ? "Receipt Information" : "Payment Information"}</Text>
                 <Text style={styles.paymentText}>
                   {isPaid 
                     ? "This bill has been fully paid and verified. No further action is required." 
-                    : "Please scan the QR code to pay via UPI."}
+                    : "Scan QR or tap \"PAY NOW\" to pay instantly."}
                 </Text>
                 <Text style={styles.paymentText}>
                   {isPaid ? `Paid Date: ${record.paidDate ? formatDateTime(record.paidDate.toISOString()).split(" ")[0] : formatDateTime(record.updatedAt.toISOString()).split(" ")[0]}` : "UPI ID: atultiwari123321@oksbi"}
@@ -484,6 +514,8 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
                   {isPaid ? `Total Paid: ${formatCurrency(record.totalAmount)}` : `Amount Due: ${formatCurrency(balance)}`}
                 </Text>
              </View>
+
+             {/* UPI QR Code */}
              <View style={styles.qrContainer}>
                 {isPaid ? (
                   <View style={{ width: 70, height: 70, borderRadius: 4, borderWidth: 2, borderColor: "#10b981", alignItems: "center", justifyContent: "center", backgroundColor: "#e6fcf5" }}>
@@ -493,6 +525,19 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
                   <Image src={qrDataUri} style={styles.qrCode} />
                 )}
               </View>
+
+             {/* PAY NOW Button — only for unpaid invoices */}
+             {!isPaid && (
+               <View style={styles.payNowSection}>
+                 <Link
+                   src={`https://atul-residency.vercel.app/tenant/payments?rentRecordId=${record.id}&amount=${balance}&month=${record.month}&year=${record.year}`}
+                   style={styles.payNowButton}
+                 >
+                   <Text style={styles.payNowButtonText}>💳 PAY NOW</Text>
+                 </Link>
+                 <Text style={styles.payNowSubText}>Tap to open payment portal.{"\n"}Amount auto-filled.</Text>
+               </View>
+             )}
           </View>
         </View>
 
@@ -506,6 +551,43 @@ const InvoiceDocument = ({ record, qrDataUri, meterPhotoBase64 }: { record: any,
     </Document>
   );
 };
+
+/**
+ * Export a helper that returns the PDF as a Buffer for use in WhatsApp attachments.
+ * This is called server-side from /api/reminders.
+ */
+export async function generateInvoicePdfBuffer(record: any): Promise<Buffer> {
+  const balance = record.totalAmount - record.amountPaid;
+  const upiString = `upi://pay?pa=atultiwari123321@oksbi&pn=ATUL%20RESIDENCY&am=${balance}&cu=INR`;
+  const qrDataUri = await QRCode.toDataURL(upiString, { width: 300, margin: 1, color: { dark: '#0f172a' } });
+
+  let meterPhotoBase64 = null;
+  if (record.meterPhotoUrl) {
+    try {
+      if (record.meterPhotoUrl.startsWith("http")) {
+        const imgRes = await fetch(record.meterPhotoUrl);
+        if (imgRes.ok) {
+          const imgBuffer = await imgRes.arrayBuffer();
+          const contentType = imgRes.headers.get("content-type") || "image/jpeg";
+          meterPhotoBase64 = `data:${contentType};base64,${Buffer.from(imgBuffer).toString("base64")}`;
+        }
+      } else {
+        const filePath = path.join(process.cwd(), "public", record.meterPhotoUrl);
+        if (fs.existsSync(filePath)) {
+          const fileBuffer = fs.readFileSync(filePath);
+          const ext = path.extname(filePath).toLowerCase().replace(".", "");
+          const mimeType = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : "image/jpeg";
+          meterPhotoBase64 = `data:${mimeType};base64,${fileBuffer.toString("base64")}`;
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load meter photo for PDF buffer:", e);
+    }
+  }
+
+  const pdfBuffer = await renderToBuffer(<InvoiceDocument record={record} qrDataUri={qrDataUri} meterPhotoBase64={meterPhotoBase64} />);
+  return pdfBuffer;
+}
 
 export async function GET(
   req: NextRequest,

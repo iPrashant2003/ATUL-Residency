@@ -1,17 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import AppLayout from "@/components/layout/AppLayout";
-import { CreditCard, Upload, Loader2, CheckCircle, QrCode, Copy, X, AlertTriangle, Phone } from "lucide-react";
+import { CreditCard, Upload, Loader2, CheckCircle, QrCode, Copy, X, AlertTriangle, Phone, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import ImageUpload from "@/components/ui/ImageUpload";
 import { getMonthName, formatCurrency } from "@/lib/utils";
 
 export default function TenantPaymentsPage() {
+  return (
+    <Suspense fallback={<div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#14b8a6" }}>Loading...</div>}>
+      <TenantPaymentsInner />
+    </Suspense>
+  );
+}
+
+function TenantPaymentsInner() {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const [profileLoading, setProfileLoading] = useState(true);
   const [dbTenantId, setDbTenantId] = useState<string | null>(null);
+  const [invoicePrefilled, setInvoicePrefilled] = useState(false);
   
   const userId = (session?.user as any)?.id;
   const sessionTenantId = (session?.user as any)?.tenantId;
@@ -51,6 +62,20 @@ export default function TenantPaymentsPage() {
     notes: "",
     rentRecordId: "",
   });
+
+  // Pre-fill from PDF Pay Now link: ?rentRecordId=X&amount=Y&month=Z&year=W
+  useEffect(() => {
+    const paramAmount = searchParams.get("amount");
+    const paramRentRecordId = searchParams.get("rentRecordId");
+    if (paramAmount || paramRentRecordId) {
+      setForm((prev) => ({
+        ...prev,
+        amount: paramAmount || prev.amount,
+        rentRecordId: paramRentRecordId || prev.rentRecordId,
+      }));
+      setInvoicePrefilled(true);
+    }
+  }, [searchParams]);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showQR, setShowQR] = useState(false);
@@ -228,6 +253,25 @@ export default function TenantPaymentsPage() {
   return (
     <AppLayout role="TENANT" title="My Payments" subtitle="Pay rent and upload proof">
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+
+        {/* Invoice Pre-fill Banner */}
+        {invoicePrefilled && (
+          <div style={{
+            display: "flex", alignItems: "center", gap: "14px",
+            background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(20,184,166,0.06) 100%)",
+            border: "1px solid rgba(20,184,166,0.35)",
+            borderRadius: "14px", padding: "16px 20px", marginBottom: "20px",
+          }}>
+            <div style={{ width: "40px", height: "40px", background: "rgba(20,184,166,0.15)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <FileText size={20} color="#14B8A6" />
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, fontSize: "14px", color: "#14B8A6", marginBottom: "2px" }}>✅ Amount pre-filled from your invoice</p>
+              <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.55)", lineHeight: 1.5 }}>Your rent amount has been automatically filled in below. Just pay via UPI and upload the screenshot.</p>
+            </div>
+          </div>
+        )}
+
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "24px" }}>
           {/* UPI Card */}
           <div
