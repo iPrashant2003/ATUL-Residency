@@ -20,18 +20,11 @@ function LoginPageContent() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    // Clear cookies client-side if they are bloated (>2000 characters) or chunked to prevent 494 REQUEST_HEADER_TOO_LARGE.
-    // This wipes bloated session cookies from prior roles/sessions to make room for a fresh sign-in request.
-    if (typeof window !== "undefined" && (document.cookie.length > 2000 || document.cookie.includes("session-token."))) {
+    // Clear bloated chunked cookies (>3000 characters or containing session-token.0) to prevent header overflow
+    if (typeof window !== "undefined" && (document.cookie.length > 3000 || document.cookie.includes("session-token.0"))) {
       clearAllAuthCookies();
     }
   }, []);
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      clearAllAuthCookies();
-    }
-  }, [status]);
 
   useEffect(() => {
     if (status === "authenticated") {

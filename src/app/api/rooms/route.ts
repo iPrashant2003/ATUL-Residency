@@ -2,11 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
+import { ensureCurrentMonthRentRecords } from "@/lib/rent-utils";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const towerId = searchParams.get("towerId");
     const vacant = searchParams.get("vacant");
+
+    // Automatically ensure all active renters have a RentRecord for the current calendar month
+    await ensureCurrentMonthRentRecords();
 
     const whereClause: any = {};
     if (towerId) whereClause.towerId = towerId;
@@ -20,8 +25,8 @@ export async function GET(req: NextRequest) {
           include: {
             user: true,
             rentRecords: {
-              orderBy: { createdAt: "desc" },
-              take: 1,
+              orderBy: [{ year: "desc" }, { month: "desc" }],
+              take: 12,
             },
           },
         },

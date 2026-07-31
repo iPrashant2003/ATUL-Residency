@@ -3267,3 +3267,11 @@
 {"message":"🌐 Starting localtunnel to expose port 3001...\n","timestamp":"2026-06-13 19:33:00","type":"out","process_id":0,"app_name":"whatsapp-bot"}
 {"message":"[Tunnel Error] ^C\n","timestamp":"2026-06-13 19:33:03","type":"out","process_id":0,"app_name":"whatsapp-bot"}
 {"message":"\n❌ Localtunnel process exited with code 3221225786\n","timestamp":"2026-06-13 19:33:03","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"\n🟢 WhatsApp Bot Server running on port 3001\n","timestamp":"2026-06-23 10:30:35","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🧹 Killing stale Chrome/Chromium processes...\n","timestamp":"2026-06-23 10:30:35","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"\n🟢 WhatsApp Bot Server running on port 3001\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🧹 Killing stale Chrome/Chromium processes in background...\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"📱 Starting bot initialization...\n\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🤖 Initializing WhatsApp bot...\n🧹 Killing stale Chrome/Chromium processes in background...\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🔄 Starting queue polling (every 5s)...\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}
+{"message":"🌐 Establishing localtunnel programmatically...\n","timestamp":"2026-06-23 10:31:31","type":"out","process_id":0,"app_name":"whatsapp-bot"}

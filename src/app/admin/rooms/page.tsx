@@ -54,10 +54,24 @@ function numericSort(a: Room, b: Room): number {
 
 function getRentStatus(room: Room): "PAID" | "OVERDUE" | "PENDING" | "NONE" {
   if (!room.isOccupied || !room.tenant) return "NONE";
-  const rec = room.tenant.rentRecords?.[0];
-  if (!rec) return "PENDING";
-  if (rec.status === "PAID" || rec.status === "ADVANCE_PAID") return "PAID";
-  if (rec.status === "OVERDUE") return "OVERDUE";
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentYear = now.getFullYear();
+
+  const rec = room.tenant.rentRecords?.find(
+    (r) => r.month === currentMonth && r.year === currentYear
+  );
+
+  if (!rec) return now.getDate() > 5 ? "OVERDUE" : "PENDING";
+
+  if (rec.amountPaid >= rec.totalAmount && rec.totalAmount > 0) {
+    return "PAID";
+  }
+
+  if (rec.status === "OVERDUE" || (now.getDate() > 5 && rec.amountPaid < rec.totalAmount)) {
+    return "OVERDUE";
+  }
+
   return "PENDING";
 }
 

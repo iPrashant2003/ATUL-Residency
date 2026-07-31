@@ -803,14 +803,34 @@ function RenterCard({
   };
 
   const wa = renter.whatsapp || renter.phone;
-  const rentStatus = renter.latestRent?.status || "PENDING";
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentYear = now.getFullYear();
+
+  const currentRec = renter.rentRecords?.find(
+    (r) => r.month === currentMonth && r.year === currentYear
+  ) || renter.latestRent;
+
+  let rentStatus: string = "PENDING";
+  if (currentRec && currentRec.month === currentMonth && currentRec.year === currentYear) {
+    if (currentRec.amountPaid >= currentRec.totalAmount && currentRec.totalAmount > 0) {
+      rentStatus = "PAID";
+    } else if (currentRec.amountPaid > 0 && currentRec.amountPaid < currentRec.totalAmount) {
+      rentStatus = "PARTIAL";
+    } else {
+      rentStatus = (currentRec.status === "OVERDUE" || (now.getDate() > 5 && currentRec.amountPaid < currentRec.totalAmount)) ? "OVERDUE" : "PENDING";
+    }
+  } else {
+    rentStatus = now.getDate() > 5 ? "OVERDUE" : "PENDING";
+  }
+
   const statusColor = getRentStatusColor(rentStatus);
   const isTowerA = renter.room?.tower?.name?.toLowerCase().includes("a");
   
   // Dynamic color palette per tower for clean multi-color room styling
   const roomColor = isTowerA ? "#a78bfa" : "#22d3ee"; // Purple for A, Cyan for B
   const avatarCol = isTowerA ? "#8b5cf6" : "#06b6d4";
-  const latestRecord = renter.rentRecords?.[0] || renter.latestRent;
+  const latestRecord = currentRec || renter.rentRecords?.[0];
   console.log("RenterCard latestRecord debug for " + renter.name + ":", {
     rentRecordsCount: renter.rentRecords?.length,
     latestRecord,

@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
+import { ensureCurrentMonthRentRecords } from "@/lib/rent-utils";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const towerId = searchParams.get("towerId");
     const search = searchParams.get("search");
     const userId = searchParams.get("userId");
+
+    // Automatically ensure all active renters have a RentRecord for the current calendar month
+    await ensureCurrentMonthRentRecords();
+
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
 
     const tenants = await prisma.tenant.findMany({
       where: {
@@ -27,8 +36,8 @@ export async function GET(req: NextRequest) {
         user: true,
         room: { include: { tower: true } },
         rentRecords: {
-          orderBy: { createdAt: "desc" },
-          take: 3,
+          orderBy: [{ year: "desc" }, { month: "desc" }],
+          take: 12,
         },
         payments: {
           orderBy: { createdAt: "desc" },
@@ -41,10 +50,15 @@ export async function GET(req: NextRequest) {
       orderBy: { name: "asc" },
     });
 
-    const tenantsWithLatest = tenants.map((t) => ({
-      ...t,
-      latestRent: t.rentRecords?.[0] || null,
-    }));
+    const tenantsWithLatest = tenants.map((t) => {
+      const currentRec = t.rentRecords?.find(
+        (r) => r.month === currentMonth && r.year === currentYear
+      );
+      return {
+        ...t,
+        latestRent: currentRec || t.rentRecords?.[0] || null,
+      };
+    });
 
     return NextResponse.json(tenantsWithLatest, {
       headers: {
