@@ -84,6 +84,20 @@ function TenantPaymentsInner() {
     upiName: "Atul Tiwari",
   });
   const [pendingRecords, setPendingRecords] = useState<any[]>([]);
+  const [myPayments, setMyPayments] = useState<any[]>([]);
+  const [paymentsLoading, setPaymentsLoading] = useState(false);
+
+  const fetchMyPayments = async (tid: string) => {
+    setPaymentsLoading(true);
+    try {
+      const res = await fetch(`/api/payments?tenantId=${tid}`);
+      if (res.ok) {
+        const data = await res.json();
+        setMyPayments(Array.isArray(data) ? data : []);
+      }
+    } catch {}
+    finally { setPaymentsLoading(false); }
+  };
 
   useEffect(() => {
     if (!dbTenantId) return;
@@ -91,10 +105,8 @@ function TenantPaymentsInner() {
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          // Filter out fully paid ones just in case
           const pending = data.filter(r => r.status !== "PAID");
           setPendingRecords(pending);
-          // Auto-select and pre-fill the latest pending record if available
           if (pending.length > 0) {
             const latest = pending[0];
             const outstanding = latest.totalAmount - (latest.amountPaid || 0);
@@ -107,6 +119,8 @@ function TenantPaymentsInner() {
         }
       })
       .catch((err) => console.error("Error fetching pending rent records:", err));
+
+    fetchMyPayments(dbTenantId);
   }, [dbTenantId]);
 
   useEffect(() => {
@@ -171,6 +185,8 @@ function TenantPaymentsInner() {
       if (!res.ok) throw new Error();
       setSubmitted(true);
       toast.success("Payment submitted for verification! 🎉");
+      // Refresh payment history immediately after submission
+      fetchMyPayments(dbTenantId!);
     } catch {
       toast.error("Failed to submit payment. Please try again.");
     } finally {
@@ -521,6 +537,69 @@ function TenantPaymentsInner() {
               {loading ? "Submitting..." : "Submit Payment"}
             </button>
           </form>
+        </div>
+
+        {/* My Payment History */}
+        <div className="glass-card" style={{ padding: "28px", marginTop: "4px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
+            <h3 style={{ fontSize: "17px", fontWeight: 700, fontFamily: "var(--font-display)" }}>My Payment History</h3>
+            <button
+              onClick={() => dbTenantId && fetchMyPayments(dbTenantId)}
+              style={{ background: "transparent", border: "1px solid rgba(20,184,166,0.3)", borderRadius: "8px", padding: "6px 14px", cursor: "pointer", color: "#14B8A6", fontSize: "12px", fontWeight: 600 }}
+            >
+              ↻ Refresh
+            </button>
+          </div>
+
+          {paymentsLoading ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {[1,2,3].map(i => <div key={i} className="shimmer" style={{ height: "64px", borderRadius: "12px" }} />)}
+            </div>
+          ) : myPayments.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "32px 0", color: "rgba(226,232,240,0.35)", fontSize: "14px" }}>
+              No payments submitted yet
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {myPayments.map((p) => {
+                const statusMap: Record<string, { label: string; color: string; bg: string; border: string }> = {
+                  PENDING:  { label: "⏳ Under Review",  color: "#f59e0b", bg: "rgba(245,158,11,0.10)",  border: "rgba(245,158,11,0.25)"  },
+                  APPROVED: { label: "✅ Approved",       color: "#10b981", bg: "rgba(16,185,129,0.10)",  border: "rgba(16,185,129,0.25)"  },
+                  REJECTED: { label: "❌ Rejected",       color: "#ef4444", bg: "rgba(239,68,68,0.10)",   border: "rgba(239,68,68,0.25)"   },
+                };
+                const s = statusMap[p.status] || statusMap.PENDING;
+                const MONTHS = ["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                return (
+                  <div key={p.id} style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    background: s.bg, border: `1px solid ${s.border}`,
+                    borderRadius: "12px", padding: "14px 18px",
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                      <span style={{ fontWeight: 700, fontSize: "15px", color: "#e2e8f0" }}>
+                        ₹{p.amount.toLocaleString("en-IN")}
+                      </span>
+                      <span style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)" }}>
+                        {p.method} &nbsp;·&nbsp;
+                        {p.rentRecord ? `${MONTHS[p.rentRecord.month]} ${p.rentRecord.year}` : "Custom"} &nbsp;·&nbsp;
+                        {new Date(p.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+                      </span>
+                      {p.transactionId && (
+                        <span style={{ fontSize: "11px", color: "rgba(226,232,240,0.35)" }}>ID: {p.transactionId}</span>
+                      )}
+                    </div>
+                    <div style={{
+                      padding: "5px 14px", borderRadius: "100px",
+                      background: s.bg, border: `1px solid ${s.border}`,
+                      color: s.color, fontSize: "12px", fontWeight: 700, whiteSpace: "nowrap",
+                    }}>
+                      {s.label}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
