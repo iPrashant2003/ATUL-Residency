@@ -2,12 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import { Plus, Edit, Trash2, X, Loader2, Building2, ChevronUp, ChevronDown, User, FileText, Zap, IndianRupee, Send, Camera, CreditCard, Clock, History } from "lucide-react";
+import { Plus, Edit, Trash2, X, Loader2, Building2, ChevronUp, ChevronDown, User, FileText, Zap, IndianRupee, Send, Camera, CreditCard, Clock, History, QrCode } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getMonthName, compressImage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import ManualPaymentModal from "@/components/admin/ManualPaymentModal";
 import RenterHistoryModal from "@/components/admin/RenterHistoryModal";
+import RoomQrModal from "@/components/admin/RoomQrModal";
 
 /* ───────────── Types ───────────── */
 
@@ -370,6 +371,7 @@ export default function RoomsPage() {
   const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
   const [uploadPaymentRenter, setUploadPaymentRenter] = useState<any | null>(null);
   const [historyTenant, setHistoryTenant] = useState<{ id: string; name: string; roomNumber?: string; towerName?: string } | null>(null);
+  const [selectedQrRoom, setSelectedQrRoom] = useState<{ number: string; towerName?: string } | null>(null);
 
   const handleSendInvoice = async (e: React.MouseEvent, recordId: string, roomId: string) => {
     e.stopPropagation();
@@ -802,6 +804,23 @@ export default function RoomsPage() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
+                              setSelectedQrRoom({ number: room.number, towerName: room.tower.name });
+                            }}
+                            style={{
+                              height: "32px", padding: "0 10px", borderRadius: "8px",
+                              background: "rgba(6,182,212,0.12)", border: "1px solid rgba(6,182,212,0.25)",
+                              cursor: "pointer", color: "#22d3ee",
+                              display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+                              fontSize: "11.5px", fontWeight: 700, transition: "all 0.2s",
+                            }}
+                            title="View / Download Room Maintenance QR Code"
+                          >
+                            <QrCode size={13} /> QR
+                          </button>
+
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
                               setHistoryTenant({
                                 id: room.tenant!.id,
                                 name: room.tenant!.name,
@@ -1011,6 +1030,13 @@ export default function RoomsPage() {
               });
             }
           }}
+        />
+      )}
+      {selectedQrRoom && (
+        <RoomQrModal
+          roomNumber={selectedQrRoom.number}
+          towerName={selectedQrRoom.towerName}
+          onClose={() => setSelectedQrRoom(null)}
         />
       )}
     </AppLayout>

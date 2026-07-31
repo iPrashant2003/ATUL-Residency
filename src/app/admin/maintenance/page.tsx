@@ -143,11 +143,15 @@ function MaintenanceModal({ request, onClose, onSave }: { request: MaintenanceRe
   );
 }
 
+import RoomQrModal from "@/components/admin/RoomQrModal";
+import { QrCode as QrCodeIcon } from "lucide-react";
+
 export default function MaintenancePage() {
   const [requests, setRequests] = useState<MaintenanceRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("OPEN");
   const [selectedRequest, setSelectedRequest] = useState<MaintenanceRequest | null>(null);
+  const [showQrModal, setShowQrModal] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -170,6 +174,34 @@ export default function MaintenancePage() {
 
   return (
     <AppLayout role="ADMIN" title="Maintenance Management" subtitle="Handle renter service requests">
+      {/* Header action bar */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <div style={{ fontSize: "14px", color: "rgba(226,232,240,0.7)" }}>
+          Track and update repair queries from portal & public QR form
+        </div>
+        <button
+          onClick={() => setShowQrModal(true)}
+          className="btn-primary"
+          style={{
+            background: "linear-gradient(135deg, #14b8a6, #06b6d4)",
+            color: "#0f172a",
+            fontWeight: 700,
+            fontSize: "13px",
+            padding: "8px 16px",
+            borderRadius: "12px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            border: "none",
+            cursor: "pointer",
+            boxShadow: "0 4px 14px rgba(20,184,166,0.3)",
+          }}
+        >
+          <QrCodeIcon size={16} /> Public Form & QR Code
+        </button>
+      </div>
+
+      {showQrModal && <RoomQrModal onClose={() => setShowQrModal(false)} />}
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "12px", marginBottom: "24px" }}>
         {[
