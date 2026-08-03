@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
+  await headers(); // Ensures dynamic per-request execution on Next.js 15
   try {
     // Dynamic tunnel registration via public endpoint
     const registerUrl = req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("tunnel");
