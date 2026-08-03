@@ -8,7 +8,7 @@ import {
   Building2, Home, Calendar, Shield, Trash2, ChevronRight,
   IndianRupee, CreditCard, FileText, Filter, UserCheck,
   AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle, Zap,
-  Archive, RotateCcw, Clock, History, FileCheck,
+  Archive, RotateCcw, Clock, History, FileCheck, Edit, Save,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatCurrency, getRentStatusColor, formatDate } from "@/lib/utils";
@@ -407,6 +407,213 @@ function AddRenterModal({
   );
 }
 
+// ─── Edit Renter Modal ────────────────────────────────────────────────────────
+
+function EditRenterModal({
+  renter,
+  onClose,
+  onSave,
+}: {
+  renter: Renter;
+  onClose: () => void;
+  onSave: () => void;
+}) {
+  const [vacantRooms, setVacantRooms] = useState<Room[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
+    name: renter.name || "",
+    email: renter.email || "",
+    phone: renter.phone || "",
+    whatsapp: renter.whatsapp || "",
+    alternatePhone: renter.alternatePhone || "",
+    roomId: renter.room?.id || "",
+    rentAmount: String(renter.rentAmount || ""),
+    securityDeposit: String(renter.securityDeposit || "0"),
+    joiningDate: renter.joiningDate ? renter.joiningDate.split("T")[0] : new Date().toISOString().split("T")[0],
+    aadhaarNumber: renter.aadhaarNumber || "",
+    photoUrl: renter.photoUrl || "",
+    aadhaarImageUrl: renter.aadhaarImageUrl || "",
+  });
+
+  useEffect(() => {
+    fetch("/api/rooms?vacant=true")
+      .then((r) => r.json())
+      .then((d) => {
+        let list: Room[] = Array.isArray(d) ? d : [];
+        if (renter.room && !list.some((r) => r.id === renter.room?.id)) {
+          list = [renter.room, ...list];
+        }
+        setVacantRooms(list);
+      })
+      .catch(() => toast.error("Failed to load rooms"));
+  }, [renter]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim()) {
+      toast.error("Name and phone are required");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/tenants/${renter.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          rentAmount: Number(form.rentAmount),
+          securityDeposit: form.securityDeposit ? Number(form.securityDeposit) : 0,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Failed to update renter details");
+      } else {
+        toast.success("Renter details updated successfully! 🎉");
+        onSave();
+        onClose();
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: "620px" }} onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(20,184,166,0.12)", border: "1px solid rgba(20,184,166,0.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Edit size={20} color="#14b8a6" />
+            </div>
+            <div>
+              <h2 style={{ fontSize: "17px", fontWeight: 700, fontFamily: "var(--font-display)", color: "#e2e8f0" }}>Edit Renter Details</h2>
+              <p style={{ fontSize: "12px", color: "rgba(226,232,240,0.5)" }}>Update information for <strong style={{ color: "#14b8a6" }}>{renter.name}</strong></p>
+            </div>
+          </div>
+          <button onClick={onClose} style={{ background: "transparent", border: "none", color: "rgba(226,232,240,0.4)", cursor: "pointer", padding: "4px" }}>
+            <X size={18} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {/* Personal Info */}
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 600, color: "#14b8a6", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "10px" }}>
+              Personal Information
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div>
+                <label className="form-label">Full Name *</label>
+                <input className="form-input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                <div>
+                  <label className="form-label">Primary Phone *</label>
+                  <input className="form-input" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
+                </div>
+                <div>
+                  <label className="form-label">WhatsApp Phone</label>
+                  <input className="form-input" value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} />
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                <div>
+                  <label className="form-label">Alternate Phone</label>
+                  <input className="form-input" value={form.alternatePhone} onChange={(e) => setForm({ ...form, alternatePhone: e.target.value })} />
+                </div>
+                <div>
+                  <label className="form-label">Email Address</label>
+                  <input type="email" className="form-input" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
+
+          {/* Room & Billing */}
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 600, color: "#14b8a6", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "10px" }}>
+              Room & Billing Info
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {vacantRooms.length > 0 && (
+                <div>
+                  <label className="form-label">Assigned Room</label>
+                  <select className="form-select" value={form.roomId} onChange={(e) => setForm({ ...form, roomId: e.target.value })}>
+                    {vacantRooms.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        Room {r.number} ({r.tower?.name}) — Rent: ₹{r.baseRent}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
+                <div>
+                  <label className="form-label">Monthly Rent (₹) *</label>
+                  <input type="number" className="form-input" value={form.rentAmount} onChange={(e) => setForm({ ...form, rentAmount: e.target.value })} required />
+                </div>
+                <div>
+                  <label className="form-label">Security Deposit (₹)</label>
+                  <input type="number" className="form-input" value={form.securityDeposit} onChange={(e) => setForm({ ...form, securityDeposit: e.target.value })} />
+                </div>
+                <div>
+                  <label className="form-label">Joining Date *</label>
+                  <input type="date" className="form-input" value={form.joiningDate} onChange={(e) => setForm({ ...form, joiningDate: e.target.value })} required />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
+
+          {/* Documents & Photos */}
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 600, color: "#14b8a6", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "10px" }}>
+              Identity & Photos
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div>
+                <label className="form-label">Aadhaar Number</label>
+                <input className="form-input" placeholder="1234 5678 9012" value={form.aadhaarNumber} onChange={(e) => setForm({ ...form, aadhaarNumber: e.target.value })} />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <ImageUpload
+                  value={form.photoUrl}
+                  onChange={(url) => setForm({ ...form, photoUrl: url })}
+                  label="Profile Photo"
+                  placeholder="Upload photo"
+                />
+                <ImageUpload
+                  value={form.aadhaarImageUrl}
+                  onChange={(url) => setForm({ ...form, aadhaarImageUrl: url })}
+                  label="Aadhaar Card Image"
+                  placeholder="Upload Aadhaar"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "8px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <button type="button" onClick={onClose} className="btn-ghost">Cancel</button>
+            <button type="submit" className="btn-primary" disabled={loading} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              {loading ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // ─── Renter Detail Modal ──────────────────────────────────────────────────────
 
 function RenterDetailModal({
@@ -415,12 +622,14 @@ function RenterDetailModal({
   onDeleted,
   onUploadPayment,
   onViewHistory,
+  onEdit,
 }: {
   tenant: Renter;
   onClose: () => void;
   onDeleted: () => void;
   onUploadPayment: () => void;
   onViewHistory: () => void;
+  onEdit: () => void;
 }) {
   const [deleting, setDeleting] = useState(false);
   const [resettingPwd, setResettingPwd] = useState(false);
@@ -691,6 +900,23 @@ function RenterDetailModal({
                 </a>
               </div>
 
+              {/* Edit Details */}
+              <button
+                onClick={() => {
+                  onClose();
+                  onEdit();
+                }}
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                  width: "100%", padding: "11px", borderRadius: "10px", marginBottom: "10px",
+                  background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.3)",
+                  color: "#f59e0b", fontSize: "13px", fontWeight: 700, cursor: "pointer",
+                }}
+              >
+                <Edit size={15} />
+                Edit Renter Information
+              </button>
+
               {/* Reset Credentials */}
               {resetCreds ? (
                 <div style={{ background: "rgba(20,184,166,0.06)", border: "1px solid rgba(20,184,166,0.25)", borderRadius: "12px", padding: "16px", marginBottom: "12px" }}>
@@ -767,6 +993,7 @@ function RenterCard({
   onViewPhoto,
   onUploadPayment,
   onViewHistory,
+  onEdit,
 }: {
   tenant: Renter;
   onClick: () => void;
@@ -774,6 +1001,7 @@ function RenterCard({
   onViewPhoto: (url: string) => void;
   onUploadPayment: () => void;
   onViewHistory: () => void;
+  onEdit: () => void;
 }) {
   const [sending, setSending] = useState(false);
 
@@ -1069,6 +1297,21 @@ function RenterCard({
               <Eye size={12} />
               Details
             </button>
+
+            {/* Edit details */}
+            <button
+              onClick={(e) => { e.stopPropagation(); onEdit(); }}
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+                padding: "7px", borderRadius: "8px",
+                background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)",
+                color: "#f59e0b", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
+              }}
+              title="Edit Renter Information"
+            >
+              <Edit size={12} />
+              Edit
+            </button>
           </div>
         </div>
       </div>
@@ -1087,6 +1330,7 @@ export default function RentersPage() {
   const [filterTower, setFilterTower] = useState("all");
   const [showAdd, setShowAdd] = useState(false);
   const [selectedRenter, setSelectedRenter] = useState<Renter | null>(null);
+  const [editingRenter, setEditingRenter] = useState<Renter | null>(null);
   const [uploadPaymentRenter, setUploadPaymentRenter] = useState<Renter | null>(null);
   const [historyTenant, setHistoryTenant] = useState<{ id: string; name: string; roomNumber?: string; towerName?: string } | null>(null);
   const [activePhotoUrl, setActivePhotoUrl] = useState<string | null>(null);
@@ -1355,6 +1599,7 @@ export default function RentersPage() {
                             towerName: renterVal.room?.tower?.name,
                           })
                         }
+                        onEdit={() => setEditingRenter(renterVal)}
                       />
                     </div>
                   ))}
@@ -1549,6 +1794,15 @@ export default function RentersPage() {
               towerName: selectedRenter.room?.tower?.name,
             });
           }}
+          onEdit={() => setEditingRenter(selectedRenter)}
+        />
+      )}
+
+      {editingRenter && (
+        <EditRenterModal
+          renter={editingRenter}
+          onClose={() => setEditingRenter(null)}
+          onSave={fetchData}
         />
       )}
 
