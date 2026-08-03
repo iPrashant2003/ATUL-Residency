@@ -12,6 +12,7 @@ export const authConfig = {
 
       // Public routes
       const isPublicRoute =
+        pathname.startsWith("/api/") ||
         pathname === "/" ||
         pathname === "/manifest.json" ||
         pathname === "/sw.js" ||
@@ -22,14 +23,7 @@ export const authConfig = {
         pathname.startsWith("/forgot-password") ||
         pathname.startsWith("/request-maintenance") ||
         pathname.startsWith("/maintenance-request") ||
-        pathname.startsWith("/pay-rent") ||
-        pathname.startsWith("/api/public") ||
-        pathname.startsWith("/api/auth") ||
-        pathname.startsWith("/api/chat") ||
-        pathname.startsWith("/api/public-stats") ||
-        pathname.startsWith("/api/whatsapp/register-url") ||
-        pathname === "/api/upload" ||
-        new RegExp("^/api/rent/[^/]+/invoice").test(pathname);
+        pathname.startsWith("/pay-rent");
 
       if (isPublicRoute) return true;
 
