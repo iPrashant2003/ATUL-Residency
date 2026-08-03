@@ -5,9 +5,8 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const registerUrl = searchParams.get("registerUrl");
-    const secret = searchParams.get("secret");
+    const registerUrl = req.nextUrl.searchParams.get("registerUrl");
+    const secret = req.nextUrl.searchParams.get("secret");
 
     // Dynamic tunnel registration via public endpoint
     if (registerUrl && registerUrl.startsWith("http")) {
