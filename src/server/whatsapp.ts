@@ -12,6 +12,8 @@ const os = require('os');
 const fs = require('fs');
 
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // ==================== Utility ====================
 
 function getLocalIp() {
@@ -73,9 +75,23 @@ function killStaleChrome() {
 }
 
 function cleanSessionLock() {
-    const lockPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot', 'SingletonLock');
-    if (fs.existsSync(lockPath)) {
-        try { fs.unlinkSync(lockPath); console.log('🧹 Cleaned stale SingletonLock'); } catch (e) {}
+    const authDir = path.join(os.homedir(), '.wwebjs_auth');
+    if (fs.existsSync(authDir)) {
+        try {
+            const dirs = fs.readdirSync(authDir);
+            for (const dir of dirs) {
+                const sessionDir = path.join(authDir, dir);
+                if (fs.statSync(sessionDir).isDirectory()) {
+                    const files = fs.readdirSync(sessionDir);
+                    for (const f of files) {
+                        if (f.startsWith('Singleton') || f.endsWith('.lock') || f.includes('Lock')) {
+                            try { fs.rmSync(path.join(sessionDir, f), { force: true, recursive: true }); } catch (e) {}
+                        }
+                    }
+                }
+            }
+            console.log('🧹 Cleaned all stale session lock files across all profiles');
+        } catch (e) {}
     }
 }
 
@@ -98,6 +114,7 @@ let botQr = null;
 let botQrImage = null;
 let botPairingCode = null;
 let botInitializing = false;
+let botInitializingTimeout = null;
 let isCronStarted = false;
 
 // ==================== Bot Initialization ====================
@@ -109,6 +126,15 @@ async function initializeBot(pairingPhone = null) {
     }
     botInitializing = true;
     console.log('🤖 Initializing WhatsApp bot...' + (pairingPhone ? ` (pairing mode: ${pairingPhone})` : ''));
+
+    // Safety timeout: reset botInitializing if stuck after 60s
+    if (botInitializingTimeout) clearTimeout(botInitializingTimeout);
+    botInitializingTimeout = setTimeout(() => {
+        if (botInitializing && !botReady) {
+            console.warn('⚠️ Bot initialization timed out after 60s. Resetting flag...');
+            botInitializing = false;
+        }
+    }, 60000);
 
     // Destroy existing client
     if (botClient) {
@@ -138,7 +164,7 @@ async function initializeBot(pairingPhone = null) {
     ];
 
     const options = {
-        authStrategy: new LocalAuth({ clientId: 'bot', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
+        authStrategy: new LocalAuth({ clientId: 'bot_v2', dataPath: path.join(os.homedir(), '.wwebjs_auth') }),
         puppeteer: { 
             args: puppeteerArgs, 
             headless: true, 
@@ -147,7 +173,10 @@ async function initializeBot(pairingPhone = null) {
             executablePath: process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : undefined
         },
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
-        webVersionCache: { type: 'none' },
+        webVersionCache: {
+            type: 'remote',
+            remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.3000.1014111620-alpha.html',
+        },
         qrMaxRetries: 0,
     };
 

@@ -17940,3 +17940,911 @@ See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode de
 💓 Tunnel health OK (https://b9555a9b629e65.lhr.life)
 ✅ Startup backup done
 💓 Tunnel health OK (https://b9555a9b629e65.lhr.life)
+⚠️ Tunnel ping failed: fetch failed (fail count: 1)
+⚠️ Tunnel ping failed: fetch failed (fail count: 2)
+❌ Tunnel health check failed 2 times. Force-restarting SSH tunnel...
+❌ SSH tunnel process exited with code null. Reconnecting in 3 seconds...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+🌐 Establishing secure SSH tunnel via localhost.run...
+❌ SSH tunnel process exited with code null. Reconnecting in 3 seconds...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 07d52f7f-e854-4f60-b882-5fe399357f1e, please mention it if you send me a message about an issue. **
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 34e3cdd28d87e7.lhr.life tunneled with tls termination, https://34e3cdd28d87e7.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://34e3cdd28d87e7.lhr.life
+✅ Registered tunnel URL successfully in database.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is aeca6d77-ca1f-47f7-bc95-22b1822ad38e, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 1979bda7f728c6.lhr.life tunneled with tls termination, https://1979bda7f728c6.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://1979bda7f728c6.lhr.life
+✅ Registered tunnel URL successfully in database.
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+⚠️ Tunnel ping failed: fetch failed (fail count: 1)
+🔄 Hard reset requested...
+❌ Bot initialize() threw: Navigating frame was detached
+🔄 Retrying bot initialization in 10 seconds...
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+🗑️ Session wiped
+🚀 Reinitializing bot...
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+⚠️ Bot is already initializing, skipping duplicate call.
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+❌ Bot initialize() threw: undefined
+🔄 Retrying bot initialization in 10 seconds...
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄▄▀ ▀▀▀▀█▀▀ ██▄▄  █ ▄▄ ██ ▀█▀ ▀▄▄  ▄█ ▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▀▄ █ ▄█▄▄▀▄█ █▀▀ ██▄█  ▄▄▀▀▀▄▀▄█▄▄ █▀▄ ██ █   █ █
+█ █▄▄▄█ █▄█▀▄▀▄█▀▀█  ▀▄  █▀ ▄▄▄  ▄ ██▄ ▄▄ █▀▄▄▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█ █▄▀ █▄▀▄▀▄▀ ▀▄█ █▄█ ▀ ▀ █ ▀▄█▄█▄▀▄▀ █ █▄▄▄▄▄▄▄█
+█▄  ▄▀▀▄█ ▄█ ▄▀▀▄▄▄▀▀█▀ ▀▀█      █ ▄▀█▀▄▄▄ ▀ █ ▄▀▀▄█▀▄▄ █ █
+██▄▄ ▄▄▄█▀█▄▀  ▀ ▀ ██ ▄▄▀ ██▄█  ▀ ▀▄█▄▀▄  ▀▄▀▀▄▄ █▀▀▄▀ ▄ ▄█
+█ █▄▄▄█▄▄██   ▄ ▀██▄ ▀█▄ █▀▄█▀█▀▄█ █  ▄▀▀▀█▄ █▀█▄▄  ██▀▄▀▄█
+█▄▄ █▄▄▄██▄▀▀▀▄█▄▀▄▀▀██▄▄ ▀▄▀███▄▄▄▄█▄▄▄▄▀ ▀▄ ██▀▀▄██▀█ ▄▀█
+█▀█   ▄▄▀▀▄██▀▄▄ ▀ ▀▄▄▄█▀█▄█▄▄▀█  █▀▀█▄█▄▀▄▄▄    ▄▄█▄██ ▄ █
+█▀▀  █ ▄▄▄▀█ ▄▀▀▄ ▀██▀▄█▀▀ ▀▀ ▀▄▀██▄▄ ██▀█▄▀▀█▀▀  ▀█▄▄ ▄ ▀█
+█▀▀ ▄ ▄▄▀▄▄▀██ ██ ▄███  ▀█▀▀▀▄▄  █▄▄▀▀ ▄▄▄ ▀███▄▄ ▀█▄ ▀▄▀▀█
+█▀▀▄▀  ▄▀█ █▄▀ ▄▀▄█▄ ▄ ▄  █▀ ▄▄ ▀▄ ▄█ █▄▄█▄█ ▄  ▀▄█  █▄██ █
+█▄ ▀▄▀▀▄▄▄▀▀█  ▀▀▄▄▄█ ▄▀█▄██▄▀▄█▄▄▄█▄▄▀ ██ ▄▄▀▀██▄  ▄▀ █▄▄█
+███▀  ▄▄▄ ▄▀█▄▄▀▀ ▄▄▀▀█▄█ █ ▄▄▄ ▀  █▀█▀   ▀ ▄ ██▀ ▄▄▄ ▀▀███
+█ ▀ ▀ █▄█ ▀▄█ ▀▀▀▀█▄▄▄▀▀█▄█ █▄█ ▄ █▀██ █ █▀██▄█ ▄ █▄█ █▄▀▀█
+█▄ █▄▄▄▄  ▀▀▄▄ ▀█▀█▄▀█▄ ▄ ▀  ▄ ▄ █▀ ▀▀   ███▀▄▀▄▄▄▄▄ ▄██▄▀█
+█▀ ██▄▀▄ ▀█▄▄▄█▀▄▄▀█▀▄ ▄▀▀██▄▄▀▀▀█ ▄ ▀▀█  ▀▀██ ▄█  ▄▄█ █  █
+███ ▀█ ▄ ▄   █ ████ ▀▀ ▀▀▀▄  ▄ █▄█▀ █▄▄▀█▄ ▀▀█▄▄▀▄  ▀▄█▄  █
+█▄▄▄▀ █▄▄▀▄ ███▄███ ▀█▀▀ ▄▄▀██ █ ▀ ▄▄ ▀ ▀▀█▄ █ █▀▄██ ▄▀█▄██
+███▄ ▀▄▄▀▄██▄▀ █ ▄▀█  ▄▀▄▀▄▄ ▄ ▀ █▀▄ ██▄▄▄█▄ ▀▄ ▀██▀▄▄▀ █▄█
+█▄▀█▄▄▀▄▀  ▄██ █▀ ██ █▀█▀▄▀ ▀▀  █▄▄▀▀█▀▄ █▀▄█▄█ ▄█▀█  ▄▄▀ █
+██▀▀█▀ ▄▀ ▄▄▄██ ▄ █▄▄██ ▀▄▀█▄   ██▄█ █▀ ▀██▀▀▄ ▄ ▀ █▄▄▄▄▄██
+█  █▄  ▄ ▀ ▄█▀█ █▄▀▀ ▄ █▀ █▄██▀▀█▀██ ▀ █  ▀▀ █▀█▀ ▄▄▄█▄▄▀▀█
+█ ▀ ▀▀▄▄▄█▄   █▀ █▄▄▀█▀▀▄▄  ▄▀▀█ ▄ ██  ▄▄ ▀ ▀▀▀ ▄ ▄ ▄  █ ▄█
+███████▄█ █▀ █ █▀▄▄ ▀ █▀█▄▀ ▄▄▄ ▄▀ █ ▄█▀▀▀ ▄ █▀██ ▄▄▄ ▄ ▀▀█
+█ ▄▄▄▄▄ ██▄ █▀▀▀█▄▀█▀█▀▄  █ █▄█ █▀▀██▄█▄█▀▀ ▄▀▀▄█ █▄█   ▀██
+█ █   █ █▀▀█▄▄▀▀▀██▀ ▄▄▀ ▀  ▄    ▄▀ ████▀█ ▄▄ ▀▀▀   ▄  ▄▀▄█
+█ █▄▄▄█ █ ▀█▀▀█▀  ▄█▄▀ ██▀▀████▀█▀▀▀▀▀█▄ ▀█▄ ▄▀ ▄▄▀ ▀▀▄▄█▀█
+█▄▄▄▄▄▄▄█▄▄███▄▄▄▄▄█▄█▄▄▄▄███████▄██▄██▄▄▄██▄█▄█▄▄██▄▄▄████
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ▀▄█ ██▀▄█ ▀▀▄▄▄ ▀▄▄ ▄█▀██▄▄▄██   ▄▀▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀ █ ▄▀▄██▄ ▄▄▀▄▀ ▀█▄██▀▀██  ▀█▀█▄▄██▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄▀▀  ▄▄█▄█▄ ▀▄▀ █ ▄▄▄ ███▀▀▀▄█▀▄▄▄ ▄▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄█▄▀▄▀▄█ ▀ █ █ █ █▄█ ▀▄█ ▀▄▀ ▀▄▀ ▀ █ ▀▄█▄▄▄▄▄▄▄█
+█▄  ▄ ▀▄▄ █▀█  ▀██▄  █ ▀▀ ▄▄    ▀█▀█▀▄ ▄██  ▀█▀█▀▀ █ ▀▄▀▄▀█
+█  ██ ▄▄ ▀ ▀▀▄▄ ██▀ ▀▀▀  █ ▄█▀▀██▀▄▄▄▀███▄ ██ █▄▄█▄ ▄▀▀▀▄██
+█▄█▄▀▄▀▄▄ ██▄▄▄▄██▀  █▀▄▄▀▀▀▀▀▀█▄▀▄█▄▄▀▄█▀ ▀ ▀██▀▀ ▄▀▀▀▄▀ █
+██  ██▄▄█▄█ ▀ ███ █  █ ▄▄▀ ▄ █▀▄█▄ ██▀█▀▀ ▀ █ ▀ ▀▀███▀▀ █▀█
+███▀▄▄█▄█ ▀▀▄▄ █▄▄█▄▀█▀▀   ▄▀ █ ▄▀▀█  ▀█▄█   █▄▄▀▀ ▄▀▀██▄▀█
+██▀  ▀▄▄▄ ██▄ ▀█▀ █▀ █ █▀▀ ██ ▄▀▀▀▀▄▀██ █ ▀█ ▀█ ▄▄▀█ ▄▄  ██
+█   █▀▀▄ ▄█ ▄█▀█▄▀▄▄▄█▀▀▀▄ ▀ █▄▀████▀▄▀▄ █  ██▄█▄▀▀██▀▀█▀ █
+█▄██▄▀▀▄█▄█▀▀█▄█▄ ▄▀▄██ ▀█▀ █ ██▄██ ██▀█  █ █▄█▄ ▀▀██▀█ ▀▀█
+█  █ ▄▄▄█▄██▀▀█▀█▄  █▄ ▀▀ ▀▀ ▀ ▀▄  █  ▀▄▀█▄ ▄███▀▀ ▄ ▀▄▀▄ █
+█▄▄▀▀ ▄▄▄ █ █ ▀▀ ▀▄█ ▀▄██▀█ ▄▄▄   █▄▀▄ ▄▀▀█▀█ ▄▄  ▄▄▄ ▀ ▄██
+███ ▄ █▄█ ▀▀▄█▀▄▄█▄▀ █▄█▄▀▀ █▄█  ▀ █▄ ▀▄█▀  ▀██▄█ █▄█ █▄█ █
+█▀▀█ ▄▄▄  █▀   █▀▀▀█▀▀█  ▄ ▄▄▄▄  ▀█ ▀▀▀▀ █▀ ▀ █▄  ▄ ▄▄▀ ▄██
+█▀▄███▀▄▀▀▄█▄█▄▀▄█   ▄▄▀ ▀▄█▀▄▀  █▀█▄▄▀█▀▀█ █▀▄▄█▀▀▄▀▄▀▄█ █
+██▀▀█▀▀▄ ▄█▄▀ ▄▄ ▄▄█▄███▄  ▀ █▀   ▄▄█▄▀▀▄  █▀█  ▀▀▄▀▀█▄▀▄▀█
+█▀▄ █ ▀▄▄█   ▄█ ▀█▀▄▀▀█▀▄ ▄█▀█▄ ▄▀▄▄▄ ▀▄▄█▀  ▀▄██ █▀▄▄█▀█ █
+█▄▄▄▀ ▄▄ ▄ █▀█▀█▀█▀▄▀ █ ▄ █▄▀█▄ ▀█ █ ▄▄▄█▄██ ▀█▀▀▄▄▀██▀▀▄▄█
+█▀█▄▀ ▄▄█▀█ ▄▀ ▀▄▄▄ ▄▄▄▀ ▀█▀▄█▀█▀█▀█  ███▀ ▀▀█ ▄█ ▀▀█▄███▀█
+█▀▀█▀█ ▄▀▄█ ▄█▀▄  ▀ ▄▀▀ █ █▀  ▄▄█▀ ▀▄▀█ ██▀▀▀ ▄▄ █ ▀ ▄▀▀▄▀█
+█▀▀▀▄▄▀▄▄▄▀▄█ ▀ ▄█▀ ▀▄▀▄▀▀▄█▄▄▀ ▄▀▄█   ▄▀▀█▀▀█▄▄▀▀▀▄▄▄▄▀ ▀█
+█ ▀ ▀▀▄▄ ▄▀▄▀█▀ █▀▄ █▄ ▀█▀█▄▀█  ▄█▄▀ ██▀█▄ ▀▀    █▄▀███▀▄██
+███████▄█ ▀▀▄▀ ▀▄▄▄▄▀▄▄▀  ▀ ▄▄▄ ▄█▄██ ▄█▀█▀▀▀█▄██ ▄▄▄  █▀██
+█ ▄▄▄▄▄ █▄█▀█  ▀ ▀▀▄▀█ ███▄ █▄█  █ ▄▀ ▄▄ ▄▀▀ ▀ █▄ █▄█  ▀ ▀█
+█ █   █ █ ▄▀▄▄█ ▄▀▄▄▄█▀█▀▄▄ ▄  ▄▄▀▄▄▄▄▀▄▀▀▀▀ █▄█▀▄▄ ▄ ▀▀▄██
+█ █▄▄▄█ █ ██ █▄█▄  ▀▄█▄█▀█▀▀ █▀██▄█▀███ █▀▀  ▀█   ▀▄ ▀  ███
+█▄▄▄▄▄▄▄█▄█▄▄█▄███▄▄████▄█▄█▄▄█▄▄▄▄▄▄▄▄▄███▄███▄▄█▄█▄█▄▄▄██
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://1979bda7f728c6.lhr.life)
+[03-08-2026 11:29:48.90] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:29:49.20] Starting WhatsApp Bot... 
+[03-08-2026 11:29:49.20] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 6361f2dd-a23a-4ac6-81fe-9eda5ebf8236, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 3e406ea5bd2940.lhr.life tunneled with tls termination, https://3e406ea5bd2940.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://3e406ea5bd2940.lhr.life
+(node:15136) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀█▄ █▀██▄▄▄█ ▀ ▄▄▀▀▀▄  ▄▀█▀▀█▀▀█▄ █ ▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄▀█  ██▄▀ ▄█▄█▀ ▀█▄▄▄ ▄▄█   ▀▀██ █ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀ ▄▄█▀ ▄█▄ ▄  █▀ █ ▄▄▄ ▄ █▀▄█ ▀█▄▀▄█▀▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄█▄▀ ▀▄▀ ▀ █ █ █ █▄█ ▀▄█ ▀▄▀▄█ █▄▀▄▀ ▀▄█▄▄▄▄▄▄▄█
+█▄▄▄▄ █▄  ▄▄ █ █ ▄ ▄▀▄ ▀     ▄▄ ▀█▀█▀▄▀███▄ ▄███▀▀ █ █▄▀ ██
+█▄▄▀▀ ▀▄ ▀ ▀ ▄▄  █▀ ▀▀▀ ▀ ▀█▀▄ █▀▀ ▄▄▄██ ▄▄▀██   ▀██▄ ▀▀ ▀█
+██ ▀█▀▄▄ ██▄▀▀▄▄██▀  ▄▀▄▀ █▄█▀▀█▀▀█▄▀ ▀▄▀█  ▄▀▄█▄▀▀█▄█▀ ▀ █
+██ ▀▀▄ ▄█▄▀▀ ██ ▀▄▄ ▄▀  ▀▀▀▄ ██▄ ▀▄▀▀ █▀▄ ▀▄ ▄ ▀  ▀  ▀▀ ███
+█ ▀██  ▄█▀▀ ▄  ▀▄█▄ ▄▄▀▀ ▀▀▀▀ ▀ ▄▀▀█▄▄▄▄ ▀   ███ ▀▀█▀█▀ ▀▀█
+█ █▄ ▀ ▄▄█ ▀▀█▀█▄▄  █▄▄▄▀▄▀██ ▀ ▄█▀ ▄▄▄▄█ ▀▀▀▀█▀  █▀▄ █▀ ██
+██▀▀█▀▄▄▀█ █▀█▀█▄▀▀▄▄█▀▀▀▄▀▀ █   ▀▄█▄▄ ███▀▀ █▄█▄▀▀█▀▀▄█▀▀█
+██ ▄▀█▄▄  ▀█▄▀▀▄▄  ▄▄██ ▀█▀  ██ ▄██ ████▄ ▀▀▀  ▀ ▀ █▀█▀▀▀▀█
+██▀█▄▀█▄ ▀ █▄█▀▄█▄ ▄█▄▀█▄▀█▀██ ▀▄  █ ▄ █▀▀▄  █▀█▀ ▄██▀▄▀▄ █
+███▀▄ ▄▄▄ ▄▀▄▀▄▄▀█▄█ ▀▄█ ▀  ▄▄▄   █ ▀▄▄▀█▄▄▀▄▄█▄▄ ▄▄▄ ▀ ▀██
+██▄ ▀ █▄█  ██▄ ▄▄█▄▀ ▄▄█▀▀▀ █▄█  █▄██  ██▀ ▀▄█▄▄▄ █▄█ █ ▀██
+██▀▄█ ▄▄▄ ▀█▄██▄ ▀▀▄▄▄  █▄▀▄ ▄ ▄▀ █▀ ▄▄▄▀▀▄█ ▀▀ ▀▄▄  ▄▀▀▄▀█
+██▄█▄▀▀▄▄█  ▀ █▀▀▄▄▄▄▄█▀▀ ▄▄▄▄▀ █▀▀█▀▄ ▄█▀█▀▄█▄▄█▀█ ▄▄▄▀▀▀█
+█▄▄▀▄█ ▄▄▀▀ █ ▀▄▄██ ▀█▀▄▄█▄▀▀▀▀ ▀▀▄▄▀▄ █ █ ▀▄█ ▄▄▄▄██▄  ▄▀█
+█▄██▀▀ ▄█  █▄  ▄▀█▄▄▀▀▀█▄ ▄ ▀█▀▄▀▀██  ▄██▀  ▄▀▄▄▀█ ██▄▄▀▄▀█
+█▀▀▄▄▄ ▄██▄▄ ▄ ▀▀█ ▄▀ █ ▄ █▄▀█▀▄▀█ ▄▀█▄ ▀▀▄▀█▄██ █▄█▀▀▀▀▄▄█
+█▄██▀▀▄▄██ ▀██▄█▀▄▄▄▄▄▀▀▀▀█▀████▀█▀█▄ ▄██▀  ▄█▀▄█ █ ▄▄▄████
+█▄▀██ █▄▀▀ ▄██▀ ▄█▀ ▄█▀ ██▀▀▄▄  ██▄█▄▄ ▄▀ █ ▄▀█▄▄▄▄▀▄█   ██
+██▄▄▄█▄▄ █▄ ▄▄▀▀▄█▀ ▀█▀▄▄▀█▀▄▄█▀▄█▄█ ▄ ██▀▀▀▄▀▄██▀▀ ▄▄█▀█▀█
+█ ▀ ▀▀▄▄▄▀ ▄█▀█▀▀ ▄█  ▀█    ▄▄ ▄▄▀▄▀▀▀██▀▄▄█  █▀ █▄███▀  ▀█
+███████▄▄▀▄▄█▀▀▀▄▄▄  ▄█▀█▀█ ▄▄▄ ▄█▄█▄▄ █▀█  █▀▄▄▀ ▄▄▄ ▄▄ ▀█
+█ ▄▄▄▄▄ █▄ ▀▀▄ ▄▀▄▀█ █▄▀  █ █▄█ █▀█▄█  ▄█▀█ ██▀█▄ █▄█ ▄ ▄▀█
+█ █   █ █ █▄▀▄ ▀▄▀▄▄▄█ ▀▀▄ ▄ ▄ ▄ ▀██  ██ ▀▄▀ ███▄▄ ▄▄▄▄▀▄▄█
+█ █▄▄▄█ █ ▄▀▄▄▀ ▄  ▄▄█▀ ▀█ ▄▀█▀█▄██  ▄█  ▄▀▀▀  ▀▄▄▀▄▀█▀▀███
+█▄▄▄▄▄▄▄█▄█▄█▄▄██▄▄▄▄████▄▄█▄██▄▄▄▄▄▄▄▄███▄▄▄███▄████▄▄█▄██
+
+✅ QR image generated successfully
+✅ Registered tunnel URL successfully in database.
+💓 Tunnel health OK (https://3e406ea5bd2940.lhr.life)
+[Tunnel Raw]: 6f9dcbdd2885f8.lhr.life tunneled with tls termination, https://6f9dcbdd2885f8.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+✅ Startup backup done
+⚠️ Tunnel returned HTTP 503 (fail count: 1)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄█▄  ▄▄█▄▄█ █   ▀▄▄▀▄ █▀▄▀▀ █  ▄▄▄▄▄▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▄▄ ▀ █▄▀▄██▄▄ ▄█▀█▄▀▀█▀███ ▄▀▀▄▀█ ▀▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀█  █▄█▀█▄ ▀███▀   ▄▄▄ ▀▀ ▀▀▀█▄▄█▀▄▄█▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ ▀ ▀ ▀ █▄▀ █▄▀▄█ █▄█ ▀▄█▄█ ▀▄█▄▀ ▀▄▀▄█ █▄▄▄▄▄▄▄█
+█▄ ▀▀ ▄▄▀▀▀▄▀██ █▄ ▄▄▀█▀  █▄▄▄▄ ▄ ▄█▀▄▄  █▄ ▀  █ ▀█▀ █▄ ▄ █
+█▀▄▀▀▄▄▄▀▀▀▀██▄   ▄█▀▀▀█▄█ ▄▀██ ▀▀▄█▀▀█▀ ▀▀ ██ ▀███▄█ ▄▄ ▀█
+███▄▀▀▄▄ █▄█▀▀▀▀ █▀ █▀▄▄▀  ▀█▀▀█▄▄ ▄▀ ▄▀▄█  ▀▄█▄ ▀▄  ██▄▄██
+█▀▀█▄▀█▄▄▄▀▄█ █ ▀▀▄▄▄▀▄▄▄▄▀▄ ▀▄█ ▀▄▄▄▀▄▀▄█▄ ▄▄▄▀▀█▀  ▄ ████
+█   ▀  ▄ ▄▄ ▄ █▄ ▄▄▄▄▀▄▀▀ ▄▄▄ ▄▀▀▄▄▄▄ █  █▀▀█ ▀▄ ▀▄ ▄█▀▀  █
+█▄ ▀█ █▄▄█ ▄▄ ▀██▄███▀▄▀▀ ▀████▄▄█▀█▄▀██▄ ▄█▄▀▄▄██▀█▄█ ▄ ▀█
+█▀▀▄   ▄▄ ███ ▄ ▀▀▀▄▀ ▄▀▀▄▄▄██  █ ▀█▄▄█  ▀▀▀▀ ▀█▄▀▄ ▄▀▄█▄▄█
+█  ▄▀▀█▄ ▄  ▀▄██▄██▀▄███▄ ▀    █▄███  ████▄▄ ▀ ▄█▄▀ █ ▄▄▀▀█
+██▄ ▀ ▄▄ ██▄▄▀▀▀ ▄ ▄ ▀▄█▄▀▄  █ ▀▀███ ▄█ ▄▀▄ █ ▄█▀ █▀▄█▄▀▀██
+█ █▀▄ ▄▄▄ ▄▄▄▀ ▄▀ ▀  ▀▄ █▄█ ▄▄▄   ██▄▀▄██▀▀▄▄▄██  ▄▄▄ ▄█▀██
+██▀██ █▄█ ▄██▄▄█▀█▄▀█▀▀█▀▀  █▄█ █ █▄█ ▄▀ ▀  ▀ ▄▄▀ █▄█ ▄█▄ █
+█▄ ▀█▄▄▄▄▄▀ ▀ █▄ ▄▄▄▄▄██ ▀    ▄ ▀ █████▄█ ▄▀ ▀█▀▀ ▄▄ ▄█▄▄▀█
+█▀▄ █▀▀▄  █ ▀  ▄▀▄  ▄ ▀▀█▀▀▀▀▄▀  ▄▄█  █  █▀ █▄▄██  █▀██▀▄▄█
+█▄█▄▀ █▄█ ▀█ █▀▄▀▀ ██▄▀▀▀▀▄▀ █▄██▀▄▀▄▄ █ ▀▄█▄▀▀▀ ▀▄█▀▄██▀▀█
+█ █ ▄▀ ▄ ███  █▀▄█▄▄▄▄▄█▄ ▀█▄█▀▀█  █  ▀ ▄█  ▀▄▀▄▀██  ▄▄▀ ▄█
+█▄▀▄▄▀█▄██▄▀▄█▄█▀ █▀▀ ██▀██▄▀ ██ ▄ ▀▄▀▄ ▀▄▀▄█▄█ █ ▄█▀▄▄▄▄▄█
+█▄  ▄▀▀▄   ▄▄▀ ▀▄▄▄▄▀▀▄▀▀▀ ▄ ███▄ ▄█▄ ▀  ▀  ▀ ▄▄█  ▀▀▄▄▀  █
+█▀▀██ █▄▀▀█▀▄▄▄█▄ ▄█▄█▀█  ▀▀▄▀████▄ ▀▀▄▄▀█ ▀▄▀▀▀█ ▀▀▄ ▀▄ ██
+██▀▄  ▄▄▄▄▄▀▄▄▀█▀█▀ ▄ ▄▄▄▀ ▄▀▄█▀▀ █▄ ▄█  ▀▄▀▀▄▀██▀ █ █ █ ▄█
+█ ▀ ▀▀▄▄▀█ ▀ ▄█▀▀█ █  ▀ ██ ▀▄▀█▀▄▀██▄▄▄████ ▄  ▀▄  █▀ ██ ▀█
+███████▄▄▀▀▄█▀▄▄▄▄▀▄▄▀ █▄▀  ▄▄▄ ▀ ▀█▄▄█ █▀█▀▀  ▄█ ▄▄▄ ███▄█
+█ ▄▄▄▄▄ █▀ ▄▄▀ ▄▄ ▄ ▀█▄▄ ▀█ █▄█ ███▀▄▀▀██▄▀▄█▄▀▀█ █▄█ ▀█▄▀█
+█ █   █ █▄ ▄ ▄█▄▀▀▄▄▀ █▀▀▄█  ▄ ▄█  █▄   ▄▀▄▀▀  ██▄▄  ▄▄▀▀ █
+█ █▄▄▄█ █▀▄▄▀██▄▄██▀▄█▀█▄  ▄█ ▄ ▄████▀█ ▀ ▄▄ ▀ ▄▀▀▀▄▀ ▄▄███
+█▄▄▄▄▄▄▄█▄█▄▄█▄▄▄▄▄▄█▄▄██▄█▄█▄█▄███▄▄▄█▄▄█▄▄█▄▄█▄█▄▄█▄▄██▄█
+
+✅ QR image generated successfully
+⚠️ Tunnel returned HTTP 503 (fail count: 2)
+❌ Tunnel health check failed 2 times. Force-restarting SSH tunnel...
+❌ SSH tunnel process exited with code null. Reconnecting in 3 seconds...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+🌐 Establishing secure SSH tunnel via localhost.run...
+❌ SSH tunnel process exited with code null. Reconnecting in 3 seconds...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 2353854b-efe9-43d1-8429-3928be84987a, please mention it if you send me a message about an issue. **
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: be26cfe4edb1c2.lhr.life tunneled with tls termination, https://be26cfe4edb1c2.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://be26cfe4edb1c2.lhr.life
+✅ Registered tunnel URL successfully in database.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 6fe76352-6669-43f5-91e3-8ebf1ba4dc5f, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+0a23ac4579044e.lhr.life tunneled with tls termination, https://0a23ac4579044e.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://0a23ac4579044e.lhr.life
+✅ Registered tunnel URL successfully in database.
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀█▄ ▄ ▀▀▄█ █▀ ▄▄▄▀▀▀▄  ▄▀█▄ ▄██▄▀▄ ▄▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄▀█▄ ███▀ ▄█▄█  ▀█▄▄▄  ██ ▀ ▀▀▀▄ █ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄▄ ▄▀ ▄█▄ ▄  █▀ █ ▄▄▄ ███▀   ▀▀█▀▄█ ▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█ █▄▀ ▀▄▀ ▀ █ █ █ █▄█ ▀▄█ ▀▄▀▄█ █▄▀▄▀ ▀▄█▄▄▄▄▄▄▄█
+█▄▄▄▄ █▄▄▄██▀█ █ ▄ ▄▀▄ ▀  ▄  ▄▄ ▀█▀█▀▄▀███▄ ▄███▄▀ █▄▀▄▀ ██
+█▄▄▀▀  ▄▄ █▀▄█▄  █▀ ▀▀▀ ▀ ▀██▄ █▀▀▄▄▄▄██ ▄ ▀██    ██▀▀▀▀ ▀█
+██  ▀▀▄▄▄ ▀█▀▀▄▄██▀  ▄▀▄▀ █▄▀▀▀█▀▀▄█▀  █▀█ ▀▄▀██ ▀▀█ ██ ▀ █
+█▀▀▄▄▄ ▄▄▄▀▀ ██ ▀▄▀▀▄▀ ▀▀▀▀▄ █▀  ▀█▀█▄ ▀▄▄█▀  ▀█▀ ▀  ▀ ▀███
+█▄▀▄▀  ▄█▀▀ ▄  ▀▄█ ▄▀▄█▀▄▀▀▀▀ ▀▀▄▀▀█   ▄▀▀ ▀▄█▄█ ▀▀█▀█ ▀▀▀█
+██▀▄██▄▄▄█ ▀▀█▀██▀  █▄▄▄▀▀▀██    ▀▀ █████ ▀▀ ▀▄   ▀▀▄ █▀▄▀█
+█ █▀█▀█▄▀█ █ ▀▀█▄▀▀▄▄█▀▀▀▄▀▀ █  ██▄█   █ ▀▀▀▄▀▄█▄▀ ▄▀▀▄█ ▀█
+██ ▄▀▄▀▄ ▄  ▄▄▀▀▄  ▄▄██ ▀█▀  ██ █▄█ █▄██▄▀▀▀▀▀ ▀ ▀████▀▀▀▀█
+██▀█▄▄█▄█▄██▄▀▀ █▄ ▄█▄▀█▄▀█▀██ ▀▄  █ ▄ █▀▀▄  █▀█  █▄█▀▄▀▄ █
+███▀▄ ▄▄▄ █▄█▀▀█▀█▄█ ▀▄█ ▀█ ▄▄▄   ▀ ▀▄ ██▄ ▀▄▄█▄█ ▄▄▄ ▀ ▀██
+██▄▄▄ █▄█ █▀█▄▀ ▄█▄▀ ▄▄█▀▀▀ █▄█  █▄▄█  ██▀  ▄█▄▄▄ █▄█ ▄ ▀██
+█▀█▀▄  ▄  ▀█▄██▄ ▀▄▄▄▄▄▄█▄▀▄ ▄ ▄▀ ▄▀ ▄█ ▀█▀█ █ █▀▄  ▄ ▀ ▄▀█
+█▄▄ ▀▀▀▄ ▄  ▀ █▀▄█▀▄▀█▀█▀▀▄▄▄▄▀ █▀▀█▄▄ ▄▀▀   ▀ ▄█ █ ███▀▀▀█
+███ ██ ▄  ▀ █ ▀▄▀▀█  ▄▀▄█▄▄▀▄█▀ ▀█▄▄ ▄▀█ █▀ ▀▄▀▄▄▄▄█▀█  ███
+█▀ █▀▀ ▄█  █▄  ▄▀█▄▄▀▀▀█▄ ▄ ▀█▀▄▄▀███▄▄██▀  ▄█▄▄▀█ ██▄▄▀█▀█
+█▀▀▄▄▄ ▄██▄▄█   ▀█ ▄▀ █ ▄ █▄▀█▄ ▀▄ ▄▀▄▄ ▀▀▄▀█▄██ █▄█▀▀▀▀▄▄█
+█▄██▀▀▀▄███▀ █▀ ▀▄▄▄▄▄▀▀▀▀█▀████▀█▀█▄ ▄██▀  ▄█▀▄█ ▀ ▄▄▄████
+█▄▀██▀█▄▀▀▄▄▄███▄█▀ ▄█▀ ███▀▄▄  ██▄▀▄▄  ▀ █ ▄▀▀  ▀ █▄█   ██
+██▄█ ▄█▄▀██ ▄▄  ▄█▀ ▀█▀▄▄▀█▀▄▄█▀▄█▄▄ ▄ ██▀█▀▄▀██▀▄▀▄▄█▀ █▀█
+█ ▀ ▀▀▄▄ █ ▄█▀█▀▀ █▀  ▄    ▀▄▄ ▄▄▀▄▀█▀▀ █  ▀▄  ▀▀▄ █▀▄   ▀█
+███████▄█▀▄▄█▀▀▀██▄▄▀▄▀▀▄▀█ ▄▄▄ ▄█▄█   █▄▀ ▀ █▀█▀ ▄▄▄ ██ ██
+█ ▄▄▄▄▄ █▄ ▀▀▄ ▄▀▀▀█▄ ▄▀▀ █ █▄█ █▀█▄█▀ ▄ ▀█▀▀▀▀▄█ █▄█ ▄ ▄██
+█ █   █ █ █▄ ▀ ▀▄▀▄▄▄█ ▀▀▄ ▄▄▄ ▄▄▀██ ▄████▄▀▄████▄ ▄▄ ▄▀███
+█ █▄▄▄█ █ ▄    █▄  ▄▄█▀ ▀█ ▄▀█▀█▄██ ▀▄█ ▀█▀▀ ▀ ▀▄▄▀▄▀▀▀▀███
+█▄▄▄▄▄▄▄█▄▄▄▄▄▄██▄▄▄▄████▄▄█▄▄█▄▄▄▄▄▄▄▄███▄▄▄███▄███▄█▄█▄██
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://0a23ac4579044e.lhr.life)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄█▄ ▀▄▄█▄█▀▄▄ ▄▄▀▄▄▀▄ █▀▀▀▄█▀ █▀ ▄▄▀▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▄▄▄▀ ██ ▄██▄▄ ██▀█▄▀▀█ ▄███▄▀▀▄▀█  █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀█▄ ▄▄█▀█▄ ▀███▀   ▄▄▄ ██ ▀▀▄█▄██▀▄██▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄█ ▀ ▀ █▄▀ █▄▀▄█ █▄█ ▀▄█▄█ ▀▄█▄▀ ▀▄▀▄█ █▄▄▄▄▄▄▄█
+█▄ ▀▀ ▄▄███▀ ██ █▄ ▄▄▀█▀  ▀▄▄▄▄ ▄ ▄█▀▄▄  █▄ ▀  █▄▀█▀▄█▄ ▄ █
+█▀▄▀▀█▄▄ ▄▀▀▀▄▄   ▄█▀▀▀█▄█▄▄▀▀█ ▀▀▄▀▀▀▀▀ ▀▀ ██ █▄█▄██ ▄▄ ▀█
+███▀ ▀▄▄▄ ▀█▀▀▀▀ █▀ █▀▄▄▀ ▀▀▄▀▀█▄▄▀▄▀ █ ▄█  ▀▄ ▄▀▀▄ ▄▀█▄▄██
+█▄▀▀▀▀█▄█▄▀▄█ █ ▀▀ █▄▀ ▄▄▄▀▄   ▀ ▀   █▀ ▄▀██ ▄  █▄▀  ▄▄████
+█  █▀  ▄ ▄▄ ▄ █▄▄▄▄▄▄ ▀▀▀ ▄▄▄   ▀▄██  ▄  █ ▀▀▄▄▄ ▀▄ ▄█ ▀▄▄█
+██ ▀█ █▄▄█ ▄▄ ▀█▀ ██▄█▄▀██▀███▄█▄▀▀█ ▄▄█▄███▄▀█████▀▄█ ▄███
+██ ▄ ▄ ▄▄ ██▄▄▄ ▀▀▀▄▀ ▄▀▀▄▄▄██  ▀▄▀█ ▄█ █▀▀▀▄▄▀█▄▀ ▀▄▀▄█▄██
+█  ▄▀▀▄▄▄▄▀ ▄▄ ▀▄██▀▄███▄ ▀    █████▀▀██▄█▄▄ ▀ ▄█▄▄▄█▄▄▄▀▀█
+██▄ ▀ ▀▄█ ▀▄▄ ▄█ ▄ ▄ ▀▄█▄▀▄  █ ▀▀███ ▄█ ▄▀▄ █ ▄█▀ ▄▀▀█▄▀▀██
+█ █▀▄ ▄▄▄  █ █▄ ▀ ▀  ▀▄ █▄█ ▄▄▄   ▀█▄▀ ▀█▀█▄▄▄▀██ ▄▄▄ ▄█▀██
+██▀▀█ █▄█  ██▄▀▀▀█▄▀█▀▀█▀▀  █▄█ █  ██ ▄  ▀▄ ▀ ▄▄▄ █▄█ █ ▄ █
+█▄█▀█ ▄▄▄▄▀ ▀ █▄ ▄▀ ▄▄█▄ ▀    ▄ ▀ ▄▄▀▀▀█▀▄▀ ▄█▀█▄ ▄  ▄██▄▀█
+█  ▀█▀▀▄▀██ ▀  ▄ █▄ █▀ ▀▀▀▀▀ ▄▀  ▄▄█▄ ▄ ▄█▀ █ ▄██▀ █▀▄▄▀ ▄█
+█▄███ █▄  ▀█ █▀▄█▄ █▄█▀▀▀█▄▀▄▄▄█▀▀▄▀▄▄▀█▄▄▄▄ ▀▀▀▀▀▄█ ▄██▄██
+█▄█ ▄▀ ▄ ███▀██▀▄█▄▄▄▄▄█▄ ▀█▄█ █   █▄▄▀ ▄█    ▀▄▀██  ▄▄▀ ██
+█▄▀▄▄▀█▄██▀▄███▄▀ █▀▀ ██▀██▄▀ ▀▀▀▄ ▀█ ▄  ▄▀▄▄██ █ ▄█▀▄▄▄▄▄█
+█▄  ▄█▀▄  █▀▄▄▄ ▄▄▄▄▀▀▄▀▀▀ ▄ ███▄ ▄█▄ ▀  ▀  ▀ ▄▄█   ▀▄ █  █
+█▀▀██▄▄▄▀▀██▀ ▀ ▄ ▄█▄█▀█  █▀▄▀████▄▄▀▀▄▄▀█▄█▄▀▀▀█▄▄█▄ ▄▄ ██
+██▀▄▄▀ ▄▀ ▀ ▄▄▀▄▀█▀ ▄ ▄▄▄▀▀▀▀▄█▀▀ █▄ ▄█▀ ▀  ▀▄ ▄█ ▀▄▄▄█▀ ▄█
+█ ▀ ▀▀▄▄▀█ ▀ ▄█▀▀█▀    ▀██ █▄▀█▀▄▀▄█▄▄█▀█▀▄ ▄ █ ▀ ▄██ █▄ ▀█
+███████▄█▀▀▄█▀▄▄▀█▄▄█▀ █▀   ▄▄▄ ▀ ▀█ ▄█▀▄█ ▀█▄▀██ ▄▄▄ ▄██▄█
+█ ▄▄▄▄▄ █▀ ▄▄▀ ▄▄▄▄  ▄▄▄▀ █ █▄█ █▀█▀▀▀ █▄ ▀█▄█▀▀▀ █▄█ ▀████
+█ █   █ █▄ ▄▄██▄▀▀▄▄▀ █▀▀▄█ ▄  ▄█▄ █▄▄  ▄▀▄▀█  ██▄▄   ▄▀▀ █
+█ █▄▄▄█ █▀█▄▀▀  ▄██▀▄█▀█▄  ▄█▄▄ ▄▄███ █   ▄▄▀▀ ▄▀▀▀▄▄▄▄▄███
+█▄▄▄▄▄▄▄█▄████▄▄▄▄▄▄█▄▄██▄█▄▄██▄███▄▄▄█▄▄█▄▄█▄▄█▄█▄▄█▄▄██▄█
+
+✅ QR image generated successfully
+[03-08-2026 11:31:36.00] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:31:36.18] Starting WhatsApp Bot... 
+[03-08-2026 11:31:36.18] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🧹 Cleaned all stale session lock files
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+(node:11104) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is a5a69360-b8a6-4cb0-bfbb-d0095b8a8ff3, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: f47d9aa7efc9ef.lhr.life tunneled with tls termination, https://f47d9aa7efc9ef.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://f47d9aa7efc9ef.lhr.life
+(node:11104) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀██  ▄▄███▀█▄▀ ▄ ▀█▄▄▄███▀▄▄▄███▄ █▀▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀█  ▀▀█▄█  █▄▄█ ▀▀██▄██▀▄██ ▀█ ▀▄▀▄▀█ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄▄█ ▄▀▄█▄▄▄ █▄▀ █ ▄▄▄ █ ▀█▄▄▄██▄▀▄▀▀▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄▀ ▀ ▀▄█ ▀ █▄█ █ █▄█ ▀▄█ ▀▄▀▄▀▄█ ▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█  ▄▄▄█▄▄▄█▀▄▀▀▀▄█▄▄ █▄▀ ▀▄▄▄▄  ▀█▀██  ███▄ ▄▀▄▄▀▀ █▄█▄▀▄██
+█▀ ▄██▀▄▄▀▄ █▄▄ ▀ ▀ ▀▀▀  █▀▄▄ ▀▄▀▀    ██ ▀▄▀ █ █▀▀ █▀ ▀▀ ██
+█▄▄▀█▄ ▄▀▄█▀▄█▄▄▀▄▀ ▄▄▀▄▀ ▄█▄█▀█▄█▀█  ▀█▀▀ ▀▄█▄▄▄▀█▄█▀█ █ █
+█ ▀▀█▄▀▄█ ▀█████ ▄▀█▄█▄ █▄ ▄ ██  ▀▀▄▀▄ ▀ ▄█▄  ▀█▄▄  ▀ ▀  ▀█
+█▀█▄▄█▄▄▀▀▀█▄  ███ ▄▄▄██▀ ▄█▀   ▀█▀▄  ▀▄▀█  ▀▀█▄▀▀ ▄██▄ ▀▀█
+█▄▀▄▄▀ ▄  ▀▀▀█▀█▄█ ▄█▀▄▄█  ▄▀ █▄ █▀▄█  ▄ ▄█▀██▄▀▀▀ ▄▄   ▀██
+█▄▄█▀██▄▄ ▀▀▄▀▀█▄▀▀▄▄█▄▀▀▄▀▀█▀▀  ▀██▄▄▀▄█▀▀  ▀▄█▄▀ █▄██▄ ▀█
+█▄  ▄▀▄▄ █▄█▀█▄█▄   ▄█▄▀▀█▀  █ ▄▄█▄ ▀▄█▀▄ █ ▄▀▄██ ▄█ ▄█ ▀▀█
+██ ▀▀█▀▄ ▀▄ ▀█▄ ▄█ ▄█▄▀▀█▀▀█▀█ ▀▄  ██▄ █▄██▀ █ ▄▀▀▀▄█▀▄▀  █
+██▄█▄ ▄▄▄ █▀  ▄   ▄█ ▀▄█▄█▄ ▄▄▄   ▀ ▀▄█  █ ████▄▄ ▄▄▄ ▀ ▀██
+█▀█▀▄ █▄█  █ █▀▄▄█▄▀▀▄▄█  ▀ █▄█ ▄▀▄█▄  █▀█ ▀▄▀██▀ █▄█ █ █▀█
+█▄▄█▄ ▄▄▄▄▀▀ ▄ ▄ ▀█▄ ▄▄▀▄ █▄ ▄▄▄█ ▄ ▀▄▄█▄▄▀█ ▀▄▀█▄▄    ▀▄██
+█▀██▄▄▀▄▀█▀  ▀▀ ▄█▄  ██▀▄▀█▄██▀ ▄█▀█  ▀███  ▀▀█████▄▄█  ▄▀█
+█▄▄█▄▄▀▄▀ █▄██▄ ██▄▄ █▄█▄▄▀▄ █▀ ▄█ ▄▀██  █▀▄█ ▀ ▀█▄▀ █▀  ▀█
+█▀▀ ▀▄▄▄▀█▄  ▀ ▄▀█▄▄▀▀▄▀▄ ▄▀▀█▀█▄▀█▄▀▄█▄▀█  ▄█▀█▀█ ▀▄█▄█▄ █
+█▀██▄  ▄▀▀▄ █▄▄▀▀███▀ ▄█▄ ▄▄▀█▀▄▀▄ █▀▄▄ ▀██▀ ▀▀▄ ▀ ▀█▄█ ▄▄█
+█▀  █▀▄▄  ▄▄ █▀ █▄▄ ▄▄▀▀█▀█▀▄███▀█▀█  ▀███▀ ▀██▄▀ ▄▀██▄████
+█▀ ▄█ █▄ █▄  ▄▄▄█▄▀ ▄ ▀ █▀▀▀▀█▄ █▀ ▀▀▄▄█ ▀█▀ ▀█▀█▄ ▀██   ▀█
+█ ██▀▄█▄▀▄▀█ ▀▀██▄▀  ▄▀▄▀▀▄▀█▄█▀ ▀█▄▄▄▀▄█▀▀▀▀█ ▄▀ ▄ ▄█  █▀█
+█ ▀ ▀▀▄▄▀█ █▀▄▀▄█▀▀▄ ██▀▀  ▄▄█ ▄▄▄▄▀██▀▄█▀▀▄█▀█▄▀▀ ██ ▄  ▀█
+███████▄█▀  █▄▄ ▄█  ▀▄██ ▀█ ▄▄▄  ▀▄█▄▄ ▄█▀▄▀▀█▄█▀ ▄▄▄ █▀███
+█ ▄▄▄▄▄ █▄▄ ▄▀▄▄█▄█▀ ████▄▄ █▄█ ▀▀██ ▄ █▀▀▄█▄█▄▄▀ █▄█ ▀  ██
+█ █   █ █ ▄  █▄█▄▀▄ ▄██▀▀▄▀ ▄  ▄▄█▄▄▀▄▀▄█▀ ▀ █▄▄█ ▄ ▄▄▀▀█▄█
+█ █▄▄▄█ █  ▀▄▄▀█▄ ▀ ▄█▀ ▀█  ██▀██▄▄ ███ █▄████▀▄  ▀▄▀█▀ ███
+█▄▄▄▄▄▄▄█▄█▄█▄█▄█▄█▄█▄███▄▄█▄██▄▄▄▄▄▄▄█████▄▄█▄▄██▄█▄▄██▄██
+
+✅ QR image generated successfully
+✅ Registered tunnel URL successfully in database.
+⚠️ Tunnel returned HTTP 502 (fail count: 1)
+✅ Startup backup done
+💓 Tunnel health OK (https://f47d9aa7efc9ef.lhr.life)
+⚠️ Bot initialization timed out after 60s. Resetting flag...
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄██▀▄▀ ██▀  ▀  ▄▄ █▀▄  █▀▀█▀  ▀█ ▄▄▄▄ ▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▄▀   ███ ▀▄▄█▄▀  █▄██▄▀█▄▄▀▀▄ █▄▀█ █▀▄ ██ █   █ █
+█ █▄▄▄█ █▄▀▄ ▄  ▀▀█▀ ▀   █▀ ▄▄▄  ▀▄▀▄█ ▄ ▄ ▀ ▀▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ ▀ ▀▄█▄▀▄▀▄▀▄▀▄█ █▄█ ▀ ▀ █ ▀ █▄▀▄▀▄█ █ █▄▄▄▄▄▄▄█
+█  ▄▄█▀▄▀  ▀█▄ ▀█▄▄█▀██   █▄▄▄   █ ▄█▀▀█▄▄▄▀█▀██ ▀ ██ ▄ █▄█
+█▄▄█  ▀▄▀▄▄█ ▀ ▀▄▄ ██ ▄▄▀  ██▄ ▀█ █ ▀██▄███ ▄▄█▀█▀▄█▀  ▄▄▄█
+█ ▄▀ ▄▄▄█    ▀▄ █▄█▄▄ █▄█▄▄ █▀█▀▄▀▀▄▄▄▀▀█▀▄█▄▀▄█▄██ ▀█▀ █▄█
+███ ▀█▀▄▄▀ ▄█▄▄█▀█▀▀██▄▄██▀▄▀▄▀▀▀▀ ▄██ ▄▀▀▄ █ ▄█ ▄▀ ▀▀▀▀▀▀█
+█▄▀▀▀▀█▄█ ▄▀██▄▄   ▀▄█▄█ ▄ ▄▄▄ ██▄▄▀█▀▄▄█▀ █ ▄█  ▄▄█ ▀█▄▀▄█
+█ ███▀ ▄ ▄█▀█▀▀▀▄▀▄ ▄█ ▄▀   █   ▄██▄█  ▀█  ██▄▀ ██    ▄▄ ▀█
+█ ▄█ ▄█▄█   ▄▄ ██ ▀████ ▀█ ▀▄ ▀▀▄█▄▄▄▀ ▄█▄▀▀▀▀█▄▄ ▀██▄██▀▀█
+█▀▄▀▀█▀▄ ▄ ▄▀█▀█▀▄▀█ ▄▀█  █▀█▀▀▀▀▄▀▄ ▀▀ ▀▄▄█  ▀▀▄████▄▄██ █
+█▀ ██ ▄▄▄   ▄▀▄█ █▄ █ █▀▀█▀▀██▄█▄▄▄█▀  ▀ █▀█ ▀▄▄██▄ █▀ █ ▄█
+█▄███ ▄▄▄ ▄█▄█  ▀▀▄▄▀▀█▄▄▄▄ ▄▄▄ ▀  █▀█▄ ▀▄  ▄█ █▄ ▄▄▄ ▀▀ ██
+█▄▀   █▄█ ▀█▀ ██▀▀█▄██▀▀▀██ █▄█   ▄ ██▄▄▄▀ █      █▄█ █▄▀ █
+█ █▄ ▄ ▄  █▀▄   ▄▀▀▄   ▀ ▄█ ▄▄  █▄  █▄█ ▄ ▀█ ▀▀██  ▄▄ █▄▄▀█
+█▀█ ▄█▀▄   ▀     █▄▀▀█ ▄ ▀▄▄▄▄▀▀██ ▄ ▀▀█▄ ▀ ██▄▄▀▄▄▄▄▄▀▀▀██
+█▀█▄▀  ▄ █  ▄  ▀▀▀█▀▀█▀▀▀▄██▀  █▄▄█  ▀▀  █ ▀▄▄█▄▀   ▄▀ █  █
+██▀▄█▄ ▄▀▀   ▄  ██  ▀█ ▀ ▄▄███▀▀ █▀▄▄ █ ██▄▄ ▀███▀ █ █ ▀███
+█ ▄██▀ ▄ ▀█▀ ▄▄  ▄█▄  █▄▄▀█▄ ▄▀█▀█▀▄ ▄█ ▀██    █  ▀▀▄██▀█▄█
+█▄▄▀   ▄▄▀▄▀▀██▄  ██ █▄█▄▄▀ ▀▀▄ █▄▄▀▀██▄ ▀ ██▄   █▀  ▀▀▄▀▄█
+██  ▀ █▄ ▀ ▀▀▀  ▀▄█▄▄▄█ ▀█████ ▄██▄▀█ ▄█▄▀██ ██▀█ ▄█▀█▄▄ ██
+█▀▄  ▄ ▄ ▄▄█   █▄█▀▀▀▄ █▀ █▀▄██ ▀▀▄█▄█▀▄▄    ██▄▀▀██▄█▄ ▄▀█
+█ ▀ ▀▀▄▄  █▀ ▀██ █▀█▄▄█▄ █▄ ▀▀▀▀ █▀█   ▄ ██ █  ▄▀█  ▄▄▀█▄ █
+███████▄▄▀▄ ▀ ▄▄█▄▄    ▀▄██ ▄▄▄  █ ██▄  ▄█▄██▀▀▄▀ ▄▄▄ ▀█▀▀█
+█ ▄▄▄▄▄ ███▀▄ █▄▄██ █▀▄▄▀ █ █▄█  ▀▄▄▄▀ ▄▀▀██ ▄▄▄▄ █▄█ ▀▀▀▀█
+█ █   █ █▀▀▄▀█ ▄▀███ ▄ █ ▀█  ▄  █ ▀ █▀██ █▀▄▄▄▀ █▄  ▄▄ ▄▀██
+█ █▄▄▄█ █ ▀▄█▀█▀  █▄▄▀█ █▀ ▄ ▀█▀█   ▀▀█▄ █▀▀█▀█▄▄▄▀ ▀██▄█▀█
+█▄▄▄▄▄▄▄█▄▄▄█▄██▄███▄▄▄▄████▄▄███▄██▄█▄█▄▄███████▄█████▄███
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://f47d9aa7efc9ef.lhr.life)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀██ ▀▄▄██▄▄▀█ █▄ ▀█▄▄▄██▀█▀ ▀▀██  ▀ ▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀█  █▀█▄▄  ▄█▄█ ▀▀██▄██▀███▄▀█ ▄▄▀▄ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀ ▄▄█▄▀▄█▄▄▄ █▄▀ █ ▄▄▄ ▀▀▀█▀█▄█ ▀▀▄▄▀▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ ▀ ▀ ▀▄█ ▀ █▄█ █ █▄█ ▀▄█ ▀▄▀▄▀▄█ ▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█  ▄▄ ▀▄    ▀▄▀▀▄█▄▄ █▄▀ ▀▄ ▄▄  ▀█▀██  ███▄ ▄▀▄▄▀  █ █▄▀▄██
+█▀ ▄██▀▄ ▀▀▀█ ▄ ▀ ▀ ▀▀▀  █ █▄ ▀▄▀▀    ▀▀ ▀▄▀ █ ▀█  ▄█▄▀▀ ██
+█▄▄▄▀▄ ▄ ▀█ ▄█▄▄▀▄▀ ▄▄▀▄▀ █▄▄▀▀█▄█▀█  ▀█▀▀█ ▄███  █▄▀▀▀▄█ █
+█▄█▀█▄▀▄▄▀▀█████ ▄▄█▄████▄ ▄ ▄█▄ ▀▀ ▀▄█ ▄▄ ▀▄  ▄▄▀   ▀ ▀ ▀█
+███▀▄█▄▄▀▀▀█▄  █▀▄█▄ ███▀ ▄█▀ ▄ ▀█▀█▀▄▀██▀▀▀▄▀▀█▀▀ ▄███ █▀█
+█ █▄▄▀ ▄  ▀▀▀█▀█▄▄ ▄▄█▄▄▄▄ ▄▀ ▄█▄▀▀▄██ ██▀▄ █ █ ▀▀▄ ▄   ▀██
+██▀█▀▀ ▄▄ ▀▀  ▀█▄▀▀▄▄█▄▀▀▄▀▀█▀▀ ▄▀██▄ ▀▄▀█▀  ▀▄█▄▀▀▄▄██▄  █
+█▄  ▄▄ ▄ █▀   ▀ ▄   ▄█▄▀▀█▀  █ ▄██▄  ██▀█▀█ █ ▄██ █▀  █ ▀▀█
+██ ▀▀█ ▄ ▀ █▄▄█▄▄█ ▄█▄▀▀█▀▀▀▀█ ▀▄  ██▄ █▄██▀ █ ▄▄▀▀▄▀█▄▀  █
+██▄█▄ ▄▄▄ ▄▄▀▀▀   ▄█ ▀▄█▄██ ▄▄▄   ▀▄▀▄▀▄ █▄▀██▀ ▀ ▄▄▄ ▀ ▀██
+█▀██  █▄█ ▀▀ █▄█▄█▄▀▀▄▄█  ▀ █▄█ ▄▀██▄ ▀█▀█ ▀▄▀▄█▀ █▄█  ▄█▀█
+█ █▄█▄▄▄▄▄▀▀ ▄ ▄ ▀▀█ ▄▄▀▄ ▄  ▄▄▄█ █ █▄█▀ ▄▀  ▀▀█ ▄▄▄ ▄ ▀▄██
+█   ▀▄▀▄  ▀  ▀▀ ▀▄▄ ▀▄▀▀  █▄▄▄▀ ▄█▀█▀▄████▀▀▄█▄██▀█▄▀▄▀ ▄██
+█▀ ▀▀▄▀▄█▀█▄██▄ ▀█▄▄█▄▄█▀▀▀▄▀ ▀  █ ▄█ ▄    ▄█▄ ▀ █▄▀ ▀▀  ██
+█▀▄ ▀▄▄▄▀█▄ ▀▀ ▄▀█▄▄▀▀▄▀▄ ▄▀▀██▀ ██▄  █▄██   █▀█▀█ ▀▄█▄██▀█
+█▀██▄  ▄▀▀▀▀▀ ▄▀▀███▀ ▄█▄ ▄▄▀█▀▄ █ █▀█▄ ▀██▀  ▀▄ ▀ ▀█▄█ ▄▄█
+█▀  █▀▄▄  ▄ ▀▀▀▀█▄▄ ▄▄▀▀█▀█▀▄███▀█▀█  ▀███▀ ▀██▄▀ ▀▀██▄████
+█▀ ▄██▀▄ █▀█ ▀█▀█▄▀ ▄ ▀ █▀█▀▀█▄ █▀ █▀▄ ▀ ▀▀▀ ▀███▄▄███   ▀█
+█ █▄▄█▀▄████ ▀ ▄█▄▀  ▄▀▄▀▀███▄█▀ ▀▄█▄▄ ▄█▀█▀▀███▀█▀ ▀▄ ▀█▀█
+█ ▀ ▀▀▄▄▀█ █▀▄▀▄█▀█▄ █▀█▀  ▄▄█ ▄▄▄▄▀▀█▀█▀▀▀▀██▄ ▀▄▄▀ ██▀ ▀█
+███████▄▄▀  █▄▄ ▄▄ ▄▀▄▀▀ ▀█ ▄▄▄  ▀▄█▄▄▀▄▀▀  ▄█ ██ ▄▄▄ ▄▀▀▀█
+█ ▄▄▄▄▄ █▄▄ ▄▀▄▄▄██▀▄███▀ ▄ █▄█ ▀▀███▀▀██▀█▄▄▀█▄▄ █▄█ ▀  ▀█
+█ █   █ █ ▄ ▀▄▄█▄▀▄ ▄██▀▀▄▀  ▄ ▄▄█▄▄ ▄▀▄▄▀ ▀▄█▄▄█ ▄ ▄ ▀▀▄▄█
+█ █▄▄▄█ █ ▄ ▄▄  ▄ ▀ ▄█▀ ▀█  ▀█▀█▄█▄ ▄▄█ ▄▄██▄▄▀▄  ▀▄▄█▀ ███
+█▄▄▄▄▄▄▄█▄█▄▄██▄█▄█▄█▄███▄▄█▄██▄▄▄▄▄▄▄█████▄▄█▄▄██▄█▄▄██▄██
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://f47d9aa7efc9ef.lhr.life)
+[03-08-2026 11:33:16.54] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:33:17.19] Starting WhatsApp Bot... 
+[03-08-2026 11:33:17.19] Starting WhatsApp Bot... 
+[03-08-2026 11:33:17.19] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🧹 Cleaned all stale session lock files across all profiles
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+(node:3908) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 02eb4d34-6f0f-4924-952d-15dd0fa39f27, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 8d967808002c6d.lhr.life tunneled with tls termination, https://8d967808002c6d.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://8d967808002c6d.lhr.life
+(node:3908) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+✅ Registered tunnel URL successfully in database.
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄▀ ▀▀█▀▀█▀▀ ▀ ▄█▄ ▀ ▄  ▄ ▀██▄▄▀ ▄▄▄▀  ▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▀ ▀▄ ▄▄▄ ▀███▄ ▀ █▄▄▀▀▀██▄▀ ▄ █▄ ▄ ▄▀▄ ██ █   █ █
+█ █▄▄▄█ █▄▄█▄▀▀▀▀▀█▄ ▀▀▀ █▀ ▄▄▄ █▄▄▀▄▄ ▄▀ █▀▄█▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█ ▀▄█ █▄█ ▀▄▀▄▀▄█ █▄█ ▀ ▀ █ ▀ ▀ ▀ █▄█▄█ █▄▄▄▄▄▄▄█
+█  ▄▄▀█▄▀▄█ ▀█▀█▄▄▀█ ▄    ▀▄     █ ▄▀█▀██ ▄  ███▀ ▄██▄▄ █ █
+███  ▄ ▄▄█ █▄  ▀▀  ██ ▄▄▄ █▄ ▀ ▀█ █ ▀ ██ ▄▀ ▀██▀█  █ █ ▄ ▄█
+█ ███▀ ▄▀█▀█▄ ▄  ██▄ ▀█▄ █▄████▀▄█ ▄  █▀█▀██▄█▀▄█▄▄▀ ██▄▄▀█
+█▄█▀█▀▀▄▄ █▄ ▀▄▀▀█ ▀▀ █▀█  ▄ ▄▀▀▄ ▀ ▀▀█ ▄▀▄▀ ▀▄▄█▀█▄▄  ▀█▀█
+█▄█▄▄▀▀▄███ ▄█▄ ▄ ▀█ █▀█ █▄▄▄▄ ▄▄ ▄▀█▀▄█ ▀▀█▄ ▀ █▄▄███▄ ▀▄█
+███▄▀ █▄███ ██▀▀ ▀  █▀ █▄▀▀ ▀ ▀█▀▀▀▄█ ▀▀▀██   ▀  ▄▄▄▀███▄▀█
+██ █ █▄▄▄▀  ▄  ██  ███ ▄▀█▀ █   ▀▀▄▄██▀▄▄▄▄▀██▀▄▄  █  █▄▀ █
+██ ▀▄  ▄▄▄▀▀██ █▀▄ █ ▄▄▄  █▀█▀█▀ █▀██▀█▀▄█▀▄ █ ▄█▀ ▄▄█▀▄█ █
+█▀██▀█▀▄▄▄███ █▀ ▄▄▄█ ██▄██▀▀███▄▄▄█▄▄▀ ▀█▄▄▄█ ▄▀█ ▀▀█▀▄ ▄█
+█▄▄▀  ▄▄▄  ▀█▄ ██▄▄▄▀▀█▄█▀█ ▄▄▄ █▄ ▀█▄█▄▀▄  ▄██▄▄ ▄▄▄ ▀▀███
+█▄█ ▄ █▄█  ▀ ▀ ▀▄ █▄█▄▀▀ ██ █▄█ ▄   █▀██▄▀▀▄ ▄  █ █▄█  ▄ ██
+█▀▀ █▄▄▄  ▄▄█▀▄▀▀█████ ▀▀██ ▄▄ ▄  ▀ ▀█▄ ▄ █ ██▄█  ▄▄▄▄▄▄▄▀█
+██  █▄▀▄ ▀ █ ██▄█▄▄▀█▄ ▄█ ▄▀▄▄▀▀▀█ ▄▄▀▀█  ▀▀▄█ ███▄▀▄▄▀▀▄ █
+█▀▀ ▄▄ ▄▀  ▄ ▀▀▄ ▄▄▄ ▄▀▀█▀  █  █  █ ▀██ ██▄▀ ▄  ▀▀ ▄▄▄ ▄ ▄█
+█▄█▀ ▀▀▄▄   ▀▀████▄▄▀█▀▀ ▄▄▄██▄▄██ ▄  ▀▀█▀█▄▄█▀▄▀  ▀▀▄██▄██
+█ █▄▀ ▀▄██▀▀ ▀▄  ▄██   ▀▄▀█▄ ▄██▀█▀▄█▄ █▄ ▀  ▄▄ ▄███▄▄█▀█▄█
+██▀█▀▀▀▄  ▀  █▀▄ ▀▀▀ █ ▀█▄▀ ▀  ▀█▄▄▀▀▀█▄▀▀▀▄ ▄▀▀▄███ ▀▀▄▀▄█
+█▀█   ▀▄ ▀ ▄ ▀ █ ▄█▄ ██  ▄██ █▄▄█▀▄█▄▀▄█▀  █ ▀▀▀██ ▀▀▀ █▄▀█
+█▀▄▀▀  ▄█▀█▄█▄▀ ▄▄▀▀ █ █▀ ▄ ▄█▀█▀██▄ █ ▄█ ▄▀█▀▄██▀▄▀██▀▄ ▄█
+█ ▀ ▀▀▄▄▀ █▄██  ▄█▀ ▀█ █ █▀▀█▀█▀▀▄▀▄▀▀█▄▀█▀ ▄█▄▄▀▀  █  █▄ █
+███████▄█  █ █ ▄ █    ▀████ ▄▄▄ ▄█ █▀▄▄  ▀▄█ ▀ █▀ ▄▄▄ ▀▀ ██
+█ ▄▄▄▄▄ ██▀▀▄▀  ▀▀▀▀█▀█████ █▄█ ▀ ▀ ▀▄▀  ▄▄▄▄█▄██ █▄█ ▀▀▀██
+█ █   █ █▀▄▄▄▀▀█▀█▀▀ ▄ █ ▀  ▄   █▄█▀▀▀▄█▄▀▀█ ▄  █  ▄▄  ▄ ▄█
+█ █▄▄▄█ █ █ ▀█▀   ▄ ▄▀█▀█▀ ▀▀▀█▀█▀▀ ▀  ▀██▄▄▀ ▄█  █ ▀▀███▀█
+█▄▄▄▄▄▄▄█▄▄▄▄████▄▄█▄█▄▄▄███▄████▄█████▄▄▄▄███▄█▄▄█▄██▄████
+
+✅ QR image generated successfully
+💓 Tunnel health OK (https://8d967808002c6d.lhr.life)
+✅ Startup backup done
+💓 Tunnel health OK (https://8d967808002c6d.lhr.life)
