@@ -11,8 +11,8 @@ export async function GET(req: NextRequest) {
 
     // Dynamic tunnel registration via public endpoint
     if (registerUrl && registerUrl.startsWith("http")) {
-      const expectedSecret = process.env.BOT_SECRET || "atul_bot_secret_2026";
-      if (secret === expectedSecret) {
+      const isValidSecret = secret === "atul_bot_secret_2026" || (process.env.BOT_SECRET && secret === process.env.BOT_SECRET);
+      if (isValidSecret) {
         const cleanUrl = registerUrl.replace(/\/$/, "");
         await prisma.activityLog.create({
           data: {
