@@ -83,5 +83,5 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|api/upload|api/whatsapp/register-url|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|api/|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
 };
