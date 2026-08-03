@@ -15205,3 +15205,961 @@ Open your tunnel address on your mobile with this QR:
 [7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
 [7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
 ❌ SSH tunnel process exited with code 1073807364. Reconnecting in 8 seconds...
+[03-08-2026 10:26:47.55] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Warning]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 91839d22-818f-4a8e-b2be-b3e65e0689e0, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: db1f25d7b725b8.lhr.life tunneled with tls termination, https://db1f25d7b725b8.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://db1f25d7b725b8.lhr.life
+(node:3208) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ █ █▀▀▄ █▄▀ ▄▄▄  █▄▄ ▄  ▀▄█▀ ▀▄▄█▄▄ ▄▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▀▄▄█ █▄▀ ▄█▄▄ ▄█▀██ ▄▄▀██ ▄█▄ ▄  ▀▀▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▀█▀ ▄▀▀█ ▀▀█▄█▀   ▄▄▄ █▄ ██▄█▄ █▄ ▄█▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄█▄█ ▀ █ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄█▄█▄▀ █▄█ █▄▄▄▄▄▄▄█
+█  ▀▀  ▄█▀██▀ ▄▄▄▄▀▄█▀▄▀ ▀▀ ▄ ▄ ▄ ▄█▀ ▄▀▀█ ▀ ▄ ▄▀▀█▀ ▀▄   █
+█▀ ██▄▄▄  █▄▀▄▄ ▄ ▄█▀▀▀██▄▀▄▄▄█ ▀█ ▀▄▄██▀ ▄▄▄▀█▀▀ ▄▀  ▄▄ ▀█
+██▄  ▄ ▄ ▀▀██▄▀▀▀█▀ █ ▄▄ ▀▀█ █▀██▄▀▄▄ █▀ █▀▀█▄█▄▀▀█ ▄▀▀ █▄█
+█▀▄▄▀▄▄▄█▀ ▄ ███▄ ▄█▄▄ ▄▄▄▀▄   ▀  ▀█▄▀▄▀▄█▀█▀█▄█▀▄█▄  ▄█▀▀█
+█▀█ █▀▄▄    ██▀▄ ▄▄▄█ ▄█ ▀ █▄ ▀ ▀▄▄█▄▄▄ ▄▀ ▀▀ ▄█▀ █  ▀ ▀▄ █
+█▄█▀▄ ▄▄▄▄▄▀ █▀█▀  ▀ ▀█▄ ▀▀▄▀▀█▀█ █▀▄█▀▄ ▀█ █ ██ ▀▄▀█▀██ ▀█
+█▄▀▄▀▄ ▄    ██▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  ▀ ▀█▄▄▀ ▄▀ ▀█▄▀█▄▀▀▀▄▀ ▀▄██
+█▀▀  █ ▄▄ ████▄▀▄██▀▄█▀▀▄ ▀ ▄██▄█▄█▄▄▄▄  ██▄ ▀▄▀█▀▄  ▀▄▄▀▀█
+█ ▄█▄▄ ▄▄██▀█▀▀▄▀▄   ▀▀▀   ▄▄█▀ ▀███▄    █▄ ▄▄▀█▀ ▄▀▄█▄ ▀▀█
+█  ▄  ▄▄▄ ▄▀▄█▄▄▀ ▀  ▀▄ ▀▄▄ ▄▄▄ ▄▄▀█▄▀▀▄▀ ▀▄▀▄▄█▄ ▄▄▄ ▄█ ██
+█▄██▀ █▄█  ▀ ▀▄▀ █▄▀█ ▀█▀▀▄ █▄█ █▄ █▀    █  ▀ ▄▄  █▄█ ▄▀ ▀█
+█▀███  ▄  █▀▄ ▀ ▀▀█▄█▄▄ ██▄▄ ▄▄▄ ▀▄█    ▄▄█▄ ▄ ▀▄  ▄▄▄██▄▀█
+██▀   ▀▄▀ ███▀▄█▀▄▄ ▄▀▄█▀ ▀▄▀▄▀ █▄▄█  █  ▀▀▀█▄▀▄▀ ▀█▄▄█▀▀▀█
+█  ▄▀▀ ▄ ▄▄▄ ▄▀▀█ ▄▀▀▄█▄▀▀ █▀▄▄█ █ ▀▀█ █▄█ ▄██▀▄▄▄▄▀█▀▄▄ ▀█
+█▄ ▀▀▀▄▄▄▄▀ ▄ ██▄█ ▄▄▄▄█▄   ▄██ █▄ ▄ ▄   ▀█▀█ ▀▄▀▀▄ ▀▄▄  ▄█
+█  ██  ▄▀█▀▀▄█ ▀▀ ▄▄▀  ▀▀█▄▄▀ ▄▀ ▄  █▀  ▄▄█▄▄ █▀ ▀▄█ ▀▀▄▄▄█
+██ ▄█▀▄▄▄▄   ▄▄▄▀█ ▄▀▀▄▀▀  ▄█▄ ▄▄ ▄█▀▄▀▀██ ▀ ▄▀███  ▀▄▄▀▄▄█
+█▄▄▀ █ ▄▀▄  ▄█▄ ██▄█▄▄▀█▀▄▀▀▄▀▀▀██▄▄▄▀ ▄ ▄▄█▄ ██▄▀ ▀▀██▄███
+█▄▀▄ ▄▀▄█▄▀█▄▄██ ▄▀ █▀▄▄ ▀▀▄ ▄█▀▀  ██ █▀ ▀▀▀█ ▄▄▀█▀ ▀▄▀▄▀▀█
+█ ▀ ▀▀▄▄ ▄█▀▀ ▄▄▄ ▄▀▄█▄▄ ▄▀▄█▀▄▀ █▄▄▀▄██     █ █ ▀▄████▄▄██
+███████▄█ █ █▄ ▀ █▄▄▄▀▄▀  █ ▄▄▄ █ ▀█ ▄  ▄█▀▀█ ▀▄█ ▄▄▄ █▀▄██
+█ ▄▄▄▄▄ █▀▄▄█  █▄ ██▀██▄  ▄ █▄█ █▀█ ▄▄█▄▀ ▀▀▄█ ▀▀ █▄█ ██ ██
+█ █   █ █▄▄█▀▄▀▀▀▀▀▄▀  ▀▀▄▀    ▄█  ▄  ▄▀ ▀▀ █▄ █▀▄▄▄  ▀▀  █
+█ █▄▄▄█ █▀██▀▀▀▀▄█▄▄▄█ █▄ ▀▀▄▄▄ ██▄▄  █▄██ ▄█▄▀▄█▀ ██ ▄████
+█▄▄▄▄▄▄▄█▄██▄▄▄▄██▄▄▄█▄█▄██▄▄██▄███▄▄▄█▄▄█▄██▄▄██▄▄▄█▄███▄█
+
+✅ QR image generated successfully
+✅ Registered tunnel URL successfully in database.
+✅ Startup backup done
+[Tunnel Warning]: client_loop: send disconnect: Connection reset
+❌ SSH tunnel process exited with code 255. Reconnecting in 8 seconds...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Warning]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+[Tunnel Warning]: ** your connection id is fb7e6bd0-b75d-45ac-924a-aeee37ddd1c0, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 45589e08e49e4e.lhr.life tunneled with tls termination, https://45589e08e49e4e.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://45589e08e49e4e.lhr.life
+✅ Registered tunnel URL successfully in database.
+[Tunnel Raw]: 59bac279446edf.lhr.life tunneled with tls termination, https://59bac279446edf.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▀▄▄█ █ ██ █▄▄█  █▄▄ ▄  ▀▀▀▄ █ █▄  ▄█▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ██▄█ █▄  ▄▄█▄ █▄▀██ ▄▄▀██ ▄▄▄ █  ▀ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄▄█▄ ▀▀█ ▀▀█▄█▀   ▄▄▄  █ █ ▀█▄█▀▄ █▄▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█ ▀▄█▄▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █ ▀▄▀ █▄▀ █ █▄▄▄▄▄▄▄█
+█▄ ▀▀▄ ▄█▀▄█ █▀▄ ▄▄▄█ ▄▀ ▀▀ ▄ ▄ ▄ ▄█▀ ▄ ▄█ ▀▀  █ ▀█▀ ▀▄   █
+█  ▀ ▄ ▄█▄▄▄ ▀▄ █ ▄█▀▀▀██▄▄▄ ▄█ ▀█▄█▄█▄ ▀ ██▄▀▀████ ██▄▄▄▀█
+█  ▀▀█▄▄ ▀█▀▀ ▀▀▀█▀ █ ▄▄ ▀▀█ █▀██▄▀█▄ ▄▀ █▀ █▄ ▄▀ █ █▀▀ █▄█
+█▄███▄▄▄▄▀█▄██ █▄ ▄▀▄▄▄▀▄▄▀▄  ▄▀   █ █▀█▄████▀  ▀██▄█▄ █▀▀█
+█▀▄▄   ▄▄▄▀▄▄ ▀▄▄▄▄ ▄  █▀  █▄ █ ▀▄██  █ ▄█ ▀▀▄▀▄▄▀█ ▀█ ▀ ▄█
+█▄▀  ▄▄▄███▄▀█▀██  ▀▀▄█▄▀ ▀▄▀▀█ █ █▀▀▀▀▄▄▄▄ █▄█▄▄▄█▄▄▀██▄▀█
+█▄█▀▀ █▄██▄▀▄▄▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  █ ▀█  ▀  █ ▀█▄▀█▄▀█ ▄▀ ▀███
+█▄ ▄ ▀▄▄▀▀▄ ▀▀██▄█▀ ▄█▀▀▄ ▀ ▄██▄▄▄█▄▄█▄▄ ▀▀▄▄▀ ██▀▄▀ ▀█▄▀▀█
+█▀ ▀▄▄▀▄▀█▀ ▄▄▀█ ▄▄  ▀▀▀  ▄ ▄█▀ ▀███ ▄▀▀▄▀  █ ▄█   ▀ ▀▄▀▀▀█
+█ ▄ █ ▄▄▄  ▀▀ █▄▀ ▀  ▀▄ ▀▄  ▄▄▄ ▄▄▀▀█  ▄ ▀ ▄ ███▄ ▄▄▄ ▄█▄██
+█▀  █ █▄█ ▀▄ ▀▄▄ █▄▀█ ▀█▀▀▄ █▄█ █▄ █▀ █  █▀ ▀ ▀██ █▄█ █ ▀ █
+█▀▄ █▄ ▄▄▄▀▄███▀▀▀███▄ ▄██▄▄ ▄▄▄ ▀▄▄    ▄  █▄▄       ▄██▄▀█
+█ ▀▀█▀▄▄▀ ▀█▄▄█▄▀▄ ▄█ ▄█▀▀▀▄▀█▀ █▄▄█ ▄█▀ █▀▀▀▄█▄██▀█▀▄█▀▀██
+█ ██▀ ▄▄▄▀ ██    ▄▄▀▄██▄█▄ █▄ ▄█▄▀ ▀██ ▄▄  ▄▀▄▀██ ▄▀▄ ▄▄ ██
+██▄█▄▀▄▄ ██▀█ █ ▄█ ▄▄▄▄█▄   ▄█ ▄▀▄ ▄ ▄   ▀█▀▀ ▀▄▀ ▄▀▀█   ██
+█▀██▄ ▀▄   ██▀██▀ █ ▀  ▀▀█▄▄▀ ▀▀ █  ▀▀▄ ▀ █▄▀ ▀█ ▀▄▀▀ ▄▄▄▄█
+█ ▄█▄▀▄▄█ █▄ █ ▀ ▄  ▀▀▄▀▀  ▄█▄ ▄▄ ▄█▀▄▀  █▀ ▀ ▀███▀▄▀▄▄█▄▄█
+██ ▄▀▀█▄█▀█▄ █▀█ ▄▄█▄▄▀█▀▄█▀▄▀▀▀██▄ █▀▄▄ ▄█▄█ ▄▀▄▄▄█▀███▄██
+██▄▄█▀▄▄█▄█▀ ▄▄  ▄▀ █▀▄▄ ▀▀█ ▄█▀▀  ▄█ ▄  ▀  █  ▄▀█▄▄▀▄▄█▀ █
+█ ▀ ▀▀▄▄█▄ ▀  ▀ ▄ ▄█▄█▀▄ ▄  █▀▄▀ █▄█▀ ▄ ▄  ▀ ▀▄  ▀▀▀█  ▄▄██
+███████▄█ ▄▀▀▀▀▀ █▀▄█ ▄▀ ▀█ ▄▄▄ █ ▀█ ▄█  ▀  █▄▀██ ▄▄▄ ▄▀ ██
+█ ▄▄▄▄▄ █▀▀ ██▀█▀▄██  █▄ █▄ █▄█ ▀▀█ ▄██▄█ ▀▀ █ ▀▀ █▄█ ██▄▀█
+█ █   █ █▄▀▀█ ▄▄▀▀▀▄▀  ▀▀▄▀ ▄▄ ▄▄▄ ▄  ▄▀▄█▀ █▄ █▀▄▄▄ ▄██▀ █
+█ █▄▄▄█ █▀▄█ ██▀▄█▄█▄█ █▄ ▀▀▀▄▄ ▄█▄▄▄ ▀▄█▄  ▄▀▀ ▀▀ ██▄▄████
+█▄▄▄▄▄▄▄█▄▄██▄█▄█▄▄▄▄█▄█▄██▄█▄█▄███▄█▄▄█▄██▄█▄▄█▄▄▄▄██▄██▄█
+
+✅ QR image generated successfully
+[Tunnel Warning]: client_loop: send disconnect: Connection reset
+❌ SSH tunnel process exited with code 255. Reconnecting in 8 seconds...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Warning]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 138ea62e-48a4-43fb-b65f-fbfdbb699b6f, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 1e4e15cd83611f.lhr.life tunneled with tls termination, https://1e4e15cd83611f.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://1e4e15cd83611f.lhr.life
+✅ Registered tunnel URL successfully in database.
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄▀▀▀▀█▄▀▄ ▀▄█▄ ▄█▄▄ ▄  ▀▄█▀ ▀▄▀▄▄▄▄ ▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ██▀█ █▄▀ ▄█▄▄ ██▀██ ▄▄ ▄█ ▀▄▄ ▄▀ ▀ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀█▀   ▀▀█ █▀█▄█▀   ▄▄▄ █▀ █▄ █▄▄▀▄ █▀▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█ ▀ █ ▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ █ █ █ █ █▄▄▄▄▄▄▄█
+█▄ █▀  ▄██▄   ▀ ▀█▀▄▄▀▄▀ ▀█ ▄ ▄ ▄ ▄█▀▄█  ▀█▀█ ▀█ ▀█▀▄█▄ ▄▄█
+█▄ ▄█▄ ▄█▄▀ ██▄ █▀▄█▀▀▀██▄ ▄  █ ▀█▄▀▄▄▀█  █▄▄▀█▄▄█▄ ▄█▄▄█▀█
+█ █▀ ▄▀▄▄▄▄ ▄▄▀▀▀█▀ █ ▄▄ ▀▀▄ ▀▀██▄ ▄▄ █▀ █ ▀█▄ █▀ █ █▀█▄█▄█
+█▀▀▀▀▄█▄█▄▀▀█▄▄▄▄ █▀▄▄ ▄▄▄▀▄▀▀ ▀  ▀█▄▀▀ ▄██ █▀▀▀▀▀█▄ ▄██▀▀█
+█ ▀█▀▄▄▄█  ▄▄▄▀ ▀▄  █ ▄▀▀  █▄ █ ▀▄▄█▀▄ ▀▄▀▄ █▄▄▄▀▀█ ▄▀▀   █
+█ ▄█▄▄▄▄▀  █▄▄▀█ ▄ ▀▀██▄ ▄▀▄▀▀█ █ █▀▄▀ ▄█▄█ ▄███ ▄▄▄▄▀██ ▀█
+█▄▀▄ ▄▄▄ ▀▄  █▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  ▀ ▀█▀ ▀ █▀ ▀▀▄▀█▄▀▄▀▄▀▄█▄██
+█  ▄  ▄▄▄▀██▀▀  ▄█ ▄▄█▀▀▄ ▀ ▄██▄███▄▀▀   █▀▄  ▄▀█▀▀█ █▄█▀▀█
+█ █▄▄ ▄▄▄█ ▄█▀ █ █   ▀▀▀    ▄█▀ ▀███▄▄█▀▄█▀  ▄▀█▀▀▄  ▀▄ ▀▀█
+█▄▄ ▄ ▄▄▄ █▀▄ ██▄▀▀  ▀▄ ▀▄▄ ▄▄▄ ▄▄▀██▀▄ ▀▀██▀▄ ██ ▄▄▄ ▄█▄▀█
+█▀█▄▀ █▄█ ▀▄█▀█  █▄▀█ ▀█▀▀  █▄█ █▄▄█▀ ▀  █▀ ▀ ▀█▄ █▄█ ▀▀ ▀█
+█▀  █  ▄    ▀ ▄ ▀▀███▄▀ ██▄  ▄▄▄ ▀██▄ ▄▄  ▀▀▄ ▀▀    ▄▄▄▄▄▀█
+█▄▀▀█▀▀▄██ ▀██▄  █▄ █▀▄▀ ▀▀▄▀█▀ █▄▄█▄▄▄ ▄██ ▀▄▄██▀▀█▀██ ▀▀█
+█▀   ▄▄▄█▀█ ▀  ▀▄█▄▀█▀█▄▀  ██▀▄█ ▀ ▀▄▀▀█ █▀▄██▀█▄▄▄▀█▀▄▄ ▀█
+█▀▀██▄▄▄▀█▀ ▄ ▀ ▄█ ▄▄▄▄█▄   ▄█ ▄█▄ ▄▄    ██▀▀ ▀▄█▄ ▄▀█▄ ▀▄█
+█▀▀▄▀▄▀▄▀█▀█ ▀▀ ▀   ▀  ▀▀█▄▄▀ ▀█▀▄  ▄█▄▄▀▄▀▄▄███ ▀ ▀█ █▄▄▄█
+██▀▄▄ █▄██   ██▀▀█▄ ▀▀▄▀▀  ▄█▄ ▄▄ ▄█ ▄█  █▀ █▄▀▄███ ▀▄▀  ▄█
+█ ▄ █  ▄ ▀█ ▀▄█▀▄▄▄█▄▄▀█▀▄█▀▄▀▀▀██▄ █▀▄█ █ ▀▄▀▀▄▄▀ ▀▀█▄▄▄██
+██  █▄ ▄▄█ ▄█ ▄▄ ▄▀ █▀▄▄ ▀▀▄ ▄█▀▀  ██ █▀ ▀▀ █ █▄▀▀▄ ▀█▀ ▀▀█
+█ ▀ ▀▀▄▄ ▄▄█▄ ▄▄▄  ▀▄█▀  ▄▀▄█▀▄▀ ██▄▀ ▄█  ██ ▀▀▀▄▀▀▀█ ██▄██
+███████▄█ ▄▄██▄▄▀▄  ▄▀ ██▀█ ▄▄▄ █ ▀█ ▄▀ ▄██▀▄ ▀██ ▄▄▄ ▄▀ ██
+█ ▄▄▄▄▄ █▀▀ ▀▀█▀ ▀██▀██▄  ▄ █▄█ █▀█ ▄ █▄▄ ▀ ▀▀  ▀ █▄█ ██▄██
+█ █   █ █▄ ▄▀▄█▄▀▀▀▄▀  ▀▀▄▀ ▄  ▄▄  ▄▀ ▄▀▄█▀ █  ██▄▄▄  ▀█ ▀█
+█ █▄▄▄█ █▀█ ▀▄▀▀▄█▀█▄█ █▄ ▀▀▀ ▄ ██▄▄ ▀█▄▄▄▄▄▄█▀ ██ █▀▄█▄███
+█▄▄▄▄▄▄▄█▄▄▄▄▄█▄██▄▄▄█▄█▄██▄█▄█▄███▄▄▄█████▄█▄▄▄▄▄▄▄▄▄███▄█
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ▄██▄▀  ▀█ ▄ ▀▀    █ ▄██ ▄▄▄▄ ▄  ▄ ▄█▄ ██ ▄▄▄▄▄ █
+█ █   █ █▄▄▀█ ▄█▄▄ █▀██▄▄▄██▄▄▄█▄█▄▄▄▄  █▄  ▄█▀▄ ██ █   █ █
+█ █▄▄▄█ █ █▀▄  ▀██ ▀▀█ █▀▄  ▄▄▄ ▄ ▄█▄ █▄▀█▄▄▀█ ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ ▀▄▀ █ ▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ █ █ █ █ █▄▄▄▄▄▄▄█
+█  ▀▄██▄▄█ ▀█  ██▄▄ █▄  ██     ▄██ ▄▄ ▄█▄  █▄██▄█▄█▄▄ ▀▄▄▀█
+███▀▄ ▄▄█▄ ▀ █▀█▄▄▀▄▄▄   ██▀▀▀ ▀▄ ▀▄▀█▄▄▀█ █▀▄ ▀▀▀▀▄▄█▀█ ▄█
+█▄ ▀ ▀█▄▄█ █  ▄██ █▄ ▄ ▀▄██   █▀  ▄▀ ▄ ▄▄ ██  ▄ ▄▄ ▄  ▀▄  █
+█▄    █▄▀▄ ███ ▄█▄▄▀ ▄▄▄▄██▄▀█▄▄▄ ▀▄▄  █▀█▄ █▀▀▄█ ▀▄▀▀▄▄█▀█
+█▄█▀▄▄▄▄█ ▄▄▄ ▀ ██▄ ▀▀ ▀▀▄ █   █▀▄ ▄ ▄█  █ █▄ ▀█▀██  ▀▀▄▄▄█
+██▀▀  ▀▄▀▀▀███▀▄ █▀ ▄ ▄▄██▀█ ▀█ ▀▀▄▀  ▀▄█▀█▀█ ██▀█▄▀█▀▄▄ ▄█
+█ █▀▄██▄▀▄ ▀▄████ ▀▄ █  ▄ █▀▄ █▄█▀█▄▀▄ █ ▄██ ██▄▀█▀█  ▀▀▄▀█
+█▀█▀▀ ▄▄▀▄▄▄█  ▀█ ██▀  ▄▀▀▄██  █▀ ▄▀█ ██ ▀▄██▄█▄  ▀▀█ ▀▄▄▄█
+█▄   ▄▀▄  ▀▄▄ ▄▄▄ ▄▄███▄▄▄█   █▄▄▀▀    █  █▄█ █ █▄ ▄▄▄ ▄▄██
+██  █ ▄▄▄  ▄ ▀▀▄██▀▀▄▀█▄▀█▄ ▄▄▄  ▄▄▀█    ██ █▄▀▀█ ▄▄▄  ▄ ▀█
+███   █▄█  ▀██ ▄▄█▄██ ██▀█▄ █▄█ █▄▀█▀▄▀ ▄█▀▄▀ ▄▄▀ █▄█ █▀ ▀█
+█ █▄▀  ▄▄ ▀  ▀▄▀ ▀ ███▀▀▄▄█▄ ▄▄▄  ▄███▀██ ▀█▄█▄█▀ ▄▄  █▄▄ █
+█▀█▄█ ▄▄█▄▄  ▀████▄  ▄ ▄▀█ ▀▄█▄▄▄▀ ▄█▄█▄▄ ██▄█ █▄   ██▀█▄ █
+█▀  ▀▀▀▄ ▀▄█▄▀█▄▄▄▀ █▀▄▀▀ █ ▀ ▀▄█▄▀▄▀ ▄▀ ███▀█  ▀█▀▄▀▄▀██ █
+███▀▀▀ ▄▄▀██▄▀▄▄  ▄ ▀    ▄█▄  ▄  ▄▄▀▀ █▄  ▀█▄▄█▀▀ █ █  ▄█▀█
+█ █▄  ▀▄██▄ ▄ ▀▄ ▄ ▀█ ▀█▀▄ ▄ ▄▀ ██▀▄█▄ ▄▀▀▀█ █▄▀  ▄▀▄▄██ ▄█
+█▀▀▄ █▄▄██▄ █▄▄ ██▄▄▀▀ ▀▀▄ ▄▀▄  ▄  █  █ ▄█▀▄█▄█▄█▀▄▀█▄█  ▄█
+█▀▄▀▄▄▄▄  ▄██▄  █▄█▄▄█ █ █▀ █▀  █▄▀ ▄   ▀█▀▄▄ ▄ █ ▀  █▄█▄▄█
+█▀▀▄▀▄█▄█▄▀  ▄▄▀▄█▄▄▄▄ ███ ▀▄█ █ ██▄ ▄ ▄▄ █▄▄█▄▄ ▀▄▄██▀█ ▄█
+█ ▀ ▀▀▄▄▄ █ ▀▀▀▀███ ▀ █▄████▄▄▀ █ ▄▀ █▀███▄ ▀▄██▀ ▄▄▀ ▀▄▀ █
+███████▄█  ▀▀▀▀ █▀  ▄█▄▄██  ▄▄▄  ▄█  ▄█▄  ▀█ ▄ ▀█ ▄▄▄  ▄█▀█
+█ ▄▄▄▄▄ █▄ ▄▀ ▀▀█ █▄▄▄▄  █  █▄█ ▀█▄▄▀▄ ▄▀▀▀▀▀█ █  █▄█ █▄▄▀█
+█ █   █ █▀▄▄▀ █▄█▀▀ ▀ ▄▀▀ ▀ ▄▄  ▀▄▄▄▄▄▄▀▄█▀▄▀ ▄██ ▄▄▄▄▀▀▀ █
+█ █▄▄▄█ █▀▀▀█▄▀███ ▄▄▄▀██▀▀   █▀█▄█▄  ██▄▄██▄█  ▄▄ ▄▄▄▄██▄█
+█▄▄▄▄▄▄▄█▄█▄▄██▄█▄█▄█▄▄▄██▄█▄▄▄▄▄▄███▄▄▄█▄▄▄▄█▄██▄██▄▄▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄▀▀▀▀█▀▀█▀▀▄██ ▄█▄▄ ▄  ▀ █▄▄▀▄█  ▄█ ▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ███▀ █▄▀ ▄▄█▄ ▄█▀██ ▄▄▀██ █▄▄ ▄  ▀▀▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀███▀ ▀▀█ █▀█▄█▀   ▄▄▄ ▀▄ █▄██▄█▄▄  ▄▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄█▄█ ▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ █ █ █ █ █▄▄▄▄▄▄▄█
+█▄ █▀ ▄▄▀▀▄█▄▀▀ ▀█▀▄▄▀▄▀ ▀█ ▄ ▄ ▄ ▄█▀▄█  ▀█▀█ ▀█▀▀█▀▄█▄ ▄▄█
+█▄ ▄██ ▄▀▄▀▀ ▄▄ █▀▄█▀▀▀██▄ ▄  █ ▀█ ▀▄▄▀▀  ▀ ▄▀▀  ▀█ ▀▄▄▄█▀█
+█ █ █▄▀▄ ▄ ▀▄▄▀▀▀█▀ █ ▄▄ ▀ █▄▀▀██▄██▄ █  █▀ █▄ █▀▀█  █▀ █▄█
+█▄█  ▄█▄█▄▀▀█▄▄▄▄ ▀▄▄▄█▀▄▄▀▄  ▄█  ▀█▄█   ▀▀▄▀▀▄  ▀█▄ ▄▄█▀▀█
+██ ██▄▄▄█  ▄▄▄▀ ▀█  ▄▀ █   █▄ ▀▀▀▄▄█ ▄█ ▄█▀    █▀▀█ ▄▀▀▀  █
+█ ▄▄▄▄▄▄▀  █▄▄▀█ ▄ ▀▀ █▄█▄▀▄▀▀█▀█▄█▀ ▀ █ ▄█ ▄▀█▄ ▄ ▄▄▀██ ██
+█▀▀▄ ██▄ ▀▄ ▀▀▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  ▀ ▀█  ▀ ▄▀ ▀█▄▀█▄▀█▀▄▀▄█▄██
+█  ▄ █▄▄ ▀█▀█ ▄ ▄█ ▄▄█▀▀▄ ▀ ▄██▄█▄█▄     █▀▄ ▀▄▀█▀▀█▄█▄█▀▀█
+█ █▄▄▀▄▄▀██ ▄▀▄█ █   ▀▀▀  ▄▄▄█▀ ▀███▄▄█▀▄█▀  ▄▀█▄▀█ ▀█▄ ▀▀█
+█▄▄ ▄ ▄▄▄ █ ▄▄▀▄▄▀▀  ▀▄ ▀▄█ ▄▄▄ ▄▄█▀█▀ ▄▀▀▀█▀▄ ▀▀ ▄▄▄  █▄▀█
+█▀█▄▀ █▄█ ███▀▄▄ █▄▀█ ▀█▀▀▄ █▄█ █▄ █▀ █▀ █  ▀  █▀ █▄█ ▄█ ▀█
+█  █ ▄ ▄▄   ▀ ▄ ▀▀███▄▄▄███  ▄▄▄ ▀█▄▄▄ ▄▄▄▀▀  ▄▀█  ▄ ▄██▄▀█
+██▄█ ▀▀▄▀█ ▀██▄  ▄▀▄▄ ▄▀▄▀▀▄ █▀ █▄▄█ ▄█▀ █▀▀  ▀▄█ ▀█ █▄ ▀██
+█▄▄▀▄▄▄▄█ █ ▀  ▀▀ ▄▀█▀█▄▀█ ██▀▄█ ▀ ▀▀▀▀██ ▀█  ▀▄█▄▄▀ █▄▄ ▀█
+██▀██▄▄▄▀█▀ ▄ ▀ ▄█ ▄▄▄▄█▄   ▄█▀▄█▄ ▄ ▄   ▀█▀ ▄▀▄█▄ ▄▀█▄  ▄█
+█▀▀▄▀▄▀▄▀█▄█▀▀█▀▀   ▀  ▀▀█▄▄▀ ▀▀▀▄  ██▄▄ ▄▀▄▄███ ▀ ▀█ █▄▄▄█
+██▀▄▄ █▄███▀▄▄ █▀█▄ ▀▀▄▀▀  ▄█▄ ▄▄ ▄█ ▄█  █▀ █▄▀▄██▀ ▀▄▀  ▄█
+█ ▄ ██▄▄ ▀  ▀ ▀█▄▄▄█▄▄▀█▀▄█▀▄▀▀▀██ ▄█▀▄█ █▄█▄▀█▄▄ ▄█▀███▄██
+██ ▀ ▀▄▄▀▀▀▄█    ▄▀ █▀▄▄ ▀ ▄ ▄█▀▀ ▀██ █  ▀ ▀█ ▀███▄▄ ▄▀ ▀▀█
+█ ▀ ▀▀▄▄▀█▄█▄ ▄▄▄ ▀█▄█▄  ▄ ██▀▄▀ █▄██ █▄▄▄██▄█▄▀  ▀▀█▀ ▄▄██
+███████▄▄▀▄▄██▄▄ ██▄▄ ▄█▀▀█ ▄▄▄ █ ▀█ ▄█ ▀█▀ █ ▀▄█ ▄▄▄ ▄▀▄▀█
+█ ▄▄▄▄▄ █▀▀ ▀▀█▀▀███  █▄▀ ▄ █▄█ █▀█ █▀█▄▄▀      ▀ █▄█ ██ ▀█
+█ █   █ █▄ ▄▄▄█▄▀▀▀▄▀  ▀▀▄▀    ▄ ▄ ▄█▄▄▀ █▀ ▄  ██▄▄▄▄▄▀█  █
+█ █▄▄▄█ █▀▄▀█▀▀█▄█▀█▄█ █▄ ▀▀█ ▄ █▄▄▄▀ █▄█▄▄▄▄▄▀ ██ ██▄█▄███
+█▄▄▄▄▄▄▄█▄▄█▄█▄███▄▄▄█▄█▄██▄▄▄█▄███▄▄▄█████▄█▄▄▄▄▄▄▄▄████▄█
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀▀▀▀▄ █▀█ ▄█▀▄ ▄ ▀▀ ▄ █▄▀▀█  ███▄▄▀▀▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀█ ▄  █▄██▀▄▄▄█  ▀███▀▀▄▄██▀ ▄ ▄██▄▀▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄▀███▄▄█ █▄ ▀█▀ █ ▄▄▄ █ ██▀▄ ▀▀▀▄ ▄█▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ █ █ ▀▄█▄▀ █▄█ █ █▄█ ▀▄█ ▀▄█▄▀▄▀▄█ █▄▀▄█▄▄▄▄▄▄▄█
+█▄▄ ▄ █▄▄▄▄██ ▄█▄█▀▄▀▄▀▀ ▀▄▄  ▄ ▀█▀█▀▄ ██▀█▀ █▄█ ▀▄█ ▀▄▀ ▀█
+█▀ ▄█ ▄▄ ▀██ ▄▄ █▄▀ ▀▀▀  ▀ ▄▄█ █▀█  ▀▀▀▀ █▄▀▄▀▀▀▀█▄ █▀▀▀█▀█
+█  ▀ ▄▀▄▄▄██▄▄▄▄▄█▀  █▀▄ ▀█ █▀▀█ ▀▀▄▄ ▀███   ▀ █▄▀ █▄██  ▀█
+██  █▀ ▄▄█▀▄ ▀▄▄▄█ █▄▄▄▄▀▀▀▄ ██    ▄▀▄ █ ▄ ███▀▄▄ █▄  ▄▀▀▀█
+█ ▀▄▀▄▄▄ ██▄▄▄▄█▄█▄▄▀▄▀█▀▀█ ▀  ▀▄▀▀▄▄ ▀▄█▀█▀ ▀▄█▀▀ █▀▀ ▀█▀█
+█▀▀▄██▀▄▀   ▀▀▀█ ██▄▀██▀█▄▀▄▀▄▀▄▀▄█▄█ ▀▄█  █▀▀▄ █▀▄▄▄▄   ██
+██▄▀█▄ ▄█▄▀ █▀▀█▄▀▄ ▄█▀▀▀▄▀▀█▀   █▄█ ▄▄█▄█ ▀▄█▄█▄▀ ▄▀▀▄█ ▀█
+██ ▄ █ ▄▄▀▄█▀  ▀▄ █▀▄█▀▄▀█▀ ▄  ▀▄██▀▄▄    ▄▀ ▀▄▄ ▄ █▄ ▀ ▀▀█
+█  ▀▀▀▀▄█▀██  ▄▄██  █▄▄▀  █▀▀█▀ ▄  █▄▄ ▄▀█▀ █▀▄█▀▀ █ █▄ ▄▄█
+█▀▄ ▄ ▄▄▄ ▄▀█▄▀█▄▄▄█ ▀▄█▄▀█ ▄▄▄ ▄▄▀  ▄ ▄▀▄▄ ▀▄ ▄  ▄▄▄ ▀ ▄▀█
+█▀  ▀ █▄█ █▄█▀█▀██▄▀ █▄█▀▀▀ █▄█  ▀█▄▀  ▄███▀▄█▄█▄ █▄█ █ █▄█
+█▀██▄ ▄▄   █▄█▄ ▀▄█▄█▄█   █▄     ▀█▀▀█▀  ▀▄▀  ▄▄▄▄▄ ▄▄▀ ▄▀█
+█▄▄▄▄▀▀▄▄ █▀██▀█▀▄▀▄ ▄▀█  ▄▀▀▄▀  ▀▀█▄▄▀█▄█▀  ▀█▄▀▄▄ ▀▄█▀ ▄█
+█▄█▀█▀▀▄▄▄██▄█ ▀▀▄▀▄▀██▀▀  █ ▀▀  █ ▄▀  ▄█▀▄▀   ▀▀▀▄▀▄▄▀▀ ██
+█▄▀  ▄▄▄▄ ▄ █▄▄█▀█ ▄▀▀▀█▄ ██▀█▄█▄▀█▄  ██▄▀█▀▄█▄▄█▄█▀▄█▄ ▄ █
+█▄▀▄▀▀▄▄▀█▄▀▄▀██▀███▀  ▄▄ ▄▄▀█▄ ▀█ █▀ ▄▄▀▀▄▀▄██ █▄ ▀██ ▀▄▄█
+██▄▀▀▀█▄  ▀ █▀█ ▄█▄ ▄▄▀▀▀ █▀ ▄ ▄▀█▀█ ▄ ███▀  ▀▄▄██▀█▄▄█ █▀█
+██▄ █▄█▄ ▀▄▄▀▀█▄▄▀▀ ▄▄▀ ▄▀█▀▄▄▄▄██ ▀ ▄ ▀  █ ▄▀█▀▀▄▄█▀ █▀▄██
+████  ▀▄  ▄ █ ▄██▄▀  ▄▀▄ ▀█▄█▄█▀▄████  ▄█▀█  ████▄  ▄▄▄█▄▄█
+█ ▀ ▀▀▄▄█ ▄ ▀█▄▄▄██▄▄█▄ █▀ ██▄▀▄ █▄▀▄█ ▄▄█▄▀▄▀▀█▀▄▄█▀▄█▀▄██
+███████▄█ ▀▄██▀▀▄▄▄  █▄▀    ▄▄▄  █▄█ ▄▀█▀▀▀ ▄█▄▄▀ ▄▄▄ ▄▀█▄█
+█ ▄▄▄▄▄ █▄▀█▄▄█▀██  ▄██▀▄█▄ █▄█ ████▄ ██▄▀██▄▀ ▄█ █▄█    ▀█
+█ █   █ █ █▄██ ▀▄▀▀▄▄██▀▀▄▄▄▄  ▄▄██▄ ▄▀▄ █▀  ▀███▄  ▄▄▀█▄██
+█ █▄▄▄█ █ █▄█▀▄▄▄ ▄ ▄█  ▀█▀▀██▀█▄▄▄▀█▄█▄▄▀▀▀▄█▀█   █▀▀ ▀███
+█▄▄▄▄▄▄▄█▄▄█▄▄▄▄▄█▄▄█▄██▄█▄█▄▄█▄▄▄▄▄▄▄▄▄▄██▄▄██▄▄▄██▄███▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄▀▀▀ █▄▀▄▀█ ▄▄▄ █▄▄ ▄  ▀ █ ▀▀ ▀█▄▄▀▀▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ██▀█ ██  ▄█▄▄ ██▀██ ▄▄ ██ ▀▄▄ ▄  ▀ ▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▀██▄ ▀▀█ █▀█▄█▀   ▄▄▄ ▀▄ ██▄█▄█▄▄   ▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄▀ █ ▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ █ █ █ █ █▄▄▄▄▄▄▄█
+█▄ █▀  ▄▀█▄▄▀ ▀ ▀█▀▄▄▀▄▀ ▀▀ ▄ ▄ ▄ ▄█▀▄█  ▀█▀█ ▀█ ▀█▀ █▄ ▄▄█
+█▄ ▄█▄▀▄████▀▀▄ █▀▄█▀▀▀██▄▄▄▄ █ ▀█ ▀▄▄██  █▄▄▀█▄ ▀█▀  ▄▄█▀█
+█ █▄ ▄▀▄ █▀ ▄▄▀▀▀█▀ █ ▄▄ ▀▀█ ▀▀██▄▀█▄ ▄▀ █ ▀█▄ ▄▀ █ ▄▀█▄█▄█
+█▀▄██▄█▄█▄▀▀█▄▄▄▄ █▀▄▄▄▄▄▄▀▄▀  ▀  ▀▄▄██▄▄█▄██▀▄  ▀█▄ █▄▄▀▀█
+█ █ █▄▄▄█  ▄▄▄▀ ▄▄ ▄█▀ ▀▀  █▄ █▀▀▄▄█ ▄▄▀▀▀▀▀▀ ▀█▀▀█ ▄▀  ▄▄█
+█ ▀▀▀▄▄▄▀  █▄▄▀█ ▄ ▀▀ █▄██▀▄▀▀▄ ▀ █▀█▄ ▄ ▄▄   ▄▄ ▄ ▄▄▀██▄██
+█ ▀▄  ▀▄ ▀▄ ▀▀▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  ▀ ▀█  ▀  █ ▀▄▄▀█▄▀▄▀▄▀▄██▄█
+█  ▄ ▄ ▄ ▀▀▀██▄ ▄█ ▄▄█▀▀▄ ▀ ▄██▄███▄▀    ▄▀▄▀▀▄▀█▀▄█▄█▄█▀▀█
+█ █▄▄█▄▄▀█ ▄▀▀▄█ █   ▀▀▀    ▄█▀ ▀███▄▄█▀▄█▀  ▄▀█  ▄▀█▀▄ ▀▀█
+█▄▄ ▄ ▄▄▄  █▄▄  ▄▀▀  ▀▄ ▀▄▄ ▄▄▄ ▄▄▀▀█▀  ▀▀▀▀▀▄▄█▄ ▄▄▄  █▄▀█
+█▀█▄▄ █▄█ ▄ █▀ █ █▄▀█ ▀█▀▀▄ █▄█ █▄ ▄▀ █  █  ▀ ▀▄▀ █▄█ ▄▀ ▀█
+█▄▄█▀  ▄▄   ▀ ▄ ▀▀█▀█▄█ ██▄▄ ▄▄▄ ▀▄█   █ ▄ █▄  ██▄▄ ▄▄▀█▄▀█
+█▄█▀▀▀▀▄ █ ▀██▄  █▀▄▄ ▄█▀ ▀▄▀▄▀ █▄▄█  █ ▄█▀▀▀▄ ▄█ ▀█▀▄▄▀███
+██   ▄▄▄ ▄█ ▀  ▀▄▀▄▀▄██▄▄█ ██ ▄█ █ ▀ █ ▄ ▀ ▄▀▀ ▄▄▄▄▀██▄▄▄██
+█▄▀██▄▄▄▀█▀ █▄▀ ▄█ ▄▄▄▄█▄   ▄█▀█▀▄ ▄ ▄  ▄██▀ ▄▀▄█▄ ▄▀█▄ ▀▄█
+█▀▀▄▀▄▀▄▀█ ▀  █ ▀   ▀  ▀▀█▄▄▀ ▄▀ █  ▄█▄▄▀▄▀▄████ ▀ ▀█ █▄▄▄█
+██▀▄▄██▄██▄    █▀█▄ ▀▀▄▀▀  ▄█▄ ▄▄ ▄█ ▄█  █▀ █▄▀▄██▄▀▀▄█▄ ▄█
+█ ▄ █  ▄ ▀██ ▄▄█▄▄▄█▄▄▀█▀▄▀▀▄▀▀▀██ ▄█▀ █ █ █▄▀█ ▄ ▄█▀█▀█▄██
+██  ▄▄▄▄ ▀▄▀█    ▄▀ █▀▄▄ ▀ ▀ ▄█▀▀  ██ █▀ ▀▀▀█ ▀▄█▄▄▀▀█▄▀▀▀█
+█ ▀ ▀▀▄▄▀▀▄█▄ ▄▄▄ ██▄█▄  ▄▀▄█▀▄▀ ███▀▄ █▄ ▀▀▄▀ █▄  █▄▄▄█▄██
+███████▄█▀▄▄██▄▄▀▄  ▄▀ █▀▀█ ▄▄▄ █ ▀█▄▄█  ▀▀ ▀▄▀▄█ ▄▄▄ █▀▄██
+█ ▄▄▄▄▄ █▀▀ ▀▀█▀█▀██▀▄█▄█▄▄ █▄█ █▀█ ▀▄█▄█▄  █  ▀▄ █▄█ ██ ▀█
+█ █   █ █▄ ▄▀██▄▀▀▀▄▀  ▀▀▄▀ ▄▄ ▄▀▄ ▄ ▄▄▀ █▀ █▄ █▄▄▄▄▄ ▀█ ▀█
+█ █▄▄▄█ █▀ ▄█  ▄▄█▀█▄█ █▄ ▀▀█▄▄ ▄█▄▄ ▀█▄█▄▄▄▄▄▀ ██ █▀▄█▄███
+█▄▄▄▄▄▄▄█▄██▄▄▄▄██▄▄▄█▄█▄██▄▄██▄███▄▄▄█████▄█▄▄▄▄▄▄▄█████▄█
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ▄██▄    ▄▄▄  ▄▄   █ ▄██▄▄▀ ▄▄▄ ▄ ▄ █▄ ██ ▄▄▄▄▄ █
+█ █   █ █▄▄▀█ ▄█▄▄ █ ██▄▄███▄▄▄██▄▄▄█▄  ▄▄  █▄▀▄ ██ █   █ █
+█ █▄▄▄█ █ ██▀▀ ▀██ ▀▀█ █▀▄  ▄▄▄ █▄▄█▀▄█▄▀▀▄▄▄▀ ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ ▀ ▀ █ ▀ ▀ ▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ █ █ █ █ █▄▄▄▄▄▄▄█
+█  ▀▄▀▀▄▄█▀▄██ ██▄▄ █▄  ██▄    ▄██ ▄▄ ▄█▄  █▄██▄██▀▄▄▄▀▄▄▀█
+███▀▄ █▄▀█ █▄▀▀█▄▄▀▄▄▄   █▄ ▀▀ ▀▄ █▄▀█▄ ▀█ ▀▀▄▄▀▀█▀█ █▀█ ▄█
+█▄  ▄▀█▄▀▄▀▄  ▄██ █▄ ▄ ▀▄██  ▄█▀  ▀▀ ▄▀▄▄  █  ▄▀▀█ ▄▄▄▀▄  █
+█▄ ▄█ █▄▀▄ ███ ▄█▄ ▀ ▄  ▄██▄ ▄ ▄▄ ██ ▄▄▄▀█▀██▀▀▄▀█▀▄  ▄██▀█
+██▄█▄▄▄▄█ ▄▄▄ ▀ ██▄▄█▀█▀ █ █   ▄▀▄ ▄▄▄▄▀ ▀▀▄▄▄▄▄▀██  ▀▀▄▄▄█
+█▀   ▄█▄▀▀▀███▀▄█ ▀ ▄ ▄▄██▀█ ▀▄▀██▄▀▀▀ █▀▄█▀▀ ▄█▀█▄██▀▄▄█ █
+█▄ ▀▄▄ ▄▀▄ ▀▀▀███ ▀▄ █  ▄ █▀▄ █▄ ▀█▄█▄ █▄ ███▀█▄▀██▄  ▀▀█▀█
+█▀█▀▀▄█▄▀▄▀▄█▀▀ █ ██▀  ▄▀▀▄██  █▀ ▄▀▄▀██  ▄██▄█▄  ▄ █ ▀▄▄▄█
+█▄   ▄ ▄▄█ ▀▀ ▄▀▄ ▄▄███▄▄▄▀   █▄▄▀▀    █  █▄█ █ ██ ▄ ▄ ▄▄██
+██  █ ▄▄▄ ▄▄▀▀▀ ██▀▀▄▀█▄▀█▄ ▄▄▄  ▄ ▀█    █▀▄█▄▀▀▄ ▄▄▄ ▄▄ ▀█
+███ ▀ █▄█ █▄██ █▄█▄██ ██▀█▄ █▄█ █▄▄▄▀▄▄▀▄█▀▄▀ ███ █▄█ █▄ ▀█
+█ ▀█▀  ▄▄ ▀  ▀▄▀ ▀  ███▄▄▄▄  ▄▄▄  ██▀▀█▀▀▄██ ██ █ ▄ ▄ ▀█▄ █
+█▀ █▄ ▄▄▄█▄  ▀██▄▄█ ▄▄  ▄▄ ▀██▄▄▄▀ ▄▀ █▄  ▄▄ ███ ▄  ▄▄▀█ ▄█
+█▀ █▀▀▀▄▀ ▄█▄▀█▄█▄▀  ▀▄▀█▀█ ██▀▄█▄▀▄█▄▄ ▀███ █   █▀▄▄▄▀██ █
+█ ▀▀▀▀ ▄▄▀██  ▄▄  ▄ ▀    ▄█▄    ▀▄▄▀▄▄█▄▄ ▀█  █▀▀ █ █  ▄█ █
+█ █▄  ▀▄██  ▀▀██ ▄ ▀█ ▀█▀▄ ▄ ▄█ █▄▀▄█▄ ▄▀▀▀█▀█▄▀  ▄▀▄▄██ ▄█
+█▀▀▄ █ ▄██▄▄ █ ▀██▄▄▀▀ ▀▀▄ ▄▀▄  ▄  █  █ ▄█▀▄█▄█▄█▀███▄█  ▄█
+█▀▄▀▄▀▄▄    ▀█ ▄█▄█▄▄█ █ █▀ █▀  █▄█ ▄ ▄ ▀██▄▄ ▄ ██ ▄ █ ▄▄▄█
+█▀▀▄▄ ▄▄▀    ▄ ▄▄█▄▄▄▄ ███▀▀▄█ █ ██▄ ▄▄▄▄ ▄▄▄█▀▄  █ ▄▄ █ ▄█
+█ ▀ ▀▀▄▄▄▄█ ▀▀▀▀██▄ ▀ █▄██▄▀▄▄▀ █ ▄  ▀█▀▀▀▀▄▀▄▄▄▀█▀  ▀▀▄▀ █
+███████▄▄▀ ▀▀▀▀ █ █ ▀█▄ █▄  ▄▄▄  ▄█    █  ▄▄▄ █▀▀ ▄▄▄ ▀▄▀▀█
+█ ▄▄▄▄▄ █▄ ▄▀ ▀▀█▄█▄██▄ █▄  █▄█ █▀▄▄█▀▀▄▄▄▀ ██ ▄  █▄█ █▄▄██
+█ █   █ █▀▄▄█ █▄█▀▀ ▀ ▄▀▀ ▀  ▄  █ ▄▄  ▄▀▄▀▀▄█ ▄██ ▄▄▄ ▀▀▀ █
+█ █▄▄▄█ █▀▄ ▄▀▀▀██ ▄▄▄▀██▀▀  ▄█▀███▄▀ ███▄███▄  ▄▄ ▄█▄▄██▄█
+█▄▄▄▄▄▄▄█▄▄▄▄████▄█▄█▄▄▄██▄█▄▄▄▄▄▄███▄▄▄█▄▄▄▄█▄██▄████▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ▄ ▀█ ▄  █  ▀▀ ▄   █ ▄██▄  ▀▀ █▄   ▄█▄ ██ ▄▄▄▄▄ █
+█ █   █ █▄██▄ ▄██▄ █▀▄█▄▄███▄▄▄██▄▄▄██  █▄  █▄▀▄ ██ █   █ █
+█ █▄▄▄█ █ ▄█▄  ███ ▀▀█ █▀▄  ▄▄▄ █▄▄█▄▀█▄▀▄▄▄ █ ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ ▀ █ █▄▀ ▀▄▀ █ ▀▄█ █▄█ ▀▄█▄█ ▀ ▀▄▀ ▀ ▀▄█ █▄▄▄▄▄▄▄█
+█ ▄█ █▀▄ █▄ ▀██▀ ██▄██  ██ ▄   ▄██ ▄ ▄██  █▄█▀▄▄█▄█▄▄▄▀▄▄▀█
+██▀▀▄ ▄▄▀█▀  █▀█▄ ▀▄▄▄   █▄▀██ ▀▄ ▀ ▀█▄  █▀█ ▄██▄█▀█  ▀█ ▄█
+█▄▄▀ ▀▀▄▀ █▀▄▀▄██ █▄ ▄ ▀▄█▄ ▄ █▀  █▀ ▄▀█▄ ▄█  ▀ █▄ ▄ ▄▀  ▀█
+█▄ ▀▀▀▀▄██▀██▄ ▀█▄▀▄ ▄██▄██▄▀▄▄ ▄  ▀  ▀█▀▀▀▄▀███ ▄█▄▀████▀█
+█  ▄▄  ▄  ██▄██▄██▄▄▄ ▄▀▀▄ █  ▄▄▀▄ ██ █ ▄▀ ▄▀▄██▀▄▄  █▀█  █
+██▄ ██▄▄▀▀█▄▀▀▀▄▄ ▀ ▀▄▄▄█▄▀█ ▀▄▀██▄▀   █▀▄▄▀▄ ▄▄▀▀▀▀█ ▄▄ ▄█
+█▄█  ▄▄▄▀▄ ██▀███ ▀▄ █  ▄ █▀▄ █▄▄██▄▀  █ ▄██▄██▄▀███  ███ █
+█ ▄ ▄█▀▄▀ █▄▄▀  █ ▄▄▀  ▄▀▀▄██  █▀ ▄▀▀▀▀█ ▄▄▀ ▀█▄  ▀▀▀▄██▄▄█
+██  █▀▄▄ ▀▀▄█████ █ ███▄▄▄▀▄  █▄▄▀▀ █  ▄▄ ▄▄  █ █▄ ▄ ▄ █▄██
+█▄▄▄  ▄▄▄ ██▀ ▀▄██▀▀▄▀█▄▀█▄ ▄▄▄  ▄ ▀█ ▀▀▀█ ▀█▄▄▀█ ▄▄▄  ▄▄██
+█ ▀▀█ █▄█  ▀▀█▀▀▄█▄██ ██▀█  █▄█ █▄██▀▄█ ▄█▄▄▀ ▄▄█ █▄█  █▀▀█
+███▀▄▄ ▄  ▀██▀ ▀ ▀█ ██▀▀▄▄▄  ▄▄▄  █▄█▀█ ▀▄▄█ █▀▀▄▄ ▄▄ ██▄ █
+█▄▀▀  ▄▄███▀ ▄▄█ █▄ █▄█ ██ ▀▄█▄▄▄▀ ▄▄ █▄ ▄██ ███▄▄  ▄█▀█  █
+█▀▀ ▀▀▀▄▄▄ ▄ ▄▀▀▀ ▀  ▄▄▀▀██ ▄ ▀▄█ ▀▄▀▄█▀▀ ████▀▀  ▀▄▀▄▀█▀▄█
+███▄███▄ ▄▀ ▄ ▀   ▄ ▀    ▄█▄  ▀█▄▄▄▀ ▄█▄▄ ▀██▄█▀▀█▄ ▄   ▄ █
+█▀   █ ▄▀▀▀▀▄▀ ▀ ▄█▄█ ▀█▀▄ ▄ ▄▀▄▄▄▀▄ █▄ █ ██ █ █▀  █ █▄▄ ▄█
+███▀█ ▀▄█▄█▄█▄  ▄▄▄▄▀▀ ▀▀▄ ▄▀▄  ▄  █  ▄  █▄█▀ ▄██▀▀ █▄▄█ ▄█
+█▀█▀▄█▀▄▀▄ █ ▄█   █▄▄█ █ ██ █▀  █▄▀▄█▀█▄▀▄▄██▀▀▀▀▀▄  █ ▄▄▄█
+█ ▄█ ▄█▄▄▀ ▄  █▄▄█▄▄▄▄ ███ ▄▄█ █ █▄▄ ▄█▄▄ █▄▄█▄█▄█▄█ ███▀▄█
+█ ▀ ▀▀▄▄▀█▄ ▄▀▄▀██▄▄▀ ▀███▄▀▄▄▀ █ █  ▀▀▄██▄▀▀ █▄▀▀▀   ▀█▀ █
+███████▄▄▀▀ █▄ ▄▄▀▄▄ ▄▄ █▄  ▄▄▄  ▄█ ▄ ▀█  █▄  ▄▀▀ ▄▄▄ ▀████
+█ ▄▄▄▄▄ █▄▀▀▄██▄▄██▄▄█▄     █▄█ ▀█▄▄  ▀██ ▀▀██▀▄▀ █▄█ █▄ ██
+█ █   █ █▀█▀▀ █ █▀▀ ▀ ▄▀▀ ▀  ▄  █ ▄▄ ▄▄▀ ▀▀▄▀▄▄█▄▄▄▄ ▄▀█▀ █
+█ █▄▄▄█ █▀ ▄▄ ▀▀███▄▄▄▀██▀▀ ▄ █▀▄██▄▀▄███ ██▄█  ▄  ▄▄ ▀██▄█
+█▄▄▄▄▄▄▄█▄▄▄███▄█▄█▄█▄▄▄██▄█▄▄▄▄▄▄███▄▄█▄▄█▄▄█▄█▄███████▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ▄ ▀▄▀█ ▀█ ▄▀      █ ▄██▄ ▄█▀ █▀▄▄  █▄ ██ ▄▄▄▄▄ █
+█ █   █ █▄██▄ ▄██▄ █▀██▄▄███▄▄▄█▄█▄▄▄█  ▄▄  █▄▀▄ ██ █   █ █
+█ █▄▄▄█ █ ▄▀ ▀ ███ ▀▀█ █▀▄  ▄▄▄  ▄▄██▀█▄▄ ▄▄▄  ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ ▀ █▄█▄▀ ▀▄▀ █ ▀▄█ █▄█ ▀▄█▄█ ▀ ▀▄▀ ▀ ▀▄█ █▄▄▄▄▄▄▄█
+█ ▄█ █▀▄ ██ ▀▄█▀ ██▄██  ██     ▄██ ▄ ▄██  █▄█▀▄▄▄██▄▄▄▀▄▄▀█
+██▀▀▄▀█▄█▀▀█▀ ▀█▄ ▀▄▄▄   ██▀▀▀ ▀▄ ▀▄▀█ ▄ █▀▀ ▄▀█▀▄ ▄ █▀█ ▄█
+█▄▄▀ ▀▀▄▀ █▀▄▀▄██ █▄ ▄ ▀▄█▄▀ ▄█▀  █▀ ▄▀▄▄ █▄  ▄ ▄█ ▄ ▄▀▄ ▀█
+██▄█ ▀▀▄█▄▀██▄ ▀█▄▀▄ ▄██▄██▄ █  ▄  █▄ ▀▀█▀▀ ▀▀ ▀ ▀█▄ ▄███▀█
+█▀▄█▄  ▄  ██▄██▄▄▄▄▄█ ▄▀ ▄ █   ▄▀▄ ██ ▀ ▄▀ ▄▀ █▄▀▄▄  █ ▄▄▄█
+█▄ ▀▀█ ▄▀▀█▄▀▀▀▄▄ ▀ █▄▄▄ █▀█ ▀█▀▀▀▄▀█▄ █▀▄▄▀█ ▄█▀▀███ ▄▄  █
+█▀█   ▄▄▀▄ █  ███ ▀▄ █  ▄ █▀▄ █▄█▀█▄█▄ █▀▄██▄▀█▄▀██▄  ██▄▀█
+█ ▄ ▄▄ ▄█▄ █▄ ▀██ ▄▄▀  ▄▀▀▄██  █  ▄▀  ▀█▀█▄▀▀ █▄  ▄▀▀▄██▄▄█
+██  █▀ ▄█▀█▀ ▀▀ █ █ ███▄▄▄█   █▄▄▀▀ █  ▄▄ ▄▄  █  █▀█▄  █▄██
+█▄▄▄  ▄▄▄  ▄▀▄▀▀██▀▀▄▀█▄▀█▀ ▄▄▄  ▄ ▀█ █▀▀█▄██▄▄█▄ ▄▄▄ ▄▄▄██
+█ ▀▀▄ █▄█ ▄▀▀█▀▀▄█▄██ ██▀█  █▄█ █▄▄█▀▄  ▄█▀█▀  ▄▄ █▄█ ▀█▀▀█
+█  █▀  ▄▄▄▀██▀ ▀ ▀▀▀██ ▄▄▄▄  ▄▄▄  ▄▄█▀ ██▄█▄ █▄▀  ▄  ▄██▄ █
+█ ▄ ▄ ▄▄▀ █▀ ▄▄███▀▄▄▄  ██ ▀█▄▄▄▄▀ ▄   ▄█ █▄▄▀█▄    ▄█ ▄▄▄█
+█▄ ▀█▀▀▄▀█ ▄ ▄▀▀ ▄▀ █ ▄▀▀██ ▄█▀▄▀ ▀▄▀ █▀█▀███ ▀▀  ▀▄█▄▀██ █
+█ ▀▄███▄ ▄▀ █ ▀   ▄ ▀    ▄█▄   █ ▄▄▀▀▄█▄█ ▀█  █▀▀█▄ ▄   █ █
+█▀   █ ▄▀▀▄▀▀▀ ▄ ▄█▄█ ▀█▀▄ ▄ ▄▄ █▄▀▄ █▄ █ ██ █ █▀  █ █▄▄ ▄█
+███▀███▄█▄ ▀▀██▀▄▄▄▄▀▀ ▀▀▄ ▄▀▄  ▄  █  ▄  █▄█▀ ▄██▀▄▄█▄▄█ ▄█
+█▀█▀▄ ▄▄▀▄▀█▀▀ ▀  █▄▄█ █ █▀ █▀  █▄█ █▀▀▄▀▄ ██▀▀▀██▄▄ █▄▄▄▄█
+█ ▄█   ▄▀▄ █  █ ▄█▄▄▄▄ ███▀█▄█ █ ███ ▄█▄▄ ▄█▄█▀█▄▄▄ ██▀ ▀▄█
+█ ▀ ▀▀▄▄▀▀▄ ▄▀▄▀██  ▀ █▀███▀▄▄▀ █ █  █▀▄█▀▄▀▀ █ █ ▀ █▀▀▄▀ █
+███████▄█ ▀ █▄ ▄█▀▄  ▄ ▄▄█  ▄▄▄  ▄█   █▄▀▄██ ▄▄ █ ▄▄▄ ▀█▀▀█
+█ ▄▄▄▄▄ █▄▀▀▄██▄▀██▄█▄▄ ▀█  █▄█ █▀▄▄   ▄█▄▀▀█  ▄▀ █▄█ █▄███
+█ █   █ █▀█▀ ▀█ █▀▀ ▀ ▄▀▀ ▀     █▄▄▄▄ ▄▀ █▀▄█▄▄██▄▄▄  ▀█▀ █
+█ █▄▄▄█ █▀▀  ▀▄▄███▄▄▄▀██▀▀ ▄ █▀▄▄█▄▀▄███ ██▄█  ▄  ▄▄▄▀██▄█
+█▄▄▄▄▄▄▄█▄█▄▄█▄██▄█▄█▄▄▄██▄███▄▄▄▄███▄▄█▄▄█▄▄█▄█▄████▄██▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀▀▄█▄  ▀█ ▄█▀█▄  ▀▀ ▄ █▄▄▀██ ▀ ▄▄▄▄█▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄▄▀▄ █▄██▀█▄▄█▀▀▀███▀▀ ▄██▀ ▄ ▀▄█▄ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀█▀█ █ ▄█ █▄ ▀█▀ █ ▄▄▄  ███▀  ▀  ▄ █▀▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄█▄█▄▀▄█ ▀ █▄█ █ █▄█ ▀▄█ ▀▄▀ ▀ █▄▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█▄ ▄  ▀▄  ▀ █▄▀▀▀▄  ▀█▀▀ ▀▄   ▄ ▀█▀██ ▀█▀▀  ▀▀██ ▀ █▄█▄▀ ▀█
+█▀▄▄█▀▄▄▄▄ ██▄▄ █ ▀ ▀▀▀  ▀ █▄▀ █▀█  ▀▀██▀██▀█▀ ▀█▀█▀▄█▀▀█▀█
+█ ▄▀ ▄█▄ ▀▀▄ █▄▄▄█▀  █▀▄ ▀▄ ▄█▀█ ▀▄▄▄  ▄██▀  ▀█▄▀▀ ███▀   █
+█▀█▄█ ▄▄▀▄ ▄  ▄▀▄█▄▀▄▄▀▀▀▀▀▄ ▄█   ▀▄▀ ▄ ▄ ▄█▀▀▀██▄▀▄▀██ ▀▀█
+███▀   ▄██▄█▄▀ ▀█▄▀▄▀▄▄▀▀▀█ ▀  ▀▄▀ █▄ ▀▄▄▀▀▀▀███▀ ▀█▀█ ▀▀▀█
+█▀▄▄▀ ▄▄▀ ▄▀██▀█▀██▄  █▀█▀▀▄▀▄▀██▄█▄▀ ▀█  ▀█ ▀▄▀███ ▄█   ██
+█▄▄ ▀▄ ▄█▄▀▄▀▀▀█▄▀▄ ▄█▀▀▀▄▀▀█▀   █▄█ ▄▄██▀ ▀▀▀▄█▄▀▄█▀▀ ▀▀ █
+█▄▀██▀ ▄▄▀██▀▀▄█▄ ▄ ▄█▀▄▀█▀ ▄  ▀▄▄█▀ ▄▄ ▀█▄█▄█▄▄ ▄▄  ▄█▀▀▀█
+█▀ ▀▄ █▄▄▀ ▀▄▀▄ ▄█▀▄█▄▄▀  ██▀█▀ ▄  █▀▄ ███   ▀▄█ ▀▄▄▀█▄▀▄▄█
+█  ▄▀ ▄▄▄ ██▀▀  ▄▄▄█ ▀▄█▄▀▄ ▄▄▄ ▄▄█▄ ▄██ ▄█▀▀▄▀▄█ ▄▄▄ ▀  ██
+█▄▄█  █▄█ ▀ ▀▀▀▀██▄▀ █▄█▀▀▀ █▄█  ▀█▄▀ ▀▄██  ▄█▄▄▀ █▄█ ██▄▄█
+█ ▀█▄▄ ▄▄▄  ▀█  ▀▄▀▀█▄█▀  ▄▄     ▀▄ ▀▀▄▀ ██ ▄ ▀▀ ▄  ▄▄▀ ▄▀█
+█▄█▄▄▀▀▄▄▀▄ █  ██▄▀▄█▄██▀ ▄▀▀▄▀  ▀▀█▄▄█▄██ ▀ ▀▄██▀▄ █▄█ ▄ █
+█ ▄▀ ▀▀▄▀▄▀▄  ▄▄ ▄▀▄█▄█▀▄▄ █▀▄▀ ▄▀ ▄▀▄ ▄▄▄▄ █▄▀▀▀▄▄▀█ ▀▀ ▀█
+█▀ █▄ ▀▄ █ █▀ ▀▀▀█ ▄▀▀▀█▄ ██▀█ ▀ ██▄▄ ███▀█▀▄█▄▄█▀▄▀██▄▄█▀█
+██▄ ▀▄█▄█▀ ▄▄   ▀█  ▀  ▄▄ ▄▄▀█  ▀▄ █▄   █  ▀██▀▄▄▄▄█▀▄▀ ▄▄█
+█▀ ▄▄▀ ▄ ▀▀ ▀█▄██▄▄ ▄▄▀▀▀ █▀ ▄ ▄▀█▀█ ▄▀█▀█▄▀▄█████▄▀▄▄ ██▀█
+███ ██▀▄▀█▄▀ █▀ ▀█▀ ▄▄▀ ▄▀▀▀▄▄▄▄██▄▀▀█▀█ ▀ ██ ▄▄▀▄▀▀▀ ▀▀▄██
+█▄ ▀ ▄▀▄▄▀▀██▄▄▀█▄▀  ▄▀▄ ▀▄▄█▄█▀▄█▄▄█  ██▀█▀ █▄█▀ ▀▀██▀▄█▄█
+█ ▀ ▀▀▄▄▀▀█ ▄█▀▄▄█ ▄▄█ ▀█▀▀▄█▄▀▄ ██▀▄█ █ ▀▄▀▄▀ █▀█ █ ▀ ▀▄██
+███████▄█▀ █▀  █▀▄ ▄ ▄▀▀▄▀  ▄▄▄  █▄█   █▀█▀ ▄██▄▀ ▄▄▄ █ ▀ █
+█ ▄▄▄▄▄ █▄  ▀▀▀▄ █  █▄█▀ █▄ █▄█ ▀███ ███ ▄▄▄ ▀▀██ █▄█   ▀██
+█ █   █ █ ▄▀█▀ █▄▀▀▄▄██▀▀▄▄▄▄▄ ▄ ██▄  ▀▄▀█▀ ▄▀██▄     ▀▀█▄█
+█ █▄▄▄█ █ ▄▀▄▄ ▀▄ ▀ ▄█  ▀█▀▀▀█▀███▄▀█ █▄██▀▀██▀█ ▄ █▀▀█▀███
+█▄▄▄▄▄▄▄█▄▄▄█▄██▄█▄▄█▄██▄█▄████▄▄▄▄▄▄▄▄███▄▄▄██▄████▄▄▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █ ▄▀▄█▀▄ ██▀▀▄▄█ ▄█▄▄ ▄  ▀ █▀ ▀▄█▀▄▄ ▀▀▄ ██ ▄▄▄▄▄ █
+█ █   █ █ ▄▀▄█ █▄▀ ▄█▄▄ ▄█▀██ ▄▄▀██ ▄█▄ ▀▀ ▀ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▄██▄ █▀█ █▀█▄█▀   ▄▄▄ ▀▀ █  █▄▀█▄ ▄▄▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄█ █▄▀ ▀▄▀ █ ▀▄█ █▄█ ▀▄█▄█ ▀ ▀▄▀ ▀ ▀▄█ █▄▄▄▄▄▄▄█
+█▄▄▀█ ▄▄█▀▀▀ ▄▄▄▄▄  ▄ ▄▀ ▀█▄▄ ▄ ▄ ▄██ ▄ ▄▀  ▄▄ ██▀█▀▄█▄ ▄▄█
+█▄▄▄█▄▀▄ ▀ █▄█▄ ██▄█▀▀▀██▄▀█ ▄█ ▀█▄▀▄▄██▀   █▀▄ ▀▀▄▀▄█▄▄█▀█
+█ ▀ █▄█▄▄▀█▄ █▀▀▀█▀ █ ▄▄ ▀▀▄▄█▀██▄ ▄▄ ▄  █  █▄▄▄▄▀█ ███ ███
+██▀███▀▄▀█ ▀██▄▀▄ █▄▄▄▄ ▄▄▀▄▀ ▄█   ▄▄█ █▄█  ▀███▀█▀▄▀▀█▄▀▀█
+███ █  ▄  ▀█▄▀█▄ █▄▄▄ ▄▀▀  █▄   ▀▄▄█▄▄█▀███▀▀▄ ▄▀ ▄ ▄█▀▀▄ █
+█ █ ▀▀█▄▀ ▄▄  ▀█▀█ ▀█ █▄█▄▀▄▀▀▄ ▀ █▀▄  ▄▄██ ▄█▄▄  ▀▄▄ ██▄██
+█▄▀█▄ ▀▄ ▀▄▄ ▀▄ ▀▀▄ ▀ ▄▀▀▄▄▄ ▀  █ ▀██ ▀ ▄▀ ▀▀ ▀█▄▀█▀▄▀ ▀▄▄█
+█▀▀██▀▄▄▄█▀▄▄ ▀▀▄█▀█▄█▀▀▄ ▀ ▄██▄█▄█▄▄ ▄ ▀▀▀ ▄▄▄▀█▀▀█▄█ ▄▀▀█
+█▀█▄▀▄█▄▄▀█ ▀▄▄█▀█▀▄ ▀▀▀  ▄ ▄█▀ ▀███▀▄█  █  █▄▀█  █  █▄▀▀▀█
+██ ▄▀ ▄▄▄  █ ▄▄ ▄▀▀  ▀▄ ▀▄▄ ▄▄▄ ▄▄▀▀█▀▀█ ▀ ▄▀▄▀▀▀ ▄▄▄ ▄█ ██
+█▄▀ ▀ █▄█ ▀▀▀▀▄▄ █▄▀█ ▀█▀▀▄ █▄█ █▄ ▄▀ ▄  █  ▀ ▀▄▀ █▄█ ▀█▀▀█
+█▄ ▀ ▄▄▄▄▄ █▄   ▀▀█ █▄█████  ▄▄▄ ▀▄▄ ▄▀█▄ ▄█▄ █ █▄▄  ▄█▄▄▀█
+█ ▄█ ▀▀▄█ ▀ █ █ ▀▄  ▄▀ █ ▀▀▄▀▄▀ █▄▄█ ▄█ ▄█  █  ███▀█▀▄▄ ███
+█▀▄▀█▄▄▄▀▀▀▀██▄▄▀▄▄▀▄██▄ ▄ █▀▀▄█ ▀ ▀█▄ █  ▀▄█▀▀█▄▀▄▀▀▀▄▄▄▀█
+█▄  ▀ ▀▄█ ███▀▄▄▄█ ▄▄▄▄█▄   ▄█▀ █  ▄ ▄   ▀█▀▀ ▀▄█▀▀▄ █▄▄ ▄█
+█ ▄ ▀▀ ▄█▀ ▀█▀▀▀▀ ██▀  ▀▀█▄▄▀ ▀▀▀█   █  █▄█▄▄▄▀▀▀▀▄█▀▀▄█▄▄█
+█▀█▀▀▀▄▄█▄▀█▀  ▀ ▄▄ ▀▀▄▀▀  ▄█▄ ▄▄ ▄█ ▄▄ ▄█▄▀▀  ███ ▄▀▄ ▀ ▄█
+█ █ █  ▄▀█ ▄▀█▄ ▀ ▄█▄▄▀█▀▄█▀▄▀▀▀██▄▄▄ █▀ ▄▀ █  ▀▄▄▄▀▀█▄▄▄██
+█▄██▄ ▄▄ ▄█▀█▄██ ▄▀ █▀▄▄ ▀ ▀ ▄█▀▀ ▀▄█ █  ▀▀ █ ▀██▀▀█▀▄   ▀█
+█ ▀ ▀▀▄▄ ███▀ ▀▄▄ ██▄█ █ ▄▀▄█▀▄▀ ██▄▀▄▄▀▄▄▀▀ ▀█ ▄ ▄▀▄▀█▄▄██
+███████▄▄▀██▀ █  █  █▀ ▀▀▀█ ▄▄▄ █ ▀█▄▄▄▀█▀  █▄██▀ ▄▄▄ █▀ ▀█
+█ ▄▄▄▄▄ █▀ █▄▄▀▄▀▄██▄██▄█ ▄ █▄█ ▀▀█ ▀▀██▄▄ ▀█▀▀▀▄ █▄█ ██ ██
+█ █   █ █▄▀▀▀ █ ▀▀▀▄▀  ▀▀▄▀ ▄  ▄▀  ▄▄ ▄▀█▀▀ ▀▄ █▄ ▄▄  ▀▀▀ █
+█ █▄▄▄█ █▀█▄█▄  ▄█▄█▄█ █▄ ▀▀█▄▄ ▄█▄▄ ██▄▄▀▄▄█▄▀ █▀ █ ▄ ▄███
+█▄▄▄▄▄▄▄█▄███▄█▄██▄▄▄█▄█▄██▄███▄███▄▄▄█▄▄█▄▄█▄▄▄██▄▄██▄██▄█
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀▀▄██▀▀▀█  ▀ █   ▀▀ ▄ █▄█▀▄  ▀▀█▄   ▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄▄█  ████▀▄█▄█▀ ▀███▀▀▀███▄▀▄ █▄█▄█▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀█▀▄▀█ ▄█ █▄ ▀█▀ █ ▄▄▄  ▀██▀▀ ▀▀ ▄ ▄▀▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄▀▄█▄▀▄█ ▀ █▄█ █ █▄█ ▀▄█ ▀▄▀ ▀ █▄▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█▄ ▄  ▀▄▄▄█ █▀▀▀▀▄  ▀█▀▀ ▀ ▄  ▄ ▀█▀██ ▀█▀▀  ▀▀██▀▀ █ ▀▄▀ ▀█
+█▀▄▄█ █▄▄▄▀▄█▀▄ █ ▀ ▀▀▀  ▀ █▄▀ █▀█ ▄▀▀█▀▀████▀ █▄▄▄ ▀ ▀▀█▀█
+█ ▄▀█▄█▄█ ▄▄ █▄▄▄█▀  █▀▄ ▀█▀▀▀▀█ ▀█▄▄ ▀███ ▀ ▀▀█▀▀ █▄▀▀▄  █
+████▀ ▄▄▀█ ▄  ▄▀▄█ ▄▄▄▄▀▀▀▀▄ ██▄   ▄▀▄▀█▄ ▄ ███ ▄ ▀▄▀█▀▀▀▀█
+█▀▄ █  ▄██▄█▄▀ ▀██▄ ▄▄▀█▀▀█ ▀  ▀▄▀▀▄▄  █▄▀▀▀ ███▀ ▀█▀█▀ █▀█
+█▀▀▀  ▄▄▀ ▄▀██▀█▀ █▄█▀█▀▄█▀▄▀▄▀██ █▄ ▄▀▄▀ ▀█ ▀▄ ███ ▄█  ▄▀█
+█ ▄ ▀█▀▄█▄▀▄█▀▀█▄▀▄ ▄█▀▀▀▄▀▀█▀  ▄▀▄█  ▄█▄▀ ▀▄█▄█▄▀ ▄▀▀ ▀ ▀█
+█▄▀████▄ ▀ ▀█▀▄▄▄ ▄ ▄█▀▄▀█▀ ▄  ▀▄▄█▀ █▄  ▄▄█▄█▄▄ ▄ █  █▀▀▀█
+█▀ ▀▄██▄▀ ▀ ▀▄█▀▄█▀▄█▄▄▀  █▀▀█▀ ▄  █▀▄ ███   ▀▄█▀ ▀█▀█▄▀▄▄█
+█  ▄▀ ▄▄▄ █ ▀█ █▄▄▄█ ▀▄█▄▀  ▄▄▄ ▄▄▀▄ ▄▀▀ ▄▀▀▀▄▀▄▀ ▄▄▄ ▀  ██
+█▄▄█▄ █▄█ █▀▀▀█▄██▄▀ █▄█▀▀▀ █▄█  ▀██▀ ▀███ ▀▄█ ██ █▄█ █▄▄▄█
+█  ▄  ▄▄    ▀█  ▀▄▄ █▄█   █▄     ▀▄▀██▄  ▀▀▄▄ █  ▄    ▀ ▄▀█
+█ ▄▄ ▀▀▄▄▀▄ █  █▄▄▄▄ ▄█▀█▀▄▀█▄▀  ▀▀█  ▀▄█▀  ▄████▄▄ ██▄▀ ▄█
+█▀ █▄▀▀▄ █▀▄  ▄▄██▀▄▀▄█▀▄█ █▄▀▀ ▄▀ ▄▄  █▀█▄ ▄█  ▀▄▄▀  ▀▀ ██
+█  █▄ ▀▄ █ ██▄▀▀▀█ ▄▀▀▀█▄ ██▀█▄█ ██▄  ██▀▀█▀▄▀▄▄█▀▄▀██▄▄█▀█
+██▄ ▀▄█▄█▀▄▄▀█ ▀▀█  ▀  ▄▄ ▄▄▀██▄▀▄ █▄   ▄  ▀█▄▀▄▄▄▄█▀▄▀ ▄▄█
+█▀ ▄▄▄▄▄ ▀▀ ▄ ▀▄█▄▄ ▄▄▀▀▀ █▀ ▄ ▄▀█▀█ ▄▀█▀█▄▀▄█████▄█▄▄▄██▀█
+███ ██ ▄▀█ █  ▀█▀█▀ ▄▄▀ ▄▀▀▀▄▄▄▄██ █▀███ ▀▄██ ▄▄██▄▀▀ ▄ ▄██
+█▄ ▄██ ▄   ▀█▄▄ █▄▀  ▄▀▄ ▀█ █▄█▀▄██▄█ ▀██▀▀▀ █▄█▀█ █▄████▄█
+█ ▀ ▀▀▄▄▀▄█ ▄█▀▄▄██▀▄█ ▀█▀  █▄▀▄ ██  █▀█ ██▄▄██▄▀▄▀▀    ▄██
+███████▄▄▀ █▀  █▄▄█▄▄▄█▀▀▀  ▄▄▄  █▄█  ▀█▀▀  ▄▀██▀ ▄▄▄ ▄▀▀▄█
+█ ▄▄▄▄▄ █▄  ▀▀▀▄█   █▄█▀▀ ▄ █▄█ █▀██▄▀██████▀▀▀▄  █▄█    ██
+█ █   █ █ ▄▀▀▄ █▄▀▀▄▄██▀▀▄▄▄   ▄▄▀█▄ ▄▀▄▀▀▀ ▄████     ▀▀█▄█
+█ █▄▄▄█ █ ▄██▀██▄ ▀ ▄█  ▀█▀▀█▀▀█▄█▄▀▄ █▄██▀▀██▀█ ▄ ██▀█▀███
+█▄▄▄▄▄▄▄█▄███▄▄▄▄█▄▄█▄██▄█▄█▄▄█▄▄▄▄▄▄▄▄███▄▄▄██▄█████▄▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▀▀▄██▀██▄▀▀█ █ ▄ ▀▀ ▄ █▄███▀ █▀█▄ █ ▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄▄█  █▄▄█▀██▄█▀▀▀███▀▀▀▄██ ▀▄  ▄█▄ ▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀▀█▄▄█ ▄█ █▄ ▀█▀ █ ▄▄▄ █ ████ ▀▀▄▄  █▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ ▀▄█▄▀▄█ ▀ █▄█ █ █▄█ ▀▄█ ▀▄▀ ▀ █▄▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█▄ ▄  █▄  ▄▀ █▀▀▀▄  ▀█▀▀ ▀▄▄  ▄ ▀█▀██ ▀█▀▀  ▀▀██▄▀ █ █▄▀ ▀█
+█▀▄▄█ ▄▄▀█▄██▄▄ █ ▀ ▀▀▀  ▀▄█ ▀ █▀█  ▀▀▀▀▀██▀█▀▄█ ▀█▀▄▄▀▀█▀█
+█ ▄ ▄▄█▄████ █▄▄▄█▀  █▀▄ ▀█ ▀█▀█ ▀██▄  ▄██▀▀ ▀█▄▀  ██▀█   █
+████▀ ▄▄▀▄ ▄  ▄▀▄█▄▄▄▄█▀▀▀▀▄ ▄█▄    █▄█▀▄ ▄▄██▄█  ▀▄ █  ▀▀█
+█▄▄█▀  ▄██▄█▄▀ ▀▄█▄  ▄██▀▀█ ▀ ▀▀▄▀▀█▄▄▄███▄ ▄▀▄▄▀ ▀█▀█  ▀██
+█▄▄▄ ▄ ▄▀ ▄▀██▀█▀██▄ ▀█▀█▀▀▄▀▄▀█▀▄█▄▄█ ▄▄▄ █▄ █▀███▄▄█  ▄██
+█▀▀ ▀█▄▄█▄▀▄  ▀█▄▀▄ ▄█▀▀▀▄▀▀█▀   █▄█ ▄▄█▀▀ ▀ █▄█▄▀▀▄▀▀ ▀▀ █
+█▄▀██  ▄ ██▄▀██▀▄ ▄ ▄█▀▄▀█▀ ▄  ▀███▀ █▄ ▀█▄██▄▄▄ ▄█ ▄ █▀▀▀█
+█▀ ▀▄▀ ▄ ▄██ ▄█▀▄█▀▄█▄▄▀  █▀▀█▀ ▄  █▀▄ ███   ▀▄█   ▄██▄▀▄▄█
+█  ▄▀ ▄▄▄ ▄▄ █▀▄▄▄▄█ ▀▄█▄▀  ▄▄▄ ▄▄█▄ ▄█▀ ▄▀▀▀▄▀▄▀ ▄▄▄ █  ██
+█▄▄█▄ █▄█ █ ▀▀ ███▄▀ █▄█▀▀█ █▄█  ▀ █▀ ▀███▀▀▄██▄▄ █▄█ ▄█▄▄█
+█▄▀▄▀▄ ▄    ▀█  ▀▄  █▄██  ▄▄     ▀▄ ███▄▄▀▀ ▄▄▄█ ▄▄▄▄▄▀▀▄▀█
+█▀ █ ▀▀▄█ ▄ █  ███▄▄▀█▀█▀ ▄▀██▀  ▀▀█  ▄█ ▀   █▄███▄ ▀▄█   █
+█▀██ ▀▀▄▀█▀▄  ▄▄ ▀▀▄▄▄█▀▄▄ █  ▀  ▀ ▄█▄ ▄▄██▀▄▀ ▀▀▄▄▀██▀▀█▀█
+████▄ ▀▄ █ ██▄▀▀▀█ ▄▀▀▀█▄ ██▀█▄▀▄██▄  ███▀█▀ █▄▄█▀▄▀██▄▄▄▀█
+██▄ ▀▄█▄█▀▄  ▀▀█▀█  ▀  ▄▄ ▄▄▀█▄▄▀▄ ██   ▄  ▀██▀▄▄▄▄█▀▄▀ ▄▄█
+█▀ ▄▄  ▄ ▀ ██▀▀ █▄▄ ▄▄▀▀▀ █▀ ▄ ▄▀█▀█ ▄▀█▀█▄▀▄█████▀█▄▄ ▀█▀█
+███ ███▄▀██▄█▄▀▀▀█▀ ▄▄▀ ▄▀▀▀▄▄▄▄██▄▀▀█▀█ ▀▄██ ▄▄█▄▀▀▀ ▀▀▄██
+█▄ █▄▀▄▄ ▀█▄█▄▄▄█▄▀  ▄▀▄ ▀▄▀█▄█▀▄██▄█  ██▀   ██▄▀▀▄ ██ ██▄█
+█ ▀ ▀▀▄▄ ▀█ ▄█▀▄▄█  ▄██ █▀▀ █▄▀▄ ██▀ ▀ █▄▀ ▄▄█  ▀█ █   ▀▄██
+███████▄█  █▀  █▄█▀▄ ▄▀▀ ▀  ▄▄▄  █▄█  ██▄█ ▀ ██▄█ ▄▄▄ █▀▀▄█
+█ ▄▄▄▄▄ █▄  ▀▀▀▄▀▄  █▄█▀▄▄▄ █▄█ ▀▀███▄▄▄ ▄██▀█▀▄█ █▄█   ▄██
+█ █   █ █ ▄▀▀▀ █▄▀▀▄▄██▀▀▄▄▄▄  ▄ ▀█▄ ▄▀▄██▀ ▄███▄   ▄▄▀▀█▄█
+█ █▄▄▄█ █  ▄▀▀█▄▄ ▀ ▄█  ▀█▀▀█▀▀███▄▀█ █▄▄▄▀▀▄▄▀█ ▄ ████▀███
+█▄▄▄▄▄▄▄█▄██▄▄█▄▄█▄▄█▄██▄█▄█▄▄█▄▄▄▄▄▄▄▄███▄▄▄██▄████▄▄▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄ ▀▄█ ██▄▄▀▀ ▄█▀▄█▄█▀█  ▀█▄███  █▀ ▀█ ▄ ██ ▄▄▄▄▄ █
+█ █   █ ██ █ █▀▀▀ █▀▄▀     ▀▀ ▀▀  ▀ ▀ █▄ ▀█▄  ▄▄ ██ █   █ █
+█ █▄▄▄█ ██   ▀██ ▀█▀▄▀█▀▄ █ ▄▄▄ ▄█▀▀    ▀ ▀ ███▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ ▀ █ ▀▄█▄▀ █▄▀▄█ ▀ █▄█ █ ▀ ▀▄▀ █▄█ █▄█ ▀▄█▄▄▄▄▄▄▄█
+█ ▄▀  █▄▀▀▀▀  █▀▀▀   ▀█▄ ▀▀ ▄▄▄  ▀█ ▀▄█▀▀ ▄ █▀▄▀▀▀▀ ▀▀█▀▀▄█
+█ ▄ █▄▄▄ ▀▄▄█ ▄▀█ ▄ ▀ █▄█▀▀▄ ███▀▄▄ ▄▀██▄▀█▀▄ █▄ ▀█   ▄▀▀▄█
+█ ▄ ▀ █▄▄█▀▀▄ ▀▀ ▄  █ ██▀▀▀█▄  ██▄███ █▀▀▄  █▄ ▄  █ ▀   ▄██
+█   █▀▄▄  ▄▄ ▄█▀  ▀██ ▄▀▀▀  ▄ ▀ ▀▄▀▀█▄█  █ ▀▄██ ▄▀▄▄█▄█  ██
+█▄▀▀▄▄ ▄ ▄ █▄  ▄▀▀▀  ▄█▀▄▀█▀█▄█▀▄ █▀ ▄▀█▄██ ▀▄▄ █▀▀████▀▀ █
+█ ████▄▄   ▄█ ▄ ▄▄▄▄ █▀   ▄▀██ █▄█▀█ ▄█▀▀▄▀▄▀▀▀▀▄▀   █▀ █▄█
+█▄▄▄▄  ▄ ▄▀ ▄█ ▀ ▄▄ █▀█▄▀▄ █▀▄  ██  ▄▄█▀█  ▀█▀  ▄▀▄▀█▄▄█ ██
+█▀▀▄█ █▄▀▀ █▀▀█  ▄ █▄▄█ ▄█▀▀ ▄█▀██▀█▀▄▄▀▀▀█▀█▀▄ █▄██▄▄▄ ▀ █
+█▀▄ ▀▀▀▄█ ▄    ▀▀▄█  ▀  ▀  ▄█▄  ▀█▄▄▀▄█▀▀ ▀ █  █▀▀█ ▀▄▄ ███
+█▄▄██ ▄▄▄ ▄▀█▄▀▀█ ▄█▀█  ▄▀  ▄▄▄ █ ▀▀ █ ▀█ ▄▀ ▀ ▀█ ▄▄▄ ▀ ███
+██  ▄ █▄█ ▄▄  ▄▀▀▀▀▀ ▄ ▀▄▀▀ █▄█   █ ▄ ██▀▀█▀▄▄▀ ▀ █▄█ █ ▄██
+█ ▀▄▀▄▄▄▄  ▄█ █▄██▄▀ ▀▄▀▀ ▀ ▄   █▄▀▀▄██▀    ▀█▄▄▀▄   ▄▀ ▀▄█
+██▄  █ ▄ ▀▀ █▄▄██▀▄▄ ▀ ▄▀ ██ ▀▀ ▀██ ▄▄  ▀ █▀█▀▀▀▀▀█▄ ▀▄▀█▄█
+██▀▀▀█▄▄▀█  ▀▄▀ ▄█▄▄ █▀█▀▀ ▄██▄   ▄ ▀▄▀▄██▀▀▀▀▄██▀▄   ▄▀▄ █
+█▄▀▀▀  ▄▀▄▄██▄█▀█▄▀▄▄▄█▄█   █▄▀▀▀▄▀██   ▀▄▄▀█▄ █▄██▀▀█▀▄▀▄█
+█▄█ ▄█▄▄██ ▀  ▀▀█ ▀▀ ▄▄▀▄ █ █ ▄▄▀▀▄ ▄█▀  ▄ ▀ ████▄██▀█▀ █ █
+█▀ ▀▀▄▀▄▀█▀▄▄█  █ ▀ ▄███▄ █ ▄ █▄▀▄█▀▀  ▄▄█▀▀█  ▀ █▀▀  ▀ █▄█
+█▄█ █ ▄▄  ▀▀ ▀▀██▄  ▀▀█▀█▀ ▄ ██▄  ▄  █ ▀▄ ▀█▀▄▄  ▀▀ █▀  █ █
+█ ▀▄█ ▀▄██▄██▄██▀▀▀ ▀ █▀ ▀▄▄▀▀█▀█▀  █ ▀ ▀▄  ▀▀ ▀▀ ▄ ▀▀█▀█▀█
+█ ▀ ▀▀▄▄█▀▀ ▀█▄█ ▀ ▄▄▄ ▀ ▀ ▀▀ ▄▄ ▄ ████ ▄▀█▀  ▄█ ▄ ▄█▀▄▀▄▄█
+███████▄█▀▀ █▄█▄▀██ ▄▀▀   █ ▄▄▄ █  ▄▄ ▀ █ ▀▀   █  ▄▄▄ █  ▀█
+█ ▄▄▄▄▄ ██▄  █▄▄ ▄  █ ▀▄▀▀█ █▄█  ▀▀ ▄▄█ ▄ ██ ▄▄▀▄ █▄█   ███
+█ █   █ █ ▄▀ ▄██ █▄▄▄▄▀█▄▄▄▄▄ ▄▄  ▀ █ ▀█▀█▄ █▄▀▀ ▄   ▄▄▀▄██
+█ █▄▄▄█ █▀ ▀▄█ ▄ ▀▀▀▀ ▄▀ █▄▄▀▄ █▀   ▄  █▄ ▄██▄█▄▀▄█ ▄▄▀▀  █
+█▄▄▄▄▄▄▄█▄▄▄██▄████▄▄▄█▄▄██████▄█▄▄█▄▄▄██▄█▄▄████▄▄██▄█████
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀██▀▀█▀▄  █ ▄ ▀▄    █ ▄██ ▄ ▄▄▄▄▀▄▄ ▀█▄ ██ ▄▄▄▄▄ █
+█ █   █ █▄█▀██▄██▄ █ ██▄█▄██▄▄▄█▄█▄▄██  ▄▄  ██▀▄ ██ █   █ █
+█ █▄▄▄█ █ ▀  ▄ ▀██ █▀█ █▀▄  ▄▄▄ ▄▀▄█ ▄█▄▄█▄▄▄  ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█ █ █ █ ▀ █▄▀ █ ▀▄█ █▄█ ▀▄█▄█ █▄▀ ▀▄▀ ▀▄█ █▄▄▄▄▄▄▄█
+█▄ █▄▀█▄ ██▀ █ █▄██▄██  ██▄▄   ▄██ ▄▄  █▄▄▀▄ █▀██▄█▄  ▀▄▄▀█
+█▄▀▄   ▄▄██▄█ ▀█ ▄▀▄▄▄   ██▀█▀ ▀▄ ▀ ▀█ ▀▀█ █▀▄ ▄▀█▀▄█▀▀█▄ █
+█▄▀▄▄▄ ▄▄ █▀▀▄▄██ █▄ ▄ ▀▄█▄ █ █▀  █▀ ▄▄▄▄ ▄▄  █ ▄█ ▄█ ▀ ▀▀█
+██▀█ █▀▄▄▄▀ █  ██▄█▄ ▄▀█▄██▄▀█ ▄▄ █▀ ▄▄ ▀▀ ▄▀▀▀▀▄▄▀   ▄██▀█
+██▀█▀ █▄█ █▀▀▄█ ▄██ ▄▀ ▀ ▄ █  ▄▄▀▄ ▄ ▄▄▀▄███ ▄▀█ █▄▀ ▀ ▄▄▄█
+██▄ ▄▀█▄█▄█  ▄▀▄█ ▀ █▄▄▄▄▄▀█ ▀▄▀▀█▄▀█▀▀▄▀▄▄▀▄▄▄█▀█▀▄█▀▄▄▄ █
+█▄▄ ▀▀▄▄█ ▄▄█████ ▀▄ █  ▄ █▀▄ █▄▄▀█▄ ▄ █▄▄██▄▀█▄▀██▄  ▀▀▄▀█
+██▄  ▀▄▄▄█▀█  ▄▄█ █▀▀  ▄▀▀▄██  █▀ ▄▀▄▀▀██▄ █▀▄▀▄  ▀▀█ ▀▄▄▄█
+██▀▄▄██▄█    ▄█▄▄  ▄███▄▄▄▀▄  █▄▄▀▀ ▄  █▄▄▄▄ ▄█▀ █▀██ ▀▄ ▀█
+█ ▀▀  ▄▄▄  ▀▄▀█▀ ▄▀▀▄▀█▄▀█▄ ▄▄▄  ▄ ▀█▀▀█ ▄▀█████▀ ▄▄▄ ▄▄ ▀█
+█▀█   █▄█  ██▄▀ ▄█▄██ ██▀█▄ █▄█ █▄▄▄▀▄█ ▄█▀█▀  ██ █▄█ ▄ ▀▀█
+█▄▀█▄ ▄▄▄▄█  ▄   ▀█▀██▀▄▄▄▄▄ ▄▄▄  ▄▄█▀█ █ ▄█ █▄▀  ▄▄ ▄██▄ █
+█▄▀  ▀█▄▀█▄▄  ▀▀▄█▀▄▄██ ██ ▀▄▄▄▄▄▀ ▄  ██ ▄█▄▄█▄▄▄▀   █ ▄  █
+█ ▄▄ ▀▀▄ ▀█▄▄ ▄▄▄█▀ █▀▄▀  █  █▀▄█▄▀▄█ ▄ ▀ █▄▄▄   █▀▄██▀█▀▄█
+██▀█▄▄█▄▄ ▀▀██ █  ▄ ▀    ▄█▄  ▀▄ ▄▄▀ ▄█▄▄ ▀█ ▄█▀▀▀ █▄▀▄ ▄ █
+█  ▄▀▀▀▄ ▀▀▄▀█   ▄▄██ ▀█▀▄ ▄ ▄█ ██▀▄▀ ▄▄▄▀███  ▀   ▀▄▀▄▄ ▄█
+████▄▄▄▄▄▀ ▀▄▄▀█ ▄▄▄▀▀ ▀▀▄ ▄▀▄  ▄  █▄▄█ ▀▀▄█ ▄███▀▄ █▄▄▄  █
+█  ▄ ▀▀▄█▄▄█▄██▀  █▄▄█ █ █▀ █▀  █▄▀▄█▀▀█▀▄ ▀▄ ▀ ██   █▄▄ ▄█
+█▄▄▄▀▄▀▄█▄     █▄█▄▄▄▄ ███▀█▄█ █ ██▄ ▄▄█▄ ▄█▄█▄▄▄▄█▄ █▄▀ ██
+█ ▀ ▀▀▄▄▄ ▄▄▄▀▀▀██▄▀▀ █████▄▄▄▀ █ █  ██▄▀█▀▄█ ▀ █ ▄▄▀▄▀█▀ █
+███████▄▄▀▄▄     ▀   █▄ ██  ▄▄▄  ▄█ ▄▄▀▄▄ █▄▄ ▀▀█ ▄▄▄ ▀██▀█
+█ ▄▄▄▄▄ █▄▀▄█▀▀ ▄▀█▄▀ ▄  ▄  █▄█ █▀▄▄ ▄▀▄▀   █▀ ██ █▄█ █▄▄▀█
+█ █   █ █▀▀██  ▀█▀▀ ▀ ▄▀▀ ▀ ▄   █▄▄▄▄▄▄▀ ▀▀▄  ▄██ ▄▄  ▀█  █
+█ █▄▄▄█ █▀█▀██▄▄██▄█▄▄▀██▀▀ █▄█▀▄██▄▀██▀ █▀▀ ▀  ▄  ▄ ▄▄██▄█
+█▄▄▄▄▄▄▄█▄█▄███▄▄█▄▄█▄▄▄██▄█▄▄▄▄▄▄███▄██▄▄▄▄██▄█▄▄██▄█▄█▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ ██ ▀▄██ ▀ █▀  ██▄▄▀ █▀█ ▄█▀  ▀█▄▀▀█▄▄  ▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀ ▄ █ ▀ ▀█▀█  ▀▀▀▀▀▀▀▀▀▀ ▀▀  ▄▄  █▄█ ▄▄ ██ █   █ █
+█ █▄▄▄█ █▄▄  ▄█▄ █ ▀▄ ██▀ █ ▄▄▄ ▄▀▀█ ▄ ▀  ▄ █ █▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ █ █ █▄▀ ▀ ▀▄█ █ █▄█ ▀▄▀ ▀▄█▄█▄█ ▀ █ ▀▄█▄▄▄▄▄▄▄█
+█ ▄▀▀█ ▄ █▄█ █▄▀▀   ▀▀██ ▀▄ ▄▄▄ ▀▀█▀▀▄▄▀▀▀▄ ▄▀▄ ▀ ▀▀▀▄▄▀▀██
+█ ▄▀█  ▄▄ █ █▀▄ █▄▀ ▀▀█  ▀ █▄█ █▀█▄▄▀▀█ ▄█ █▄▀▀   █ ▀ ▀▀▀██
+█  █  █▄█▄▄▄▄ ██ ▄  ▀▄██▀▀▄▀█▄ █▀  ▄█  █▀▄▀▀▀ ▀█  ▀▄  ▄  ▀█
+█▄▄▀▀ ▄▄  ▄█ ▄▄▀ ▀█▀▄ ▀▀▀▀▀ █▀▀  ▄█ ▀ █▄▄▄▀ ▀▀  ▀▄█▄▄█▀▀▀██
+█ ▀▀▄ █▄ █ ▀▀  █ ▄ ▄▀█ ▀  █ █  ▀▄▀█▄ ▄▀▄ ▀▀▀ ▀▄▄ ▀▀▄█▀  █▀█
+█  ▀ ▀▄▄▄▄ ▄█  ▄██▄▄▄▀▀ ▄▄ ███ ▄▄▀▀█▄▄▀█▄█ █▀█▀▀▄▀ ▄ █▀ █ █
+██▄▄▄▀▀▄▀▄▀▀ ▄▀▀ █▄ ▄▀██▀▄▀█▀█   ▀ ▀▄ ▄▀██ ▀▄█ ▀▄▀█▀██▄█▀██
+█▀▀██ █▄▀  ▄▀▀█▀  ██▄██▄▀█▀    ▀█▄▀▀█▄▄ ▀█ ▀█▀▄▄ ▄ ▄▄ ▀ ▀▀█
+█▀ ▄▀▄▀▄▄▀█▄██ ▀▀▄█ ▄█  ▀ ▄ █▄  █▀▄▄▀▄▀█▀ ▀ ▀▄ █▀  █ ▄▄ ▀▀█
+█▄███ ▄▄▄ ▄ ▀▀▀▀█▀▄█ █ ▀▄▀▀ ▄▄▄ ▄ █▄ ██▀█▀ ▀▀▀  █ ▄▄▄ ▀ ▄██
+██ ▄▀ █▄█   █ █ ▀█▄▀ █ █▀▀▀ █▄█  ▀ ▄▀ █▄▀██▀▄█ ▄  █▄█ █▄▄▄█
+█▄▀█ ▄▄▄▄  ▄█ ▀ ██▄ ▄██▄▀ █▄▄   ▀  ▀▄█ █▄ ▀██▀▄█▄▄▄▄▄▄ ▀█ █
+█▀▀█▄▄ ▄█▀▀▀█▄███   ▀▀▀▀▀ ▄█▀ ▀  ██▀▄  ▀▄█▄▀▀█ ▀█▀▄▄  █ ▄▄█
+█▀ ▀▄▀▀▄█▄ ▄▄▄▀▀█ ▀▄▀█▀▀▄█ █▄ ▀  ▀▄▄ ▄▀█▄█▄▀▀▀█▀ ▀▄▀▄▄▀▀▄▀█
+█▀██▀  ▄█ ▄█▄█▀██▄▀▄  █▄█ ▄▄█▄█▀█▄▀█ ▄▄▄▀ ▄▀█  █▄█▀█▀█▀▄▄ █
+█▄▄ ▄▄▄▄▄██ ▀█▀▄█▀▀▀▀▄▄ ▄ ▄ █▀    ▄▀▄█   ▄ ▀ ██▄█▄▄█▀▄▀ ▄ █
+█▀  ▀ █▄▀▄▀▀▄▀  █▄▄ ▄▄█▀▀ █▀▄▄ ▄▀███▄  █▄▀▄▀█▀ ███▀█ ▄ ▄███
+█▄▀▄█▀▄▄▄▄▀█▄▄▀▀█▄  ███▀█▀▄  ██▄▄▄ ▄ █▄▀▄ █▀█    ▄█ █▀ ▀▀▄█
+█  ▀  █▄ ▄█▄█▄▀█▀ ▀   █  ▀██▀ █▀▄▀▄▀█   ▀█ ▀ ▀▀▀▀ ██▀ ▀█▄▀█
+█ ▀ ▀▀▄▄ ▀▀▄▄█▄▄ █▀▀▄█ ▄█▀ ▄▀▄▀▄ █   █ █▄██▄ ▀▄▄▄█▄▀█▀▀▀▄██
+███████▄▄ ▀ █▄▀ ▄█▀ ███▄▄▀▀ ▄▄▄ ▀▄ ▄▀▄ █▀    ▄ █▄ ▄▄▄ ▄▀ ▀█
+█ ▄▄▄▄▄ █ ▄▀ ██▄▄   █ ▀█▀█▄ █▄█ █▀▀▀▄ █ ▄ █▄█▄▄▀█ █▄█   ▄██
+█ █   █ ██▄█▀▀█▄ ▀▀▄▄█▀▀▀▄▄▄▄▄ ▄ ▀▀▄▄ ▀▄▀▀▀ ▄█▀█▄▄    ▀▀███
+█ █▄▄▄█ █▀▀▄▄▀ ▄ ▀▀▀█▄▄▀ █  ▀  █▄█  ▄▀▄▀▄ ▄█ ▀█▄▀▄▀▄█ ▀▀▄▄█
+█▄▄▄▄▄▄▄█▄▄▄██▄▄█▄█▄█▄██▄█▄█▄██▄▄▄▄▄▄▄█████▄███▄█▄██▄███▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀▄ ███▀█▀▄  ▀▀█▄▄ ▀▀ ▄ █▄▀▀▄▄ █ ▀▄ █▀▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄  ▀ ████▀██▄█▀▀▀███▀▀▀▄██▀ ▄ ███▄ █ ▄ ██ █   █ █
+█ █▄▄▄█ █▀  ▀▀█▄▄█ ▀▄ ▀█▀ █ ▄▄▄ █▄██   ▀▄ ▄  █▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄▀ █ ▀▄▀ ▀ █▄█ █ █▄█ ▀▄█ ▀▄█▄▀▄█ ▀ ▀ ▀▄█▄▄▄▄▄▄▄█
+█ ▄▄▄ ▀▄▄▄▀▀ ▄▄██▄  ▀█▀▀ ▀ ▄  ▄ ▀█▀█▀▄▄███▄ ▄█ ▄▀▀ █▄▀▄▀ ▀█
+█ ▄▀▀  ▄██▄ █ ▄ ▀▄▀ ▀▀▀  ▀ ▄ █ █▀█▄▄▀▀▀▄ █ ▀▄▀▀▄▄▀▄  ▄▀▀▀██
+█ ▀ ▄▀▄▄▄ ███ ▄▄▄█▀  █▀▄ ▀█▀██▀█ ▀██▄  ███▀▀ ▀▀█ ▀ ██▀█▄▀ █
+███▀▄▄▄▄▀▄ ▀ ▄▄█▄█▄▄▄▄▄▄▀▀▀▄▀█▀    ▄█▄██ ▄▄▀█▀█▄█▀█  ▀  ▀▀█
+█ █ █ █▄ █▄▀▀  █▀▄▄  ▄▀▀  █ ▀ ▀ ▄▀▀▄   ▄██▀▀ ▀▀▄ ▀▀▄▀▀  ▀██
+█▀ ▀ ▄▀▄██▄█▄ ▀█▀▄█▄ ██▀██▀▄▀▄▀▄▀▄█▄▀▄ ▄  ▀█▀▀█ █▀▀█▄▄  ▄▀█
+██   █▄▄▀ ███▀▀█▄▀▄ ▄█▀▀▀▄▀▀█▀  ▄▀▄█ ▄▄█▀█ ▀▄█▄█▄▀ █▀▀▄█ ▀█
+█▀▀█▀▄ ▄█ ▄▀█ █▀▄ ██▄█▀▄▀█▀ ▄  ▀███▀▄█▄ █▄ ▀▄▀ ▄ ▄▀█  ▀ ▀▀█
+█▀▀██▀ ▄▄▀ ▀█▄▀▄██▄ █▄▄▀  █▀▀█▀ ▄  █ ▄ ▄█▀   █▄▄  ▀▄▀██   █
+█▄█▀▀ ▄▄▄ █▀ █ █▀█▄█ ▀▄█▄▀  ▄▄▄ ▄▄█  ███▀█ ▀▀█ ▄  ▄▄▄ █ ▄▀█
+██ ▀  █▄█ ███  ███▄▀ █▄█▀▀▀ █▄█  ▀▄█▀  ████▀▄█ ▄█ █▄█ ▄▀▄▄█
+█ █ ▀  ▄▄ ▄█▄  ▀▀▄▄▄█▄█▀  █      ▀▄ ▀██▀▄▀▄█  ▀▄▄▄▄▄▄▄  ▄▀█
+██     ▄  ███▄█▀██ ▄ ▄▀█ ▀▄▀█▄▀  ▀▀█▀▄▀▄ ▀▀▀ █▄▄█▄▄ ▄▄▄▀  █
+█  ▄▀▀▀▄██▄▄▄▄▀▀█▄▀▄▄██▀▄  █▀▄▀  █ ▄▄█▀█ ██  ▀ ▀▀▀▄▀▀▀▀▀█▀█
+██ ▄█▀▀▄▄▀ ▄██ ▄▀█ ▄▀▀▀█▄ ██▀█▄▀ ▀█▄  █████▀▀▀▄▄██ ▄█▄ ▄█▀█
+█▄▄▄  ▄▄▄▀ ▄▀▄▄▀▀█▀▀▀  ▄▄ ▄▄▀█▄ ▀█ ██▄ ▄▄▀ ▀ ▀▀ █▄▄▀█ ▀ ▄▄█
+█▀  █▄▀▄▀▄  ██  ▀▄▄ ▄▄▀▀▀ █▀ ▄ ▄▀█▀█▄  █ ▀▄▀█▀▄███▄▀▄▄▄▄███
+█▄ █▀ ▀▄██ ▄█▄▀▄▀█▀ ▄▄▀ ▄▀█▀▄▄▄▄██ █▀█▀  ▀▄▀▄▀ █▀▀▄▀▀ ▀  ██
+█   ▄▀█▄█▀███▄▄▀█▄▀  ▄▀▄ ▀███▄█▀▄██▄█  ██▀   █▀▄█▀▄▄█▄█ ▄██
+█ ▀ ▀▀▄▄ ██▄▄█▄▄▄██▄▄█ ▀█▀  █▄▀▄ █▄▀▄█▄▀▄▀█▀ ▀█ ██▀▀█  ▀▄██
+███████▄█▀█▀▄▄ ▀█▄▄ ▄▄▀▀    ▄▄▄  █▄█▀  █▀▀█▀▀█▄█▀ ▄▄▄ █▀▀▄█
+█ ▄▄▄▄▄ █▄ █ ██ ██   ▀█▀▄ ▄ █▄█ █▀██▀▀▄█▄█▄█ ▀ █▄ █▄█    ▀█
+█ █   █ █  █▀██▄▄▀▀▄▄██▀▀▄▄▄ ▄ ▄▄▀█▄  ▀▄██▀  ▀██▄▄   ▄▀▀▄██
+█ █▄▄▄█ █ ▀█▄▄▄ ▄  ▀▄█  ▀█▀▀██▀█▄█▄▀▄ █  ▀██ ▀▀█ ▄ ███ ▀███
+█▄▄▄▄▄▄▄█▄▄▄▄█▄██▄█▄█▄██▄█▄██▄█▄▄▄▄▄▄▄█████▄███▄█▄███▄██▄██
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▄  ▀▀█▄█▀ █▀███   ██  ▄█ ██▀█▄▀▄▀  █▄ ▄ ██ ▄▄▄▄▄ █
+█ █   █ █ █▀▄ ▀████ ███▄ ▀ █▄▄▀ █▄▄▄▀▀█ ▄▄██ ▄▀▄ ██ █   █ █
+█ █▄▄▄█ █▄█ █▀▀█▀▀▀▄ ▀▄▀ █▀ ▄▄▄  ▀ ▀ ▀▄ ▀▄██  ▄▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄▀ █▄█▄█▄▀▄▀▄▀▄█ █▄█ ▀ ▀ █ █ █▄▀▄▀▄█ █ █▄▄▄▄▄▄▄█
+█ ▄▄▄██▄▀ ▀▀▀ ██▄█ ▀ █    ▀▄  ▄  █ ▄▀███▄▄▄▀██▀█ ▀ ██▄▄ ▀ █
+██  ▄▄▀▄ ▀ ▄   ▀▄  ██ ▄▄▀▄▄▄▀█▀ █▄▀  ▄▀██▀▀   ▄▄█▀▀ ▀▄ ▄█▄█
+█▄▀▄█▀ ▄█▀▄█▀▄▄  ██▄ ▀█▄▄██▄▀██▀ █ █ ▄▄▀▀█▄▄ █ █▄▄ ▀▀█▀▄▀▄█
+█▀▀ ▀█▄▄▀▄▀  ████▄▀ █▄▀▄▀  ▄▀█▀▀▀ █▀▀█▀ █▀▄▀ █▄█▄ ▄ ▀▀   ▀█
+██▀▀ ▄▄▄▄▄▀█ █▄▄   ▀█▄▄█▀█▀▀▄▄▀█  ▄▀█▀▄▄▀█▀█▄ ▀▀▀▄██▄█ ██ █
+███▀▀ ▀▄█▀ █ ▄▀▀▄▀▀ ▀▀▀▀██▀ █▄█▀█ ▀▄ ▀▀▀▄██ █▀▀ ▀██▀ ▄▄▄▀▀█
+█▄▀ ▀ ▄▄  ▄▄ ▀ ██ ▄▀██  ▀█ ▀▄  ▀▀▀█▄▄▀██▄   ▀██▄▄ ▄▄  ▄▄▀▀█
+█▄█▄▄▄ ▄█▀ ▀ ▄▀ ▀▄▄  ▄▄   █▀▀▄▀▄▀█ ██▀ ▀  ▀▄▀ █ ▀▀▄█▀▄ ██ █
+██▀▀▀█▀▄▄▄▄█▀▀▀ ▀█ ▄█  ▀▄▄▀▀███▄▄▄▄█▄   ▀▀▄▄ ▀ ▄██ ▀▀█▀▄ ▄█
+██▄▀  ▄▄▄ █▄▀  ▀ ▄▄▄▀▀█▄▄   ▄▄▄ █▄▄▀ ▄▄█ ▄▄▄ ███  ▄▄▄ █▀█▀█
+█ ▄   █▄█  ▄▄█▄  ▀█▄▄▄▀▀ ▄█ █▄█ ▄ █▀ ███ ▀▀█ ▄ ▀▀ █▄█  ▄ ██
+█▀▄▄▄▄▄▄▄▄ █ ▄ ██▄▄▄█ ▀▄▄▄█ ▄ ▄▄ █▀ ▀▀██ ▀▀▀  █▀▄▄▄▄  ▄▄▄██
+█  ▀█▀ ▄▀▄▄▄██▄▀ █▄██▄  ▀▀█▀█▄▀▀▀▀ ▄ █▀▄▄▄█▀▀█▀▄▀▄█ ██▄▀▀▄█
+█▀█▀▀█ ▄  ▀ █▀█ ▄▄ ▀▀  █ ▄▄▄▀▀ █ ▄█ █▀███▄█▄█▀█▄▀▄  ▀▀ ▄▄▄█
+██▀ ▀▀█▄▄█▄▄▄▄  ██▄ ▀███ ▄█▀██▄▀ █▀▄▄ █▀ █▀█ █ ▄▀▀  ▀▄▄ ███
+███▄▀▀▄▄█▀  █ ▀█ ▄▀   ▀█▄▀█▄ ▄▀█ █▀▄▄▄▀▄█   ▀▀ ▀███▀▄▀▀▀█▄█
+█▄▄▀ ▄ ▄███ ██▀ ▄ ██ █▄█ █▀ █ ▀▀█▄▄▀██▄▄███▄▀ ▀▀▄ █▄▀ █▀▀▄█
+█  ▀█▀█▄█▀ █▄  ▀███▄▄ █  █▀█ ▄  █▀ ██▀▀ ▄▀ █▄█▄▀█▄ ▀█ ▄█ ▀█
+█▀▀██▄ ▄███ ██ █▄█▀▀▀▄ █  ██▄██ █████▀ ▄▄   ▀█▀▄▀▀▄▀█▄▄████
+█ ▀ ▀▀▄▄█▄  █  █▀▀▀▀ ▄ ▀▄▄██   ▀▄▄▀▄▀  ▀██▄▄  ▄▄▀▀▄▄█  █ ▄█
+███████▄█ ▀▀   █ ▄ ▄▀ ▀█▄▄  ▄▄▄  ▀ █▄▄▀ ▀█▄▄ ▀▀▄█ ▄▄▄ ▀▄▀▄█
+█ ▄▄▄▄▄ ██▀▄ ▄▄  ▀ ▀▀▄▄ ███ █▄█ ▄▀▄▄▄█▄▄▀ ▄█ ▀ █  █▄█  ▀▀▀█
+█ █   █ █▀█▀█ ▀█▀█ ▀ ▄ █ ▀ ▄▄    ▄  █▀██ █ █   ▀▄ ▄ ▄  ▄ ▄█
+█ █▄▄▄█ █    ▄▀▀  ▄█▄▀▄ █▀▀█▀██▀▄▀ ▀▀██▄█▀▀▀▀███▄  ▀▀▀▄██▀█
+█▄▄▄▄▄▄▄█▄██▄███▄███▄▄▄▄▄▄███████▄██▄█▄█▄▄██▄█▄███▄█▄▄█▄███
+
+✅ QR image generated successfully
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ ██ ▀▄█▄ █ ▄ ▀ ██ ▄▀ █▀█ ▄█▀  ▄█ █▀█▄ ▀ ▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀ ▄▄▀ ▀▀▀█▀▄▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀  ▄▄  █▄▄ ▄▄ ██ █   █ █
+█ █▄▄▄█ █▄  ▄ █▄ █ ▀▄ ██▀ █ ▄▄▄ ▄▀▀█▄▄ ▀██▄ ▀██▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄█▄▀ █ █▄▀ ▀ ▀▄█ █ █▄█ ▀▄▀ ▀▄█▄█▄█ ▀ █ ▀▄█▄▄▄▄▄▄▄█
+█ ▄▀▀█▄▄ ▀▄██ ▄▀▀   ▀▀██ ▀  ▄▄▄ ▀▀█▀▀▄▄▀▀▀▄ ▄▀▄  ▀▀▀▀ ▄▀▀██
+█ ▄▀█▀▀▄▄▄█▄ ▄▄ █▄▀ ▀▀█  ▀▀█▄▀ █▀█▄ ▀▀█ ▄█ ▀▄▀▀▄█ ▄   ▀▀▀██
+█  ▀▄ █▄   █▄ ██ ▄  ▀▄██▀▀▄ █  █▀ ▄██  ▄▀▄  ▀ ▀█▀▀▀▄▀  ▄ ▀█
+█▀▀▀  ▄▄  ▄█ ▄▄▀ ▀▀▄▄ ▀▀▀▀▀ ▄ ▀  ▄  █▄██▄ ▀▄██▄▀▄██▄▄▄ ▀▀██
+█▄ █  █▄ █ ▀▀  █▀▄   ▄ ▀▀ █ █ ▄▀▄▀█▄▄▄▀▄██▀▀▄▀▀▄ ▀▀▄█▀ ▀███
+█ ▄█▄█ ▄▄▄ ▄█  ▄▄▀▄▄█ ▀ ██ ███▀█ █▀█▄  ▄▄  █▀▄  ▄▀▄  █▀ █▄█
+█ █▄▄█ ▄▀▄▀▀▄▄▀▀ █▄ ▄▀██▀▄▀█▀█   ▀ ▀ ▄▄▀█▀ ▀ ▀ ▀▄▀▄▀██▄█ ██
+█▀▀██▄█▄▀▄███ █▄  ██▄██▄▀█▀    ▀██▀▀▄█▄ ▀▄ ▀▄▀▄▄ ▄▄  ▄▀ ▀▀█
+█▀ ▄▀ ▄▄███▀ ▀▄█▀▄█ ▄█  ▀ ▄▄█▄  █▀▄▄▀▄▀█▀ ▀ ▀▄ █▀  ██▄▄ ▀▀█
+█▄███ ▄▄▄ ▀▄▀█▀▄█▀▄█ █ ▀▄▀▀ ▄▄▄ ▄ ▀▄ █▀▀█▀▄█▀▀ ▄▀ ▄▄▄ █ ▄██
+██    █▄█ ▀▄█ ██▀█▄▀ █ █▀▀▀ █▄█  ▀█▄▀  ▄▀██ ▄██▄▄ █▄█ █▀▄▄█
+█▄█▀▀▄ ▄▄▄ ▄█ ▀ ██▄▀▄██▄▀ █▄▄   ▀ ▀▀▄▀▄▄   █▀▀██ ▄ ▄ ▄ ▀█ █
+████▄▄ ▄ ▀▀▀█▄██ ▀ ▄ ▀ ██▀▄█  ▀  ██▀ ▄ ▀▀█▀▀▀█▀▀█▀▄▄ ▀▄  ▄█
+█ ▀  ▀▀▄▀▄ ▄▄▄▀▀▄▀▀▄ ▀▀▀▀█ ███▀  ▀▄▄▄▄▀▄▄▀▄▀▄▀▄▀ ▀▄▀▄▀▀▀███
+██▄█▀  ▄█ ▄█  ▀██▄▀▄  █▄█ ▄▄█▄▄▀▀ ▀█▀ ▄▄▀ ▄▀▀  █▄█▀█▀█▀▄█▀█
+█▄▄ ▄▄▄▄▄█▄▀ ▄█▀█▀▀▀▀▄▄ ▄ ▄ █▀ ▄  ▄▀█▄   ▄ ▀▀██▄█▄▄█▀▄▀ ▄ █
+█▀  ▀█ ▄▀▄▀▄▀ █ █▄▄ ▄▄█▀▀ █▀▄▄ ▄▀███▄  █▄▀▄▀█▀ ███▄█ ▄▄▄███
+█▄▀▄███▄▄▄█▄█ ▀ █▄  ███▀█▀▄  ██▄▄▄ ▄ █ █▄ ███  ▄ █  █▀▀▀▀▄█
+█     ▀▄▀██▄█▄ ▀▀ ▀   █  ▀██▀ █▀▄▀▀ █ ▀▀▀█▄▀ ▀  ▀▀ █  ▄▄▄▀█
+█ ▀ ▀▀▄▄█▀▀▄▄█▄▄ █▀ ▄█▀██▀ █▀▄▀▄ █  ▄▀██▄▀▄█▄██ ██ █▄██ ▄██
+███████▄█▀▀ █▄▀  ▄█  █    ▀ ▄▄▄ ▀▄ ▄▀▄▀█▀▄▀ █▄▀▄▄ ▄▄▄ █▀▄▀█
+█ ▄▄▄▄▄ █ ▄▀ ██▄▄▄  ▀▀▀█ █▄ █▄█ █▀▀▀█▄█ ▄▀▄█▄▀▄   █▄█    ▀█
+█ █   █ ██▄██▀█▄ ▀▀▄▄█▀▀▀▄▄▄ ▄ ▄ ▀▀▄▄▄▀▄██▀ ▄█▀██▄    ▀▀███
+█ █▄▄▄█ █▀▄█ ▄▄█ ▀▀▀█▄▄▀ █  ▀  ███  ▄▀▄▀█ ▄█▀ █▄▀▄▀▄█▄▀▀▄▄█
+█▄▄▄▄▄▄▄█▄▄█▄█▄▄█▄█▄█▄██▄█▄█▄██▄▄▄▄▄▄▄█████▄███▄█▄██████▄██
+
+✅ QR image generated successfully

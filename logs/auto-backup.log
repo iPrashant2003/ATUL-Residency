@@ -4211,3 +4211,289 @@ See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode de
 ✅ Kept 30 most recent backups.
 [31-07-2026 10:26:41.98] Backup finished. 
  
+[31-07-2026 23:12:31.70] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:7748) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 16 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 14 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 15 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 1 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 69 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 50 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 9 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-07-31T17-42-43-704Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+❌ Failed to email database backup: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 46e09a7af769-7f18f0da951sm1141735a34.24 - gsmtp
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-07-11T08-30-14-759Z.json
+✅ Kept 30 most recent backups.
+[31-07-2026 23:12:46.55] Backup finished. 
+ 
+[01-08-2026  2:00:01.76] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:12596) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 16 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 14 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 15 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 1 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 69 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 50 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 9 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-07-31T20-30-13-149Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+❌ Failed to email database backup: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3153e06fc98sm8950108eec.21 - gsmtp
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-07-12T01-03-08-723Z.json
+✅ Kept 30 most recent backups.
+[01-08-2026  2:00:15.02] Backup finished. 
+ 
+[01-08-2026 15:25:20.25] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:2040) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 16 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 14 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 15 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 1 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 69 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 50 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 9 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-08-01T09-55-33-353Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+❌ Failed to email database backup: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3153e045016sm23008462eec.19 - gsmtp
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-07-12T14-55-07-351Z.json
+✅ Kept 30 most recent backups.
+[01-08-2026 15:25:35.16] Backup finished. 
+ 
+[02-08-2026  2:00:02.04] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:23948) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 16 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 14 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 15 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 1 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 69 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 50 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 9 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-08-01T20-30-13-453Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+❌ Failed to email database backup: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3153e06f88fsm19187598eec.20 - gsmtp
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-07-13T03-58-50-576Z.json
+✅ Kept 30 most recent backups.
+[02-08-2026  2:00:16.20] Backup finished. 
+ 
+[02-08-2026 17:05:37.72] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:16152) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Connected successfully.
+📦 Exporting table "User"...
+✔️ Exported 16 rows from "User".
+📦 Exporting table "Tower"...
+✔️ Exported 2 rows from "Tower".
+📦 Exporting table "Room"...
+✔️ Exported 34 rows from "Room".
+📦 Exporting table "Tenant"...
+✔️ Exported 14 rows from "Tenant".
+📦 Exporting table "RentRecord"...
+✔️ Exported 15 rows from "RentRecord".
+📦 Exporting table "Payment"...
+✔️ Exported 1 rows from "Payment".
+📦 Exporting table "MaintenanceRequest"...
+✔️ Exported 1 rows from "MaintenanceRequest".
+📦 Exporting table "Notification"...
+✔️ Exported 50 rows from "Notification".
+📦 Exporting table "Document"...
+✔️ Exported 0 rows from "Document".
+📦 Exporting table "ActivityLog"...
+✔️ Exported 69 rows from "ActivityLog".
+📦 Exporting table "OtpCode"...
+✔️ Exported 24 rows from "OtpCode".
+📦 Exporting table "WhatsappQueue"...
+✔️ Exported 50 rows from "WhatsappQueue".
+📦 Exporting table "PushSubscription"...
+✔️ Exported 9 rows from "PushSubscription".
+
+==================================================
+🎉 DATABASE BACKUP COMPLETED SUCCESSFULLY!
+📂 Saved to: C:\Users\prash\.gemini\antigravity\scratch\atul-residency\backups\backup-2026-08-02T11-36-01-609Z.json
+==================================================
+
+✉️ Syncing backup file to cloud inbox: sending to atultiwari123321@gmail.com...
+❌ Failed to email database backup: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5a478bee46e88-3153dd4e666sm38343326eec.4 - gsmtp
+🗑️ Cleaning up 1 old backup(s)...
+  Deleted: backup-2026-07-14T03-58-01-155Z.json
+✅ Kept 30 most recent backups.
+[02-08-2026 17:06:03.47] Backup finished. 
+ 
+[03-08-2026  2:02:36.82] Starting automated database backup... 
+🔄 Connecting to PostgreSQL database...
+(node:18388) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: getaddrinfo ENOTFOUND ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:121:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech'
+}
+
+Node.js v25.6.1
+[03-08-2026  2:02:37.95] Backup finished. 
+ 

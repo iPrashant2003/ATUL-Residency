@@ -26,6 +26,7 @@ interface RentRecord {
   dueDate: string;
   paidDate?: string;
   notes?: string;
+  payments?: any[];
   tenant: {
     id: string;
     name: string;
@@ -650,6 +651,28 @@ export default function RentTrackerPage() {
                         <span className={`badge ${getRentStatusColor(record.status)}`}>
                           {record.status}
                         </span>
+                        {record.payments && (record.payments as any[]).some((p: any) => p.status === "PENDING") && (
+                          <a
+                            href="/admin/payments"
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              fontSize: "10px",
+                              color: "#f59e0b",
+                              background: "rgba(245,158,11,0.15)",
+                              border: "1px solid rgba(245,158,11,0.35)",
+                              borderRadius: "4px",
+                              padding: "2px 6px",
+                              marginTop: "4px",
+                              fontWeight: 700,
+                              textDecoration: "none",
+                            }}
+                            title="Payment screenshot uploaded! Click to review in Admin Payments Desk"
+                          >
+                            ⏳ Review Proof
+                          </a>
+                        )}
                       </td>
                       <td>
                         <div style={{ display: "flex", gap: "6px" }}>

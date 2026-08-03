@@ -18,17 +18,20 @@ import {
   Loader2,
   FileText,
   Sparkles,
+  Zap,
+  Home,
 } from "lucide-react";
 import { toast, Toaster } from "sonner";
 import ImageUpload from "@/components/ui/ImageUpload";
 
 function PayRentFormInner() {
   const searchParams = useSearchParams();
-  const rentRecordId = searchParams.get("rentRecordId") || searchParams.get("id");
+  const rentRecordIdParam = searchParams.get("rentRecordId") || searchParams.get("id");
 
-  const [loadingBill, setLoadingBill] = useState(true);
-  const [billData, setBillData] = useState<any>(null);
-  const [billError, setBillError] = useState<string | null>(null);
+  const [bills, setBills] = useState<any[]>([]);
+  const [loadingBills, setLoadingBills] = useState(true);
+  const [selectedTenantId, setSelectedTenantId] = useState<string>("");
+  const [selectedBill, setSelectedBill] = useState<any>(null);
 
   const [form, setForm] = useState({
     amount: "",
@@ -45,31 +48,52 @@ function PayRentFormInner() {
   const upiId = "atultiwari123321@oksbi";
   const upiName = "Atul Tiwari (Atul Residency)";
 
+  // Load public active bills list on mount
   useEffect(() => {
-    if (!rentRecordId) {
-      setLoadingBill(false);
+    setLoadingBills(true);
+    fetch("/api/public/bills")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setBills(data);
+
+          // If rentRecordIdParam is passed in URL, auto-select that tenant/bill
+          if (rentRecordIdParam) {
+            const found = data.find((b) => b.rentRecordId === rentRecordIdParam);
+            if (found) {
+              setSelectedTenantId(found.tenantId);
+              setSelectedBill(found);
+              setForm((prev) => ({
+                ...prev,
+                amount: found.balance > 0 ? found.balance.toString() : found.totalAmount.toString(),
+              }));
+            }
+          }
+        }
+      })
+      .catch((err) => console.error("Error loading public bills:", err))
+      .finally(() => setLoadingBills(false));
+  }, [rentRecordIdParam]);
+
+  // Handle Tenant selection change
+  function handleTenantChange(tid: string) {
+    setSelectedTenantId(tid);
+    if (!tid) {
+      setSelectedBill(null);
+      setForm((prev) => ({ ...prev, amount: "" }));
       return;
     }
 
-    setLoadingBill(true);
-    fetch(`/api/public/rent/${rentRecordId}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Could not load bill details");
-        return res.json();
-      })
-      .then((data) => {
-        setBillData(data);
-        setForm((prev) => ({
-          ...prev,
-          amount: data.balance > 0 ? data.balance.toString() : data.totalAmount.toString(),
-        }));
-      })
-      .catch((err) => {
-        console.error(err);
-        setBillError("Failed to load bill details. You can still enter payment manually.");
-      })
-      .finally(() => setLoadingBill(false));
-  }, [rentRecordId]);
+    const b = bills.find((item) => item.tenantId === tid);
+    if (b) {
+      setSelectedBill(b);
+      const totalDue = b.balance > 0 ? b.balance : b.totalAmount;
+      setForm((prev) => ({
+        ...prev,
+        amount: totalDue.toString(),
+      }));
+    }
+  }
 
   function copyUPI() {
     navigator.clipboard.writeText(upiId);
@@ -78,6 +102,11 @@ function PayRentFormInner() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!selectedTenantId && !selectedBill) {
+      toast.error("Please select your Tenant Name or Room");
+      return;
+    }
 
     if (!form.amount || parseFloat(form.amount) <= 0) {
       toast.error("Please enter a valid payment amount");
@@ -92,8 +121,8 @@ function PayRentFormInner() {
     setSubmitting(true);
     try {
       const payload = {
-        rentRecordId: rentRecordId || null,
-        tenantId: billData?.tenantId || null,
+        rentRecordId: selectedBill?.rentRecordId || rentRecordIdParam || null,
+        tenantId: selectedBill?.tenantId || selectedTenantId || null,
         amount: parseFloat(form.amount),
         method: form.method,
         transactionId: form.transactionId || null,
@@ -134,7 +163,7 @@ function PayRentFormInner() {
     >
       <Toaster position="top-right" theme="dark" />
 
-      {/* Ambient Sea-Green Glow Orbs */}
+      {/* Ambient Glow Orbs */}
       <div
         style={{
           position: "fixed",
@@ -202,7 +231,7 @@ function PayRentFormInner() {
               fontWeight: 600,
             }}
           >
-            ✦ Quick Rent Payment Desk ✦
+            ✦ Quick Rent & Utility Payment Desk ✦
           </p>
         </div>
 
@@ -250,10 +279,11 @@ function PayRentFormInner() {
                 fontSize: "14px",
                 color: "rgba(226,232,240,0.7)",
                 lineHeight: 1.6,
-                marginBottom: "24px",
+                marginBottom: "20px",
               }}
             >
-              Your payment of <strong style={{ color: "#14b8a6" }}>₹{form.amount}</strong> has been submitted to the Admin for verification. Once approved, your status will update automatically.
+              Your payment of <strong style={{ color: "#14b8a6" }}>₹{form.amount}</strong> for{" "}
+              <strong style={{ color: "#FFE259" }}>{selectedBill?.tenantName || "your room"}</strong> has been submitted to Admin for verification and will reflect immediately in the payment tracer.
             </p>
 
             <div
@@ -272,12 +302,14 @@ function PayRentFormInner() {
               }}
             >
               <Clock size={18} color="#14b8a6" />
-              <span>Admin Verification: Usually within 15–30 mins</span>
+              <span>Admin Verification: Instant / 15 mins</span>
             </div>
 
             <button
               onClick={() => {
                 setSubmitted(false);
+                setSelectedTenantId("");
+                setSelectedBill(null);
                 setForm({ amount: "", method: "UPI", transactionId: "", screenshotUrl: "", notes: "" });
               }}
               style={{
@@ -296,82 +328,148 @@ function PayRentFormInner() {
           </div>
         ) : (
           <div>
-            {/* Rent Bill Summary Card (If loaded) */}
-            {loadingBill ? (
-              <div
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(13,184,166,0.2)",
-                  borderRadius: "20px",
-                  padding: "24px",
-                  textAlign: "center",
-                  color: "#14b8a6",
-                  marginBottom: "20px",
-                }}
-              >
-                <Loader2 size={24} className="animate-spin" style={{ margin: "0 auto 8px" }} />
-                <p style={{ fontSize: "13px" }}>Loading invoice details...</p>
-              </div>
-            ) : billData ? (
-              <div
-                style={{
-                  background: "linear-gradient(135deg, rgba(13,184,166,0.10) 0%, rgba(13,184,166,0.03) 100%)",
-                  border: "1px solid rgba(13,184,166,0.30)",
-                  borderRadius: "20px",
-                  padding: "20px 24px",
-                  marginBottom: "20px",
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-                }}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
-                  <div>
-                    <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#ffffff", marginBottom: "2px" }}>
-                      {billData.tenantName}
-                    </h3>
-                    <p style={{ fontSize: "12px", color: "rgba(13,184,166,0.9)", fontWeight: 600 }}>
-                      Room {billData.roomNumber} ({billData.towerName})
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      background: billData.status === "PAID" ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)",
-                      border: `1px solid ${billData.status === "PAID" ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`,
-                      color: billData.status === "PAID" ? "#10b981" : "#f59e0b",
-                      borderRadius: "100px",
-                      padding: "4px 12px",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {billData.monthName} {billData.year}
-                  </div>
-                </div>
+            {/* Step 1: Select Tenant Name & Room */}
+            <div
+              style={{
+                background: "rgba(255, 255, 255, 0.04)",
+                border: "1px solid rgba(13, 184, 166, 0.25)",
+                borderRadius: "24px",
+                padding: "24px",
+                marginBottom: "20px",
+                backdropFilter: "blur(20px)",
+              }}
+            >
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 700, color: "#14b8a6", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                👤 Select Your Tenant Name & Room *
+              </label>
 
-                <div
+              {loadingBills ? (
+                <div style={{ padding: "14px", background: "rgba(0,0,0,0.2)", borderRadius: "10px", color: "rgba(226,232,240,0.5)", fontSize: "13px", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Loader2 size={16} className="animate-spin" color="#14b8a6" />
+                  Loading active renters list...
+                </div>
+              ) : (
+                <select
+                  value={selectedTenantId}
+                  onChange={(e) => handleTenantChange(e.target.value)}
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "10px",
-                    background: "rgba(0,0,0,0.2)",
+                    width: "100%",
+                    padding: "14px 16px",
+                    background: "rgba(5, 20, 18, 0.95)",
+                    border: "1.5px solid rgba(13, 184, 166, 0.4)",
                     borderRadius: "12px",
-                    padding: "12px 16px",
-                    marginTop: "12px",
+                    color: "#ffffff",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    outline: "none",
+                    cursor: "pointer",
                   }}
                 >
-                  <div>
-                    <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)" }}>Total Invoice</p>
-                    <p style={{ fontSize: "15px", fontWeight: 700, color: "#e2e8f0" }}>₹{billData.totalAmount}</p>
+                  <option value="">-- Choose your name / room --</option>
+                  {bills.map((b) => (
+                    <option key={b.tenantId} value={b.tenantId}>
+                      {b.tenantName} — Room {b.roomNumber} ({b.towerName}) — Due: ₹{b.balance > 0 ? b.balance : b.totalAmount}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              {/* Auto Calculated Breakdown Card */}
+              {selectedBill && (
+                <div
+                  style={{
+                    marginTop: "20px",
+                    background: "linear-gradient(135deg, rgba(13,184,166,0.12) 0%, rgba(13,184,166,0.03) 100%)",
+                    border: "1px solid rgba(13,184,166,0.35)",
+                    borderRadius: "16px",
+                    padding: "20px",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", borderBottom: "1px solid rgba(13,184,166,0.2)", paddingBottom: "10px" }}>
+                    <div>
+                      <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#ffffff" }}>
+                        {selectedBill.tenantName}
+                      </h4>
+                      <p style={{ fontSize: "12px", color: "rgba(13,184,166,0.9)", fontWeight: 600 }}>
+                        Room {selectedBill.roomNumber} ({selectedBill.towerName})
+                      </p>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <span style={{ fontSize: "11px", background: "rgba(255,226,89,0.15)", border: "1px solid rgba(255,226,89,0.3)", color: "#FFE259", borderRadius: "100px", padding: "4px 10px", fontWeight: 700 }}>
+                        {selectedBill.monthName} {selectedBill.year}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)" }}>Balance Due</p>
-                    <p style={{ fontSize: "16px", fontWeight: 800, color: "#14b8a6" }}>₹{billData.balance}</p>
+
+                  {/* Auto-Calculated Rent + Electricity Itemized Lines */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", marginBottom: "14px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", color: "rgba(226,232,240,0.85)" }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <Home size={14} color="#14b8a6" /> Monthly Rent:
+                      </span>
+                      <span style={{ fontWeight: 600 }}>₹{selectedBill.rentAmount}</span>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", color: "rgba(226,232,240,0.85)" }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <Zap size={14} color="#FFE259" /> Electricity Bill:
+                      </span>
+                      <span style={{ fontWeight: 600 }}>
+                        ₹{selectedBill.electricityBill}
+                        {selectedBill.meterReading && (
+                          <span style={{ fontSize: "11px", color: "rgba(226,232,240,0.45)", marginLeft: "6px" }}>
+                            ({selectedBill.meterReading} units)
+                          </span>
+                        )}
+                      </span>
+                    </div>
+
+                    {selectedBill.maintenanceCharge > 0 && (
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "rgba(226,232,240,0.85)" }}>
+                        <span>🔧 Maintenance Charge:</span>
+                        <span style={{ fontWeight: 600 }}>₹{selectedBill.maintenanceCharge}</span>
+                      </div>
+                    )}
+
+                    {selectedBill.lateFee > 0 && (
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "#ef4444" }}>
+                        <span>⏳ Late Fee Penalty:</span>
+                        <span style={{ fontWeight: 600 }}>₹{selectedBill.lateFee}</span>
+                      </div>
+                    )}
+
+                    {selectedBill.discount > 0 && (
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "#10b981" }}>
+                        <span>🎁 Discount:</span>
+                        <span style={{ fontWeight: 600 }}>-₹{selectedBill.discount}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Auto Total Highlight */}
+                  <div
+                    style={{
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(13,184,166,0.3)",
+                      borderRadius: "12px",
+                      padding: "12px 16px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span style={{ fontSize: "14px", fontWeight: 700, color: "#e2e8f0" }}>
+                      💰 Auto Total (Rent + Electricity):
+                    </span>
+                    <span style={{ fontSize: "20px", fontWeight: 800, color: "#14b8a6" }}>
+                      ₹{selectedBill.balance > 0 ? selectedBill.balance : selectedBill.totalAmount}
+                    </span>
                   </div>
                 </div>
-              </div>
-            ) : null}
+              )}
+            </div>
 
-            {/* Payment Methods Card */}
+            {/* UPI Details Card */}
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.04)",
@@ -476,7 +574,7 @@ function PayRentFormInner() {
               )}
             </div>
 
-            {/* Payment Upload Form */}
+            {/* Step 2: Payment Proof Upload Form */}
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.04)",
@@ -488,7 +586,7 @@ function PayRentFormInner() {
               }}
             >
               <h2 style={{ fontSize: "18px", fontWeight: 700, color: "#ffffff", marginBottom: "20px" }}>
-                Upload Payment Screenshot
+                Upload Payment Proof
               </h2>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
@@ -500,17 +598,17 @@ function PayRentFormInner() {
                     type="number"
                     value={form.amount}
                     onChange={(e) => setForm({ ...form, amount: e.target.value })}
-                    placeholder="Enter amount paid"
+                    placeholder="Auto-filled rent + electricity"
                     required
                     style={{
                       width: "100%",
                       padding: "12px 16px",
                       background: "rgba(0,0,0,0.25)",
-                      border: "1px solid rgba(13,184,166,0.3)",
+                      border: "1px solid rgba(13,184,166,0.4)",
                       borderRadius: "10px",
-                      color: "#ffffff",
-                      fontSize: "15px",
-                      fontWeight: 700,
+                      color: "#14b8a6",
+                      fontSize: "16px",
+                      fontWeight: 800,
                       outline: "none",
                     }}
                   />
