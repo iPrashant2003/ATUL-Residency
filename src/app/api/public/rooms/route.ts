@@ -1,8 +1,28 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const registerUrl = searchParams.get("registerUrl");
+    const secret = searchParams.get("secret");
+
+    // Dynamic tunnel registration via public endpoint
+    if (registerUrl && registerUrl.startsWith("http")) {
+      const expectedSecret = process.env.BOT_SECRET || "atul_bot_secret_2026";
+      if (secret === expectedSecret) {
+        const cleanUrl = registerUrl.replace(/\/$/, "");
+        await prisma.activityLog.create({
+          data: {
+            action: "WHATSAPP_BOT_URL",
+            entity: "SYSTEM",
+            details: cleanUrl,
+          },
+        });
+        console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
+        return NextResponse.json({ success: true, registeredUrl: cleanUrl });
+      }
+    }
     const rooms = await prisma.room.findMany({
       where: { isOccupied: true },
       include: {
