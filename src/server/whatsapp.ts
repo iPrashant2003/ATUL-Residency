@@ -569,6 +569,20 @@ async function registerUrlToCloud(url) {
 
     for (const domain of baseDomains) {
         const cleanDomain = domain.replace(/\/$/, '');
+        
+        // 1. Primary GET endpoint (100% reliable through Vercel/NextAuth)
+        try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 6000);
+            const getEndpoint = `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}&secret=${encodeURIComponent(secret)}`;
+            const res = await fetch(getEndpoint, { signal: controller.signal }).finally(() => clearTimeout(timer));
+            if (res.ok) {
+                console.log(`📡 Registered bot URL to cloud via GET (${cleanDomain}) successfully!`);
+                continue;
+            }
+        } catch (err) {}
+
+        // 2. Secondary POST endpoints
         const endpoints = [
             `${cleanDomain}/api/whatsapp/status`,
             `${cleanDomain}/api/whatsapp/register-url`
