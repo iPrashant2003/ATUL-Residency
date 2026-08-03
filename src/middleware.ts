@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default auth((req) => {
+export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Always pass ALL API routes directly to their route handlers
+  // CRITICAL: Return NextResponse.next() for ALL /api/ routes FIRST, BEFORE any auth checks.
+  // This guarantees webhooks & API POST routes never encounter NextAuth 405 or redirects.
   if (pathname.startsWith("/api/")) {
     return NextResponse.next();
   }
@@ -67,7 +69,10 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
 
     return response;
   }
-});
+
+  // Run NextAuth session validation for page routes (/admin, /tenant, etc.)
+  return (auth as any)(req);
+}
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
