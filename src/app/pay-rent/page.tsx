@@ -20,6 +20,8 @@ import {
   Sparkles,
   Zap,
   Home,
+  ExternalLink,
+  ArrowRight,
 } from "lucide-react";
 import { toast, Toaster } from "sonner";
 import ImageUpload from "@/components/ui/ImageUpload";
@@ -30,6 +32,7 @@ function PayRentFormInner() {
 
   const [bills, setBills] = useState<any[]>([]);
   const [loadingBills, setLoadingBills] = useState(true);
+  const [selectedTower, setSelectedTower] = useState<string>("Tower A");
   const [selectedTenantId, setSelectedTenantId] = useState<string>("");
   const [selectedBill, setSelectedBill] = useState<any>(null);
 
@@ -61,6 +64,7 @@ function PayRentFormInner() {
           if (rentRecordIdParam) {
             const found = data.find((b) => b.rentRecordId === rentRecordIdParam);
             if (found) {
+              if (found.towerName) setSelectedTower(found.towerName);
               setSelectedTenantId(found.tenantId);
               setSelectedBill(found);
               setForm((prev) => ({
@@ -74,6 +78,14 @@ function PayRentFormInner() {
       .catch((err) => console.error("Error loading public bills:", err))
       .finally(() => setLoadingBills(false));
   }, [rentRecordIdParam]);
+
+  // Handle Tower card selection
+  function handleTowerSelect(tower: string) {
+    setSelectedTower(tower);
+    setSelectedTenantId("");
+    setSelectedBill(null);
+    setForm((prev) => ({ ...prev, amount: "" }));
+  }
 
   // Handle Tenant selection change
   function handleTenantChange(tid: string) {
@@ -95,16 +107,52 @@ function PayRentFormInner() {
     }
   }
 
+  // Filter bills by selected tower and sort sequentially by room number
+  const towerBills = bills
+    .filter((b) => (selectedTower === "Tower A" ? b.towerName === "Tower A" : b.towerName === "Tower B"))
+    .sort((a, b) => {
+      const numA = parseInt(a.roomNumber.replace(/\D/g, "") || "0", 10);
+      const numB = parseInt(b.roomNumber.replace(/\D/g, "") || "0", 10);
+      return numA - numB;
+    });
+
+  const towerACount = bills.filter((b) => b.towerName === "Tower A").length;
+  const towerBCount = bills.filter((b) => b.towerName === "Tower B").length;
+
   function copyUPI() {
     navigator.clipboard.writeText(upiId);
     toast.success("UPI ID copied to clipboard!");
+  }
+
+  // Generate deep UPI App URL
+  function getDeepUpiUrl(appScheme: "gpay" | "phonepe" | "paytm" | "generic") {
+    const amt = form.amount ? parseFloat(form.amount) : 0;
+    const note = encodeURIComponent(`Rent Payment - Atul Residency ${selectedBill ? selectedBill.roomNumber : ""}`);
+    const base = `pa=${upiId}&pn=${encodeURIComponent(upiName)}&cu=INR&tn=${note}`;
+    const amtParam = amt > 0 ? `&am=${amt}` : "";
+
+    if (appScheme === "gpay") return `gpay://upi/pay?${base}${amtParam}`;
+    if (appScheme === "phonepe") return `phonepe://pay?${base}${amtParam}`;
+    if (appScheme === "paytm") return `paytmmp://pay?${base}${amtParam}`;
+    return `upi://pay?${base}${amtParam}`;
+  }
+
+  function handleAppPay(appScheme: "gpay" | "phonepe" | "paytm" | "generic", appName: string) {
+    if (!form.amount || parseFloat(form.amount) <= 0) {
+      toast.error("Please select a tenant/room or enter amount first");
+      return;
+    }
+
+    const url = getDeepUpiUrl(appScheme);
+    toast.info(`Opening ${appName}... Complete payment & upload screenshot below! 📲`);
+    window.location.href = url;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!selectedTenantId && !selectedBill) {
-      toast.error("Please select your Tenant Name or Room");
+      toast.error("Please select your Room or Tenant Name");
       return;
     }
 
@@ -189,9 +237,9 @@ function PayRentFormInner() {
         }}
       />
 
-      <div style={{ maxWidth: "580px", margin: "0 auto", position: "relative" }}>
+      <div style={{ maxWidth: "600px", margin: "0 auto", position: "relative" }}>
         {/* Logo Header */}
-        <div style={{ textAlign: "center", marginBottom: "28px" }}>
+        <div style={{ textAlign: "center", marginBottom: "24px" }}>
           <div
             style={{
               width: "72px",
@@ -328,7 +376,82 @@ function PayRentFormInner() {
           </div>
         ) : (
           <div>
-            {/* Step 1: Select Tenant Name & Room */}
+            {/* Step 1: Tower Selection Header Cards */}
+            <div style={{ marginBottom: "20px" }}>
+              <p style={{ fontSize: "12px", fontWeight: 700, color: "#14b8a6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "10px" }}>
+                🏢 Select Building Tower
+              </p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                {/* Tower A Card */}
+                <div
+                  onClick={() => handleTowerSelect("Tower A")}
+                  style={{
+                    background: selectedTower === "Tower A"
+                      ? "linear-gradient(135deg, rgba(20,184,166,0.22) 0%, rgba(20,184,166,0.08) 100%)"
+                      : "rgba(255,255,255,0.03)",
+                    border: selectedTower === "Tower A"
+                      ? "2px solid #14b8a6"
+                      : "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "18px",
+                    padding: "18px 16px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    position: "relative",
+                    boxShadow: selectedTower === "Tower A" ? "0 0 24px rgba(20,184,166,0.25)" : "none",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <div style={{ width: "36px", height: "36px", background: selectedTower === "Tower A" ? "rgba(20,184,166,0.2)" : "rgba(255,255,255,0.05)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Building size={20} color={selectedTower === "Tower A" ? "#14b8a6" : "rgba(226,232,240,0.6)"} />
+                    </div>
+                    {selectedTower === "Tower A" && <CheckCircle2 size={18} color="#14b8a6" />}
+                  </div>
+
+                  <h3 style={{ fontSize: "16px", fontWeight: 800, color: selectedTower === "Tower A" ? "#14b8a6" : "#e2e8f0" }}>
+                    Tower A
+                  </h3>
+                  <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)", marginTop: "2px" }}>
+                    {towerACount} Active Rooms
+                  </p>
+                </div>
+
+                {/* Tower B Card */}
+                <div
+                  onClick={() => handleTowerSelect("Tower B")}
+                  style={{
+                    background: selectedTower === "Tower B"
+                      ? "linear-gradient(135deg, rgba(255,226,89,0.22) 0%, rgba(255,167,81,0.08) 100%)"
+                      : "rgba(255,255,255,0.03)",
+                    border: selectedTower === "Tower B"
+                      ? "2px solid #FFE259"
+                      : "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "18px",
+                    padding: "18px 16px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    position: "relative",
+                    boxShadow: selectedTower === "Tower B" ? "0 0 24px rgba(255,226,89,0.25)" : "none",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <div style={{ width: "36px", height: "36px", background: selectedTower === "Tower B" ? "rgba(255,226,89,0.2)" : "rgba(255,255,255,0.05)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Building size={20} color={selectedTower === "Tower B" ? "#FFE259" : "rgba(226,232,240,0.6)"} />
+                    </div>
+                    {selectedTower === "Tower B" && <CheckCircle2 size={18} color="#FFE259" />}
+                  </div>
+
+                  <h3 style={{ fontSize: "16px", fontWeight: 800, color: selectedTower === "Tower B" ? "#FFE259" : "#e2e8f0" }}>
+                    Tower B
+                  </h3>
+                  <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)", marginTop: "2px" }}>
+                    {towerBCount} Active Rooms
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2: Room Sequence Dropdown for Selected Tower */}
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.04)",
@@ -340,13 +463,13 @@ function PayRentFormInner() {
               }}
             >
               <label style={{ display: "block", fontSize: "13px", fontWeight: 700, color: "#14b8a6", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                👤 Select Your Tenant Name & Room *
+                🚪 Select Room ({selectedTower} Sequential Order) *
               </label>
 
               {loadingBills ? (
                 <div style={{ padding: "14px", background: "rgba(0,0,0,0.2)", borderRadius: "10px", color: "rgba(226,232,240,0.5)", fontSize: "13px", display: "flex", alignItems: "center", gap: "8px" }}>
                   <Loader2 size={16} className="animate-spin" color="#14b8a6" />
-                  Loading active renters list...
+                  Loading {selectedTower} room list...
                 </div>
               ) : (
                 <select
@@ -365,16 +488,16 @@ function PayRentFormInner() {
                     cursor: "pointer",
                   }}
                 >
-                  <option value="">-- Choose your name / room --</option>
-                  {bills.map((b) => (
+                  <option value="">-- Choose room from {selectedTower} --</option>
+                  {towerBills.map((b) => (
                     <option key={b.tenantId} value={b.tenantId}>
-                      {b.tenantName} — Room {b.roomNumber} ({b.towerName}) — Due: ₹{b.balance > 0 ? b.balance : b.totalAmount}
+                      Room {b.roomNumber} — {b.tenantName} — Due: ₹{b.balance > 0 ? b.balance : b.totalAmount}
                     </option>
                   ))}
                 </select>
               )}
 
-              {/* Auto Calculated Breakdown Card */}
+              {/* Auto-Calculated Breakdown Card */}
               {selectedBill && (
                 <div
                   style={{
@@ -469,7 +592,7 @@ function PayRentFormInner() {
               )}
             </div>
 
-            {/* UPI Details Card */}
+            {/* Step 3: Direct App Payment Buttons (GPay / PhonePe / Paytm) */}
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.04)",
@@ -496,8 +619,8 @@ function PayRentFormInner() {
                     <CreditCard size={20} color="#14b8a6" />
                   </div>
                   <div>
-                    <p style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff" }}>UPI Payment Details</p>
-                    <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)" }}>Pay to landlord directly</p>
+                    <p style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff" }}>Pay Directly via App</p>
+                    <p style={{ fontSize: "11px", color: "rgba(226,232,240,0.5)" }}>One-tap auto pre-filled amount</p>
                   </div>
                 </div>
 
@@ -522,6 +645,89 @@ function PayRentFormInner() {
                 </button>
               </div>
 
+              {/* Direct UPI App Launch Buttons */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
+                <button
+                  onClick={() => handleAppPay("gpay", "Google Pay")}
+                  style={{
+                    background: "linear-gradient(135deg, rgba(66,133,244,0.2) 0%, rgba(52,168,83,0.15) 100%)",
+                    border: "1px solid rgba(66,133,244,0.35)",
+                    borderRadius: "12px",
+                    padding: "12px 14px",
+                    color: "#ffffff",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                  }}
+                >
+                  💳 Google Pay
+                </button>
+
+                <button
+                  onClick={() => handleAppPay("phonepe", "PhonePe")}
+                  style={{
+                    background: "linear-gradient(135deg, rgba(95,37,159,0.2) 0%, rgba(95,37,159,0.1) 100%)",
+                    border: "1px solid rgba(95,37,159,0.4)",
+                    borderRadius: "12px",
+                    padding: "12px 14px",
+                    color: "#ffffff",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                  }}
+                >
+                  📲 PhonePe
+                </button>
+
+                <button
+                  onClick={() => handleAppPay("paytm", "Paytm")}
+                  style={{
+                    background: "linear-gradient(135deg, rgba(0,185,245,0.2) 0%, rgba(0,46,134,0.15) 100%)",
+                    border: "1px solid rgba(0,185,245,0.35)",
+                    borderRadius: "12px",
+                    padding: "12px 14px",
+                    color: "#ffffff",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                  }}
+                >
+                  🔷 Paytm
+                </button>
+
+                <button
+                  onClick={() => handleAppPay("generic", "UPI App")}
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,226,89,0.15) 0%, rgba(255,167,81,0.15) 100%)",
+                    border: "1px solid rgba(255,226,89,0.3)",
+                    borderRadius: "12px",
+                    padding: "12px 14px",
+                    color: "#FFE259",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                  }}
+                >
+                  ✨ Any UPI App
+                </button>
+              </div>
+
               {/* UPI ID Row */}
               <div
                 style={{
@@ -543,7 +749,7 @@ function PayRentFormInner() {
                 <button
                   onClick={copyUPI}
                   style={{
-                    background: "linear-gradient(135deg, rgba(255,226,89,0.15) 0%, rgba(255,167,81,0.15) 100%)",
+                    background: "rgba(255,226,89,0.12)",
                     border: "1px solid rgba(255,226,89,0.3)",
                     borderRadius: "8px",
                     padding: "8px 14px",
@@ -574,7 +780,7 @@ function PayRentFormInner() {
               )}
             </div>
 
-            {/* Step 2: Payment Proof Upload Form */}
+            {/* Step 4: Payment Proof Upload Form */}
             <div
               style={{
                 background: "rgba(255, 255, 255, 0.04)",
@@ -586,7 +792,7 @@ function PayRentFormInner() {
               }}
             >
               <h2 style={{ fontSize: "18px", fontWeight: 700, color: "#ffffff", marginBottom: "20px" }}>
-                Upload Payment Proof
+                Upload Payment Screenshot for Instant Verification
               </h2>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
