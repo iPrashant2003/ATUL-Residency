@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
+  await headers();
   try {
-    const { searchParams } = new URL(req.url);
-    const registerUrl = searchParams.get("registerUrl") || searchParams.get("url") || searchParams.get("tunnel");
+    const registerUrl = req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("tunnel");
 
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
