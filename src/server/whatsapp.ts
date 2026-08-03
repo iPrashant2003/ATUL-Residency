@@ -570,8 +570,10 @@ async function registerUrlToCloud(url) {
     for (const domain of baseDomains) {
         const cleanDomain = domain.replace(/\/$/, '');
         
-        // 1. Primary GET endpoints (100% reliable through Vercel/NextAuth)
+        // 1. Primary GET endpoints (100% reliable dynamic routes)
+        const domainHost = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const getEndpoints = [
+            `${cleanDomain}/api/public/register/${encodeURIComponent(domainHost)}`,
             `${cleanDomain}/api/public/rooms?registerUrl=${encodeURIComponent(url)}&secret=${encodeURIComponent(secret)}`,
             `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}&secret=${encodeURIComponent(secret)}`
         ];
