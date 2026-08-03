@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getBotUrl } from "@/lib/whatsappUrl";
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // Allow up to 60s — WhatsApp can take 40s+ to return a pairing code
 export const maxDuration = 60;
 

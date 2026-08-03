@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getBotUrl } from "@/lib/whatsappUrl";
 
+// Allow SSH tunnel HTTPS certificates without TLS rejection error
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 export async function GET() {
   const session = await auth();
   if (!session || (session.user as any)?.role !== "ADMIN") {

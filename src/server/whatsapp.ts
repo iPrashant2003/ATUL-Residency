@@ -552,7 +552,8 @@ async function establishTunnel() {
             const output = data.toString();
             console.log(`[Tunnel Raw]: ${output.trim()}`);
 
-            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            // Strictly match real tunnel domain extensions (.lhr.life, .lhrtunnel.link, etc.)
+            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.(lhr\.life|lhrtunnel\.link|pinggy\.link|localtunnel\.me)/);
             if (match && !urlFound) {
                 urlFound = true;
                 currentTunnelUrl = match[0].replace(/\/$/, '');

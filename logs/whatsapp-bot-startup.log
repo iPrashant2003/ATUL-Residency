@@ -17446,3 +17446,497 @@ Open your tunnel address on your mobile with this QR:
 [7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
 [7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
 [7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[03-08-2026 11:24:01.28] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:24:02.18] Starting WhatsApp Bot... 
+[03-08-2026 11:24:02.18] Starting WhatsApp Bot... 
+[03-08-2026 11:24:02.18] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+🎉 Public SSH Tunnel URL Established: https://twitter.com
+(node:7564) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[Tunnel Raw]: ** your connection id is ef39919f-e0e7-48f2-b50b-c2cf2230961d, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 19d7bbac7cb8e2.lhr.life tunneled with tls termination, https://19d7bbac7cb8e2.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+✅ Registered tunnel URL successfully in database.
+❌ Bot disconnected: LOGOUT
+🔄 Restarting bot in 5s...
+Unhandled rejection: Error: Attempted to use detached Frame '895FDE031E7384F6B24041C0B5032DDF'.
+    at CdpFrame.<anonymous> (C:\Users\prash\.gemini\antigravity\scratch\atul-residency\node_modules\puppeteer-core\lib\cjs\puppeteer\util\decorators.js:107:23)
+    at CdpPage.evaluate (C:\Users\prash\.gemini\antigravity\scratch\atul-residency\node_modules\puppeteer-core\lib\cjs\puppeteer\api\Page.js:830:43)
+    at Client.inject (C:\Users\prash\.gemini\antigravity\scratch\atul-residency\node_modules\whatsapp-web.js\src\Client.js:126:38)
+    at C:\Users\prash\.gemini\antigravity\scratch\atul-residency\node_modules\whatsapp-web.js\src\Client.js:503:24
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+[03-08-2026 11:24:26.81] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:24:27.21] Starting WhatsApp Bot... 
+[03-08-2026 11:24:27.21] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:27.31] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:29.14] Starting WhatsApp Bot... 
+[03-08-2026 11:24:29.14] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:29.25] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:30.20] Starting WhatsApp Bot... 
+[03-08-2026 11:24:30.20] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:30.31] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:31.18] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:31.27] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:32.12] Starting WhatsApp Bot... 
+[03-08-2026 11:24:32.12] Starting WhatsApp Bot... 
+[03-08-2026 11:24:32.12] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:32.21] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:34.15] Starting WhatsApp Bot... 
+[03-08-2026 11:24:34.15] Starting WhatsApp Bot... 
+[03-08-2026 11:24:34.15] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:34.25] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:35.21] Starting WhatsApp Bot... 
+[03-08-2026 11:24:35.21] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:35.31] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:36.12] Starting WhatsApp Bot... 
+[03-08-2026 11:24:36.12] Starting WhatsApp Bot... 
+[03-08-2026 11:24:36.12] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:36.21] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:37.13] Starting WhatsApp Bot... 
+[03-08-2026 11:24:37.13] Starting WhatsApp Bot... 
+C:\Users\prash\.gemini\antigravity\scratch\atul-residency\src\server\whatsapp.ts:637
+
+    } catch (err) {
+      ^^^^^
+        console.error('❌ Failed to setup SSH tunnel:', err.message);
+
+SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Expected a semicolon
+    at parseTypeScript (node:internal/modules/typescript:72:36)
+    at processTypeScriptCode (node:internal/modules/typescript:146:42)
+    at stripTypeScriptModuleTypes (node:internal/modules/typescript:209:22)
+    at Module._compile (node:internal/modules/cjs/loader:1763:15)
+    at Object..js (node:internal/modules/cjs/loader:1942:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'ERR_INVALID_TYPESCRIPT_SYNTAX'
+}
+
+Node.js v25.6.1
+[03-08-2026 11:24:37.24] Bot process exited with code 1. Restarting in 5 seconds... 
+[03-08-2026 11:24:39.16] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 15f58762-7502-46f2-a199-ac3fd297f671, please mention it if you send me a message about an issue. **
+
+======================================================
+📲 NEW QR CODE READY — Scan with WhatsApp
+======================================================
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █▀ ██▄▄ ▄▀▄▄ ▀█  ▄▄█▄▄ ▄▄ ███▀▄██▄▄▄ █▄▄ ██ ▄▄▄▄▄ █
+█ █   █ █▀▄█▄▄ ▄▄██▀███▄▀ ▀█▄██▀ ██▄▀   ██ █ ▄ ▄ ██ █   █ █
+█ █▄▄▄█ █▀ ▄▄ ▀▄▄█ ▀▄ ▄▄▀ █ ▄▄▄ ▄▀ ▀▀▄▀▀▄▀ ▄ ▄▀▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀ █ ▀▄▀▄█ ▀ █ █ █ █▄█ ▀▄█ ▀▄█▄█▄▀ █▄█▄▀▄█▄▄▄▄▄▄▄█
+█   ▄▄▀▄▄▄██ ▄ █▄█▀▄ █ ▀▄▀ ▄    ▀█▀█▀  █▀▀▄▀▄▀ █▀▀ █ █▄▀▄██
+█▀  ▀██▄▄▄▀▀▄█▄ █▄▀ ▀▀▀ ▄▀ █▄▀ █▀█▄ ▄██▀▀▀ ▀▄▀▀▄ █▄▀ ▄▀▀▄██
+█ ▀▄ █▀▄  ▄█ █▄▄▄█▀ ▀█▀▄▀  █ █▀█▄██▄▄▄▀████ ▀▀█▄▄▀▀██▀▀  ▀█
+█▀█ ▄▀▀▄ █▀▀▄█▀▄▄▄█ ██▄▄█▀▀█▀▄▀ █▀ ▄ ▄▀▄█▀▄██▀▀▀▀ ██▄ ▄  ██
+█▀█▄▄ ▀▄██▄▄█▄ ▀██▄▄ █▀█▄▀  ▀ ▄  █▀█   █▀█▀▀▄▀██▀ ▀▄██ ▀▄▄█
+█ ▄▄█ █▄█  ██ ▀█▀█▄▄▄▀▄ ▀ ▀█▀▄ ▀▀ █ ▄ █▄▀▀█▀█ █▀ ▀▀▀▀▀ ▀▄▀█
+█▀ ▀▄█ ▄██ ▄ ▄▀█▄▀▄ ▄█▀▀▀▄▀▀▀▀▄▀ ██▄▄  ▄▀██  █▄█▄▀ ██▀▄▄ ▀█
+██ █  █▄█▄  ▀ █ ▄ █▀▄██ ▀█▀  █▄▀███▀▄ ██ ▀▄▀ █▀▄▄▄▀▄█▀▀ ▀▀█
+█ █▄ ▀█▄▀ █▄▄  ▀▀▄  █▄█▀▀▀▀███▄ ▄  █▄  ████▀ ▀▄▄▀  ▄▀██ ▄ █
+██▄▄█ ▄▄▄ ██▀▄ ▄▀▄▄█ ▀▄█ ▀▄ ▄▄▄   █▄▀▀ ▀ ▀ ▀▀ ▄▄█ ▄▄▄ ▀ ▄██
+█▄ ▄█ █▄█ █  ▀▀▀▄▄▄▀ ▄▄█  ▀ █▄█ ██▄█▄  █▀█▀▀█▀██▀ █▄█ █ █▄█
+█ █▀▀ ▄▄ ▄▄▄  ▀ ▀ ██▄▄▀▀█▄▀ ▄▄ ▄█▀▄ ▀█▀▀▄   ▀▀▀█ ▄    █  ▀█
+█  ▀▀█ ▄▄ ▄█▄▄▄█▄█▀▄▄▄█▀  ██▄▄▀ ▄▀▀██▄▀▄ ▀▀▀ █▄▄▀█   ▄▀▀▄▄█
+█ ▀▄▄▀█▄▄██ ██▀ ▄█  ▄▀█▀ ▀▀ ▀▀▀    ▄█▀▄█▄ █▄█ ▀ ▀█▄▀▄█ ▀ ▀█
+█▀▄█▄▀▀▄▀█▄▄ █ ▀▀█▄ ▀▀██▄ █▀▀█▀▀ ▀█▄  ▀▄ ▀▀ ▄████ ▄▀█▄█ █▀█
+██▄▀███▄█▀█ ▄█ ▀▀█▀ ▀ █▀▄ █▄▀█▄ ▀█▀█▀█ █▄█▄▄█▀▄▄▄█ █▀   ▄▄█
+█▀▀ ▀  ▄ █ ▀▄█ ██▄  ▄▄█▀ ▀█▀▄▄▀ ▀█▀█   ▄█▀▀  ▀▄▄▀▄█▀▄▄▀▀▀▀█
+█  ▀ ▀▄▄ ▀▀ ▀ █▄▀▄▀ ██▀ ▀▀█▀▄█▄▄▀▀ █▀▄▀█  █ ▄█ ███ ▀█▄█ ▀██
+█   ▄▀▀▄██▀   ▀▀▄▄▀ ▀▄▀▄▀ ████ ▄████▀▄▀▄██   ███▀ █ ▄█▄██ █
+█ ▀ ▀▀▄▄▀██▄▄▀ ▀ ▀█▀█  █▄ ▄ ▄▄  █▄▄▀▀█ ▄▄█ ██  ▄██ ▀██ ▀▀▀█
+███████▄▄ ██ ▄ ██▄▀▄▀█▀▀  █ ▄▄▄ ▄▀▄█▄▄ █▀▀▄  █▄▄█ ▄▄▄ █▄▀██
+█ ▄▄▄▄▄ █▄  ▀██▄█▄ ▄▀▄▄▀  █ █▄█ ▀▀▀█ ▄ ▄██ ▀▀█  █ █▄█ ▄  ██
+█ █   █ █ ▄ █   ▄▀▄ ▄███▀▄▄  ▄ ▄██ ▄█ ▄████ ▄▀▄▄█▄▄ ▄ ▄▀█▄█
+█ █▄▄▄█ █ █▄▄▀█▀▄ ▀▄▄██▀▀█▄██▀▀█▄▄█ ██▀ ▀▀▄▀ ▄█▄  ▀█ █ ▀███
+█▄▄▄▄▄▄▄█▄▄█▄▄▄███▄▄▄▄▄█▄█▄█▄▄█▄▄▄▄▄▄▄▄▄██▄█▄█████▄█▄▄█▄▄██
+
+✅ QR image generated successfully
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: 1d45c35f72a8d3.lhr.life tunneled with tls termination, https://1d45c35f72a8d3.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://1d45c35f72a8d3.lhr.life
+(node:8944) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Registered tunnel URL successfully in database.
+[03-08-2026 11:24:47.22] Bot process exited with code -1. Restarting in 5 seconds... 
+[03-08-2026 11:24:49.11] Starting WhatsApp Bot... 
+[03-08-2026 11:24:49.11] Starting WhatsApp Bot... 
+
+🟢 WhatsApp Bot Server running on port 3001
+🧹 Killing stale Chrome/Chromium processes synchronously...
+📱 Starting bot initialization...
+
+🤖 Initializing WhatsApp bot...
+🧹 Killing stale Chrome/Chromium processes synchronously...
+🔄 Starting queue polling (every 5s)...
+🌐 Establishing secure SSH tunnel via localhost.run...
+[Tunnel Raw]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel SSH]: Pseudo-terminal will not be allocated because stdin is not a terminal.
+[Tunnel Raw]: ===============================================================================
+Welcome to localhost.run!
+
+Follow your favourite reverse tunnel at [https://twitter.com/localhost_run].
+
+To set up and manage custom domains go to https://admin.localhost.run/
+
+More details on custom domains (and how to enable subdomains of your custom
+domain) at https://localhost.run/docs/custom-domains
+
+If you get a permission denied error check the faq for how to connect with a key or
+create a free tunnel without a key at [http://localhost:3000/docs/faq#generating-an-ssh-key].
+
+To explore using localhost.run visit the documentation site:
+https://localhost.run/docs/
+
+===============================================================================
+
+** your connection id is 411e8fd0-0d4f-4aa4-afef-6169a934ed00, please mention it if you send me a message about an issue. **
+[Tunnel Raw]: authenticated as anonymous user
+[Tunnel Raw]: b9555a9b629e65.lhr.life tunneled with tls termination, https://b9555a9b629e65.lhr.life
+create an account and add your key for a longer lasting domain name. see https://localhost.run/docs/forever-free/ for more information.
+Open your tunnel address on your mobile with this QR:
+
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m
+[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m
+[7m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[7m  [0m[7m  [0m[49m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[49m  [0m[7m  [0m[49m  [0m[7m  [0m
+[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m[7m  [0m
+🎉 Public SSH Tunnel URL Established: https://b9555a9b629e65.lhr.life
+(node:15892) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ Registered tunnel URL successfully in database.
+💓 Tunnel health OK (https://b9555a9b629e65.lhr.life)
+✅ Startup backup done
+💓 Tunnel health OK (https://b9555a9b629e65.lhr.life)
