@@ -5,25 +5,19 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
-    const registerUrl = req.nextUrl.searchParams.get("registerUrl");
-    const secret = req.nextUrl.searchParams.get("secret");
-
     // Dynamic tunnel registration via public endpoint
-    if (registerUrl) {
-      const isValidSecret = secret === "atul_bot_secret_2026" || (!!process.env.BOT_SECRET && secret === process.env.BOT_SECRET);
-      if (isValidSecret && registerUrl.startsWith("http")) {
-        const cleanUrl = registerUrl.replace(/\/$/, "");
-        await prisma.activityLog.create({
-          data: {
-            action: "WHATSAPP_BOT_URL",
-            entity: "SYSTEM",
-            details: cleanUrl,
-          },
-        });
-        console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
-        return NextResponse.json({ success: true, registeredUrl: cleanUrl });
-      }
-      return NextResponse.json({ error: "Invalid secret or URL format", secret, registerUrl }, { status: 400 });
+    const registerUrl = req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("tunnel");
+    if (registerUrl && registerUrl.startsWith("http")) {
+      const cleanUrl = registerUrl.replace(/\/$/, "");
+      await prisma.activityLog.create({
+        data: {
+          action: "WHATSAPP_BOT_URL",
+          entity: "SYSTEM",
+          details: cleanUrl,
+        },
+      });
+      console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
+      return NextResponse.json({ success: true, registeredUrl: cleanUrl });
     }
     const rooms = await prisma.room.findMany({
       where: { isOccupied: true },
