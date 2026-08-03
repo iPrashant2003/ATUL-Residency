@@ -6,6 +6,11 @@ import type { NextRequest } from "next/server";
 const authMiddleware = NextAuth(authConfig).auth;
 
 export default async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  if (pathname.startsWith("/api/whatsapp/register-url")) {
+    return NextResponse.next();
+  }
+
   // Calculate total cookie header size
   const cookieHeader = request.headers.get("cookie") || "";
   const cookieSize = new TextEncoder().encode(cookieHeader).length;
