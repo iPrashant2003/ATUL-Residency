@@ -1217,102 +1217,115 @@ function RenterCard({
         </div>
 
         {/* Actions row */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          <div style={{ display: "flex", gap: "8px" }}>
-            {/* Upload Payment Button */}
-            <button
-              onClick={(e) => { e.stopPropagation(); onUploadPayment(); }}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
-                padding: "8px 10px", borderRadius: "10px",
-                background: "linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(13,148,136,0.1) 100%)",
-                border: "1px solid rgba(20,184,166,0.3)",
-                color: "#14B8A6", fontSize: "12px", fontWeight: 700, cursor: "pointer",
-                transition: "all 0.2s ease"
-              }}
-              title="Upload Payment Screenshot for Renter"
-            >
-              <CreditCard size={13} />
-              Upload Payment
-            </button>
+        {/* Actions grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "4px" }}>
+          {/* Row 1: Primary Renter Actions */}
+          <button
+            onClick={(e) => { e.stopPropagation(); onUploadPayment(); }}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: "linear-gradient(135deg, rgba(20,184,166,0.18) 0%, rgba(13,148,136,0.08) 100%)",
+              border: "1px solid rgba(20,184,166,0.35)",
+              color: "#14B8A6", fontSize: "12px", fontWeight: 700, cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(20,184,166,0.08)",
+              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "rgba(20,184,166,0.25)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(20,184,166,0.18) 0%, rgba(13,148,136,0.08) 100%)"; }}
+            title="Upload Payment Screenshot for Renter"
+          >
+            <CreditCard size={13} />
+            Upload Payment
+          </button>
 
-            {/* 1-Yr History Button */}
-            <button
-              onClick={(e) => { e.stopPropagation(); onViewHistory(); }}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
-                padding: "8px 10px", borderRadius: "10px",
-                background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.25)",
-                color: "#a78bfa", fontSize: "12px", fontWeight: 700, cursor: "pointer",
-                transition: "all 0.2s ease"
-              }}
-              title="View 1-Year Payment & Rent History"
-            >
-              <History size={13} />
-              1-Yr History
-            </button>
-          </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); onViewHistory(); }}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: "linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(124,58,237,0.08) 100%)",
+              border: "1px solid rgba(139,92,246,0.35)",
+              color: "#a78bfa", fontSize: "12px", fontWeight: 700, cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(139,92,246,0.08)",
+              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "rgba(139,92,246,0.25)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "linear-gradient(135deg, rgba(139,92,246,0.18) 0%, rgba(124,58,237,0.08) 100%)"; }}
+            title="View 1-Year Payment & Rent History"
+          >
+            <History size={13} />
+            1-Yr History
+          </button>
 
-          <div style={{ display: "flex", gap: "8px" }}>
-            {/* Add Bill */}
-            <button
-              onClick={(e) => { e.stopPropagation(); onAddBill(); }}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-                padding: "7px", borderRadius: "8px",
-                background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.2)",
-                color: "#60a5fa", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
-              }}
-            >
-              <Plus size={12} />
-              Bill
-            </button>
-            
-            {/* Send Invoice */}
-            <button
-              onClick={handleSendInvoice}
-              disabled={sending}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-                padding: "7px", borderRadius: "8px",
-                background: "rgba(37,211,102,0.08)", border: "1px solid rgba(37,211,102,0.2)",
-                color: "#4ade80", fontSize: "11.5px", fontWeight: 600, cursor: sending ? "not-allowed" : "pointer",
-                opacity: sending ? 0.7 : 1
-              }}
-            >
-              {sending ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
-              Send Bill
-            </button>
+          {/* Row 2: Billing Actions */}
+          <button
+            onClick={(e) => { e.stopPropagation(); onAddBill(); }}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)",
+              color: "#60a5fa", fontSize: "12px", fontWeight: 600, cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = "rgba(59,130,246,0.2)"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "rgba(59,130,246,0.1)"}
+          >
+            <Plus size={13} />
+            Add Bill
+          </button>
 
-            {/* View details */}
-            <button
-              onClick={onClick}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-                padding: "7px", borderRadius: "8px",
-                background: isTowerA ? "rgba(139,92,246,0.08)" : "rgba(6,182,212,0.08)", border: `1px solid ${isTowerA ? "rgba(139,92,246,0.2)" : "rgba(6,182,212,0.2)"}`,
-                color: isTowerA ? "#a78bfa" : "#22d3ee", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
-              }}
-            >
-              <Eye size={12} />
-              Details
-            </button>
+          <button
+            onClick={handleSendInvoice}
+            disabled={sending}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.25)",
+              color: "#4ade80", fontSize: "12px", fontWeight: 600, cursor: sending ? "not-allowed" : "pointer",
+              opacity: sending ? 0.7 : 1, transition: "all 0.2s ease"
+            }}
+            onMouseEnter={(e) => { if (!sending) e.currentTarget.style.background = "rgba(37,211,102,0.2)"; }}
+            onMouseLeave={(e) => { if (!sending) e.currentTarget.style.background = "rgba(37,211,102,0.1)"; }}
+          >
+            {sending ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
+            Send Bill
+          </button>
 
-            {/* Edit details */}
-            <button
-              onClick={(e) => { e.stopPropagation(); onEdit(); }}
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-                padding: "7px", borderRadius: "8px",
-                background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)",
-                color: "#f59e0b", fontSize: "11.5px", fontWeight: 600, cursor: "pointer",
-              }}
-              title="Edit Renter Information"
-            >
-              <Edit size={12} />
-              Edit
-            </button>
-          </div>
+          {/* Row 3: Admin Controls */}
+          <button
+            onClick={onClick}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: isTowerA ? "rgba(139,92,246,0.1)" : "rgba(6,182,212,0.1)",
+              border: `1px solid ${isTowerA ? "rgba(139,92,246,0.25)" : "rgba(6,182,212,0.25)"}`,
+              color: isTowerA ? "#c084fc" : "#38bdf8", fontSize: "12px", fontWeight: 600, cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = isTowerA ? "rgba(139,92,246,0.2)" : "rgba(6,182,212,0.2)"}
+            onMouseLeave={(e) => e.currentTarget.style.background = isTowerA ? "rgba(139,92,246,0.1)" : "rgba(6,182,212,0.1)"}
+          >
+            <Eye size={13} />
+            Details
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); onEdit(); }}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+              padding: "8px 10px", borderRadius: "10px",
+              background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.25)",
+              color: "#fbbf24", fontSize: "12px", fontWeight: 600, cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = "rgba(245,158,11,0.2)"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "rgba(245,158,11,0.1)"}
+            title="Edit Renter Information"
+          >
+            <Edit size={13} />
+            Edit
+          </button>
         </div>
       </div>
     </div>
