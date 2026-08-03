@@ -7,6 +7,9 @@ const authMiddleware = NextAuth(authConfig).auth;
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  if (pathname === "/api/test-mw") {
+    return NextResponse.json({ mw: "working" });
+  }
   if (pathname.startsWith("/api/")) {
     return NextResponse.next();
   }
