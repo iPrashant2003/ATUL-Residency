@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getBotUrl } from "@/lib/whatsappUrl";
 
+export const dynamic = "force-dynamic";
+
 // Allow SSH tunnel HTTPS certificates without TLS rejection error
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
