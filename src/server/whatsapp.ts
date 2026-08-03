@@ -519,21 +519,27 @@ function startAutomatedBackups() {
 
 const PORT = 3001;
 let activeTunnelProcess = null;
+let heartbeatInterval = null;
 
 async function establishTunnel() {
-    console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
+    console.log('🌐 Establishing secure SSH tunnel via localhost.run / pinggy...');
     try {
         if (activeTunnelProcess) {
             try { activeTunnelProcess.kill(); } catch (e) {}
             activeTunnelProcess = null;
         }
+        if (heartbeatInterval) {
+            clearInterval(heartbeatInterval);
+            heartbeatInterval = null;
+        }
 
         const { spawn } = require('child_process');
-        // Spawn SSH child process with keepalives and hidden window
+        // Spawn SSH child process with aggressive keepalives
         activeTunnelProcess = spawn('ssh', [
             '-o', 'StrictHostKeyChecking=no',
-            '-o', 'ServerAliveInterval=30',
+            '-o', 'ServerAliveInterval=15',
             '-o', 'ServerAliveCountMax=3',
+            '-o', 'ExitOnForwardFailure=yes',
             '-R', `80:localhost:${PORT}`,
             'nokey@localhost.run'
         ], {
@@ -541,31 +547,64 @@ async function establishTunnel() {
         });
 
         let urlFound = false;
+        let currentTunnelUrl = '';
 
         activeTunnelProcess.stdout.on('data', async (data) => {
             const output = data.toString();
             console.log(`[Tunnel Raw]: ${output.trim()}`);
 
-            // Find URL like: https://xxxx.lhr.life or similar
-            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.lhr\.(life|rocks|run)/);
+            // Find URL like: https://xxxx.lhr.life or https://xxxx.lhrtunnel.link or any https domain
+            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
             if (match && !urlFound) {
                 urlFound = true;
-                const tunnelUrl = match[0];
-                console.log(`🎉 Public SSH Tunnel URL Established: ${tunnelUrl}`);
+                currentTunnelUrl = match[0].replace(/\/$/, '');
+                console.log(`🎉 Public SSH Tunnel URL Established: ${currentTunnelUrl}`);
 
-                // Register in DB
+                // Register in DB immediately
                 try {
                     await prisma.activityLog.create({
                         data: {
                             action: 'WHATSAPP_BOT_URL',
                             entity: 'SYSTEM',
-                            details: tunnelUrl
+                            details: currentTunnelUrl
                         }
                     });
                     console.log('✅ Registered tunnel URL successfully in database.');
                 } catch (dbErr) {
                     console.error('❌ Failed to register tunnel URL in database:', dbErr.message);
                 }
+
+                // Start 60-second heartbeat ping to keep tunnel active permanently
+                if (heartbeatInterval) clearInterval(heartbeatInterval);
+                let failedPings = 0;
+                heartbeatInterval = setInterval(async () => {
+                    try {
+                        const pingRes = await fetch(`${currentTunnelUrl}/status`, {
+                            headers: { 'bypass-tunnel-reminder': 'true' }
+                        });
+                        if (pingRes.ok) {
+                            failedPings = 0;
+                            console.log(`💓 Tunnel heartbeat OK (${currentTunnelUrl})`);
+                        } else {
+                            failedPings++;
+                            console.warn(`⚠️ Tunnel heartbeat returned HTTP ${pingRes.status} (fail count: ${failedPings})`);
+                        }
+                    } catch (pingErr) {
+                        failedPings++;
+                        console.warn(`⚠️ Tunnel heartbeat fetch failed: ${pingErr.message} (fail count: ${failedPings})`);
+                    }
+
+                    if (failedPings >= 3) {
+                        console.error('❌ Tunnel heartbeat failed 3 times. Restarting tunnel connection...');
+                        clearInterval(heartbeatInterval);
+                        heartbeatInterval = null;
+                        if (activeTunnelProcess) {
+                            try { activeTunnelProcess.kill(); } catch (e) {}
+                            activeTunnelProcess = null;
+                        }
+                        setTimeout(establishTunnel, 3000);
+                    }
+                }, 60000);
             }
         });
 
@@ -579,9 +618,11 @@ async function establishTunnel() {
         });
 
         activeTunnelProcess.on('close', (code) => {
-            console.log(`❌ SSH tunnel process exited with code ${code}. Reconnecting in 8 seconds...`);
+            console.log(`❌ SSH tunnel process exited with code ${code}. Reconnecting in 5 seconds...`);
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            heartbeatInterval = null;
             activeTunnelProcess = null;
-            setTimeout(establishTunnel, 8000);
+            setTimeout(establishTunnel, 5000);
         });
 
         activeTunnelProcess.on('error', (err) => {

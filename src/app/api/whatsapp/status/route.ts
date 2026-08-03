@@ -20,12 +20,24 @@ export async function GET() {
     });
 
     const text = await res.text();
-    let data: any;
+    let rawData: any;
     try {
-      data = JSON.parse(text);
+      rawData = JSON.parse(text);
     } catch {
       return NextResponse.json({ error: "Bot server is not responding correctly" }, { status: 502 });
     }
+
+    // Unwrap bot1 if present so initialized, isReady, qrImage exist at root level
+    const b = rawData.bot1 || rawData;
+    const data = {
+      isReady: !!(rawData.isReady || b.isReady),
+      initialized: rawData.initialized !== undefined ? rawData.initialized : (b.initialized !== undefined ? b.initialized : true),
+      qrImage: rawData.qrImage || b.qrImage || null,
+      pairingCode: rawData.pairingCode || b.pairingCode || null,
+      phone: rawData.phone || b.phone || null,
+      pushname: rawData.pushname || b.pushname || null,
+      bot1: b,
+    };
 
     return NextResponse.json(data);
   } catch (err: any) {
