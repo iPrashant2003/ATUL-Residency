@@ -561,29 +561,37 @@ let heartbeatInterval = null;
 async function registerUrlToCloud(url) {
     if (!url || !url.startsWith('http')) return;
     const secret = process.env.BOT_SECRET || 'atul_bot_secret_2026';
-    const targets = [
+    const baseDomains = [
         process.env.WEB_APP_URL,
         'https://atul-residency.vercel.app',
         'http://localhost:3000'
     ].filter(Boolean);
 
-    for (const targetDomain of targets) {
-        try {
-            const endpoint = `${targetDomain.replace(/\/$/, '')}/api/whatsapp/register-url`;
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 6000);
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url, secret }),
-                signal: controller.signal
-            }).finally(() => clearTimeout(timer));
+    for (const domain of baseDomains) {
+        const cleanDomain = domain.replace(/\/$/, '');
+        const endpoints = [
+            `${cleanDomain}/api/whatsapp/status`,
+            `${cleanDomain}/api/whatsapp/register-url`
+        ];
 
-            if (res.ok) {
-                console.log(`📡 Registered bot URL to cloud (${endpoint}) successfully!`);
+        for (const endpoint of endpoints) {
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 6000);
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, secret }),
+                    signal: controller.signal
+                }).finally(() => clearTimeout(timer));
+
+                if (res.ok) {
+                    console.log(`📡 Registered bot URL to cloud (${endpoint}) successfully!`);
+                    break;
+                }
+            } catch (err) {
+                // Silently ignore ping errors for offline endpoints
             }
-        } catch (err) {
-            // Silently ignore ping errors for offline endpoints
         }
     }
 }

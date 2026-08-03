@@ -58,3 +58,36 @@ export async function GET() {
     });
   }
 }
+
+// POST: Allows local WhatsApp bot to register its live SSH tunnel URL
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json().catch(() => ({}));
+    const { url, secret } = body;
+
+    if (!url || typeof url !== "string" || !url.startsWith("http")) {
+      return NextResponse.json({ error: "Invalid URL provided" }, { status: 400 });
+    }
+
+    const expectedSecret = process.env.BOT_SECRET || "atul_bot_secret_2026";
+    if (secret && secret !== expectedSecret) {
+      return NextResponse.json({ error: "Invalid secret token" }, { status: 401 });
+    }
+
+    const cleanUrl = url.replace(/\/$/, "");
+
+    await prisma.activityLog.create({
+      data: {
+        action: "WHATSAPP_BOT_URL",
+        entity: "SYSTEM",
+        details: cleanUrl,
+      },
+    });
+
+    console.log(`[WhatsApp Status API] Registered SSH Tunnel URL: ${cleanUrl}`);
+    return NextResponse.json({ success: true, url: cleanUrl });
+  } catch (err: any) {
+    console.error("[WhatsApp Status POST Error]", err);
+    return NextResponse.json({ error: err.message || "Failed to register URL" }, { status: 500 });
+  }
+}
