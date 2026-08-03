@@ -49,18 +49,24 @@ function getBaseUrl() {
 
 function createPrismaClient() {
     try {
-        const databaseUrl = process.env.DATABASE_URL;
+        let databaseUrl = process.env.DATABASE_URL || process.env.DATABASE_URL_DIRECT;
         if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://'))) {
+            databaseUrl = databaseUrl.replace('channel_binding=require&', '').replace('&channel_binding=require', '').replace('channel_binding=require', '');
             const { Pool } = require('pg');
             const { PrismaPg } = require('@prisma/adapter-pg');
-            const pool = new Pool({ connectionString: databaseUrl });
+            const pool = new Pool({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false }, connectionTimeoutMillis: 5000 });
             const adapter = new PrismaPg(pool);
             return new PrismaClient({ adapter });
         }
     } catch (e) {
         console.warn('⚠️ Adapter init failed, using standard PrismaClient:', e.message);
     }
-    return new PrismaClient();
+    try {
+        return new PrismaClient();
+    } catch (err) {
+        console.warn('⚠️ Could not initialize PrismaClient:', err.message);
+        return new PrismaClient();
+    }
 }
 
 function killStaleChrome() {
@@ -551,6 +557,37 @@ const PORT = 3001;
 let activeTunnelProcess = null;
 let heartbeatInterval = null;
 
+// Helper: Registers the tunnel URL directly to Vercel cloud API endpoint via HTTPS
+async function registerUrlToCloud(url) {
+    if (!url || !url.startsWith('http')) return;
+    const secret = process.env.BOT_SECRET || 'atul_bot_secret_2026';
+    const targets = [
+        process.env.WEB_APP_URL,
+        'https://atul-residency.vercel.app',
+        'http://localhost:3000'
+    ].filter(Boolean);
+
+    for (const targetDomain of targets) {
+        try {
+            const endpoint = `${targetDomain.replace(/\/$/, '')}/api/whatsapp/register-url`;
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 6000);
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, secret }),
+                signal: controller.signal
+            }).finally(() => clearTimeout(timer));
+
+            if (res.ok) {
+                console.log(`📡 Registered bot URL to cloud (${endpoint}) successfully!`);
+            }
+        } catch (err) {
+            // Silently ignore ping errors for offline endpoints
+        }
+    }
+}
+
 async function establishTunnel() {
     console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
     try {
@@ -603,6 +640,9 @@ async function establishTunnel() {
                     console.error('⚠️ Could not write bot-tunnel-url.txt:', fErr.message);
                 }
 
+                // Register URL to cloud (Vercel) via HTTPS webhook
+                registerUrlToCloud(currentTunnelUrl);
+
                 try {
                     await prisma.activityLog.create({
                         data: {
@@ -620,6 +660,9 @@ async function establishTunnel() {
                 if (heartbeatInterval) clearInterval(heartbeatInterval);
                 let failCount = 0;
                 heartbeatInterval = setInterval(async () => {
+                    // Periodically refresh registration on Vercel
+                    registerUrlToCloud(currentTunnelUrl);
+
                     try {
                         const controller = new AbortController();
                         const timeoutId = setTimeout(() => controller.abort(), 6000);
