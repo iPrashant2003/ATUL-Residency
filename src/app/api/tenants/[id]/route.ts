@@ -31,15 +31,100 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const { id } = await params;
-    const data = await req.json();
-    const tenant = await prisma.tenant.update({
+    const body = await req.json();
+
+    const existingTenant = await prisma.tenant.findUnique({
       where: { id },
-      data,
+      include: { room: true },
+    });
+
+    if (!existingTenant) {
+      return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
+    }
+
+    const {
+      name,
+      email,
+      phone,
+      whatsapp,
+      alternatePhone,
+      aadhaarNumber,
+      photoUrl,
+      aadhaarImageUrl,
+      rentAmount,
+      securityDeposit,
+      joiningDate,
+      roomId,
+    } = body;
+
+    const updateData: any = {};
+
+    if (name !== undefined && name !== "") updateData.name = name.trim();
+    if (email !== undefined) updateData.email = email ? email.trim() : null;
+    if (phone !== undefined && phone !== "") updateData.phone = phone.trim();
+    if (whatsapp !== undefined) updateData.whatsapp = whatsapp ? whatsapp.trim() : null;
+    if (alternatePhone !== undefined) updateData.alternatePhone = alternatePhone ? alternatePhone.trim() : null;
+    if (aadhaarNumber !== undefined) updateData.aadhaarNumber = aadhaarNumber ? aadhaarNumber.trim() : null;
+    if (photoUrl !== undefined) updateData.photoUrl = photoUrl || null;
+    if (aadhaarImageUrl !== undefined) updateData.aadhaarImageUrl = aadhaarImageUrl || null;
+    if (rentAmount !== undefined && rentAmount !== "") updateData.rentAmount = Number(rentAmount);
+    if (securityDeposit !== undefined && securityDeposit !== "") updateData.securityDeposit = Number(securityDeposit);
+
+    if (joiningDate) {
+      const parsedDate = new Date(joiningDate);
+      if (!isNaN(parsedDate.getTime())) {
+        updateData.joiningDate = parsedDate;
+      }
+    }
+
+    // Room re-assignment handling if roomId is changed
+    if (roomId && roomId !== existingTenant.roomId) {
+      const newRoom = await prisma.room.findUnique({ where: { id: roomId } });
+      if (!newRoom) {
+        return NextResponse.json({ error: "Selected room does not exist" }, { status: 404 });
+      }
+      if (newRoom.isOccupied) {
+        return NextResponse.json({ error: `Room ${newRoom.number} is already occupied` }, { status: 409 });
+      }
+
+      // Mark old room as vacant
+      if (existingTenant.roomId) {
+        await prisma.room.update({
+          where: { id: existingTenant.roomId },
+          data: { isOccupied: false },
+        });
+      }
+
+      // Mark new room as occupied
+      await prisma.room.update({
+        where: { id: roomId },
+        data: { isOccupied: true },
+      });
+
+      updateData.roomId = roomId;
+    }
+
+    // Also update associated User table record if name or email changed
+    if (name || email) {
+      await prisma.user.update({
+        where: { id: existingTenant.userId },
+        data: {
+          ...(name ? { name: name.trim() } : {}),
+          ...(email !== undefined ? { email: email ? email.trim() : existingTenant.userId } : {}),
+        },
+      });
+    }
+
+    const updatedTenant = await prisma.tenant.update({
+      where: { id },
+      data: updateData,
       include: { room: { include: { tower: true } }, user: true },
     });
-    return NextResponse.json(tenant);
-  } catch {
-    return NextResponse.json({ error: "Failed to update tenant" }, { status: 500 });
+
+    return NextResponse.json(updatedTenant);
+  } catch (error: any) {
+    console.error("PATCH tenant error:", error);
+    return NextResponse.json({ error: error.message || "Failed to update tenant" }, { status: 500 });
   }
 }
 
