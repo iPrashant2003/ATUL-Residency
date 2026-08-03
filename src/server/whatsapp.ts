@@ -591,12 +591,17 @@ async function establishTunnel() {
                 currentTunnelUrl = match[0].replace(/\/$/, '');
                 console.log(`🎉 Public SSH Tunnel URL Established: ${currentTunnelUrl}`);
 
-                // Save to local fallback file
+                // Save to local fallback file (using __dirname for reliable path resolution)
                 try {
-                    const logDir = path.join(process.cwd(), 'logs');
+                    const projectRoot = path.resolve(__dirname, '..', '..');
+                    const logDir = path.join(projectRoot, 'logs');
                     if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
-                    fs.writeFileSync(path.join(logDir, 'bot-tunnel-url.txt'), currentTunnelUrl);
-                } catch (fErr) {}
+                    const urlFilePath = path.join(logDir, 'bot-tunnel-url.txt');
+                    fs.writeFileSync(urlFilePath, currentTunnelUrl);
+                    console.log(`✅ Saved tunnel URL to ${urlFilePath}`);
+                } catch (fErr) {
+                    console.error('⚠️ Could not write bot-tunnel-url.txt:', fErr.message);
+                }
 
                 try {
                     await prisma.activityLog.create({
