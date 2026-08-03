@@ -522,10 +522,10 @@ let activeTunnelProcess = null;
 let heartbeatInterval = null;
 
 async function establishTunnel() {
-    console.log('🌐 Establishing secure SSH tunnel via localhost.run / pinggy...');
+    console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
     try {
         if (activeTunnelProcess) {
-            try { activeTunnelProcess.kill(); } catch (e) {}
+            try { activeTunnelProcess.kill('SIGKILL'); } catch (e) {}
             activeTunnelProcess = null;
         }
         if (heartbeatInterval) {
@@ -534,11 +534,10 @@ async function establishTunnel() {
         }
 
         const { spawn } = require('child_process');
-        // Spawn SSH child process with aggressive keepalives
         activeTunnelProcess = spawn('ssh', [
             '-o', 'StrictHostKeyChecking=no',
-            '-o', 'ServerAliveInterval=15',
-            '-o', 'ServerAliveCountMax=3',
+            '-o', 'ServerAliveInterval=10',
+            '-o', 'ServerAliveCountMax=2',
             '-o', 'ExitOnForwardFailure=yes',
             '-R', `80:localhost:${PORT}`,
             'nokey@localhost.run'
@@ -549,18 +548,16 @@ async function establishTunnel() {
         let urlFound = false;
         let currentTunnelUrl = '';
 
-        activeTunnelProcess.stdout.on('data', async (data) => {
+        const handleOutput = async (data) => {
             const output = data.toString();
             console.log(`[Tunnel Raw]: ${output.trim()}`);
 
-            // Find URL like: https://xxxx.lhr.life or https://xxxx.lhrtunnel.link or any https domain
             const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
             if (match && !urlFound) {
                 urlFound = true;
                 currentTunnelUrl = match[0].replace(/\/$/, '');
                 console.log(`🎉 Public SSH Tunnel URL Established: ${currentTunnelUrl}`);
 
-                // Register in DB immediately
                 try {
                     await prisma.activityLog.create({
                         data: {
@@ -574,55 +571,59 @@ async function establishTunnel() {
                     console.error('❌ Failed to register tunnel URL in database:', dbErr.message);
                 }
 
-                // Start 60-second heartbeat ping to keep tunnel active permanently
+                // Start 20-second active health check
                 if (heartbeatInterval) clearInterval(heartbeatInterval);
-                let failedPings = 0;
+                let failCount = 0;
                 heartbeatInterval = setInterval(async () => {
                     try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 6000);
                         const pingRes = await fetch(`${currentTunnelUrl}/status`, {
-                            headers: { 'bypass-tunnel-reminder': 'true' }
-                        });
+                            headers: { 'bypass-tunnel-reminder': 'true' },
+                            signal: controller.signal
+                        }).finally(() => clearTimeout(timeoutId));
+
                         if (pingRes.ok) {
-                            failedPings = 0;
-                            console.log(`💓 Tunnel heartbeat OK (${currentTunnelUrl})`);
+                            failCount = 0;
+                            console.log(`💓 Tunnel health OK (${currentTunnelUrl})`);
                         } else {
-                            failedPings++;
-                            console.warn(`⚠️ Tunnel heartbeat returned HTTP ${pingRes.status} (fail count: ${failedPings})`);
+                            failCount++;
+                            console.warn(`⚠️ Tunnel returned HTTP ${pingRes.status} (fail count: ${failCount})`);
                         }
                     } catch (pingErr) {
-                        failedPings++;
-                        console.warn(`⚠️ Tunnel heartbeat fetch failed: ${pingErr.message} (fail count: ${failedPings})`);
+                        failCount++;
+                        console.warn(`⚠️ Tunnel ping failed: ${pingErr.message} (fail count: ${failCount})`);
                     }
 
-                    if (failedPings >= 3) {
-                        console.error('❌ Tunnel heartbeat failed 3 times. Restarting tunnel connection...');
+                    if (failCount >= 2) {
+                        console.error('❌ Tunnel health check failed 2 times. Force-restarting SSH tunnel...');
                         clearInterval(heartbeatInterval);
                         heartbeatInterval = null;
                         if (activeTunnelProcess) {
-                            try { activeTunnelProcess.kill(); } catch (e) {}
+                            try { activeTunnelProcess.kill('SIGKILL'); } catch (e) {}
                             activeTunnelProcess = null;
                         }
-                        setTimeout(establishTunnel, 3000);
+                        setTimeout(establishTunnel, 2000);
                     }
-                }, 60000);
+                }, 20000);
             }
-        });
+        };
 
+        activeTunnelProcess.stdout.on('data', handleOutput);
         activeTunnelProcess.stderr.on('data', (data) => {
             const errOutput = data.toString();
+            handleOutput(data);
             if (errOutput.includes('Warning') || errOutput.includes('Pseudo-terminal')) {
                 console.log(`[Tunnel SSH]: ${errOutput.trim()}`);
-            } else {
-                console.warn(`[Tunnel Warning]: ${errOutput.trim()}`);
             }
         });
 
         activeTunnelProcess.on('close', (code) => {
-            console.log(`❌ SSH tunnel process exited with code ${code}. Reconnecting in 5 seconds...`);
+            console.log(`❌ SSH tunnel process exited with code ${code}. Reconnecting in 3 seconds...`);
             if (heartbeatInterval) clearInterval(heartbeatInterval);
             heartbeatInterval = null;
             activeTunnelProcess = null;
-            setTimeout(establishTunnel, 5000);
+            setTimeout(establishTunnel, 3000);
         });
 
         activeTunnelProcess.on('error', (err) => {
