@@ -48,18 +48,19 @@ function getBaseUrl() {
 }
 
 function createPrismaClient() {
-    const databaseUrl = process.env.DATABASE_URL;
-    if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://'))) {
-        const { Pool } = require('pg');
-        const { PrismaPg } = require('@prisma/adapter-pg');
-        const pool = new Pool({ connectionString: databaseUrl });
-        const adapter = new PrismaPg(pool);
-        return new PrismaClient({ adapter });
+    try {
+        const databaseUrl = process.env.DATABASE_URL;
+        if (databaseUrl && (databaseUrl.startsWith('postgresql://') || databaseUrl.startsWith('postgres://'))) {
+            const { Pool } = require('pg');
+            const { PrismaPg } = require('@prisma/adapter-pg');
+            const pool = new Pool({ connectionString: databaseUrl });
+            const adapter = new PrismaPg(pool);
+            return new PrismaClient({ adapter });
+        }
+    } catch (e) {
+        console.warn('⚠️ Adapter init failed, using standard PrismaClient:', e.message);
     }
-    const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
-    const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
-    const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
-    return new PrismaClient({ adapter });
+    return new PrismaClient();
 }
 
 function killStaleChrome() {
@@ -84,7 +85,7 @@ function cleanSessionLock() {
                 if (fs.statSync(sessionDir).isDirectory()) {
                     const files = fs.readdirSync(sessionDir);
                     for (const f of files) {
-                        if (f.startsWith('Singleton') || f.endsWith('.lock') || f.includes('Lock')) {
+                        if (f.startsWith('Singleton') || f.endsWith('.lock') || f.includes('Lock') || f === 'DevToolsActivePort') {
                             try { fs.rmSync(path.join(sessionDir, f), { force: true, recursive: true }); } catch (e) {}
                         }
                     }
@@ -564,6 +565,8 @@ async function establishTunnel() {
 
         const { spawn } = require('child_process');
         activeTunnelProcess = spawn('ssh', [
+            '-T',
+            '-N',
             '-o', 'StrictHostKeyChecking=no',
             '-o', 'ServerAliveInterval=10',
             '-o', 'ServerAliveCountMax=2',
@@ -587,6 +590,13 @@ async function establishTunnel() {
                 urlFound = true;
                 currentTunnelUrl = match[0].replace(/\/$/, '');
                 console.log(`🎉 Public SSH Tunnel URL Established: ${currentTunnelUrl}`);
+
+                // Save to local fallback file
+                try {
+                    const logDir = path.join(process.cwd(), 'logs');
+                    if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+                    fs.writeFileSync(path.join(logDir, 'bot-tunnel-url.txt'), currentTunnelUrl);
+                } catch (fErr) {}
 
                 try {
                     await prisma.activityLog.create({

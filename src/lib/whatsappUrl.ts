@@ -23,5 +23,16 @@ export async function getBotUrl(): Promise<string> {
     console.error("Error querying WHATSAPP_BOT_URL from database:", err);
   }
 
+  // Fallback to local bot-tunnel-url.txt file if present
+  try {
+    const fs = require("fs");
+    const path = require("path");
+    const filePath = path.join(process.cwd(), "logs", "bot-tunnel-url.txt");
+    if (fs.existsSync(filePath)) {
+      const savedUrl = fs.readFileSync(filePath, "utf8").trim();
+      if (savedUrl.startsWith("http")) return savedUrl;
+    }
+  } catch {}
+
   return process.env.WHATSAPP_BOT_URL || "http://localhost:3001";
 }
