@@ -7,7 +7,7 @@ const authMiddleware = NextAuth(authConfig).auth;
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (pathname.startsWith("/api/whatsapp/register-url")) {
+  if (pathname.startsWith("/api/")) {
     return NextResponse.next();
   }
 
