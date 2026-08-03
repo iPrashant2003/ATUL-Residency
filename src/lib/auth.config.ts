@@ -27,6 +27,7 @@ export const authConfig = {
         pathname.startsWith("/api/auth") ||
         pathname.startsWith("/api/chat") ||
         pathname.startsWith("/api/public-stats") ||
+        pathname.startsWith("/api/whatsapp/register-url") ||
         pathname === "/api/upload" ||
         new RegExp("^/api/rent/[^/]+/invoice").test(pathname);
 
