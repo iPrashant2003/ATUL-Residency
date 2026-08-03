@@ -5,14 +5,21 @@ export const authConfig = {
     signIn: "/login",
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
+      const pathname = request?.nextUrl?.pathname || "";
+      
+      // All API routes manage their own auth or are public webhooks
+      if (pathname.startsWith("/api/")) {
+        return true;
+      }
+
       const isLoggedIn = !!auth?.user;
       const role = (auth?.user as any)?.role;
-      const { pathname } = nextUrl;
+      const nextUrl = request?.nextUrl;
+      if (!nextUrl) return true;
 
       // Public routes
       const isPublicRoute =
-        pathname.startsWith("/api/") ||
         pathname === "/" ||
         pathname === "/manifest.json" ||
         pathname === "/sw.js" ||
