@@ -6,31 +6,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
-  const headerList = await headers();
+  await headers();
   try {
-    const debug = req.nextUrl?.searchParams?.get("debug");
-    if (debug === "1") {
-      return NextResponse.json({
-        nextUrlParams: Object.fromEntries(req.nextUrl?.searchParams?.entries() || []),
-        reqUrl: req.url,
-        xUrl: headerList.get("x-url"),
-        xInvokePath: headerList.get("x-invoke-path"),
-      });
-    }
-
-    let registerUrl = req.nextUrl?.searchParams?.get("url") ||
-                      req.nextUrl?.searchParams?.get("registerUrl") ||
-                      req.nextUrl?.searchParams?.get("tunnel") ||
-                      headerList.get("x-bot-url") ||
-                      headerList.get("x-tunnel-url");
-
-    if (!registerUrl) {
-      const rawUrl = (req as any).url || "";
-      const match = rawUrl.match(/[?&](?:url|registerUrl|tunnel)=([^&]+)/i);
-      if (match && match[1]) {
-        try { registerUrl = decodeURIComponent(match[1]); } catch { registerUrl = match[1]; }
-      }
-    }
+    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
+    let registerUrl = parsedUrl.searchParams.get("url") ||
+                      parsedUrl.searchParams.get("registerUrl") ||
+                      parsedUrl.searchParams.get("tunnel");
 
     if (registerUrl && registerUrl.length > 5) {
       let cleanUrl = registerUrl.trim();
@@ -45,7 +26,6 @@ export async function GET(req: NextRequest) {
         },
       });
       console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
-      return NextResponse.json({ success: true, registeredUrl: cleanUrl });
     }
 
     const rooms = await prisma.room.findMany({
