@@ -75,5 +75,5 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
+  matcher: ["/((?!api/|_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
 };
