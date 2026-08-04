@@ -3,14 +3,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export default async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  // CRITICAL: Return NextResponse.next() for ALL /api/ routes FIRST, BEFORE any auth checks.
-  // This guarantees webhooks & API POST routes never encounter NextAuth 405 or redirects.
-  if (pathname.startsWith("/api/")) {
-    return NextResponse.next();
-  }
-
   // Calculate total cookie header size to prevent Vercel 8KB header errors
   const cookieHeader = req.headers.get("cookie") || "";
   const cookieSize = new TextEncoder().encode(cookieHeader).length;
@@ -70,10 +62,10 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
     return response;
   }
 
-  // Run NextAuth session validation for page routes (/admin, /tenant, etc.)
+  // Run NextAuth session validation ONLY for protected routes (/admin, /tenant)
   return (auth as any)(req);
 }
 
 export const config = {
-  matcher: ["/((?!api/|_next/static|_next/image|favicon\\.ico|manifest\\.json|sw\\.js|offline|\\.well-known/|.*\\.png$|.*\\.ico$|.*\\.svg$).*)"],
+  matcher: ["/admin/:path*", "/tenant/:path*"],
 };
