@@ -42,7 +42,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const session = await auth();
+  await headers();
+  let session = null;
+  try {
+    session = await auth();
+  } catch (e) {}
+
   if (!session || (session.user as any)?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
