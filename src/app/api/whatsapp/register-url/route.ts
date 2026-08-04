@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // POST: Registers a new WhatsApp Bot SSH tunnel URL into Neon database
 export async function POST(req: NextRequest) {
@@ -39,6 +41,7 @@ export async function POST(req: NextRequest) {
 
 // GET: Returns current registered WhatsApp Bot URL
 export async function GET() {
+  await headers();
   try {
     const latestLog = await prisma.activityLog.findFirst({
       where: { action: "WHATSAPP_BOT_URL" },
