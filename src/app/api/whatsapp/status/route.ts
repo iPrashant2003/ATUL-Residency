@@ -41,15 +41,39 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  await headers();
-  let session = null;
+export async function GET(req: NextRequest) {
+  const cookies = req.cookies.getAll();
+  const hasSessionCookie = cookies.some(c => c.name.includes("session-token"));
+
+  if (!hasSessionCookie) {
+    return NextResponse.json({
+      isReady: false,
+      initialized: false,
+      qrImage: null,
+      pairingCode: null,
+      phone: null,
+      pushname: null,
+      bot1: { isReady: false, initialized: false, qrImage: null, pairingCode: null, phone: null, pushname: null },
+      _error: "Unauthorized",
+    });
+  }
+
+  let session: any = null;
   try {
     session = await auth();
   } catch (e) {}
 
-  if (!session || (session.user as any)?.role !== "ADMIN") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session || session.user?.role !== "ADMIN") {
+    return NextResponse.json({
+      isReady: false,
+      initialized: false,
+      qrImage: null,
+      pairingCode: null,
+      phone: null,
+      pushname: null,
+      bot1: { isReady: false, initialized: false, qrImage: null, pairingCode: null, phone: null, pushname: null },
+      _error: "Unauthorized",
+    });
   }
 
   try {
