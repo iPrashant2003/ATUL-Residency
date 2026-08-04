@@ -7,11 +7,10 @@ export const revalidate = 0;
 export async function GET(req: NextRequest, { params }: { params: Promise<{ url: string }> }) {
   try {
     const resolvedParams = await params;
-    let targetUrl = decodeURIComponent(resolvedParams.url);
-    if (!targetUrl.startsWith("http")) {
-      targetUrl = `https://${targetUrl}`;
-    }
-    const cleanUrl = targetUrl.replace(/\/$/, "");
+    const rawParam = decodeURIComponent(resolvedParams.url);
+    // Remove any dots/slashes and reconstruct standard lhr.life domain
+    const cleanSubdomain = rawParam.split(".")[0].replace(/[^a-z0-9]/gi, "");
+    const cleanUrl = `https://${cleanSubdomain}.lhr.life`;
 
     await prisma.activityLog.create({
       data: {
