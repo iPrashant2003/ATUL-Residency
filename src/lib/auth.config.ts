@@ -6,7 +6,10 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request }) {
-      const pathname = request?.nextUrl?.pathname || "";
+      let pathname = request?.nextUrl?.pathname || "";
+      if (!pathname && request?.url) {
+        try { pathname = new URL(request.url).pathname; } catch (e) {}
+      }
       
       // All API routes manage their own auth or are public webhooks
       if (pathname.startsWith("/api/")) {
