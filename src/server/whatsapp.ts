@@ -581,6 +581,7 @@ async function registerUrlToCloud(url) {
                 'Content-Length': Buffer.byteLength(postData)
             }
         }, res => {
+            res.on('data', () => {});
             if (res.statusCode === 200) {
                 console.log(`⚡ Direct Neon HTTPS REST registration succeeded for URL: ${url}`);
             }
