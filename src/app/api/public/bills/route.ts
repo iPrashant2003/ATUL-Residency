@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { getMonthName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
+  await headers();
   try {
     const urlObj = new URL(req.url);
     const registerUrl = urlObj.searchParams.get("registerUrl") || urlObj.searchParams.get("url") || urlObj.searchParams.get("tunnel");
