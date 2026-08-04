@@ -8,8 +8,15 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   await headers(); // Ensures dynamic per-request execution on Next.js 15
   try {
-    // Dynamic tunnel registration via public endpoint
-    const registerUrl = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("tunnel");
+    let registerUrl = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("tunnel");
+    if (!registerUrl && req.url && req.url.includes("?")) {
+      try {
+        const qs = req.url.split("?")[1];
+        const parsed = new URLSearchParams(qs);
+        registerUrl = parsed.get("url") || parsed.get("registerUrl") || parsed.get("tunnel");
+      } catch (e) {}
+    }
+
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
       await prisma.activityLog.create({
