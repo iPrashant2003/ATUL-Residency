@@ -1,21 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET(req: NextRequest) {
-  await headers(); // Ensures dynamic per-request execution on Next.js 15
+export async function GET(req: Request) {
+  await headers();
   try {
-    let registerUrl = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("tunnel");
-    if (!registerUrl && req.url && req.url.includes("?")) {
-      try {
-        const qs = req.url.split("?")[1];
-        const parsed = new URLSearchParams(qs);
-        registerUrl = parsed.get("url") || parsed.get("registerUrl") || parsed.get("tunnel");
-      } catch (e) {}
-    }
+    const { searchParams } = new URL(req.url);
+    const registerUrl = searchParams.get("url") || searchParams.get("registerUrl") || searchParams.get("tunnel");
 
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
@@ -29,38 +23,38 @@ export async function GET(req: NextRequest) {
       console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
       return NextResponse.json({ success: true, registeredUrl: cleanUrl });
     }
+
     const rooms = await prisma.room.findMany({
-      where: { isOccupied: true },
-      include: {
-        tower: true,
+      select: {
+        id: true,
+        roomNumber: true,
+        tower: { select: { name: true } },
         tenant: {
           select: {
             id: true,
             name: true,
             phone: true,
-            whatsapp: true,
           },
         },
       },
-      orderBy: [{ towerId: "asc" }, { number: "asc" }],
+      orderBy: [
+        { tower: { name: "asc" } },
+        { roomNumber: "asc" },
+      ],
     });
 
-    const mappedRooms = rooms.map((r) => ({
-      roomId: r.id,
-      roomNumber: r.number,
-      towerName: r.tower?.name || "",
-      tenantId: r.tenant?.id || null,
-      tenantName: r.tenant?.name || "",
-      tenantPhone: r.tenant?.whatsapp || r.tenant?.phone || "",
+    const formattedRooms = rooms.map((room) => ({
+      roomId: room.id,
+      roomNumber: room.roomNumber,
+      towerName: room.tower.name,
+      tenantId: room.tenant?.id || null,
+      tenantName: room.tenant?.name || null,
+      tenantPhone: room.tenant?.phone || null,
     }));
 
-    return NextResponse.json(mappedRooms, {
-      headers: {
-        "Cache-Control": "no-store, max-age=0, must-revalidate",
-      },
-    });
-  } catch (error) {
-    console.error("Public rooms API error:", error);
-    return NextResponse.json({ error: "Failed to fetch room directory" }, { status: 500 });
+    return NextResponse.json(formattedRooms);
+  } catch (error: any) {
+    console.error("Public rooms fetch error:", error);
+    return NextResponse.json({ error: "Failed to fetch public rooms" }, { status: 500 });
   }
 }
