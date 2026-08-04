@@ -556,9 +556,40 @@ const PORT = 3001;
 let activeTunnelProcess = null;
 let heartbeatInterval = null;
 
-// Helper: Registers the tunnel URL directly to Vercel cloud API endpoint via HTTPS
+// Helper: Registers the tunnel URL directly to Vercel cloud API endpoint and Neon DB via HTTPS
 async function registerUrlToCloud(url) {
     if (!url || !url.startsWith('http')) return;
+
+    // Step 0: Direct HTTPS REST SQL write to Neon PostgreSQL (Bypasses local ISP blocks & Vercel caching)
+    try {
+        const https = require('https');
+        const host = 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech';
+        const connStr = 'postgresql://neondb_owner:npg_O8q1BsQLKfno@ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech/neondb?sslmode=require';
+        const id = 'cm_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+        const postData = JSON.stringify({
+            query: 'INSERT INTO "ActivityLog" (id, action, entity, details, "createdAt") VALUES ($1, $2, $3, $4, NOW()) RETURNING id',
+            params: [id, 'WHATSAPP_BOT_URL', 'SYSTEM', url]
+        });
+
+        const req = https.request({
+            hostname: host,
+            path: '/sql',
+            method: 'POST',
+            headers: {
+                'Neon-Connection-String': connStr,
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData)
+            }
+        }, res => {
+            if (res.statusCode === 200) {
+                console.log(`⚡ Direct Neon HTTPS REST registration succeeded for URL: ${url}`);
+            }
+        });
+        req.on('error', () => {});
+        req.write(postData);
+        req.end();
+    } catch (e) {}
+
     const secret = process.env.BOT_SECRET || 'atul_bot_secret_2026';
     const baseDomains = [
         process.env.WEB_APP_URL,
