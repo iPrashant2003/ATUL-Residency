@@ -5,11 +5,9 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-// Allow SSH tunnel HTTPS certificates without TLS rejection error
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 // POST: Allows local WhatsApp bot to register its live SSH tunnel URL
 export async function POST(req: NextRequest) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const body = await req.json().catch(() => ({}));
     const { url, secret } = body;
@@ -42,6 +40,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const cookies = req.cookies.getAll();
   const hasSessionCookie = cookies.some(c => c.name.includes("session-token"));
 
