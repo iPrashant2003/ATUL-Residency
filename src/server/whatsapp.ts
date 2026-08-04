@@ -573,9 +573,9 @@ async function registerUrlToCloud(url) {
         const domainHost = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const subdomainOnly = domainHost.split('.')[0];
         const getEndpoints = [
-            `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/register?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(subdomainOnly)}`
+            `${cleanDomain}/api/register-bot?url=${encodeURIComponent(url)}`,
+            `${cleanDomain}/api/register-bot?subdomain=${encodeURIComponent(subdomainOnly)}`,
+            `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}`
         ];
 
         for (const getEndpoint of getEndpoints) {
