@@ -1,8 +1,9 @@
-import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export default async function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
   // Calculate total cookie header size to prevent Vercel 8KB header errors
   const cookieHeader = req.headers.get("cookie") || "";
   const cookieSize = new TextEncoder().encode(cookieHeader).length;
@@ -62,8 +63,21 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
     return response;
   }
 
-  // Run NextAuth session validation ONLY for protected routes (/admin, /tenant)
-  return (auth as any)(req);
+  // Check auth session cookie for protected dashboard routes (/admin, /tenant)
+  if (pathname.startsWith("/admin") || pathname.startsWith("/tenant")) {
+    const sessionToken = req.cookies.get("authjs.session-token")?.value ||
+      req.cookies.get("__Secure-authjs.session-token")?.value ||
+      req.cookies.get("next-auth.session-token")?.value ||
+      req.cookies.get("__Secure-next-auth.session-token")?.value;
+
+    if (!sessionToken) {
+      const loginUrl = new URL("/login", req.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
