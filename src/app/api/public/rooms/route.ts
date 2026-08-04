@@ -1,15 +1,27 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET(req: Request) {
-  await headers();
+export async function GET(req: NextRequest) {
+  const headerList = await headers();
   try {
-    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
-    const registerUrl = parsedUrl.searchParams.get("url") || parsedUrl.searchParams.get("registerUrl") || parsedUrl.searchParams.get("tunnel");
+    let registerUrl = req.nextUrl?.searchParams?.get("url") ||
+                      req.nextUrl?.searchParams?.get("registerUrl") ||
+                      req.nextUrl?.searchParams?.get("tunnel");
+
+    if (!registerUrl) {
+      const fullUrl = headerList.get("x-url") || headerList.get("x-invoke-path") || req.url || "";
+      if (fullUrl.includes("?")) {
+        try {
+          const qs = fullUrl.split("?")[1];
+          const params = new URLSearchParams(qs);
+          registerUrl = params.get("url") || params.get("registerUrl") || params.get("tunnel");
+        } catch (e) {}
+      }
+    }
 
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
