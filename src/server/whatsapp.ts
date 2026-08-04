@@ -650,12 +650,11 @@ async function registerUrlToCloud(url) {
 }
 
 function killTunnelProcess(proc) {
-    if (!proc) return;
     try {
-        if (process.platform === 'win32' && proc.pid) {
+        if (process.platform === 'win32') {
             const { execSync } = require('child_process');
-            execSync(`taskkill /F /PID ${proc.pid} /T 2>nul`, { shell: 'cmd.exe', stdio: 'ignore', windowsHide: true });
-        } else {
+            execSync('taskkill /F /IM ssh.exe /T 2>nul', { shell: 'cmd.exe', stdio: 'ignore', windowsHide: true });
+        } else if (proc) {
             proc.kill('SIGKILL');
         }
     } catch (e) {}
