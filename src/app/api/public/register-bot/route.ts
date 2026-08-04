@@ -1,14 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   await headers();
   try {
-    const url = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("subdomain");
+    const { searchParams } = new URL(req.url);
+    const url = searchParams.get("url") || searchParams.get("registerUrl") || searchParams.get("subdomain");
     
     if (!url) {
       return NextResponse.json({ error: "Missing url parameter" }, { status: 400 });
@@ -31,7 +32,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    console.log(`[Public Register Bot API] Registered WhatsApp Bot URL: ${cleanUrl}`);
+    console.log(`[Public Register Bot API] Successfully registered Bot URL: ${cleanUrl}`);
     return NextResponse.json({ success: true, url: cleanUrl });
   } catch (err: any) {
     console.error("[Public Register Bot API Error]", err);
