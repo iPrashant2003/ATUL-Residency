@@ -181,8 +181,7 @@ async function initializeBot(pairingPhone = null) {
         },
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
         webVersionCache: {
-            type: 'remote',
-            remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.3000.1014111620-alpha.html',
+            type: 'none'
         },
         qrMaxRetries: 0,
     };
@@ -619,11 +618,23 @@ async function registerUrlToCloud(url) {
     }
 }
 
+function killTunnelProcess(proc) {
+    if (!proc) return;
+    try {
+        if (process.platform === 'win32' && proc.pid) {
+            const { execSync } = require('child_process');
+            execSync(`taskkill /F /PID ${proc.pid} /T 2>nul`, { shell: 'cmd.exe', stdio: 'ignore', windowsHide: true });
+        } else {
+            proc.kill('SIGKILL');
+        }
+    } catch (e) {}
+}
+
 async function establishTunnel() {
     console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
     try {
         if (activeTunnelProcess) {
-            try { activeTunnelProcess.kill('SIGKILL'); } catch (e) {}
+            killTunnelProcess(activeTunnelProcess);
             activeTunnelProcess = null;
         }
         if (heartbeatInterval) {
@@ -719,7 +730,7 @@ async function establishTunnel() {
                         clearInterval(heartbeatInterval);
                         heartbeatInterval = null;
                         if (activeTunnelProcess) {
-                            try { activeTunnelProcess.kill('SIGKILL'); } catch (e) {}
+                            killTunnelProcess(activeTunnelProcess);
                             activeTunnelProcess = null;
                         }
                         setTimeout(establishTunnel, 2000);
