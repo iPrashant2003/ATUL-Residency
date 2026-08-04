@@ -6,7 +6,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import {
   Users, Plus, X, Loader2, Search, Phone, MessageCircle, Send,
   Building2, Home, Calendar, Shield, Trash2, ChevronRight,
-  IndianRupee, CreditCard, FileText, Filter, UserCheck,
+  IndianRupee, CreditCard, FileText, UserCheck,
   AlertTriangle, Eye, Mail, Hash, Camera, Key, Copy, CheckCircle, Zap,
   Archive, RotateCcw, Clock, History, FileCheck, Edit, Save,
 } from "lucide-react";
@@ -1446,13 +1446,21 @@ export default function RentersPage() {
     });
   }, [renters, search, filterTower]);
 
-  // Group filtered renters by Tower for clean and separate sections
+  // Group filtered renters by Tower, sorted numerically by room number
   const groupedByTower = useMemo(() => {
     const groups: { [towerName: string]: Renter[] } = {};
     filtered.forEach((t) => {
       const towerName = t.room?.tower?.name || "Unassigned Tower";
       if (!groups[towerName]) groups[towerName] = [];
       groups[towerName].push(t);
+    });
+    // Sort each tower's renters numerically by room number
+    Object.keys(groups).forEach((tower) => {
+      groups[tower].sort((a, b) => {
+        const aNum = parseInt(a.room?.number || "0", 10);
+        const bNum = parseInt(b.room?.number || "0", 10);
+        return aNum - bNum;
+      });
     });
     return groups;
   }, [filtered]);
@@ -1505,18 +1513,57 @@ export default function RentersPage() {
           />
         </div>
 
-        {/* Tower filter */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <Filter size={14} color="rgba(226,232,240,0.4)" />
-          <select
-            className="form-input"
-            style={{ width: "auto", fontSize: "13px", minWidth: "140px" }}
-            value={filterTower}
-            onChange={(e) => setFilterTower(e.target.value)}
+        {/* Tower toggle tab buttons */}
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: "4px" }}>
+          {/* All Towers */}
+          <button
+            onClick={() => setFilterTower("all")}
+            style={{
+              display: "flex", alignItems: "center", gap: "6px",
+              padding: "7px 14px", borderRadius: "9px", border: "none",
+              fontSize: "13px", fontWeight: 700, cursor: "pointer",
+              transition: "all 0.2s ease",
+              background: filterTower === "all"
+                ? "linear-gradient(135deg, rgba(139,92,246,0.25) 0%, rgba(6,182,212,0.25) 100%)"
+                : "transparent",
+              color: filterTower === "all" ? "#e2e8f0" : "rgba(226,232,240,0.45)",
+              boxShadow: filterTower === "all" ? "0 2px 8px rgba(0,0,0,0.3)" : "none",
+            }}
           >
-            <option value="all">All Towers</option>
-            {towers.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
-          </select>
+            <Building2 size={13} />
+            All Towers
+          </button>
+
+          {/* Dynamic Tower A / Tower B tabs */}
+          {towers.map((tower) => {
+            const isTowerA = tower.name.toLowerCase().includes("a");
+            const accentColor = isTowerA ? "#8b5cf6" : "#06b6d4";
+            const accentBg = isTowerA ? "rgba(139,92,246,0.25)" : "rgba(6,182,212,0.25)";
+            const isActive = filterTower === tower.id;
+            return (
+              <button
+                key={tower.id}
+                onClick={() => setFilterTower(isActive ? "all" : tower.id)}
+                style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  padding: "7px 14px", borderRadius: "9px", border: "none",
+                  fontSize: "13px", fontWeight: 700, cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  background: isActive ? accentBg : "transparent",
+                  color: isActive ? accentColor : "rgba(226,232,240,0.45)",
+                  boxShadow: isActive ? `0 2px 8px ${accentColor}30` : "none",
+                }}
+              >
+                <div style={{
+                  width: "8px", height: "8px", borderRadius: "50%",
+                  background: isActive ? accentColor : "rgba(226,232,240,0.3)",
+                  transition: "background 0.2s",
+                  flexShrink: 0,
+                }} />
+                {tower.name}
+              </button>
+            );
+          })}
         </div>
 
         {/* Results count */}
