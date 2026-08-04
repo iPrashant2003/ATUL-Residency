@@ -12,7 +12,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 export async function GET(req: NextRequest) {
   await headers();
   try {
-    const registerUrl = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl");
+    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
+    const registerUrl = parsedUrl.searchParams.get("url") || parsedUrl.searchParams.get("registerUrl");
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
       await prisma.activityLog.create({

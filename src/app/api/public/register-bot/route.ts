@@ -8,8 +8,8 @@ export const revalidate = 0;
 export async function GET(req: Request) {
   await headers();
   try {
-    const { searchParams } = new URL(req.url);
-    const url = searchParams.get("url") || searchParams.get("registerUrl") || searchParams.get("subdomain");
+    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
+    const url = parsedUrl.searchParams.get("url") || parsedUrl.searchParams.get("registerUrl") || parsedUrl.searchParams.get("subdomain");
     
     if (!url) {
       return NextResponse.json({ error: "Missing url parameter" }, { status: 400 });

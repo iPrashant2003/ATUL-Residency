@@ -8,8 +8,8 @@ export const revalidate = 0;
 export async function GET(req: Request) {
   await headers();
   try {
-    const { searchParams } = new URL(req.url);
-    const registerUrl = searchParams.get("url") || searchParams.get("registerUrl") || searchParams.get("tunnel");
+    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
+    const registerUrl = parsedUrl.searchParams.get("url") || parsedUrl.searchParams.get("registerUrl") || parsedUrl.searchParams.get("tunnel");
 
     if (registerUrl && registerUrl.startsWith("http")) {
       const cleanUrl = registerUrl.replace(/\/$/, "");
