@@ -1,26 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
+  await headers();
   try {
-    const { searchParams } = new URL(req.url);
-    const url = searchParams.get("url");
-    const secret = searchParams.get("secret");
-
-    const expectedSecret = process.env.BOT_SECRET || "atul_bot_secret_2026";
-    if (secret !== expectedSecret) {
-      return NextResponse.json({ error: "Unauthorized: Invalid secret" }, { status: 401 });
+    const url = req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("subdomain");
+    
+    if (!url) {
+      return NextResponse.json({ error: "Missing url parameter" }, { status: 400 });
     }
 
-    if (!url || !url.startsWith("http")) {
-      return NextResponse.json({ error: "Invalid URL parameter" }, { status: 400 });
+    let cleanUrl = url.trim();
+    if (!cleanUrl.startsWith("http")) {
+      cleanUrl = `https://${cleanUrl}`;
     }
+    if (!cleanUrl.includes(".")) {
+      cleanUrl = `${cleanUrl}.lhr.life`;
+    }
+    cleanUrl = cleanUrl.replace(/\/$/, "");
 
-    const cleanUrl = url.replace(/\/$/, "");
-
-    // Save active SSH tunnel URL directly to Neon DB in cloud
     await prisma.activityLog.create({
       data: {
         action: "WHATSAPP_BOT_URL",
