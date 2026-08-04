@@ -661,8 +661,9 @@ function killTunnelProcess(proc) {
     } catch (e) {}
 }
 
-async function establishTunnel() {
-    console.log('🌐 Establishing secure SSH tunnel via localhost.run...');
+async function establishTunnel(useFallback = false) {
+    const providerHost = useFallback ? 'nokey@localhost.run' : 'serveo.net';
+    console.log(`🌐 Establishing secure SSH tunnel via ${providerHost}...`);
     try {
         if (activeTunnelProcess) {
             killTunnelProcess(activeTunnelProcess);
@@ -674,7 +675,7 @@ async function establishTunnel() {
         }
 
         const { spawn } = require('child_process');
-        activeTunnelProcess = spawn('ssh', [
+        const sshArgs = useFallback ? [
             '-T',
             '-N',
             '-o', 'StrictHostKeyChecking=no',
@@ -683,7 +684,15 @@ async function establishTunnel() {
             '-o', 'ExitOnForwardFailure=yes',
             '-R', `80:localhost:${PORT}`,
             'nokey@localhost.run'
-        ], {
+        ] : [
+            '-o', 'StrictHostKeyChecking=no',
+            '-o', 'ServerAliveInterval=10',
+            '-o', 'ServerAliveCountMax=2',
+            '-R', `80:localhost:${PORT}`,
+            'serveo.net'
+        ];
+
+        activeTunnelProcess = spawn('ssh', sshArgs, {
             windowsHide: true
         });
 
@@ -694,8 +703,8 @@ async function establishTunnel() {
             const output = data.toString();
             console.log(`[Tunnel Raw]: ${output.trim()}`);
 
-            // Strictly match real tunnel domain extensions (.lhr.life, .lhrtunnel.link, etc.)
-            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.(lhr\.life|lhrtunnel\.link|pinggy\.link|localtunnel\.me)/);
+            // Strictly match real tunnel domain extensions (.serveousercontent.com, .lhr.life, .lhrtunnel.link, etc.)
+            const match = output.match(/https:\/\/[a-zA-Z0-9.-]+\.(serveousercontent\.com|lhr\.life|lhrtunnel\.link|pinggy\.link|localtunnel\.me)/);
             if (match && !urlFound) {
                 urlFound = true;
                 currentTunnelUrl = match[0].replace(/\/$/, '');
