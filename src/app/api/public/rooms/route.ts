@@ -8,6 +8,16 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   const headerList = await headers();
   try {
+    const debug = req.nextUrl?.searchParams?.get("debug");
+    if (debug === "1") {
+      return NextResponse.json({
+        nextUrlParams: Object.fromEntries(req.nextUrl?.searchParams?.entries() || []),
+        reqUrl: req.url,
+        xUrl: headerList.get("x-url"),
+        xInvokePath: headerList.get("x-invoke-path"),
+      });
+    }
+
     let registerUrl = req.nextUrl?.searchParams?.get("url") ||
                       req.nextUrl?.searchParams?.get("registerUrl") ||
                       req.nextUrl?.searchParams?.get("tunnel") ||
@@ -22,8 +32,11 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    if (registerUrl && registerUrl.startsWith("http")) {
-      const cleanUrl = registerUrl.replace(/\/$/, "");
+    if (registerUrl && registerUrl.length > 5) {
+      let cleanUrl = registerUrl.trim();
+      if (!cleanUrl.startsWith("http")) cleanUrl = `https://${cleanUrl}`;
+      cleanUrl = cleanUrl.replace(/\/$/, "");
+      
       await prisma.activityLog.create({
         data: {
           action: "WHATSAPP_BOT_URL",
