@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
     const rooms = await prisma.room.findMany({
       select: {
         id: true,
-        roomNumber: true,
+        number: true,
         tower: { select: { name: true } },
         tenant: {
           select: {
@@ -63,13 +63,13 @@ export async function GET(req: NextRequest) {
       },
       orderBy: [
         { tower: { name: "asc" } },
-        { roomNumber: "asc" },
+        { number: "asc" },
       ],
     });
 
     const formattedRooms = rooms.map((room) => ({
       roomId: room.id,
-      roomNumber: room.roomNumber,
+      roomNumber: room.number,
       towerName: room.tower.name,
       tenantId: room.tenant?.id || null,
       tenantName: room.tenant?.name || null,
