@@ -570,11 +570,10 @@ async function registerUrlToCloud(url) {
         const cleanDomain = domain.replace(/\/$/, '');
         
         // 1. Primary GET endpoints (100% reliable dynamic routes)
-        const domainHost = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const getEndpoints = [
+            `${cleanDomain}/api/public/register-tunnel?url=${encodeURIComponent(url)}`,
             `${cleanDomain}/api/public/bills?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public-stats?registerUrl=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/rooms?url=${encodeURIComponent(url)}`
+            `${cleanDomain}/api/public-stats?registerUrl=${encodeURIComponent(url)}`
         ];
 
         for (const getEndpoint of getEndpoints) {
