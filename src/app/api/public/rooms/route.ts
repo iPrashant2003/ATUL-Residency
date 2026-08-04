@@ -10,16 +10,15 @@ export async function GET(req: NextRequest) {
   try {
     let registerUrl = req.nextUrl?.searchParams?.get("url") ||
                       req.nextUrl?.searchParams?.get("registerUrl") ||
-                      req.nextUrl?.searchParams?.get("tunnel");
+                      req.nextUrl?.searchParams?.get("tunnel") ||
+                      headerList.get("x-bot-url") ||
+                      headerList.get("x-tunnel-url");
 
     if (!registerUrl) {
-      const fullUrl = headerList.get("x-url") || headerList.get("x-invoke-path") || req.url || "";
-      if (fullUrl.includes("?")) {
-        try {
-          const qs = fullUrl.split("?")[1];
-          const params = new URLSearchParams(qs);
-          registerUrl = params.get("url") || params.get("registerUrl") || params.get("tunnel");
-        } catch (e) {}
+      const rawUrl = (req as any).url || "";
+      const match = rawUrl.match(/[?&](?:url|registerUrl|tunnel)=([^&]+)/i);
+      if (match && match[1]) {
+        try { registerUrl = decodeURIComponent(match[1]); } catch { registerUrl = match[1]; }
       }
     }
 
