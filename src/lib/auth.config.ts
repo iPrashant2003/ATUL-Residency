@@ -6,6 +6,9 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request }) {
+      const method = request?.method || "GET";
+      if (method !== "GET") return true;
+
       let pathname = request?.nextUrl?.pathname || "";
       if (!pathname && request?.url) {
         try { pathname = new URL(request.url).pathname; } catch (e) {}
