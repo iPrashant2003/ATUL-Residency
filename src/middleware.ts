@@ -65,12 +65,10 @@ setTimeout(function() { window.location.href = '/login'; }, 500);
 
   // Check auth session cookie for protected dashboard routes (/admin, /tenant)
   if (pathname.startsWith("/admin") || pathname.startsWith("/tenant")) {
-    const sessionToken = req.cookies.get("authjs.session-token")?.value ||
-      req.cookies.get("__Secure-authjs.session-token")?.value ||
-      req.cookies.get("next-auth.session-token")?.value ||
-      req.cookies.get("__Secure-next-auth.session-token")?.value;
+    const cookies = req.cookies.getAll();
+    const hasSessionCookie = cookies.some(c => c.name.includes("session-token"));
 
-    if (!sessionToken) {
+    if (!hasSessionCookie) {
       const loginUrl = new URL("/login", req.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
