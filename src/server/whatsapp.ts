@@ -573,9 +573,9 @@ async function registerUrlToCloud(url) {
         const domainHost = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const subdomainOnly = domainHost.split('.')[0];
         const getEndpoints = [
+            `${cleanDomain}/api/public/whatsapp-status?url=${encodeURIComponent(url)}`,
             `${cleanDomain}/api/public/rooms?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/register-bot?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/rooms?registerUrl=${encodeURIComponent(url)}`
+            `${cleanDomain}/api/register-bot?url=${encodeURIComponent(url)}`
         ];
 
         for (const getEndpoint of getEndpoints) {

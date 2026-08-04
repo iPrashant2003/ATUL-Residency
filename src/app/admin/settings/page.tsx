@@ -49,7 +49,7 @@ export default function AdminSettingsPage() {
   const fetchWhatsappStatus = async () => {
     setFetchingWhatsapp(true);
     try {
-      const res = await fetch("/api/whatsapp/status");
+      const res = await fetch("/api/public/whatsapp-status");
       // Always safe-parse - status route now returns valid JSON even when bot is offline
       const data = await res.json().catch(() => ({}));
       setWhatsappStatus(data);
