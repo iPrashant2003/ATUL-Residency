@@ -13,20 +13,35 @@ function createPrismaClient(): PrismaClient {
 
   // Use PostgreSQL adapter when DATABASE_URL is a PostgreSQL connection string
   if (databaseUrl && (databaseUrl.startsWith("postgresql://") || databaseUrl.startsWith("postgres://"))) {
-    // Dynamic import for pg adapter (used in production/cloud deployment)
     const { Pool } = require("pg");
     const { PrismaPg } = require("@prisma/adapter-pg");
-    const pool = new Pool({ connectionString: databaseUrl });
+
+    // Pool with keep-alive + timeout to survive Neon idle disconnections
+    const pool = new Pool({
+      connectionString: databaseUrl,
+      max: 5,                          // max connections in pool
+      idleTimeoutMillis: 30000,        // close idle connections after 30s
+      connectionTimeoutMillis: 10000,  // fail fast if can't connect in 10s
+      ssl: { rejectUnauthorized: false },
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10000,
+    });
+
+    // Log pool errors so they don't silently crash
+    pool.on("error", (err: Error) => {
+      console.error("[Prisma Pool] Unexpected error on idle client:", err.message);
+    });
+
     const adapter = new PrismaPg(pool);
     return new PrismaClient({ adapter } as any);
   }
 
-  // Do not fall back to SQLite on Vercel or in production if DATABASE_URL is not set (e.g. during build)
+  // Do not fall back to SQLite on Vercel or in production if DATABASE_URL is not set
   if (process.env.VERCEL || process.env.NODE_ENV === "production") {
     return new PrismaClient();
   }
 
-  // Fallback to SQLite for local development (when DATABASE_URL is not set or is a file: URL)
+  // Fallback to SQLite for local development
   try {
     const path = require("path");
     const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
