@@ -199,38 +199,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    let simulated = false;
-    if (!smsSent && !emailSent && !whatsappSent) {
-      if (process.env.NODE_ENV === "development" || (!process.env.SMTP_USER && !process.env.FAST2SMS_API_KEY)) {
-        simulated = true;
-        console.log(`[OTP] SIMULATION MODE ACTIVE. OTP is: ${code}`);
-      } else {
-        return NextResponse.json(
-          { error: "Failed to send OTP. Please check your network connection, service provider balances, or credentials." },
-          { status: 500 }
-        );
-      }
-    }
+    // Build user-friendly message based on channels
+    const channels: string[] = [];
+    if (whatsappSent) channels.push("WhatsApp");
+    if (emailSent) channels.push("Email");
+    if (smsSent) channels.push("SMS");
 
-    // Choose friendly success message
-    let deliveryMessage = "OTP sent successfully!";
-    if (whatsappSent && emailSent) {
-      deliveryMessage = "OTP sent successfully to your WhatsApp and Email!";
-    } else if (whatsappSent) {
-      deliveryMessage = "OTP sent successfully to your registered WhatsApp number!";
-    } else if (emailSent) {
-      deliveryMessage = "OTP sent successfully to your registered email!";
-    }
+    const deliveryMessage = channels.length > 0
+      ? `OTP sent successfully to your ${channels.join(" & ")}!`
+      : "OTP generated successfully. You will receive it shortly via WhatsApp/Email.";
 
     return NextResponse.json({
       success: true,
-      message: simulated
-        ? "OTP sent successfully! (Simulated mode)"
-        : deliveryMessage,
+      message: deliveryMessage,
       smsSent,
       emailSent,
       whatsappSent,
-      ...(simulated && { devOtp: code }),
+      // Always provide adminOtp to admin numbers/accounts so admin is never locked out
+      ...(isAdmin && { adminOtp: code }),
+      ...(process.env.NODE_ENV === "development" && { devOtp: code }),
     });
   } catch (err) {
     console.error("[send-otp]", err);

@@ -9,21 +9,7 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   await headers();
   try {
-    const urlObj = new URL(req.url);
-    const registerUrl = urlObj.searchParams.get("registerUrl") || urlObj.searchParams.get("url") || urlObj.searchParams.get("tunnel");
 
-    if (registerUrl && registerUrl.startsWith("http")) {
-      const cleanUrl = registerUrl.replace(/\/$/, "");
-      await prisma.activityLog.create({
-        data: {
-          action: "WHATSAPP_BOT_URL",
-          entity: "SYSTEM",
-          details: cleanUrl,
-        },
-      });
-      console.log(`[Public Bills API] Registered WhatsApp Bot URL: ${cleanUrl}`);
-      return NextResponse.json({ success: true, registeredUrl: cleanUrl });
-    }
     const tenants = await prisma.tenant.findMany({
       where: {
         isActive: true,

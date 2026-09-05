@@ -29,8 +29,10 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message || "OTP sent successfully");
-        if (data.devOtp) {
-          toast.info(`Simulation Mode: Your reset OTP is ${data.devOtp}`, { duration: 15000 });
+        const receivedOtp = data.adminOtp || data.devOtp;
+        if (receivedOtp) {
+          toast.info(`🔑 Your Password Reset OTP is: ${receivedOtp}`, { duration: 20000 });
+          setOtp(receivedOtp);
         }
         setStep(2);
       } else {

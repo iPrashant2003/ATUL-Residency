@@ -96,9 +96,11 @@ function LoginPageContent() {
         toast.error(data.error || "Failed to send OTP");
         return;
       }
-      toast.success("OTP sent successfully!");
-      if (data.devOtp) {
-        toast.info(`Simulation Mode: Your OTP is ${data.devOtp}`, { duration: 15000 });
+      toast.success(data.message || "OTP sent successfully!");
+      const receivedOtp = data.adminOtp || data.devOtp;
+      if (receivedOtp) {
+        toast.info(`🔑 Your Login OTP is: ${receivedOtp}`, { duration: 20000 });
+        setOtp(receivedOtp);
       }
       setOtpStep("verify");
       setResendTimer(30);

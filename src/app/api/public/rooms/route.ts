@@ -8,25 +8,7 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   await headers();
   try {
-    const parsedUrl = new URL(req.url, "https://atul-residency.vercel.app");
-    let registerUrl = parsedUrl.searchParams.get("url") ||
-                      parsedUrl.searchParams.get("registerUrl") ||
-                      parsedUrl.searchParams.get("tunnel");
 
-    if (registerUrl && registerUrl.length > 5) {
-      let cleanUrl = registerUrl.trim();
-      if (!cleanUrl.startsWith("http")) cleanUrl = `https://${cleanUrl}`;
-      cleanUrl = cleanUrl.replace(/\/$/, "");
-      
-      await prisma.activityLog.create({
-        data: {
-          action: "WHATSAPP_BOT_URL",
-          entity: "SYSTEM",
-          details: cleanUrl,
-        },
-      });
-      console.log(`[Public Rooms API] Dynamically registered WhatsApp Bot URL: ${cleanUrl}`);
-    }
 
     const rooms = await prisma.room.findMany({
       select: {

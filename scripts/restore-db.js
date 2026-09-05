@@ -113,10 +113,14 @@ async function runRestore() {
         let totalRestored = 0;
 
         for (const table of RESTORE_ORDER) {
-            const rows = backupData.tables[table];
+            let rows = backupData.tables[table];
             if (!rows || rows.length === 0) {
                 console.log(`  ⏭️ Table "${table}" has 0 rows. Skipping.`);
                 continue;
+            }
+            if (table === 'ActivityLog' && rows.length > 50) {
+                console.log(`  🧹 Trimming ActivityLog from ${rows.length} rows to the most recent 50 rows.`);
+                rows = rows.slice(-50);
             }
 
             console.log(`  📦 Restoring ${rows.length} rows to "${table}"...`);

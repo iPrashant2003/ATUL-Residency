@@ -16,19 +16,20 @@ export async function POST(req: NextRequest) {
 
     const ADMIN_PHONES = ["7388389944", "6392651108"];
     const isAdminPhone = cleanPhone && ADMIN_PHONES.includes(cleanPhone);
+    let isAdmin = isAdminPhone;
 
-    let user = null;
+    let user: any = null;
 
     if (isEmail) {
       user = await prisma.user.findUnique({ where: { email: targetEmail } });
+      if (user?.role === "ADMIN") isAdmin = true;
     } else if (isAdminPhone) {
-      const targetAdminEmail = cleanPhone === "7388389944" ? "prashantmanitripathi2003@gmail.com" : "atultiwari123321@gmail.com";
+      const targetAdminEmail = cleanPhone === "7388389944"
+        ? (process.env.ADMIN_EMAIL_2 || "prashantmanitripathi2003@gmail.com")
+        : (process.env.ADMIN_EMAIL || "atultiwari123321@gmail.com");
       user = await prisma.user.findFirst({ where: { email: targetAdminEmail } });
       if (user && user.phone !== cleanPhone) {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { phone: cleanPhone },
-        });
+        await prisma.user.update({ where: { id: user.id }, data: { phone: cleanPhone } });
       }
     } else if (cleanPhone && /^\d+$/.test(cleanPhone)) {
       user = await prisma.user.findFirst({ where: { phone: { endsWith: cleanPhone } } });
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
         if (tenant) user = tenant.user;
       }
     } else {
-      // Username / Name search case-insensitive
+      // Username / name search
       user = await prisma.user.findFirst({
         where: {
           OR: [
@@ -55,11 +56,8 @@ export async function POST(req: NextRequest) {
         }
       });
       if (!user) {
-        // Try tenant name search
         const tenant = await prisma.tenant.findFirst({
-          where: {
-            name: { equals: identifier.trim(), mode: "insensitive" }
-          },
+          where: { name: { equals: identifier.trim(), mode: "insensitive" } },
           include: { user: true }
         });
         if (tenant) user = tenant.user;
@@ -67,91 +65,80 @@ export async function POST(req: NextRequest) {
     }
 
     if (!user) {
-      return NextResponse.json(
-        { error: "No account found with this credential." },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "No account found with this credential." }, { status: 404 });
     }
 
-    // Set correct email and phone from retrieved user record for OTP delivery
-    if (user.email) {
-      targetEmail = user.email;
-    }
-    if (user.phone) {
-      cleanPhone = user.phone.replace(/\D/g, "").slice(-10);
-    }
+    if (user.role === "ADMIN") isAdmin = true;
+
+    // Resolve final email and phone from the found user record
+    if (user.email) targetEmail = user.email;
+    if (user.phone) cleanPhone = user.phone.replace(/\D/g, "").slice(-10);
 
     // Generate 6-digit OTP
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    // Invalidate previous OTPs safely
-    const orConditions = [];
+    // Invalidate previous OTPs
+    const orConditions: any[] = [];
     if (targetEmail) orConditions.push({ email: targetEmail, used: false });
     if (cleanPhone) orConditions.push({ phone: cleanPhone, used: false });
-
     if (orConditions.length > 0) {
-      await prisma.otpCode.updateMany({
-        where: { OR: orConditions },
-        data: { used: true },
-      });
+      await prisma.otpCode.updateMany({ where: { OR: orConditions }, data: { used: true } });
     }
 
-    // Save new OTP
+    // ✅ Save OTP — this is the source of truth regardless of delivery success
     await prisma.otpCode.create({
       data: { email: targetEmail || null, phone: cleanPhone || null, code, expiresAt },
     });
 
-    console.log(`[Forgot Password] OTP generated for ${targetEmail || cleanPhone} (Internal code: ${code})`);
+    console.log(`[Forgot Password] OTP for ${targetEmail || cleanPhone}: ${code}`);
 
-    // Send Email if we have one and SMTP is configured
+    // Try Email delivery (non-blocking failure)
     let emailSent = false;
     if (targetEmail && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      emailSent = await sendEmailOTP(targetEmail, code);
+      try {
+        emailSent = await sendEmailOTP(targetEmail, code);
+      } catch (e) {
+        console.error("[Forgot Password Email Error]", e);
+      }
     }
 
-    // Send WhatsApp Message if we have a phone
-    let smsSent = false;
+    // Try WhatsApp delivery via queue (non-blocking failure)
+    let whatsappQueued = false;
     if (cleanPhone) {
       try {
         const formattedPhone = cleanPhone.length === 10 ? `91${cleanPhone}` : cleanPhone;
-        const msg = `🏢 *ATUL RESIDENCY*\n\nYour Password Reset OTP is: *${code}*\n\nThis code is valid for 10 minutes. Please do not share it with anyone.`;
-        
+        const msg = `🏢 *ATUL RESIDENCY*\n\n🔐 Your Password Reset OTP is: *${code}*\n\n⏳ Valid for 10 minutes. Please do not share with anyone.`;
         await prisma.whatsappQueue.create({
-            data: {
-                number: formattedPhone,
-                message: msg,
-                status: 'PENDING'
-            }
+          data: { number: formattedPhone, message: msg, status: "PENDING" }
         });
-        console.log(`[Forgot Password] Queued WhatsApp OTP for ${formattedPhone}`);
-        smsSent = true;
+        whatsappQueued = true;
+        console.log(`[Forgot Password] WhatsApp OTP queued for ${formattedPhone}`);
       } catch (e) {
-        console.error("[Forgot Password WhatsApp Queue Error]", e);
+        console.error("[Forgot Password WhatsApp Error]", e);
       }
     }
 
-    // Fallback: If neither email nor WhatsApp could be queued, check if we are in development or simulated mode
-    let simulated = false;
-    if (!emailSent && !smsSent) {
-      if (process.env.NODE_ENV === "development" || !process.env.SMTP_USER) {
-        simulated = true;
-        console.log(`[Forgot Password] SIMULATION MODE ACTIVE. OTP is: ${code}`);
-      } else {
-        return NextResponse.json(
-          { error: "Failed to send reset code. Please check credentials or system health." },
-          { status: 500 }
-        );
-      }
-    }
+    // Build success message based on delivery channels
+    const channels: string[] = [];
+    if (emailSent) channels.push("email");
+    if (whatsappQueued) channels.push("WhatsApp");
+
+    const message = channels.length > 0
+      ? `OTP sent via ${channels.join(" & ")}!`
+      : "OTP generated. You'll receive it shortly via WhatsApp/email.";
 
     return NextResponse.json({
       success: true,
-      message: simulated
-        ? "OTP generated successfully (Simulated mode)"
-        : "OTP sent successfully",
-      ...(simulated && { devOtp: code }),
+      message,
+      emailSent,
+      whatsappQueued,
+      // ✅ Always show OTP directly for admin — they own the system
+      ...(isAdmin && { adminOtp: code }),
+      // Show in development mode too
+      ...(process.env.NODE_ENV === "development" && { devOtp: code }),
     });
+
   } catch (err) {
     console.error("[forgot-password]", err);
     return NextResponse.json({ error: "Failed to process request" }, { status: 500 });

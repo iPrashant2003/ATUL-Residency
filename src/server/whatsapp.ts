@@ -572,42 +572,31 @@ const PORT = 3001;
 let activeTunnelProcess = null;
 let heartbeatInterval = null;
 
-// Helper: Registers the tunnel URL directly to Vercel cloud API endpoint and Neon DB via HTTPS
+let lastRegisteredCloudUrl = null;
+
+// Helper: Registers the tunnel URL directly to Vercel cloud API endpoint and Neon DB via Prisma
 async function registerUrlToCloud(url) {
     if (!url || !url.startsWith('http')) return;
+    if (url === lastRegisteredCloudUrl) return; // Deduplicate: only run if URL actually changes!
+    lastRegisteredCloudUrl = url;
 
-    // Step 0: Direct HTTPS REST SQL write to Neon PostgreSQL (Bypasses local ISP blocks & Vercel caching)
+    // Keep exactly ONE active record in database
     try {
-        const https = require('https');
-        const host = 'ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech';
-        const connStr = 'postgresql://neondb_owner:npg_O8q1BsQLKfno@ep-billowing-star-ajgbsm9e-pooler.c-3.us-east-2.aws.neon.tech/neondb?sslmode=require';
-        const id = 'cm_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
-        const postData = JSON.stringify({
-            query: 'INSERT INTO "ActivityLog" (id, action, entity, details, "createdAt") VALUES ($1, $2, $3, $4, NOW()) RETURNING id',
-            params: [id, 'WHATSAPP_BOT_URL', 'SYSTEM', url]
+        await prisma.activityLog.deleteMany({
+            where: { action: 'WHATSAPP_BOT_URL' }
         });
-
-        const req = https.request({
-            hostname: host,
-            path: '/sql',
-            method: 'POST',
-            headers: {
-                'Neon-Connection-String': connStr,
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postData)
-            }
-        }, res => {
-            res.on('data', () => {});
-            if (res.statusCode === 200) {
-                console.log(`⚡ Direct Neon HTTPS REST registration succeeded for URL: ${url}`);
+        await prisma.activityLog.create({
+            data: {
+                action: 'WHATSAPP_BOT_URL',
+                entity: 'SYSTEM',
+                details: url
             }
         });
-        req.on('error', () => {});
-        req.write(postData);
-        req.end();
-    } catch (e) {}
+        console.log(`✅ Synced WHATSAPP_BOT_URL in database: ${url}`);
+    } catch (e) {
+        console.warn('⚠️ Could not sync bot URL to DB:', e.message);
+    }
 
-    const secret = process.env.BOT_SECRET || 'atul_bot_secret_2026';
     const baseDomains = [
         process.env.WEB_APP_URL,
         'https://atul-residency.vercel.app',
@@ -616,55 +605,19 @@ async function registerUrlToCloud(url) {
 
     for (const domain of baseDomains) {
         const cleanDomain = domain.replace(/\/$/, '');
-        
-        // 1. Primary GET endpoints (100% reliable dynamic routes under /api/public/)
-        const domainHost = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        const subdomainOnly = domainHost.split('.')[0];
-        const getEndpoints = [
-            `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/whatsapp-status?url=${encodeURIComponent(url)}`,
-            `${cleanDomain}/api/public/rooms?url=${encodeURIComponent(url)}`
-        ];
-
-        for (const getEndpoint of getEndpoints) {
-            try {
-                const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 6000);
-                const res = await fetch(getEndpoint, { signal: controller.signal }).finally(() => clearTimeout(timer));
-                if (res.ok) {
-                    console.log(`📡 Registered bot URL to cloud via GET (${getEndpoint}) successfully!`);
-                    break;
-                }
-            } catch (err) {}
-        }
-
-        // 2. Secondary POST endpoints
-        const endpoints = [
-            `${cleanDomain}/api/whatsapp/status`,
-            `${cleanDomain}/api/whatsapp/register-url`
-        ];
-
-        for (const endpoint of endpoints) {
-            try {
-                const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 6000);
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url, secret }),
-                    signal: controller.signal
-                }).finally(() => clearTimeout(timer));
-
-                if (res.ok) {
-                    console.log(`📡 Registered bot URL to cloud (${endpoint}) successfully!`);
-                    break;
-                }
-            } catch (err) {
-                // Silently ignore ping errors for offline endpoints
+        const getEndpoint = `${cleanDomain}/api/public/register-bot?url=${encodeURIComponent(url)}`;
+        try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 6000);
+            const res = await fetch(getEndpoint, { signal: controller.signal }).finally(() => clearTimeout(timer));
+            if (res.ok) {
+                console.log(`📡 Registered bot URL to cloud (${getEndpoint}) successfully!`);
+                break;
             }
-        }
+        } catch (err) {}
     }
 }
+
 
 function killTunnelProcess(proc) {
     try {
@@ -741,18 +694,7 @@ async function establishTunnel(useFallback = false) {
                 // Register URL to cloud (Vercel) via HTTPS webhook
                 registerUrlToCloud(currentTunnelUrl);
 
-                try {
-                    await prisma.activityLog.create({
-                        data: {
-                            action: 'WHATSAPP_BOT_URL',
-                            entity: 'SYSTEM',
-                            details: currentTunnelUrl
-                        }
-                    });
-                    console.log('✅ Registered tunnel URL successfully in database.');
-                } catch (dbErr) {
-                    console.error('❌ Failed to register tunnel URL in database:', dbErr.message);
-                }
+
 
                 // Start 20-second active health check
                 if (heartbeatInterval) clearInterval(heartbeatInterval);

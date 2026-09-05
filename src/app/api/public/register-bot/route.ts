@@ -24,6 +24,9 @@ export async function GET(req: Request) {
     }
     cleanUrl = cleanUrl.replace(/\/$/, "");
 
+    await prisma.activityLog.deleteMany({
+      where: { action: "WHATSAPP_BOT_URL" },
+    });
     await prisma.activityLog.create({
       data: {
         action: "WHATSAPP_BOT_URL",

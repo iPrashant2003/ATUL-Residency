@@ -8,20 +8,7 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   await headers();
   try {
-    const registerUrl = req.nextUrl.searchParams.get("registerUrl") || req.nextUrl.searchParams.get("url") || req.nextUrl.searchParams.get("tunnel");
 
-    if (registerUrl && registerUrl.startsWith("http")) {
-      const cleanUrl = registerUrl.replace(/\/$/, "");
-      await prisma.activityLog.create({
-        data: {
-          action: "WHATSAPP_BOT_URL",
-          entity: "SYSTEM",
-          details: cleanUrl,
-        },
-      });
-      console.log(`[Public Stats API] Registered WhatsApp Bot URL: ${cleanUrl}`);
-      return NextResponse.json({ success: true, registeredUrl: cleanUrl });
-    }
     // Fetch only Tower A and Tower B
     const towers = await prisma.tower.findMany({
       where: {
