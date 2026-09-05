@@ -102,6 +102,22 @@ function cleanSessionLock() {
     }
 }
 
+// Wipe sessions that are older than 7 days — they cause hangs after system sleep/restart
+function clearStaleSession() {
+    const sessionPath = path.join(os.homedir(), '.wwebjs_auth', 'session-bot_v2');
+    if (!fs.existsSync(sessionPath)) return;
+    try {
+        const stat = fs.statSync(sessionPath);
+        const ageMs = Date.now() - stat.mtimeMs;
+        const ageDays = ageMs / (1000 * 60 * 60 * 24);
+        if (ageDays > 7) {
+            fs.rmSync(sessionPath, { recursive: true, force: true });
+            console.log(`🗑️ Cleared stale WhatsApp session (${ageDays.toFixed(1)} days old) — will re-pair fresh.`);
+        }
+    } catch (e) {}
+}
+
+
 // ==================== State ====================
 
 const prisma = createPrismaClient();
@@ -813,6 +829,9 @@ app.listen(PORT, () => {
     
     // Kill stale chrome on boot to prevent locks
     killStaleChrome();
+
+    // Clear sessions older than 7 days (stale after sleep/restart)
+    clearStaleSession();
 
     console.log('📱 Starting bot initialization...\n');
     initializeBot().catch(e => console.error('Initial bot start failed:', e.message));
